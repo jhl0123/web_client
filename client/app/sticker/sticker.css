@@ -1,9 +1,21 @@
+.open .sticker_panel {
+  opacity: 1;
+  visibility: visible;
+}
 
 .sticker_panel {
   bottom: 30px !important;
   padding-top:0px !important;
   padding-bottom:0px !important;
-  /*width: 330px !important;*/
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity .12s ease, visibility .12s ease;
+  transition: opacity .12s ease, visibility .12s ease;
+}
+
+.sticker_panel:focus {
+  outline: 0;
 }
 .sticker_panel_wrap {
   position: absolute;
@@ -15,21 +27,57 @@
 .sticker_panel_wrap.shift{
   right: 20px;
 }
-.sticker_panel_btn {
+.sticker_panel_wrap .sticker_panel_btn {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: block;
   opacity: 0.3;
   font-size: 18px;
   color: black;
-}
-.sticker_panel_btn:active,
-.sticker_panel_btn:hover {
-  color: #00abe6;
-  opacity: 0.9;
   text-decoration: none;
 }
-.sticker_panel_btn.on {
+.sticker_panel_wrap .sticker_panel_btn.on {
   color: #00abe6;
-  opacity: 1;
+  opacity: 0.9;
 }
+
+.sticker_panel_wrap .sticker_panel_btn > .mouse {
+  position: absolute;
+  top: 11px;
+  left: 5px;
+  right: 5px;
+  height: 2px;
+  background-color: #fff;
+  display: inline-block;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  border-bottom-right-radius: 12px 8px;
+  border-bottom-left-radius: 12px 8px;
+  -webkit-transition: height .12s linear;
+  transition: height .12s linear;
+}
+.sticker_panel_wrap .sticker_panel_btn.on > .mouse {
+  height: 4px;
+  border-color: #00abe6;
+  border-bottom: 1px solid #00abe6;
+}
+
+.sticker_panel_wrap .sticker_panel_btn > .lip {
+  position: absolute;
+  top: 11px;
+  left: 4px;
+  width: 10px;
+  height: 4px;
+  background-color: #fff;
+  display: inline-block;
+  border-top: 1px solid rgba(0, 0, 0, .6);
+}
+.sticker_panel_wrap .sticker_panel_btn.on > .lip {
+  border-color: #00abe6;
+}
+
 .sticker_panel_contents ul li{overflow:hidden;}
 .sticker_panel_contents {
   /*width: 328px !important;
@@ -68,12 +116,9 @@
   line-height: 21px;
   border: 2px solid #FFFFFF;
 }
-/*.sticker_panel_li:hover {
-  border: 2px solid #d7e0e8;
-  border-radius: 5px;
-}*/
-.sticker_panel_li:active {
-  opacity: 0.4;
+.sticker_panel_li.active {
+  background-color: #d7e0e8;
+  border-radius: 11px;
 }
 .sticker_panel_tab {
   height: 35px;
@@ -117,7 +162,6 @@
 .sticker_panel_tab_item.recent.on {
   opacity: 1;
 }
-
 
 .sticker_panel_tab_item img {
   width: 20px;

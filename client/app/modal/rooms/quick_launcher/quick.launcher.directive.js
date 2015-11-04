@@ -76,6 +76,7 @@
        */
       function _onKeyDown(event) {
         var which = event.which;
+
         if (_hasJumpIndex() && event.ctrlKey || event.metaKey) {
           if (jndKeyCode.match('UP_ARROW', which)) {
             event.preventDefault();

@@ -9,48 +9,84 @@
     .module('jandiApp')
     .controller('StickerPanelCtrl', StickerPanelCtrl);
 
-  function StickerPanelCtrl($scope, $attrs, jndPubSub, Sticker, Preloader) {
+  function StickerPanelCtrl($scope, $attrs, $q, jndPubSub, Sticker, Preloader, JndUtil) {
     // 서버에서 group 리스트 API 완성전에 대비하여 임시로 만든 데이터
     var _groups = [
       {
-        isRecent: true,
-        isSelected: false
+        activeIndex: 0,
+        className: 'recent'
       },
       {
-        isRecent: false,
-        isSelected: true
+        activeIndex: 0,
+        className: 'kiyomi',
+        id: 101
+      },
+      {
+        activeIndex: 0,
+        className: 'pangya',
+        id: 100
       }
     ];
-    var _cache = {};
 
-    $scope.onClickGroup = onClickGroup;
-    $scope.onClickItem = onClickItem;
-    $scope.onToggled = onToggled;
+    var MAX_COLUMN = parseInt($attrs.maxColumns, 10);
+    var _activeGroupIndex = 1;
 
-    init();
+    _init();
 
     /**
      * 초기화 메서드
+     * @private
      */
-    function init() {
+    function _init() {
       $scope.groups = _groups;
       $scope.name = $attrs.name;
-      $scope.isRecent = false;
       $scope.status = {
         isOpen: false
       };
-      _select();
+
+      $scope.onClickGroup = onClickGroup;
+      $scope.selectSticker = selectSticker;
+
+      $scope.navActiveSticker = navActiveSticker;
+      $scope.select = select;
+
+      $scope.selectActiveSticker = selectActiveSticker;
+      $scope.isActiveSticer = isActiveSticer;
+      $scope.isActiveGroup = isActiveGroup;
+      $scope.isRecentGroup = isRecentGroup;
+
+      _on();
     }
 
     /**
-     * show hide 토글 핸들러
-     * @param {boolean} isOpen 현재 show 되었는지 여부
+     * on listeners
+     * @private
      */
-    function onToggled(isOpen) {
-      $scope.status.isOpen = isOpen;
-      if (isOpen) {
-        _select();
+    function _on() {
+      if ($scope.name === 'chat') {
+        $scope.$on('center:toggleSticker', _onCenterToggleSticker);
+        $scope.$on('toggleQuickLauncher', _onToggleQuickLauncher);
       }
+    }
+
+    /**
+     * toggle sticker event handler
+     * @private
+     */
+    function _onCenterToggleSticker() {
+      $scope.$apply(function() {
+        $scope.status.isOpen = !$scope.status.isOpen;
+      });
+    }
+
+    /**
+     * toggle quick launcher
+     * @private
+     */
+    function _onToggleQuickLauncher() {
+      $scope.$apply(function() {
+        $scope.status.isOpen = false;
+      });
     }
 
     /**
@@ -60,7 +96,25 @@
      */
     function onClickGroup(clickEvent, group) {
       clickEvent.stopPropagation();
-      _select(group);
+      select(group);
+    }
+
+    /**
+     * select sticker event handler
+     */
+    function selectSticker(item) {
+      var activeGroup = _groups[_activeGroupIndex];
+      var list = $scope.list;
+
+      item = item || list[activeGroup.activeIndex];
+
+      if (item) {
+        JndUtil.safeApply($scope, function() {
+          $scope.status.isOpen = false;
+
+          jndPubSub.pub('selectSticker:' + $scope.name, item);
+        });
+      }
     }
 
     /**
@@ -68,78 +122,129 @@
      * @param {object} group 선택할 그룹
      * @private
      */
-    function _select(group) {
-      group = group || $scope.groups[1];
-      _deselectAll();
-      group.isSelected = true;
-      $scope.isRecent = !!group.isRecent;
-      $scope.list = [];
+    function select(group, active) {
+      group = group || _groups[_activeGroupIndex];
 
-      if (group.isRecent) {
-        _getRecent();
+      _activeGroupIndex = _groups.indexOf(group);
+
+      Sticker.getStickers(group.id)
+        .then(function(stickers) {
+          $scope.list = stickers;
+
+          //_updateSelect(group);
+          if (stickers.length > 0) {
+            active ?  _setNextItem(stickers.length - 1) :  _setNextItem(0);
+          }
+
+          $scope.onCreateSticker();
+        });
+    }
+
+    /**
+     * 활성화된 sticker navigation
+     * @param {number} x
+     * @param {number} y
+     */
+    function navActiveSticker(x, y) {
+      var activeGroup = _groups[_activeGroupIndex];
+      var list = $scope.list;
+
+      var acx = activeGroup.activeIndex % MAX_COLUMN;
+      var acy = Math.floor(activeGroup.activeIndex / MAX_COLUMN);
+
+      var cpx = acx + x;
+      var cpy = acy + y;
+
+      if (_isNextGroup(cpx, cpy, x, y)) {
+        //setActiveItem(false);
+        _setNextGroup((x > 0 || y > 0) ? 1 : -1);
       } else {
-        _getList();
+        $scope.$apply(function() {
+          //setActiveItem(false);
+          _setNextItem(list[cpy * MAX_COLUMN + cpx] == null && y > 0 ? list.length - 1 : cpy * MAX_COLUMN + cpx);
+        });
       }
     }
 
     /**
-     * 모든 group 을 deselect 한다.
+     * select active sticker
+     * @param {number} index
+     */
+    function selectActiveSticker(index) {
+      _groups[_activeGroupIndex].activeIndex = index;
+    }
+
+    /**
+     * is active sticker
+     * @param {number} index
+     * @returns {boolean}
+     */
+    function isActiveSticer(index) {
+      return _groups[_activeGroupIndex].activeIndex === index;
+    }
+
+    /**
+     * is active group
+     * @param {number} index
+     * @returns {boolean}
+     */
+    function isActiveGroup(index) {
+      return _activeGroupIndex === index;
+    }
+
+    /**
+     * is recent group
+     * @param {number} index
+     * @returns {boolean}
+     */
+    function isRecentGroup(index) {
+      return _groups[0] === _groups[index];
+    }
+
+    /**
+     * 다음 group 으로 이동해야 하는지 여부
+     * @param {number} cpx - 다음 이동해야할 x
+     * @param {number} cpy - 다음 이동해야할 y
+     * @param {numer} x - x 가감
+     * @param {numer} y - y 가감
+     * @returns {boolean}
      * @private
      */
-    function _deselectAll() {
-      _.forEach($scope.groups, function(group) {
-        group.isSelected = false;
+    function _isNextGroup(cpx, cpy, x, y) {
+      var list = $scope.list;
+      return ((list[cpy * MAX_COLUMN] == null && (y > 0 || y < 0)) || (list[cpy * MAX_COLUMN + cpx] == null && (x > 0 || x < 0))) && _groups.length > 1;
+    }
+
+    /**
+     * 다음 group으로 이동
+     * @param {number} next - 이동해야할 group +,-
+     * @private
+     */
+    function _setNextGroup(next) {
+      select(_getNextGroup(next), next < 0);
+    }
+
+    /**
+     * 다음 sticker로 이동
+     * @param {number} index - 이동해야할 sticker index
+     * @private
+     */
+    function _setNextItem(index) {
+      selectActiveSticker(index, true);
+
+      setTimeout(function() {
+        $scope.autoScroll(index);
       });
     }
 
     /**
-     * 스티커 클릭시
-     * @param {object} item 스티커 아이템
-     */
-    function onClickItem(item) {
-      jndPubSub.pub('selectSticker:' + $scope.name, item);
-    }
-
-    /**
-     * groupId 에 해당하는 스티커를 로드한다.
-     * @param {number} [groupId=100]
+     * 다음 이동해야할 group 전달
+     * @param {number} next - 이동 해야할 group +,-
+     * @returns {{isRecent, isSelected, activeIndex, className}|{isRecent, isSelected, activeIndex, className, id}|*}
      * @private
      */
-    function _getList(groupId) {
-      groupId = _.isUndefined(groupId) ? 100 : groupId;
-      if (_cache[groupId]) {
-        $scope.list = _cache[groupId];
-      } else {
-        Sticker.getList(groupId)
-          .success(function(response) {
-            _cache[groupId] = response;
-            Preloader.img(_.pluck(response, 'url'));
-            $scope.list = response;
-          })
-          .error(function() {
-            $scope.list = [];
-          });
-      }
-
-    }
-
-    /**
-     * 최근 사용 리스트를 반환한다.
-     * @private
-     */
-    function _getRecent() {
-      Sticker.getRecentList()
-        .success(function(response) {
-          if (_.isArray(response)) {
-            Preloader.img(_.pluck(response, 'url'));
-            $scope.list = response.reverse();
-          } else {
-            $scope.list = [];
-          }
-        })
-        .error(function() {
-          $scope.list = [];
-        });
+    function _getNextGroup(next) {
+      return _groups[_activeGroupIndex + next] == null ? next > 0 ? _groups[0] : _groups[_groups.length - 1] : _groups[_activeGroupIndex + next];
     }
   }
 })();

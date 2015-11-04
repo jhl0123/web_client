@@ -17,6 +17,16 @@
     function link(scope) {
       var jqBody = $('body');
 
+      var shortcutMap= {
+        keydown: {
+          'toggleQuickLauncher': _isQuickLauncherShortcut,
+          'center:toggleSticker': _isCenterStickerShortcut
+        },
+        keyup: {
+          'setChatInputFocus': _isChatInputFocus
+        }
+      };
+
       _init();
 
       /**
@@ -73,12 +83,7 @@
        * @private
        */
       function _onKeyDown(keyEvent) {
-        if (_isQuickLauncherShortcut(keyEvent)) {
-
-          // browser에서 사용하는 shortcut을 override 한다.
-          keyEvent.preventDefault();
-          jndPubSub.pub('toggleQuickLauncher');
-        }
+        _pubShortcutEvent(shortcutMap.keydown, keyEvent);
       }
 
       /**
@@ -87,10 +92,35 @@
        * @private
        */
       function _onKeyUp(keyEvent) {
+        _pubShortcutEvent(shortcutMap.keyup, keyEvent);
+      }
+
+      /**
+       * pub shortcut event
+       * @param {object} shortcuts
+       * @param {object} keyEvent
+       * @private
+       */
+      function _pubShortcutEvent(shortcuts, keyEvent) {
+        _.each(shortcuts, function(fn, name) {
+          if (fn(keyEvent)) {
+            // keyboard shortcut이라면 기본동작 막음
+            keyEvent.preventDefault();
+
+            jndPubSub.pub(name);
+          }
+        });
+      }
+
+      /**
+       * center의 chat input에 focus가야하는 shortcut인지 여부를 반환한다.
+       * @param {object} keyEvent
+       * @returns {*|boolean}
+       * @private
+       */
+      function _isChatInputFocus(keyEvent) {
         var jqTarget = $(keyEvent.target);
-        if (jndKeyCode.match('ENTER', keyEvent.keyCode) && !_isInput(jqTarget) && !_isModalShown()) {
-          jndPubSub.pub('setChatInputFocus');
-        }
+        return jndKeyCode.match('ENTER', keyEvent.keyCode) && !_isInput(jqTarget) && !_isModalShown();
       }
 
       /**
@@ -119,9 +149,17 @@
        * @private
        */
       function _isQuickLauncherShortcut(keyEvent) {
-        var keycode = keyEvent.keyCode;
-        //keyEvent.ctrlKey && (jndKeyCode.match('CHAR_Q', keycode));
-        return (keyEvent.ctrlKey || keyEvent.metaKey) && (jndKeyCode.match('CHAR_J', keycode));
+        var keyCode = keyEvent.keyCode;
+        return (keyEvent.ctrlKey || keyEvent.metaKey) && (jndKeyCode.match('CHAR_J', keyCode));
+      }
+
+      /**
+       * center sticker shortcut 인지 여부를 반환한다.
+       * @param {object} keyEvent
+       */
+      function _isCenterStickerShortcut(keyEvent) {
+        var keyCode = keyEvent.keyCode;
+        return (keyEvent.ctrlKey || keyEvent.metaKey) && keyEvent.shiftKey && jndKeyCode.match('CHAR_K', keyCode);
       }
     }
   }

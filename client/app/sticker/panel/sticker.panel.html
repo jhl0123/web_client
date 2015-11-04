@@ -1,44 +1,43 @@
-<div class="dropup sticker_panel_wrap">
+<div class="dropup sticker_panel_wrap non-selectable" dropdown on-toggle="onToggled(open);" is-open="status.isOpen">
   <!-- 스티커 패널 오픈 버튼-->
   <a class="dropdown dropdown-toggle sticker_panel_btn cursor_pointer"
-          data-toggle="dropdown"
           ng-class="{'on': status.isOpen}"
-          on-toggle="onToggled(open);">
-  <i class="icon-sticker"></i> </a>
+          dropdown-toggle>
+    <i class="icon-sticker"></i>
+    <div class="lip"></div>
+    <div class="mouse"></div>
+  </a>
   <!-- 스티커 패널 -->
-  <div class="sticker_panel dropdown-menu dropdown-menu-right" role="menu">
+  <div class="sticker_panel dropdown-menu dropdown-menu-right" dropdown-menu>
     <!-- 스티커 리스트-->
     <div class="sticker_panel_contents"
-        ng-class="{ 'empty': !list.length }">
+         ng-class="{ 'empty': !list.length }">
       <div ng-if="!list.length">
-        <div ng-if="isRecent">
-          <div class="sticker_panel_empty_icon">
-            <i class="icon-sticker"></i>
-          </div>
-          <div class="sticker_panel_empty_text">
-            Recent Stickers
-          </div>
+        <div class="sticker_panel_empty_icon">
+          <i class="icon-sticker"></i>
+        </div>
+        <div class="sticker_panel_empty_text">
+          Recent Stickers
         </div>
       </div>
       <ul ng-if="list.length" class="sticker_panel_ul">
         <li class="sticker_panel_li cursor_pointer"
-            data-ng-repeat="item in list"
-            ng-click="onClickItem(item)">
-          <img class="sticker size_1" src="{{item.url}}?size=130"/>
+            ng-repeat="item in list"
+            ng-class="{'active': isActiveSticer($index)}"
+            ng-mouseenter="selectActiveSticker($index)"
+            ng-mousedown="selectSticker()">
+          <img class="sticker size_1" src="{{::item.url}}?size=130"/>
         </li>
       </ul>
     </div>
     <!-- 스티커 탭-->
     <div class="sticker_panel_tab">
       <ul>
-        <li data-ng-repeat="group in groups"
-            data-ng-class="{ 'on': group.isSelected }"
+        <li ng-repeat="group in groups"
             ng-click="onClickGroup($event, group)">
-          <div class="sticker_panel_tab_item"
-               data-ng-class="{ 'on': group.isSelected,
-                                'recent': group.isRecent,
-                                'basic': !group.isRecent }">
-            <i ng-if="group.isRecent" class="icon-clock"></i>
+          <div class="sticker_panel_tab_item {{::group.className}}"
+               ng-class="{'on': isActiveGroup($index)}">
+            <i ng-if="isRecentGroup($index)" class="icon-clock"></i>
           </div>
         </li>
       </ul>

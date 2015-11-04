@@ -24,6 +24,7 @@
       'CHAR_C': 67,
       'CHAR_F': 70,
       'CHAR_J': 74,
+      'CHAR_K': 75,
       'CHAR_Q': 81,
       'CHAR_R': 82,
       'CHAR_V': 86,

@@ -116,7 +116,8 @@
 
       $scope.$on('updateTeamBadgeCount', updateTeamBadge);
 
-      $scope.$on('toggleQuickLauncher', _toggleQuickLauncher);
+      $scope.$on('toggleQuickLauncher', _onToggleQuickLauncher);
+      $scope.$on('center:toggleSticker', _onToggleSticker);
     }
 
     $scope.onLanguageClick = onLanguageClick;
@@ -308,10 +309,10 @@
     }
 
     /**
-     * toggle quick launcher
+     * on toggle quick launcher
      * @private
      */
-    function _toggleQuickLauncher() {
+    function _onToggleQuickLauncher() {
       if (isOpenQuickLauncher) {
         modalHelper.closeModal();
       } else {
@@ -320,6 +321,14 @@
           openQuickLauncher();
         }, 50);
       }
+    }
+
+    /**
+     * on toggle sticker
+     * @private
+     */
+    function _onToggleSticker() {
+      modalHelper.closeModal();
     }
 
     /**
