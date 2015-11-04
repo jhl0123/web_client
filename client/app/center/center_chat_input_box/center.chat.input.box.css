@@ -223,3 +223,14 @@
 #has-new-msg-banner:hover {
   background-color: rgba(217, 83, 79, 0.95);
 }
+
+.markdown-guide-content {
+  position: absolute;
+  right: 20px;
+  top: 35px;
+  font-size: 11px;
+  color: #aaa;
+}
+.markdown-guide-content > span {
+  margin-left: 10px;
+}

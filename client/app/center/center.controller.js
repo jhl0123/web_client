@@ -98,8 +98,8 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
   $scope.onShareClick = onShareClick;
   $scope.isDisabledMember = publicService.isDisabledMember;
 
-  $scope.onKeyUp = onKeyUp;
   $scope.onTextChange = _cutTextareaMaxLength;
+  $scope.onMessageInputChange = onMessageInputChange;
 
   $scope.setCommentFocus = setCommentFocus;
   $scope.loadMore = loadMore;
@@ -1225,20 +1225,6 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
     if (isLogEnabled) logger.log(string);
   }
 
-
-
-  /**
-   * keyUp 이벤트 핸들러
-   * @param {event} keyUpEvent 키 업 이벤트
-   */
-  function onKeyUp(keyUpEvent) {
-    var keyCode = keyUpEvent.keyCode;
-
-    if (jndKeyCode.match('ESC', keyCode)) {
-      _hideSticker();
-    }
-  }
-
   function setCommentFocus(file) {
     if ($state.params.itemId != file.id) {
       $rootScope.setFileDetailCommentFocus = true;
@@ -1851,6 +1837,18 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
   function _onTopicDeleted(event, data) {
     if (data && data.topic) {
       TextBuffer.remove(data.topic.id);
+    }
+  }
+
+  /**
+   * message input change event handler
+   * @param {object} event
+   */
+  function onMessageInputChange(event) {
+    if (event.type === 'keyup' && jndKeyCode.match('ESC', event.keyCode)) {
+      _hideSticker();
+    } else if (_.isString(event.target.value)) {
+      $scope.showMarkdownGuide = event.target.value.length > 1;
     }
   }
 });
