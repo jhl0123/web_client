@@ -29,7 +29,7 @@ set :default_env, {
 # used to set extended properties on the server.
 
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
-server 'jandi.io', user: 'deploy', port: 2222, password: fetch(:password), roles: 'server'
+server '52.192.78.133', user: 'jandi', password: fetch(:password), roles: 'server'
 
 
 # Custom SSH Options
