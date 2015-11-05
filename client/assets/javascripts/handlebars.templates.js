@@ -30,11 +30,11 @@ this["Handlebars"]["templates"]["center.file.comment"] = Handlebars.template({"1
 },"5":function(depth0,helpers,partials,data) {
     var stack1, alias1=this.lambda, alias2=this.escapeExpression;
 
-  return "        <!--    CONTENT(MESSAGE)    -->\n        <span>\n          <span class=\"keep _compile\" jnd-ignore-braces> "
+  return "        <!--    CONTENT(MESSAGE)    -->\n        <span>\n          <span class=\"keep _compile\" jnd-ignore-braces>"
     + ((stack1 = alias1(((stack1 = ((stack1 = ((stack1 = (depth0 != null ? depth0.msg : depth0)) != null ? stack1.message : stack1)) != null ? stack1.content : stack1)) != null ? stack1.body : stack1), depth0)) != null ? stack1 : "")
-    + "</span>\n          <!--    CREATED TIME    -->\n          <span class=\"msg-item-header__created\">\n            "
+    + "</span>\n          <!--    CREATED TIME    -->\n          <span class=\"msg-item-header__created\">"
     + alias2(alias1(((stack1 = (depth0 != null ? depth0.msg : depth0)) != null ? stack1.extTime : stack1), depth0))
-    + "\n          </span>\n          <span class=\"badge unread-badge\">"
+    + "</span>\n          <span class=\"badge unread-badge\">"
     + alias2(alias1(((stack1 = (depth0 != null ? depth0.msg : depth0)) != null ? stack1.unreadCount : stack1), depth0))
     + "</span>\n        </span>\n";
 },"7":function(depth0,helpers,partials,data) {

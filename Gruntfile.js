@@ -981,6 +981,27 @@ module.exports = function (grunt) {
   });
 
   /**
+   * alpha 버전 릴리즈
+   */
+  grunt.registerTask('version-prerelease', function(target) {
+    switch (target) {
+      case 'major':
+        target = 'premajor';
+        break;
+      case 'minor':
+        target = 'preminor';
+        break;
+      default:
+        target = 'prerelease';
+        break;
+    }
+    grunt.config.set('bump.options.commit', true);
+    grunt.config.set('bump.options.push', true);
+    grunt.config.set('bump.options.createTag', true);
+    grunt.task.run(['bump:' + target + ':bump-only', 'package-update', 'bump::commit-only']);
+  });
+
+  /**
    * 마크업 환경 제공
    */
   grunt.registerTask('build-markup', function(target) {

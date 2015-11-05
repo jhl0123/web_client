@@ -10,8 +10,7 @@
 
   /* @ngInject */
   function messageListCtrl($scope, $timeout, storageAPIservice, messageList, entityAPIservice, currentSessionHelper,
-                           publicService, $filter, modalHelper, jndPubSub, EntityMapManager, Dialog) {
-    var collapseTimer;
+                           publicService, $filter, modalHelper, jndPubSub, EntityMapManager, Dialog, JndUtil) {
     // okay - okay to go!
     // loading - currently loading.
     // failed - failed to retrieve list from server.
@@ -33,34 +32,32 @@
     $scope.openModal= openTeamMemberListModal;
 
     $scope.isDisabledMember = isDisabledMember;
+    $scope.totalAlarmCnt = 0;
+
+    _init();
+
+    function _init() {
+      if ($scope.isMessageListCollapsed) {
+        $('#dm-list').css('display', 'none');
+      }
+      _setTotalAlarmCnt();
+      // Must keep watching memberList in 'leftController' in order to keep member's starred status.
+      $scope.$on('updateBadgePosition', _setTotalAlarmCnt);
+      $scope.$watch('memberList', getMessageList);
+      $scope.$on('updateChatList', getMessageList);
+      $scope.$watch('isMessageListCollapsed', _onCollapseStatusChanged);
+    }
 
     function openTeamMemberListModal() {
       modalHelper.openTeamMemberListModal();
     }
-
-    // Must keep watching memberList in 'leftController' in order to keep member's starred status.
-    $scope.$watch('memberList', function() {
-      getMessageList();
-    });
-
-    $scope.$on('updateChatList', function() {
-      getMessageList();
-    });
-    $scope.$watch('isMessageListCollapsed', _onCollapseStatusChanged);
 
     /**
      * collapse status 변경시 update badge posision 이벤트 트리거한다.
      * @private
      */
     function _onCollapseStatusChanged() {
-      $timeout.cancel(collapseTimer);
-      /*
-       collapse 가 완료되는 시점을 알 수 없기 때문에 0.8 초 뒤에 position update 를 하도록 한다.
-       todo: collapse 완료 시점을 알 수 있는 방법이 있다면 timeout 을 제거해야함
-       */
-      collapseTimer = $timeout(function() {
-        jndPubSub.updateBadgePosition();
-      }, 800);
+      jndPubSub.updateBadgePosition();
     }
 
     function getMessageList() {
@@ -81,9 +78,49 @@
         });
     }
 
-    function onMessageHeaderClick() {
-      $scope.isMessageListCollapsed = !$scope.isMessageListCollapsed;
-      storageAPIservice.setLeftDMCollapsed($scope.isMessageListCollapsed);
+    /**
+     * message header 클릭 이벤트
+     */
+    function onMessageHeaderClick(clickEvent) {
+      var jqBadge = $(clickEvent.target).find('.left-header-badge');
+      if ($('#dm-list').css('display') === 'none') {
+        jqBadge.hide();
+      }
+      $('#dm-list').stop().slideToggle({
+        always: function() {
+          JndUtil.safeApply($scope, function() {
+            jqBadge.show();
+            $('#dm-list').css('height', '');
+            $scope.isMessageListCollapsed = ($('#dm-list').css('display') === 'none');
+            storageAPIservice.setLeftDMCollapsed($scope.isMessageListCollapsed);
+            _setTotalAlarmCnt();
+            jndPubSub.updateBadgePosition();
+          });
+        }
+      });
+    }
+
+    /**
+     * 전체 뱃지 개수를 설정한다
+     * @private
+     */
+    function _setTotalAlarmCnt() {
+      $scope.totalAlarmCnt = $scope.isMessageListCollapsed ? _getTotalAlarmCnt() : 0;
+    }
+
+    /**
+     * 전체 뱃지 개수를 반환한다
+     * @returns {number}
+     * @private
+     */
+    function _getTotalAlarmCnt() {
+      var count;
+      var totalCnt = 0;
+      _.forEach($scope.messageList, function(entity) {
+        count = +(entity.alarmCnt || 0);
+        totalCnt += count;
+      });
+      return totalCnt;
     }
 
     function _generateMessageList(messages) {
@@ -121,7 +158,7 @@
           EntityMapManager.add('memberEntityId', entity);
         }
       });
-
+      _setTotalAlarmCnt();
       return messageList;
     }
 

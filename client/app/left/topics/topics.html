@@ -1,6 +1,6 @@
 <div>
   <!--    HEADER  -->
-  <div class="lpanel-list__header cursor_pointer" ng-click="leftListCollapseStatus.isTopicsCollapsed = !leftListCollapseStatus.isTopicsCollapsed"
+  <div class="lpanel-list__header topic-header cursor_pointer" ng-click="onTopicHeaderClick($event);"
        ng-class="{'collapsed': leftListCollapseStatus.isTopicsCollapsed}">
 
     <i class="fa lpanel-collapse-arrow" ng-class="{'icon-angle-down': !leftListCollapseStatus.isTopicsCollapsed,
@@ -18,7 +18,9 @@
          tooltip="{{'@browse-more-topics' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
       <i class="icon-reorder"></i>
     </div>
-
+    <span class="left-header-badge">
+      <badge content="{{totalAlarmCnt}}" group="header" key="0"></badge>
+    </span>
     <!--<div class="lpanel-list-option-cog pull-right" ng-click="createTopicFolder($event);">-->
       <!--<i class="fa fa-cog"></i>-->
     <!--</div>-->
@@ -26,7 +28,7 @@
   </div>
   <!-- TOPICS -->
   <div class="lpanel-list__topics">
-    <div id="topics-list" collapse="leftListCollapseStatus.isTopicsCollapsed">
+    <div id="topics-list">
       <div ng-repeat="folder in folderData.folderList">
         <topic-folder></topic-folder>
       </div>

@@ -24,7 +24,7 @@
     function link(scope, el, attrs) {
       var CSS_ICON_MAP = {
         'googleDocs': 'fileicon-document-google-drive',
-        'document': 'fileicon-hwp',
+        'document': 'fileicon-txt',
         'presentation': 'fileicon-ppt',
         'spreadsheet': 'fileicon-excel',
         'pdf': 'fileicon-pdf',

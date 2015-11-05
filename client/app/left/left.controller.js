@@ -21,8 +21,6 @@ app.controller('leftPanelController1', function(
     broadcastTo: ''
   };
   var that = this;
-  //collapse 이후 갱신 요청할 timer
-  var collapseTimer;
   var _getLeftListDeferredObject;
 
   //unread 갱신시 $timeout 에 사용될 타이머
@@ -105,14 +103,8 @@ app.controller('leftPanelController1', function(
    * @private
    */
   function _onCollapseStatusChanged() {
-    $timeout.cancel(collapseTimer);
-    /*
-     collapse 가 완료되는 시점을 알 수 없기 때문에 0.8 초 뒤에 position update 를 하도록 한다.
-     todo: collapse 완료 시점을 알 수 있는 방법이 있다면 timeout 을 제거해야함
-     */
-    collapseTimer = $timeout(function() {
-      jndPubSub.updateBadgePosition();
-    }, 800);
+    storageAPIservice.setLeftTopicCollapsed($scope.leftListCollapseStatus.isTopicsCollapsed);
+    jndPubSub.updateBadgePosition();
   }
 
   /**

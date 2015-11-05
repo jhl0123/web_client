@@ -25,11 +25,9 @@
         {{else}}
         <!--    CONTENT(MESSAGE)    -->
         <span>
-          <span class="keep _compile" jnd-ignore-braces> {{{ msg.message.content.body }}}</span>
+          <span class="keep _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
           <!--    CREATED TIME    -->
-          <span class="msg-item-header__created">
-            {{ msg.extTime }}
-          </span>
+          <span class="msg-item-header__created">{{ msg.extTime }}</span>
           <span class="badge unread-badge">{{ msg.unreadCount }}</span>
         </span>
         {{/if}}

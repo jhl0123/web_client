@@ -1,6 +1,6 @@
 <div>
   <!--    HEADER  -->
-  <div class="lpanel-list__header cursor_pointer" ng-click="onMessageHeaderClick();"
+  <div class="lpanel-list__header cursor_pointer" ng-click="onMessageHeaderClick($event);"
      ng-class="{'collapsed': isMessageListCollapsed}">
     <i class="lpanel-collapse-arrow" ng-class="{'icon-angle-down': !isMessageListCollapsed,
                                                 'icon-angle-right': isMessageListCollapsed}"></i>
@@ -10,11 +10,13 @@
          tooltip="{{'@more-dm-list' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
       <i class="icon-plus"></i>
     </div>
-
+    <span class="left-header-badge">
+      <badge content="{{totalAlarmCnt}}" group="header" key="1"></badge>
+    </span>
   </div>
 
   <!--    LIST    -->
-  <ul id="dm-list" collapse="isMessageListCollapsed">
+  <ul id="dm-list">
     <!--    WHEN THERE IS NO ONE IN MESSAGE LIST    -->
     <div class="empty-message-list-container cursor_pointer" ng-if="messageList.length == 0"
          ng-click="openModal('memberList');">

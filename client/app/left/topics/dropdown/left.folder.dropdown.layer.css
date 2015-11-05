@@ -1,6 +1,6 @@
-.left-folder-dropdown-layer {
+.dropdown-menu.left-folder-dropdown-layer {
   position: absolute;
-  display: block;
-  z-index: 100;
-  left:230px !important;
+  z-index: 1000;
+  margin-left:-6px !important;
+  margin-top:4px !important;
 }

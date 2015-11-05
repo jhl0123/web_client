@@ -71,6 +71,7 @@
      * @returns {{above: Array, below: Array}}
      */
     function getUnreadPos(top, bottom) {
+
       var unread = {
         above: [],
         below: []
@@ -85,10 +86,16 @@
       });
       unread.above = unread.above.sort(_sortNum);
       unread.below = unread.below.sort(_sortNum);
-
       return unread;
     }
 
+    /**
+     * sorting 함수
+     * @param {number} a
+     * @param {number} b
+     * @returns {number}
+     * @private
+     */
     function _sortNum(a, b) {
       return a - b;
     }

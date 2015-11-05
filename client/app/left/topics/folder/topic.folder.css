@@ -7,10 +7,11 @@
   margin-top:2px;
   margin-bottom:2px;
   min-height: 16px;
+  
   -webkit-transition: background 0.2s, border 0.2s;
   -moz-transition: background 0.2s, border 0.2s;
   -ms-transition: background 0.2s, border 0.2s;
-  -o-transition: background 0.2s, border 0.2s;
+  -o-transition: background 0.2s, border 0.2s
   transition: background 0.2s, border 0.2s;
 }
 .topic-folder-current {
@@ -162,13 +163,19 @@
 .topic-folder-more {
   position: absolute;
   text-align: center;
-  right: 6px;
-  width: 30px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
   color: #A0A0A0;
   font-size: 16px;
+  border-radius: 50%;
+  padding-top:1px;
+  line-height: 24px;
+  margin-top:2px;
 }
 .topic-folder-more:hover {
-	color: #737373;
+  color: #737373;
+  background-color:rgba(0,0,0,0.09);
 }
 .topic-folder-more-hide {
   /*display: none;*/
@@ -176,10 +183,12 @@
 
 .topic-folder-badge {
   position: absolute;
-  right: 11px;
+  right: 9px;
   z-index: 800;
 }
-
+.topic-folder.has-folder:hover .topic-folder-badge {
+  z-index: -1;
+}
 .topic-folder-badge .left-panel_badge {
   max-width: 100px;
 }
