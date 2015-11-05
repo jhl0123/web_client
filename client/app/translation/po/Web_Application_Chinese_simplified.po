@@ -177,8 +177,8 @@ msgstr "取消标记议题"
 #: client/app/modal/change_log/changeLog.html
 msgid "@change-log-explanation-1"
 msgstr ""
-"私人群组被更名为私人议题并整合到议题列表中。私人议题都标有上锁符号，并像以"
-"前一样提供仅限邀请机制，仅参与者可以看到所有沟通内容。"
+"私人群组被更名为私人议题并整合到议题列表中。私人议题都标有上锁符号，并像"
+"以前一样提供仅限邀请机制，仅参与者可以看到所有沟通内容。"
 
 #: client/app/modal/change_log/changeLog.html
 msgid "@change-log-explanation-2"
@@ -187,9 +187,9 @@ msgstr "直接传讯的对话现在将根据最新的讯息自动重新排序。
 #: client/app/modal/change_log/changeLog.html
 msgid "@change-log-explanation-3"
 msgstr ""
-"针对直接传讯，初始设定是如果是已经传出的讯息将表列出来，但您可以选择关闭并"
-"隐藏它们。当您收到新的讯息，已关闭的直接传讯将会自动重新出现（连同讯息历史"
-"记录），或者您也可以点击'+添加'来启动对话。"
+"针对直接传讯，初始设定是如果是已经传出的讯息将表列出来，但您可以选择关闭"
+"并隐藏它们。当您收到新的讯息，已关闭的直接传讯将会自动重新出现（连同讯息"
+"历史记录），或者您也可以点击'+添加'来启动对话。"
 
 #: client/app/modal/change_log/changeLog.html
 msgid "@change-log-title"
@@ -243,8 +243,8 @@ msgstr "离开"
 #: client/app/left/messages/messages.html
 msgid "@common-conversation-leave-confirm"
 msgstr ""
-"您确定您要离开这个对话？一离开将使这对话在'信息'标签下是隐藏看不到的，直到"
-"您收到新的讯息或以手动方式重新打开它。"
+"您确定您要离开这个对话？一离开将使这对话在'信息'标签下是隐藏看不到的，直"
+"到您收到新的讯息或以手动方式重新打开它。"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 #: client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.html
@@ -389,7 +389,7 @@ msgstr "其它"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-pdf"
-msgstr "pdf"
+msgstr "PDF"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-presentations"
@@ -715,7 +715,8 @@ msgstr "移除共享链接"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@external-share-remove-desc"
-msgstr "若移除共享链接，访问至该文件的权限将被撤销。 你确定要移除共享链接？"
+msgstr ""
+"若移除共享链接，访问至该文件的权限将被撤销。 你确定要移除共享链接？"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@external-share-remove-msg"
@@ -800,8 +801,8 @@ msgstr "重新命名"
 #: client/app/left/topics/tutorial/left.tutorial.folder.html
 msgid "@folder-tutorial-content"
 msgstr ""
-"面对杂乱无章的议题列表束手无策吗？ 有了议题文件夹，轻松整理、归类你的议题"
-"列表！ 拖、拉、放，三步骤即可建立文件夹并移动议题至新文件夹。"
+"面对杂乱无章的议题列表束手无策吗？ 有了议题文件夹，轻松整理、归类你的议"
+"题列表！ 拖、拉、放，三步骤即可建立文件夹并移动议题至新文件夹。"
 
 #: client/app/left/topics/tutorial/left.tutorial.folder.html
 msgid "@folder-tutorial-never-show"
@@ -883,8 +884,8 @@ msgstr "串联你的Google帐户"
 #: client/app/modal/files/integration/integration.html
 msgid "@integration-desc-google-drive-2"
 msgstr ""
-"点击筛选功能的“Google Doc”选项轻松搜寻Google 文件、电子表格、简报。而使用"
-"筛选功能的文件类型，可查询Word、Excel、PDF等其他格式的档案。"
+"点击筛选功能的“Google Doc”选项轻松搜寻Google 文件、电子表格、简报。而使"
+"用筛选功能的文件类型，可查询Word、Excel、PDF等其他格式的档案。"
 
 #: client/app/modal/files/integration/integration.html
 msgid "@integration-submit"
@@ -976,7 +977,8 @@ msgstr "@all (议题成员)"
 
 #: client/app/right/right.html
 msgid "@mention-all-toast"
-msgstr "你即将完成提及{{topicParticipantsCount}}位属于{{topicName}}里的成员"
+msgstr ""
+"你即将完成提及{{topicParticipantsCount}}位属于{{topicName}}里的成员"
 
 #: client/app/right/mentions/mentions.html
 msgid "@mention-empty"
@@ -1190,7 +1192,8 @@ msgstr "重新整理搜索条件"
 #: client/app/right/stars/stars.html
 msgid "@search-in-progress"
 msgstr ""
-"搜索 <span class=\"searchQueryKeyword\">{{searchStatus.keyword}}</span>..."
+"搜索 <span class=\"searchQueryKeyword\">{{searchStatus.keyword}}</"
+"span>..."
 
 #: client/app/right/rpanel_search/rpanel.search.html
 msgid "@search-minimum-query-length"
@@ -1312,8 +1315,8 @@ msgstr "星期日"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@system-msg-announcement-created"
 msgstr ""
-"{{msg.message.content.actionOwner}} 更新 {{msg.announceWriterName}} 的信息"
-"为公告"
+"{{msg.message.content.actionOwner}} 更新 {{msg.announceWriterName}} 的信"
+"息为公告"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@system-msg-announcement-deleted"
@@ -1322,8 +1325,8 @@ msgstr "{{msg.message.content.actionOwner}} 删除公告"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@team-create-info-help-msg"
 msgstr ""
-"有了JANDI，您可以任意建立许多团队及任意邀请许多成员加入，完全免费。不如自"
-"己亲自来看看JANDI可以如何改善您在工作场合里的沟通方式。"
+"有了JANDI，您可以任意建立许多团队及任意邀请许多成员加入，完全免费。不如"
+"自己亲自来看看JANDI可以如何改善您在工作场合里的沟通方式。"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 #: client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.html
@@ -1342,8 +1345,8 @@ msgstr "{{inviteeNumber}}封邀请电邮已成功寄出"
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-done-with-fail"
 msgstr ""
-"{{inviteeNumber}}封邀请电邮成功寄出，但{{failedInviteeNumber}}封邀请电邮传"
-"送失败。请再次确认收件人是否已加入团队。"
+"{{inviteeNumber}}封邀请电邮成功寄出，但{{failedInviteeNumber}}封邀请电邮"
+"传送失败。请再次确认收件人是否已加入团队。"
 
 #: client/app/modal/teams/team_invite/invite_emails/invite.emails.html
 #: client/app/modal/teams/team_invite/team.invite.html
@@ -1427,8 +1430,8 @@ msgstr "恭喜 {{username}}！"
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_congratulations_content"
 msgstr ""
-"你已完成所有的使用教学！接下来将转移至 {{teamName}} ，开始与工作伙伴的合作"
-"无间！"
+"你已完成所有的使用教学！接下来将转移至 {{teamName}} ，开始与工作伙伴的合"
+"作无间！"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_dm_click_list"
@@ -1625,22 +1628,22 @@ msgstr "知道了！"
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-file-msg1"
 msgstr ""
-"所有分享过的文件都在文件夹里。想分享、留言、下载或删除等动作，只需要在选定"
-"文件后，将点击右边的「ᵒᵒᵒ」即可。"
+"所有分享过的文件都在文件夹里。想分享、留言、下载或删除等动作，只需要在选"
+"定文件后，将点击右边的「ᵒᵒᵒ」即可。"
 
 #: client/app/modal/change_log/changeLog.msg.search.html
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-file-msg2"
 msgstr ""
-"想找到封尘已久的文件，透过键入关键词或筛选功能中“文件类别、曾经被谁分享、"
-"曾经分享在哪个议题下”的项目进行搜索。"
+"想找到封尘已久的文件，透过键入关键词或筛选功能中“文件类别、曾经被谁分"
+"享、曾经分享在哪个议题下”的项目进行搜索。"
 
 #: client/app/modal/change_log/changeLog.msg.search.html
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-file-msg3"
 msgstr ""
-"收放搜索栏好简单！点击右上角的「搜索」开启关键词搜索功能；点击「关闭」即可"
-"收纳搜索栏。"
+"收放搜索栏好简单！点击右上角的「搜索」开启关键词搜索功能；点击「关闭」即"
+"可收纳搜索栏。"
 
 #: client/app/modal/change_log/changeLog.msg.search.html
 #: client/app/tutorial/tutorial.html
@@ -1654,8 +1657,8 @@ msgstr "送出信息及上传文件"
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-msg-explanation"
 msgstr ""
-"要发送信息，只需在文字栏中开始打字然后按'Enter'。要上传文件，点击左侧的按"
-"钮和选择所需的路径，或任意拖拽文件到中间留言板上的任何地方。"
+"要发送信息，只需在文字栏中开始打字然后按'Enter'。要上传文件，点击左侧的"
+"按钮和选择所需的路径，或任意拖拽文件到中间留言板上的任何地方。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-skip"
@@ -1668,15 +1671,15 @@ msgstr "TIPS"
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-dm-explanation"
 msgstr ""
-"直接传讯是介于两位成员之间的私人、一对一的对话。当您收到一个新讯息，直接传"
-"讯会自动出现，或者您也可以透过点击'+添加'启动对话。您也可以关闭并隐藏直接"
-"传讯，同时仍然保留讯息历史直到对话重新启动。"
+"直接传讯是介于两位成员之间的私人、一对一的对话。当您收到一个新讯息，直接"
+"传讯会自动出现，或者您也可以透过点击'+添加'启动对话。您也可以关闭并隐藏"
+"直接传讯，同时仍然保留讯息历史直到对话重新启动。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-group-explanation"
 msgstr ""
-"私人议题是仅限邀请机制，分享的资讯仅对参与者显示。透过点击'+添加'来启动新"
-"的私人议题。"
+"私人议题是仅限邀请机制，分享的资讯仅对参与者显示。透过点击'+添加'来启动"
+"新的私人议题。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-title"
@@ -1685,9 +1688,9 @@ msgstr "'公开议题'、'私人议题'及'直接传讯'有什么不同？"
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-topic-explanation"
 msgstr ""
-"议题'是以社群为主的讨论及分享任何事物的空间- 专案、更新、会议行程、午餐的"
-"建议等等。公开议题是开放给您团队上的任何人来参与。您可以透过'+添加'来建立"
-"您自己的，或则透过点击'☰浏览'加入其它现行的公开议题。"
+"议题'是以社群为主的讨论及分享任何事物的空间- 专案、更新、会议行程、午餐"
+"的建议等等。公开议题是开放给您团队上的任何人来参与。您可以透过'+添加'来"
+"建立您自己的，或则透过点击'☰浏览'加入其它现行的公开议题。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-tour"
@@ -1696,8 +1699,8 @@ msgstr "继续 »"
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-welcome-intro"
 msgstr ""
-"JANDI要让您的团队沟通更加无缝和紧密。 以下您了解JANDI而需要知道的三个最重"
-"要的提示。"
+"JANDI要让您的团队沟通更加无缝和紧密。 以下您了解JANDI而需要知道的三个最"
+"重要的提示。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-welcome-title"
@@ -1813,8 +1816,8 @@ msgstr "星期三"
 
 #~ msgid "@ie9-file-preview"
 #~ msgstr ""
-#~ "IE9浏览器无法适当支援文件预览。如果图像不能正确显示，别担心，这不影响您"
-#~ "上传文件。"
+#~ "IE9浏览器无法适当支援文件预览。如果图像不能正确显示，别担心，这不影响"
+#~ "您上传文件。"
 
 #~ msgid "@ie9-please-do-not-use"
 #~ msgstr "为了达到对JANDI的最佳体验，请使用最新版本的IE浏览器。"
@@ -1967,8 +1970,8 @@ msgstr "星期三"
 
 #~ msgid "@modal-create-ch-msg3"
 #~ msgstr ""
-#~ "- 私人议题对未受邀成员不开放- 在私人议题内分享的文件仅开放给其参与者- "
-#~ "已设定为公开或私人的议题在建立之后不能被转换成另一个"
+#~ "- 私人议题对未受邀成员不开放- 在私人议题内分享的文件仅开放给其参与"
+#~ "者- 已设定为公开或私人的议题在建立之后不能被转换成另一个"
 
 #~ msgid "@modal-create-pg-msg1"
 #~ msgstr "私人议题仅向其成员显示，且仅其成员可以阅读或搜索其内容。"
@@ -1996,7 +1999,8 @@ msgstr "星期三"
 
 #~ msgid "@modal-setting-team-msg"
 #~ msgstr ""
-#~ "您可以在这裏变更您的团队设定。请注意，任何变更也将适用到您的团队成员。"
+#~ "您可以在这裏变更您的团队设定。请注意，任何变更也将适用到您的团队成"
+#~ "员。"
 
 #~ msgid "@option-noti-all"
 #~ msgstr "给所有信息"
@@ -2077,8 +2081,8 @@ msgstr "星期三"
 
 #~ msgid "@ch-menu-leave-private-confirm"
 #~ msgstr ""
-#~ "离开私人议题后，未来希望能够重新加入，必须先取得其它人的邀请。您确定要"
-#~ "离开吗？"
+#~ "离开私人议题后，未来希望能够重新加入，必须先取得其它人的邀请。您确定"
+#~ "要离开吗？"
 
 #~ msgid "@alert-empty-file"
 #~ msgstr "没有上传档案"

@@ -372,11 +372,11 @@ msgstr "All"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-audio"
-msgstr "audio"
+msgstr "Audio"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-documents"
-msgstr "documents"
+msgstr "Documents"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-google-docs"
@@ -396,7 +396,7 @@ msgstr "Google spreadsheet"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-images"
-msgstr "images"
+msgstr "Images"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-others"
@@ -408,15 +408,15 @@ msgstr "PDF"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-presentations"
-msgstr "presentations"
+msgstr "Presentations"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-spreadsheets"
-msgstr "spreadsheets"
+msgstr "Spreadsheets"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-video"
-msgstr "video"
+msgstr "Video"
 
 #: client/app/center/center.html
 msgid "@common-file-upload-abort-msg"

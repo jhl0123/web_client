@@ -398,7 +398,7 @@ msgstr "기타"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-pdf"
-msgstr "pdf"
+msgstr "PDF"
 
 #: client/app/right/files/files.html
 msgid "@common-file-type-presentations"
