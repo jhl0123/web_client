@@ -31,6 +31,7 @@
   position: relative;
   width: 18px;
   height: 18px;
+  line-height: 23px;
   display: block;
   opacity: 0.3;
   font-size: 18px;
@@ -44,35 +45,35 @@
 
 .sticker_panel_wrap .sticker_panel_btn > .mouse {
   position: absolute;
-  top: 11px;
+  top: .63em;
   left: 5px;
-  right: 5px;
-  height: 2px;
+  height: 1.5px;
+  width: .47em;
   background-color: #fff;
   display: inline-block;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
+  border-left: 1px solid rgba(0, 0, 0, .8);
+  border-right: 1px solid rgba(0, 0, 0, .8);
+  border-bottom: 1px solid rgba(0, 0, 0, .8);
   border-bottom-right-radius: 12px 8px;
   border-bottom-left-radius: 12px 8px;
   -webkit-transition: height .12s linear;
   transition: height .12s linear;
 }
 .sticker_panel_wrap .sticker_panel_btn.on > .mouse {
-  height: 4px;
+  height: 3.5px;
   border-color: #00abe6;
   border-bottom: 1px solid #00abe6;
 }
 
 .sticker_panel_wrap .sticker_panel_btn > .lip {
   position: absolute;
-  top: 11px;
+  top: .57em;
   left: 4px;
-  width: 10px;
+  width: .58em;
   height: 4px;
   background-color: #fff;
   display: inline-block;
-  border-top: 1px solid rgba(0, 0, 0, .6);
+  border-top: 1px solid rgba(0, 0, 0, .8);
 }
 .sticker_panel_wrap .sticker_panel_btn.on > .lip {
   border-color: #00abe6;

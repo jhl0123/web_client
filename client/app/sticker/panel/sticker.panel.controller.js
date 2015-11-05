@@ -9,18 +9,19 @@
     .module('jandiApp')
     .controller('StickerPanelCtrl', StickerPanelCtrl);
 
-  function StickerPanelCtrl($scope, $attrs, $q, jndPubSub, Sticker, Preloader, JndUtil) {
+  function StickerPanelCtrl($scope, $attrs, jndPubSub, Sticker, JndUtil) {
     // 서버에서 group 리스트 API 완성전에 대비하여 임시로 만든 데이터
     var _groups = [
       {
         activeIndex: 0,
         className: 'recent'
       },
-      {
-        activeIndex: 0,
-        className: 'kiyomi',
-        id: 101
-      },
+      // mobile 준비되면 그때 들어갈 예정
+      //{
+      //  activeIndex: 0,
+      //  className: 'kiyomi',
+      //  id: 101
+      //},
       {
         activeIndex: 0,
         className: 'pangya',
