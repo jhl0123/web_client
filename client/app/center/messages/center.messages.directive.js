@@ -571,6 +571,7 @@
        */
       function _onBeforeRemove(angularEvent, index) {
         var msg = MessageCollection.list[index];
+        var isLastMsg = (index === MessageCollection.list.length - 1);
         var jqTarget = $('#' + msg.id);
         var jqPrev = jqTarget.prev();
 
@@ -578,7 +579,12 @@
         if (jqTarget.length) {
           if (jqPrev.attr('content-type') === 'dateDivider') {
             jqPrev.remove();
+            jqPrev = jqTarget.prev();
           }
+          if (jqPrev.attr('content-type') === 'unreadBookmark' && isLastMsg) {
+            jqPrev.remove();
+          }
+
           jqTarget.remove();
         }
       }
