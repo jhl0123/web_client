@@ -254,7 +254,7 @@ last element of list
 .lpanel-list ul li.active a span.left-panel_badge {
   margin-top: 5px;
   color: white;
-  max-width: 22%;
+  max-width: 100px;
   min-width: 26px;
 }
 
@@ -469,9 +469,6 @@ last element of list
   margin-right: 1px;
 }
 
-.lpanel-list__header.collapsed:hover .left-header-badge {
+.left-header-badge.hide {
   display: none;
-}
-.lpanel-list__header.collapsed .left-header-badge {
-  display: block;
 }

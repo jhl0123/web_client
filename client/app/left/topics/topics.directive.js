@@ -43,6 +43,16 @@
       function _attachEvents() {
         scope.$on('topic-update-lock', _onLock);
         scope.$on('topic-folder:update', _onFolderUpdate);
+        el.find('.lpanel-list__header').on('mouseover', _onMouseOverHeader)
+          .on('mouseout', _onMouseOutHeader);
+      }
+
+      function _onMouseOverHeader() {
+        el.find('.left-header-badge').addClass('hide');
+      }
+
+      function _onMouseOutHeader() {
+        el.find('.left-header-badge').removeClass('hide');
       }
 
       /**
