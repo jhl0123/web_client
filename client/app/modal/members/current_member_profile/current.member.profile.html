@@ -45,6 +45,7 @@
             <div class="col-sm-9">
               <input type="text" class="form-control" name="name"
                      jnd-input-model="curUser.name"
+                     autofocus
                      jnd-is-trim="on"
                      jnd-on-change="validate()"/>
               <alert ng-if="!validate('curUser.name')" type="warning" class="profile-settings-body__alert">

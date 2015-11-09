@@ -100,7 +100,6 @@
 
         $timeout(function() {
           el.remove();
-          jqFilter.focus();
         });
 
         _on();
