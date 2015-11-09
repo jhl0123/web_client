@@ -226,12 +226,15 @@
 
 .footer .markdown-guide-content {
   position: absolute;
-  right: 20px
+  right: 20px;
   top: 35px;
   font-size: 11px;
   color: #154a67;
-  opacity: 0.6;
 }
+.footer .markdown-guide-content.opac-in-fast {
+  opacity: .6;
+}
+
 .footer .markdown-guide-content > span {
   margin-left: 10px;
 }
