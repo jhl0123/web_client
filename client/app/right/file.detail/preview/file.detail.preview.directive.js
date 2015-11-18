@@ -105,7 +105,7 @@
               // image file api data
               messageId: fileDetail.id,
               // image carousel view data
-              userName: fileDetail.writer.name,
+              userName: fileDetail.extWriter.name,
               uploadDate: fileDetail.createTime,
               fileTitle: fileDetail.content.title,
               fileUrl: fileDetail.content.fileUrl,
