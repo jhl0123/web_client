@@ -1,3 +1,12 @@
+.msg-item-action-icon {
+  font-size: 16px;
+  /*color: #c5c5c5;*/
+}
+
+.msg-item-action-icon:hover {
+  /*color: #9a9a9a;*/
+}
+
 .center-item-dropdown-layer {
   position: absolute;
   display: block;

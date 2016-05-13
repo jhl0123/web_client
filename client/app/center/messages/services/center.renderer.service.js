@@ -69,10 +69,23 @@
       var renderer = CenterRendererFactory.get(contentType);
       var content = renderer ? renderer.render(index) : '';
 
-      var context = {
-        content: content,
-        contentType: contentType
-      };
+      var context;
+
+      if (_.isObject(content)) {
+        context = {
+          css: {
+            className: content.className || ''
+          },
+          content: content.template,
+          contentType: contentType
+        }
+      } else {
+        context = {
+          content: content,
+          contentType: contentType
+        };
+      }
+
 
       if (hasId) {
         context.id = msg.id;

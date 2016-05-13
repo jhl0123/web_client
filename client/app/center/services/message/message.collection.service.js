@@ -39,7 +39,9 @@
     this.hasConnectPreview = hasConnectPreview;
 
     this.isChildText = isChildText;
+    this.hasChildText = hasChildText;
     this.isChildComment = isChildComment;
+    this.hasChildComment = hasChildComment;
     this.isTitleComment = isTitleComment;
     this.isNewDate = isNewDate;
 
@@ -290,6 +292,16 @@
     }
 
     /**
+     * child text 가지고 있는지 여부를 반환한다.
+     * @param {number} index
+     * @returns {boolean}
+     */
+    function hasChildText(index) {
+      var contentType = getContentType(index);
+      return !!(centerService.isTextType(contentType) && MessageText.isChild(index + 1, that.list));
+    }
+
+    /**
      * child comment 인지 여부를 반환한다.
      * @param {number} index
      * @returns {boolean}
@@ -297,6 +309,16 @@
     function isChildComment(index) {
       var contentType = getContentType(index);
       return !!(centerService.isCommentType(contentType) && MessageComment.isChild(index, that.list));
+    }
+
+    /**
+     * child comment 가지고 있는지 여부를 반환한다.
+     * @param {number} index
+     * @returns {boolean}
+     */
+    function hasChildComment(index) {
+      var contentType = getContentType(index);
+      return !!(centerService.isCommentType(contentType) && MessageComment.isChild(index + 1, that.list));
     }
 
     /**

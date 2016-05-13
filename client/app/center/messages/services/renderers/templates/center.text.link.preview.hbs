@@ -1,49 +1,27 @@
-{{#if msg.message.linkPreview.extThumbnail.isWaiting}}
-<div class="social-image loading">
-  <div class="loading_bar">
-    <span class="three-quarters-loader jnd-three-quarters-loader"></span>
-  </div>
-</div>
-{{/if}}
-
-{{#if msg.message.linkPreview.extThumbnail.hasSuccess}}
-<div class="social-image">
-  <a href="{{html.linkUrl}}" target="_blank">
-    <img src="{{html.imageUrl}}"/>
-  </a>
-</div>
-{{/if}}
-
-
-{{#if msg.message.linkPreview.extThumbnail.hasSuccess}}
-<div class="social-body has-image">
-{{else}}
-<div class="social-body">
-{{/if}}
-
-{{#if msg.message.linkPreview.title}}
-  <div class="social-title neighbor">
-    <a href="{{html.linkUrl}}" target="_blank">
-      <span>{{html.title}}</span>
-    </a>
-  </div>
-{{/if}}
-
-{{#if msg.message.linkPreview.description}}
-  {{#if msg.message.linkPreview.domain}}
-  <div class="social-desc neighbor has-domain">
-  {{else}}
-  <div class="social-desc neighbor">
+<div class="link-preview-content _link-preview cursor_pointer {{css.image}}" data-href="{{html.linkUrl}}" data-target="_blank">
+  {{#if msg.message.linkPreview.extThumbnail.isWaiting}}
+    <div class="social-image loading">
+      <div class="loading_bar">
+        <span class="three-quarters-loader jnd-three-quarters-loader"></span>
+      </div>
+    </div>
   {{/if}}
-    <a href="{{html.linkUrl}}" target="_blank">
-      <span>{{html.description}}</span>
-    </a>
-  </div> <!-- end of social-desc  -->
-{{/if}}
 
-{{#if msg.message.linkPreview.domain}}
-  <div class="social-domain">
-    <span>{{html.domain}}</span>
+  {{#if msg.message.linkPreview.extThumbnail.hasSuccess}}
+    <div class="social-image"><img src="{{html.imageUrl}}"/></div>
+  {{/if}}
+
+  <div class="social-body {{css.image}}">
+    {{#if msg.message.linkPreview.title}}
+      <div class="social-title neighbor">{{html.title}}</div>
+    {{/if}}
+
+    {{#if msg.message.linkPreview.description}}
+      <div class="social-desc neighbor {{css.domain}}">{{html.description}}</div>
+    {{/if}}
+
+    {{#if msg.message.linkPreview.domain}}
+      <div class="social-domain">{{html.domain}}</div>
+    {{/if}}
   </div>
-{{/if}}
-</div> <!-- end of social-body -->
+</div>

@@ -1,50 +1,38 @@
-<div class="msg-item text {{css.botText}}">
-  <div class="text-msg-item-container">
-    <!--  User Thumbnail -->
-    <div class="msg-item-float {{css.profileCursor}} {{css.disabledMember}} _user">
-      <img class="member-profile member-thumb" src="{{ msg.exProfileImg }}"/>
-    </div>
-
-    <div class="msg-item-header {{css.disabledMember}}">
-      <!--    WRITER-->
-      <span class="msg-item-header__name {{css.profileCursor}}">
-        <span class="msg-item-header__nameSpace _user">
-          <span>{{ msg.extWriterName }}</span>
-        </span>
-      </span>
-    </div>
-    <div class="msg-item-body">
-      <!-- TEXT -->
-      <div class="msg-text">
-        {{#if isSticker}}
-          <img class="sticker size_5" src="{{msg.message.content.url}}"/>
-        {{else}}
-          <span class="keep msg-text-body _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
-        {{/if}}
-        <!--  TIME  -->
-        <span class="msg-item-header__created">{{ msg.extTime }}</span>
-
-        <!--  UNREAD COUNT  -->
-        <span class="badge unread-badge">{{ msg.unreadCount }}</span>
-      </div>
-      <div class="msg-text-extra">
-         <!--More -->
-        {{#if hasMore}}
-          <span class="msg-item-icon _textMore">
-            <span class="_textMore">
-              <i class="icon-more-fill msg-item__action msg-item-circle msg-item-more cursor_pointer _textMore"></i>
-            </span>
-          </span>
-        {{/if}}
-         <!--Star -->
-        {{#if hasStar}}
-          <span class="cursor_pointer msg-item-star msg-item-icon msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
-            <i class="icon-star-on"></i>
-          </span>
-        {{/if}}
-      </div>
-    </div>
-  </div>
-  {{{ html.connectPreview }}}
-  {{{ html.linkPreview }}}
+<!--  User Thumbnail -->
+<div class="msg-header {{css.disabledMember}}">
+  <img class="member-profile member-thumb {{css.profileCursor}} _user" src="{{ msg.exProfileImg }}"/>
+  <span class="member-name {{css.profileCursor}} _user">{{ msg.extWriterName }}</span>
 </div>
+{{#if isSticker}}
+  <div class="msg-itemsticker">
+    <img class="sticker size_5" src="{{msg.message.content.url}}"/>
+  </div>
+{{else}}
+  <div class="msg-item text">
+    <span class="keep msg-text-body _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
+  </div>
+{{/if}}
+<div class="msg-text-extra">
+  <div class="msg-buttons">
+    <!--More -->
+    {{#if hasMore}}
+      <span class="msg-item-icon msg-item-more msg-item-circle">
+        <i class="icon-more _textMore"></i>
+      </span>
+    {{/if}}
+    <!--Star -->
+    {{#if hasStar}}
+      <span class="msg-item-icon msg-item-star msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
+        <i class="{{css.starIcon}}"></i>
+      </span>
+    {{/if}}
+  </div>
+  <div class="msg-item-info no-select">
+    <span class="msg-badge unread-badge">{{ msg.unreadCount }}</span>
+    {{#unless hasChild}}
+      <span class="msg-item-header__created">{{ msg.extTime }}</span>
+    {{/unless}}
+  </div>
+</div>
+{{{ html.connectPreview }}}
+{{{ html.linkPreview }}}

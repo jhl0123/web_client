@@ -1,0 +1,28 @@
+.system-event-msg {
+  min-height: 15px;
+  margin-bottom: 0px;
+  padding-top: 1px;
+  padding-bottom:1px;
+  line-height: 24px;
+}
+.system-event-msg .msg-item-float {
+  height: inherit;
+  top:6px;
+}
+.system-event-msg .msg-item-float img {
+  background-image: none !important;
+  height: 1px;
+  background-color: #ededed;
+  vertical-align: middle;
+  border: 0;
+  border-radius: 0;
+}
+
+.system-event-msg .msg-item-header {
+  display: none;
+}
+.system-event-msg .msg-item-body {
+  font-size: 15px;
+  color: #999999;
+}
+

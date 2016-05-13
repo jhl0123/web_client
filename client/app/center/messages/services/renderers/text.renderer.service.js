@@ -51,6 +51,8 @@
 
       if (jqTarget.hasClass('_textMore')) {
         _showMoreDropdown(jqTarget, MessageCollection.get(id));
+      } else if (jqTarget.closest('_link-preview')) {
+        _openLinkPreviewUrl(jqTarget);
       }
     }
 
@@ -70,6 +72,24 @@
         isMyMessage: RendererUtil.isMyMessage(msg),
         showAnnouncement: showAnnouncement
       });
+    }
+
+    /**
+     * open link preview url
+     * @param {object} jqTarget
+     * @private
+     */
+    function _openLinkPreviewUrl(jqTarget) {
+      var jqLinkPreview = jqTarget.parents('._link-preview');
+      var href;
+      var target;
+
+      if (jqLinkPreview.length > 0) {
+        href = jqLinkPreview.data('href');
+        target = jqLinkPreview.data('target');
+
+        window.open(href, target);
+      }
     }
 
     /**
@@ -116,25 +136,48 @@
         profileCursor = 'cursor_pointer';
       }
 
-      return template({
-        html: {
-          linkPreview: linkPreview,
-          connectPreview: connectPreview
-        },
-        css: {
-          star: RendererUtil.getStarCssClass(msg.message),
-          disabledMember: RendererUtil.getDisabledMemberCssClass(msg),
-          profileCursor: profileCursor,
-          botText: _getMsgItemClass(msg)
-        },
-        hasMore: RendererUtil.hasMore(msg),
-        hasStar: RendererUtil.hasStar(msg),
-        hasLinkPreview: !!linkPreview,
-        hasConnectPreview: !!connectPreview,
-        isSticker: RendererUtil.isSticker(msg),
-        isChild: isChild,
-        msg: msg
-      });
+      return {
+        className: _getClassName(msg, isChild),
+        template: template({
+          html: {
+            linkPreview: linkPreview,
+            connectPreview: connectPreview
+          },
+          css: {
+            star: RendererUtil.getStarCssClass(msg.message),
+            starIcon: msg.message.isStarred ? 'icon-star-on' : 'icon-star-off',
+            disabledMember: RendererUtil.getDisabledMemberCssClass(msg),
+            profileCursor: profileCursor
+          },
+          hasMore: RendererUtil.hasMore(msg),
+          hasStar: RendererUtil.hasStar(msg),
+          hasLinkPreview: !!linkPreview,
+          hasConnectPreview: !!connectPreview,
+          isSticker: RendererUtil.isSticker(msg),
+          isChild: isChild,
+          hasChild: MessageCollection.hasChildText(index),
+          msg: msg
+        })
+      };
+    }
+
+    /**
+     * 상위 element에서 사용할 className 전달함
+     * @param {object} msg
+     * @param {boolean} isChild
+     * @returns {string}
+     * @private
+     */
+    function _getClassName(msg, isChild) {
+      var result = ['text'];
+
+      result.push(_getMsgItemClass(msg));
+
+      if (isChild) {
+        result.push('text-child');
+      }
+
+      return result.join(' ');
     }
 
     /**
@@ -177,6 +220,10 @@
         }
 
         linkPreview = _templateLinkPreview({
+          css: {
+            image: msg.message.linkPreview.extThumbnail.hasSuccess ? 'has-image' : '',
+            domain: msg.message.linkPreview.domain ? 'has-domain' : ''
+          },
           html: {
             title: msg.message.linkPreview.title,
             description: msg.message.linkPreview.description,

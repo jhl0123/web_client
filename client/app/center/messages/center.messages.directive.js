@@ -479,9 +479,11 @@
         jqTarget = $('#' + msg.id).find(jqTarget || '._star');
         if (jqTarget.length) {
           if (message.isStarred) {
-            jqTarget.removeClass('off').removeClass('msg-item__action');
+            jqTarget.removeClass('off').addClass('on');
+            jqTarget.find('i').removeClass('icon-star-off').addClass('icon-star-on');
           } else {
-            jqTarget.addClass('off msg-item__action');
+            jqTarget.removeClass('on').addClass('off');
+            jqTarget.find('i').removeClass('icon-star-on').addClass('icon-star-off');
           }
         }
       }
@@ -593,10 +595,20 @@
         var length = list.length;
         var htmlList = [];
         var index = MessageCollection.list.length - length;
+        var prevIndex;
+        var prevMessage;
+
         _.forEach(list, function(message) {
           _pushMarkup(htmlList, message, index);
           index++;
         });
+
+        if (MessageCollection.isChildText(MessageCollection.list.length - 1)) {
+          prevIndex = MessageCollection.list.length - 2;
+          prevMessage = MessageCollection.list[prevIndex];
+          _refresh(prevMessage.id, prevIndex);
+        }
+
         el.append(_getCompiledEl(htmlList.join('')));
         scope.onRepeatDone();
         //$compile(el.contents())(scope);

@@ -46,7 +46,7 @@
      * @returns {string}
      */
     function getStarCssClass(message) {
-      return message.isStarred ? '' : 'off msg-item__action';
+      return message.isStarred ? 'on' : 'off';
     }
 
     /**

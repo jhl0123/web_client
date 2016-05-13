@@ -36,13 +36,13 @@
 .comment-title .msg-file {
   position: relative;
 }
-.msg-item:hover.comment-title .msg-file .msg-item__action,
-.msg-item:hover.comment-title .continue-comment-body .msg-item__action {
-  display: none;
-}
-.msg-item.comment-title .msg-file:hover .msg-item__action {
-  display: inline-block;
-}
-.msg-item.comment-title .continue-comment-body:hover .msg-item__action {
-  display: inline-block;
-}
+/*.msg-item:hover.comment-title .msg-file .msg-item__action,*/
+/*.msg-item:hover.comment-title .continue-comment-body .msg-item__action {*/
+  /*display: none;*/
+/*}*/
+/*.msg-item.comment-title .msg-file:hover .msg-item__action {*/
+  /*display: inline-block;*/
+/*}*/
+/*.msg-item.comment-title .continue-comment-body:hover .msg-item__action {*/
+  /*display: inline-block;*/
+/*}*/
