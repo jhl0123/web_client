@@ -107,27 +107,27 @@
      * @private
      */
     function _onClickFileDetail(msg, isFocusCommentInput) {
-      var contentType = msg.message.contentType;
-      var userName = $filter('getName')(msg.message.writerId);
-      var itemId = contentType === 'comment' ? msg.feedbackId : msg.message.id;
-
-      if ($state.params.itemId != itemId) {
-        if (msg.feedback && contentType !== 'file') {
-          userName = $filter('getName')(msg.feedback.writerId);
-          itemId = msg.feedback.id;
-        }
-
-        if (isFocusCommentInput) {
-          $rootScope.setFileDetailCommentFocus = true;
-        }
-
-        $state.go('files', {
-          userName: userName,
-          itemId: itemId
-        });
-      } else if (isFocusCommentInput) {
-        fileAPIservice.broadcastCommentFocus();
-      }
+      //var contentType = msg.message.contentType;
+      //var userName = $filter('getName')(msg.message.writerId);
+      //var itemId = contentType === 'comment' ? msg.feedbackId : msg.message.id;
+      //
+      //if ($state.params.itemId != itemId) {
+      //  if (msg.feedback && contentType !== 'file') {
+      //    userName = $filter('getName')(msg.feedback.writerId);
+      //    itemId = msg.feedback.id;
+      //  }
+      //
+      //  if (isFocusCommentInput) {
+      //    $rootScope.setFileDetailCommentFocus = true;
+      //  }
+      //
+      //  $state.go('files', {
+      //    userName: userName,
+      //    itemId: itemId
+      //  });
+      //} else if (isFocusCommentInput) {
+      //  fileAPIservice.broadcastCommentFocus();
+      //}
     }
 
     /**
@@ -236,6 +236,7 @@
           archived: isArchived ? 'archived' : '',
           wrapper: isArchived ? '': '',
           star: RendererUtil.getStarCssClass(msg.message),
+          starIcon: msg.message.isStarred ? 'icon-star-on' : 'icon-star-off',
           disabledMember: RendererUtil.getDisabledMemberCssClass(msg)
         },
         attrs: {
@@ -268,7 +269,10 @@
         _setExtraInfo(data.file, content.extraInfo);
       }
 
-      return _template(data);
+      return {
+        className: 'file',
+        template: _template(data)
+      };
     }
 
     /**

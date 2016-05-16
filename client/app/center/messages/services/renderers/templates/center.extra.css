@@ -27,10 +27,12 @@
   line-height: 19px;
   visibility: hidden;
 }
+.msg-item-icon:hover {
+  color: #58829b !important;
+  opacity: 1 !important;
+}
 .msg-item-circle:hover {
   background-color: rgba(143, 174, 186, 0.2);
-  color: #58829b;
-  opacity: 1;
 }
 
 .msg-item-icon.msg-item-circle:hover {
@@ -38,18 +40,22 @@
 }
 
 .msg-item-star.on {
-  color: #FFB32A;
-  opacity: 1;
+  color: #FFB32A !important;
+  opacity: 1 !important;
   visibility: visible;
 }
 
-.comment-continue .msg-item-star i {
+.comment-continue .msg-item-star.on i {
   vertical-align: top;
   display: inline-block;
 }
 
 .msg-item-more {
   color:#575757;
+}
+.msg-item-pdf,
+.msg-item-image {
+  width: inherit;
 }
 
 /* badge count, timestamp */
