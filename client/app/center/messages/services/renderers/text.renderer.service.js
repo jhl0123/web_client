@@ -221,6 +221,7 @@
 
         linkPreview = _templateLinkPreview({
           css: {
+            loading: msg.message.linkPreview.extThumbnail.isWaiting ? 'is-loading': '',
             image: msg.message.linkPreview.extThumbnail.hasSuccess ? 'has-image' : '',
             domain: msg.message.linkPreview.domain ? 'has-domain' : ''
           },

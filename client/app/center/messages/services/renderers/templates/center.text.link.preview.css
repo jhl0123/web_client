@@ -1,4 +1,9 @@
-.attachment-content-wrapper .neighbor {
+.link-preview-content.is-loading,
+.link-preview-content.has-image {
+  min-height: 110px;
+}
+
+.link-preview-content .neighbor {
   display: -webkit-box;
   max-width: 100%;
   -webkit-line-clamp: 2;
@@ -7,58 +12,67 @@
   text-overflow: ellipsis;
 }
 
-.attachment-content-wrapper .social-image {
-  position: relative;
-  display: table-cell;
-  float: left;
-
+.link-preview-content .social-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 110px;
-  height: 110px;
-
-  cursor: pointer;
-  outline: 1px solid #e1e1e1;
-  background-color: #000;
-}
-.attachment-content-wrapper .loading.social-image {
-  background-color: transparent;
+  height: 100%;
+  border: 1px solid #E4E8EB;
+  border-bottom: 1px solid #CDD3D8;
+  /*overflow: hidden;*/
 }
 
-.attachment-content-wrapper .social-image>a {
+.link-preview-content .social-image>a {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.attachment-content-wrapper .social-image img {
+.link-preview-content.is-loading .social-image,
+.link-preview-content .social-image img {
   position: absolute;
   margin: auto;
   top: 0;
   left: 0;
-  bottom: 0;
-  right: 0;
+  width: 100%;
+  height: 100%;
 
   max-width: 110px;
-  max-height: 110px;
+  max-height: 140px;
 }
 
-.attachment-content-wrapper .social-body {
+.link-preview-content .loading-wheel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -12px;
+  margin-left: -12px;
+}
+
+.social-body {
   position: relative;
-  display: table-cell;
   padding: 10px 12px 8px 12px;
   color: #333;
-}
-
-.attachment-content-wrapper .social-body.has-image {
-  height: 110px;
-}
-
-.link-preview-content.has-image {
-  padding-left: 12px;
 }
 
 .social-body a {
   text-decoration: none;
   color: #333;
+}
+
+.link-preview-content.is-loading .social-body,
+.link-preview-content.has-image .social-body {
+  margin-left: 110px;
+}
+
+.link-preview-content.has-domain .social-desc {
+  margin-bottom: 25px;
+}
+
+.link-preview-content.is-loading .social-image {
+  background-color: #fff;
+  min-height: 110px;
 }
 
 .social-body .social-title {
@@ -73,9 +87,6 @@
   font-size: 13px;
   line-height: 18px;
   max-height: 36px;
-}
-.social-body .social-desc.has-domain {
-  margin-bottom: 25px;
 }
 
 .social-body .social-domain {
