@@ -1,6 +1,6 @@
 .integration-preview-wrapper {
   font-size: 14px;
-  line-height: 18px;
+  line-height: 22px;
   clear: both;
 }
 
@@ -8,13 +8,16 @@
 .integration-preview-wrapper .preview-subset-title {
   color: #505050;
   font-weight: 700;
+  font-size: 16px;
 }
 
 .integration-preview-wrapper .preview-description,
 .integration-preview-wrapper .preview-subset-description {
-  margin-top: 4px;
+  margin-top: 5px;
+  line-height: 20px;
   color: #808080;
   font-weight: 500;
+  font-size: 14px;
 }
 
 .integration-preview-wrapper .preview-image {
@@ -25,7 +28,7 @@
 .attachment-content .integration-preview-wrapper:not(:first-child),
 .integration-preview-wrapper .preview-item:not(:first-child),
 .integration-preview-wrapper .preview-subsets .preview-subset:not(:first-child){
-  margin-top: 14px;
+  margin-top: 18px;
 }
 
 /* integration-preview-wrapper가 두개 연속으로 올 수 있기 때문에 float으로 하지 않고 inline-block으로 처리함 */
@@ -34,4 +37,17 @@
   margin-top: 0;
   margin-right: 8px;
   width: calc(50% - 28px);
+}
+
+.attachment-content .integration-preview-wrapper {
+  padding-left: 18px;
+  padding-right: 20px;
+}
+
+.attachment-content .integration-preview-wrapper:first-child {
+  padding-top: 12px;
+}
+
+.attachment-content .integration-preview-wrapper:last-child {
+  padding-bottom: 14px;
 }

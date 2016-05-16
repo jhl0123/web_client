@@ -8,12 +8,7 @@
   margin-top: -22px;
 }
 
-.msgs-group.bot-text {
-  padding:14px 18px 14px 67px;
-  margin: -4px 0 5px;
-}
 .msgs-group.bot-text.text-child {
-
   margin-top:-5px;
 }
 .msgs-group.bot-text.text-child:before {
