@@ -40,14 +40,18 @@
   direction: ltr;
   width: 816px;
   height: 1056px;
-  /*margin: 1px auto -8px auto;*/
+  box-sizing: content-box;
   margin: 1px auto 8px auto;
   position: relative;
   overflow: visible;
   border: 9px solid transparent;
   background-clip: content-box;
   border-image: url(/assets/images/pdfjs/shadow.png) 9 9 repeat;
-  background-color: white;
+  background-color: #FFFFFF;
+}
+
+.pdfViewer .page .canvasWrapper {
+  background-color: #FFFFFF;
 }
 
 .pdfViewer .page .loadingIcon {
@@ -58,4 +62,5 @@
   right: 0;
   bottom: 0;
   background: url('/assets/images/pdfjs/loading-icon.gif') center no-repeat;
+  background-color: #FFFFFF;
 }

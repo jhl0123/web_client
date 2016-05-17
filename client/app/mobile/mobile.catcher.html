@@ -46,8 +46,8 @@
 
         <img class="signin-mobile-line" ng-src="assets/images/gm_line.svg"/>
 
-        <span class="download-title" translate>@common-has-jandi-app</span>
-        <button class="btn bt_next btn-ok" data-ng-click="toMobileApplication()">
+        <span ng-if="!isSafari" class="download-title" translate>@common-has-jandi-app</span>
+        <button ng-if="!isSafari" class="btn bt_next btn-ok" data-ng-click="toMobileApplication()">
             <span translate>@common-start-using-mobile</span>
         </button>
 

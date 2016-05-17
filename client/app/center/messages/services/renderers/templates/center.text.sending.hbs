@@ -8,8 +8,8 @@
     </div>
   {{/if}}
   {{#if isSticker}}
-    <div class="msg-itemsticker">
-      <img class="sticker size_5" src="{{msg.message.content.url}}"/>
+    <div class="msg-item sticker">
+      <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
     </div>
   {{else}}
     <div class="msg-item text">

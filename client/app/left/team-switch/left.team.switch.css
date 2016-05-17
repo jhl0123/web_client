@@ -11,7 +11,6 @@
 /* team switch dropdown toggle button */
 .lpanel-user .lpanel-user__team {
   padding: 9px 35px 9px 15px;
-  border-right: 1px solid #e1e1e1;
 }
 
 .lpanel-user .lpanel-user__user {
@@ -85,7 +84,6 @@
   right: -12px;
   width: 100%;
   border: 0;
-  border-right: 1px solid #e1e1e1;
   margin: 0;
   border-top-right-radius: 0;
   border-top-left-radius: 0;

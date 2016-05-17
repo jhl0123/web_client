@@ -164,7 +164,7 @@
 
       //message 소켓 이벤트 중 messageType 이 topic_join인 소켓 이벤트 발생 시점에 join 한 member 정보가 없을 수 있기 때문에
       //leftSideMenu request 실행 이전에 소켓 이벤트에 포함된 join 한 member 데이터 추가/업데이트를 먼저 수행한다.
-      if (!UserList.isExist(user)) {
+      if (!UserList.isExist(user.id)) {
         UserList.add(user);
       }
       RoomTopicList.join(room.id);

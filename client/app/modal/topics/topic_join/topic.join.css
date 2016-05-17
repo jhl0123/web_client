@@ -16,10 +16,27 @@
   max-width: 250px;
   line-height: 17px;
 }
+
 .join-modal-channel_title .icon-topic,
+.join-modal-channel_title .icon-lock,
 .join-modal-channel_title .icon-clock {
   margin-right: 4px;
 }
+
+.join-modal-channel_title .icon-topic,
+.join-modal-channel_title .icon-lock {
+  float: left;
+  margin-top: 2px;
+}
+
+.join-modal-channel_title .icon-clock {
+  float: left;
+}
+
+.join-modal-channel_title .join-time {
+  margin-top: 3px;
+}
+
 .join-modal-channel_container .topic-description {
   line-height: 21px;
   height: 40px;

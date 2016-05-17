@@ -208,7 +208,7 @@
       var room = get(roomId);
       var memberId = memberService.getMemberId();
 
-      if (!isExist(roomId, false)) {
+      if (!isExist(roomId, true)) {
         add(room, true);
         addMember(roomId, memberId);
       }

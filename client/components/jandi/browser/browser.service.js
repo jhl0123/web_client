@@ -37,19 +37,19 @@
       var appName = nav.appName.replace(/\s/g, '_');
       var userAgent = nav.userAgent;
       var platformName = nav.platform;
-
       var regxIE = /MSIE\s([0-9]+[.0-9]*)/;
       var regxIE11 = /Trident.*rv:11\./;
       var regxEdge = /Edge\/(\d+)\./;
       var regxVer = {
         'firefox': /Firefox\/(\d+)\./,
         'chrome': /Chrome\/(\d+)\./,
-        'safari': /Version\/([\d\.]+)\sSafari\/(\d+)/
+        'safari': /Version\/(.+)\sSafari\/(\d+)/
       };
       var regxMac = /Mac/;
       var regxWin = /Win/;
       var regxLinux = /Linux/;
-
+      var regxMobile = /Mobi/;
+      
       var key;
       var tmp;
       var isDetacted = false;
@@ -63,6 +63,7 @@
         others: false,
         version: 0,
         platform: {
+          isMobile: false,
           isMac: false,
           isWin: false,
           isLinux: false,
@@ -75,8 +76,10 @@
         browser.platform.isMac = true;
       } else if (regxWin.test(platformName)) {
         browser.platform.isWin = true;
-      } else if(regxLinux.test(platformName)) {
+      } else if (regxLinux.test(platformName)) {
         browser.platform.isLinux = true;
+      } else if (regxMobile.test(userAgent)) {
+        browser.platform.isMobile = true;
       } else {
         browser.platform.isOthers = true;
       }

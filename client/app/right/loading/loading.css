@@ -27,6 +27,16 @@
 .search-result-container .search-result-summary {
   margin-left: 16px;
 }
+.search-result-container .search-result-summary .searchQueryKeyword {
+  font-weight: bold;
+  margin-right: 0.075em;
+  color:#6D6D6D;
+}
+.search-result-container .search-result-summary .searchQueryKeyword:lang(en),
+.search-result-container .search-result-summary .searchQueryKeyword:lang(zh-tw),
+.search-result-container .search-result-summary .searchQueryKeyword:lang(zh-cn) {
+  margin-right: -0.1em;
+}
 .search-result-container .search-result-summary-ing .three-quarters-loader {
   position: absolute;
   left: 14px;

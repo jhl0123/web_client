@@ -949,9 +949,8 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
     _initMarkers();
     if (MessageSendingCollection.queue.length) {
       _requestPostMessages(true);
-    } else {
-      _requestEventsHistory();
     }
+    _requestEventsHistory();
   }
 
   /**
@@ -965,7 +964,7 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
     SocketEventApi.get({
       ts: lastTimeStamp
     }).success(_onSuccessGetEventsHistory)
-      .error(publicService.reloadCurrentPage);
+      .error(_.bind(_refreshCurrentTopic, this, true));
   }
 
   /**

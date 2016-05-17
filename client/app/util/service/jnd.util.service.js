@@ -8,8 +8,10 @@
     .module('jandiApp')
     .service('JndUtil', JndUtil);
 
-  function JndUtil($filter, $q, Dialog) {
+  function JndUtil($compile, $filter, $q, Dialog) {
     this.safeApply = safeApply;
+    this.safeCompile = safeCompile;
+
     this.alertUnknownError = alertUnknownError;
   
     this.getImageDataByFile = getImageDataByFile;
@@ -22,14 +24,25 @@
     function safeApply(scope, fn) {
       var phase = scope.$root.$$phase;
       if (scope) {
-        fn = _.isFunction(fn) ? fn : function () {
-        };
+        fn = _.isFunction(fn) ? fn : function () {};
+
         if (phase !== '$apply' && phase !== '$digest') {
           scope.$apply(fn);
         } else {
           fn();
         }
       }
+    }
+
+    /**
+     * angular 의 $compile 을 안전하게 수행한다.
+     * @param {object} scope
+     * @param {object} jqCompile
+     */
+    function safeCompile(scope, jqCompile) {
+      try {
+        $compile(jqCompile)(scope);
+      } catch(e) {}
     }
 
     /**

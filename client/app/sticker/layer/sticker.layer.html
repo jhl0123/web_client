@@ -1,7 +1,7 @@
 <div ng-show="fileUrl" class="sticker_layer">
   <a class="sticker_layer_remove link-remove pull-right cursor_pointer"
-     data-ng-click="hide();">
+     ng-click="hide();">
     <i class="icon-delete"></i>
   </a>
-  <img ng-src="{{fileUrl}}" width="126" height="126"  style="margin: auto;" scale-up/>
+  <div class="sticker size_5" style="margin: auto;" scale-up scale-up-src="fileUrl"></div>
 </div>

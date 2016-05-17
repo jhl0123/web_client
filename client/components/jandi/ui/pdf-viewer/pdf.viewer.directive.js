@@ -89,6 +89,8 @@
         PDFJS.cMapUrl = PDFJS_PATH + 'cmaps/';
         PDFJS.cMapPacked = true;
         PDFJS.disableWorker = false;
+        PDFJS.externalLinkTarget = PDFJS.LinkTarget.BLANK;
+        
         _pdfViewer = new PDFJS.PDFViewer({
           container: el.find('._container')[0]
         });

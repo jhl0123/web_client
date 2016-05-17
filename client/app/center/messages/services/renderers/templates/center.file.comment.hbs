@@ -24,7 +24,7 @@
         {{/unless}}
         {{#if isSticker}}
         <div>
-          <img class="sticker size_5" src="{{ msg.message.content.url }}"/>
+          <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
           <!--    CREATED TIME    -->
           <span class="msg-item-header__created">{{ msg.extTime }}</span>
           <span class="badge unread-badge">{{ msg.unreadCount }}</span>

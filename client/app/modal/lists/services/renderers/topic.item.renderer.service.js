@@ -30,6 +30,9 @@
       data = _convertData(data);
 
       return _template({
+        css: {
+          topicIcon: data.isPublic ? 'icon-topic' : 'icon-lock'
+        },
         html: {
           topicName: $filter('typeaheadHighlight')(data.name, filterText)
         },
@@ -49,12 +52,17 @@
      * @private
      */
     function _convertData(data) {
+      var isPublic = RoomTopicList.isPublic(data.id);
+      var createTime = isPublic ? data.ch_createTime : data.pg_createTime;
+      var creatorId = isPublic ? data.ch_creatorId : data.pg_creatorId;
+
       return {
         name: data.name,
-        createTime: $filter('getyyyyMMddformat')(data.ch_createTime),
+        createTime: $filter('getyyyyMMddformat')(createTime),
         topicDescription: data.description,
-        creatorName: $filter('getName')(data.ch_creatorId),
-        userCount: RoomTopicList.getUserLength(data.id)
+        creatorName: $filter('getName')(creatorId),
+        userCount: RoomTopicList.getUserLength(data.id),
+        isPublic: isPublic
       };
     }
   }
