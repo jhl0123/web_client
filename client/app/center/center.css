@@ -20,7 +20,7 @@ article {
   left: 240px;
   right: 0;
   bottom: 0;
-  min-width: 520px;
+  min-width: 608px;
 }
 .cpanel .panel-title-container {
   z-index: 28;
@@ -104,18 +104,18 @@ article {
   background-color: #fff;
   color: #333;
 }
-#unread-bookmark.msg-item {
-  margin-bottom: 10px;
-  margin-top: 8px;
-  padding-top: 0;
-}
-#unread-bookmark.msg-item .msg-unread-bookmark {
-  margin: 0;
-  line-height: 28px;
-}
-#unread-bookmark.msg-item .system-event-msg .msg-item-float {
-  top: -1px;
-}
+/*#unread-bookmark.msg-item {*/
+  /*margin-bottom: 10px;*/
+  /*margin-top: 8px;*/
+  /*padding-top: 0;*/
+/*}*/
+/*#unread-bookmark.msg-item .msg-unread-bookmark {*/
+  /*margin: 0;*/
+  /*line-height: 28px;*/
+/*}*/
+/*#unread-bookmark.msg-item .system-event-msg .msg-item-float {*/
+  /*top: -1px;*/
+/*}*/
 
 .msg-item.file-upload {
   margin: 13px 0 15px;
@@ -124,6 +124,15 @@ article {
 .msg-item.comment_continue {
   margin-bottom: 8px;
 }
+
+.msg-item.system {
+  margin: 0 5px 0 0;
+  border: 0;
+  background-color: transparent;
+  box-shadow: 0 0 0 1px transparent;
+  color: #929498;
+}
+
 .msg-item-float {
   position: absolute;
   top: 7px;

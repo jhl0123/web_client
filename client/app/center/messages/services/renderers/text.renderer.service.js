@@ -47,7 +47,7 @@
      */
     function _onClick(clickEvent) {
       var jqTarget = $(clickEvent.target);
-      var id = jqTarget.closest('.msgs-group').attr('id');
+      var id = jqTarget.closest('.message').attr('id');
 
       if (jqTarget.hasClass('_textMore')) {
         _showMoreDropdown(jqTarget, MessageCollection.get(id));
@@ -123,6 +123,7 @@
     function render(index) {
       var msg = MessageCollection.list[index];
       var isChild = MessageCollection.isChildText(index);
+      var isSticker = RendererUtil.isSticker(msg);
       var template = isChild ? _templateChild : _template;
 
       var linkPreview = _getLinkPreview(msg, index);
@@ -137,7 +138,7 @@
       }
 
       return {
-        className: _getClassName(msg, isChild),
+        className: _getClassName(msg, isChild, isSticker),
         template: template({
           html: {
             linkPreview: linkPreview,
@@ -153,7 +154,7 @@
           hasStar: RendererUtil.hasStar(msg),
           hasLinkPreview: !!linkPreview,
           hasConnectPreview: !!connectPreview,
-          isSticker: RendererUtil.isSticker(msg),
+          isSticker: isSticker,
           isChild: isChild,
           hasChild: MessageCollection.hasChildText(index),
           msg: msg
@@ -165,16 +166,21 @@
      * 상위 element에서 사용할 className 전달함
      * @param {object} msg
      * @param {boolean} isChild
+     * @param {boolean} isSticker
      * @returns {string}
      * @private
      */
-    function _getClassName(msg, isChild) {
+    function _getClassName(msg, isChild, isSticker) {
       var result = ['text'];
 
       result.push(_getMsgItemClass(msg));
 
       if (isChild) {
         result.push('text-child');
+      }
+
+      if (isSticker) {
+        result.push('sticker');
       }
 
       return result.join(' ');

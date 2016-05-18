@@ -1,8 +1,8 @@
-.msg-item.comment-all {
-  padding-top: 0;
-  margin-top: -3px;
-  max-height: 33px;
-}
+/*.msg-item.comment-all {*/
+  /*padding-top: 0;*/
+  /*margin-top: -3px;*/
+  /*max-height: 33px;*/
+/*}*/
 
 .msg-item.comment-all .comment-all-desc {
   font-size: 14px;
@@ -24,18 +24,18 @@
   opacity: .5;
 }
 
-.comment-title .icon-file {
-  position: absolute;
-  font-size: 25px;
-  color: #d1dae7;
-  left: 28px;
-  top: 12px;
-}
+/*.comment-title .icon-file {*/
+  /*position: absolute;*/
+  /*font-size: 25px;*/
+  /*color: #d1dae7;*/
+  /*left: 28px;*/
+  /*top: 12px;*/
+/*}*/
 
-/* hover시 extra menu css */
-.comment-title .msg-file {
-  position: relative;
-}
+/*/!* hover시 extra menu css *!/*/
+/*.comment-title .msg-file {*/
+  /*position: relative;*/
+/*}*/
 /*.msg-item:hover.comment-title .msg-file .msg-item__action,*/
 /*.msg-item:hover.comment-title .continue-comment-body .msg-item__action {*/
   /*display: none;*/

@@ -1,4 +1,4 @@
-<div class="msg-item system-event-msg">
+<div class="msg-item system-event">
   <!-- SYSTEM EVENT -->
   <div class="msg-item-float cursor_pointer">
     <img class="member-profile member-thumb"/>
@@ -8,7 +8,7 @@
     <div class="msg-text">
       <div class="msg-comment-header">
           {{#if status.isInvite}}
-        <!--1-->
+            <!--1-->
             <span class="msg-comment_userType">{{msg.message.content.actionOwner}}</span>
             <span class="keep">{{{msg.message.content.body}}}</span>
             {{#each invitees}}

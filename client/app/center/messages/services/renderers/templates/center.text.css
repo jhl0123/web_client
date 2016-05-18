@@ -1,11 +1,15 @@
+.message.sticker .msg-item-info {
+  margin-left: -24px;
+}
+.message.sticker .msg-item {
+  background-color: transparent;
+  border: 0;
+}
+
 .msg-item.text {
   padding: 8px 13px;
   word-wrap: break-word;
   word-break: keep-all;
-}
-
-.msg-item.text-child {
-  margin-top: -6px;
 }
 
 .text-highlight-background {

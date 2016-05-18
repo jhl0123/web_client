@@ -32,10 +32,13 @@
     function render(index) {
       var msg = MessageCollection.list[index];
 
-      return _template({
-        msg: msg,
-        date: msg.date
-      });
+      return {
+        className: 'system-event date-divider',
+        template: _template({
+          msg: msg,
+          date: msg.date
+        })
+      };
     }
   }
 })();

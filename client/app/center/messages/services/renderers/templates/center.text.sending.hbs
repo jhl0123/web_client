@@ -1,4 +1,4 @@
-<div id="{{id}}" class="msgs-group text {{ css.child }}">
+<div id="{{id}}" class="message text {{css.child}} {{css.sticker}}">
   <!--  User Thumbnail -->
   {{#if hasProfile}}
     <!--  User Thumbnail -->
@@ -8,7 +8,7 @@
     </div>
   {{/if}}
   {{#if isSticker}}
-    <div class="msg-item sticker">
+    <div class="msg-item">
       <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
     </div>
   {{else}}

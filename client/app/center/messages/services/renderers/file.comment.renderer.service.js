@@ -85,10 +85,11 @@
         css: {
           unshared: isUnshared ? 'unshared' : '',
           archived: isArchived ? 'archived' : '',
-          wrapper: isTitle ? 'comment-title' : 'comment-continue',
           star: RendererUtil.getStarCssClass(msg.message),
+          starIcon: msg.message.isStarred ? 'icon-star-on' : 'icon-star-off',
           disabledMember: RendererUtil.getDisabledMemberCssClass(msg),
-          fileStar: RendererUtil.getStarCssClass(feedback)
+          fileStar: RendererUtil.getStarCssClass(feedback),
+          fileStarIcon: feedback.isStarred ? 'icon-star-on' : 'icon-star-off'
         },
         attrs: {
           download: RendererUtil.getFileDownloadAttrs(msg)
@@ -127,7 +128,34 @@
         _setExtraInfo(data.file, content.extraInfo);
       }
 
-      return template(data);
+      return {
+        className: _getClassName(isTitle, isChild),
+        template: template(data)
+      };
+    }
+
+    /**
+     * 상위 element에서 사용할 className 전달함
+     * @param {boolean} isTitle
+     * @param {boolean} isChild
+     * @returns {string}
+     * @private
+     */
+    function _getClassName(isTitle, isChild) {
+      var result = ['text'];
+
+      if (isTitle) {
+        result.push('message-group');
+      } else {
+        result.push('comment');
+        if (isChild) {
+          result.push('continue');
+        } else {
+          result.push('first');
+        }
+      }
+
+      return result.join(' ');
     }
 
     /**

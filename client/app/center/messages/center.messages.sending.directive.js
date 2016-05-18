@@ -74,7 +74,7 @@
       function _retry(jqTarget) {
         var list = MessageSendingCollection.list;
         var index = _.findIndex(list, {
-          id: jqTarget.closest('.msgs-group').attr('id')
+          id: jqTarget.closest('.message').attr('id')
         });
         var msg = list[index];
         var payload = msg._payload;
@@ -102,7 +102,7 @@
       function _onClickMore(jqTarget) {
         var list = MessageSendingCollection.list;
         var index = _.findIndex(list, {
-          id: jqTarget.closest('.msgs-group').attr('id')
+          id: jqTarget.closest('.message').attr('id')
         });
         jndPubSub.pub('show:center-item-dropdown', {
           target: jqTarget,
@@ -195,17 +195,21 @@
         var msg = list[index];
         var hasProfile = false;
         var lastMsg = MessageCollection.list[MessageCollection.list.length - 1];
+        var isSticker = msg.message.contentType === 'sticker';
+
         if (!index) {
           hasProfile = !MessageText.isChild(1, [lastMsg, msg]);
         }
+
         return _template({
           css: {
-            child: hasProfile ? '' : 'text-child'
+            child: hasProfile ? '' : 'text-child',
+            sticker: isSticker ? 'sticker' : ''
           },
           hasProfile: hasProfile,
           msg: msg,
           id: msg.id,
-          isSticker: msg.message.contentType === 'sticker',
+          isSticker: isSticker,
           isFailed: msg.status === 'failed'
         });
       }

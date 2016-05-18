@@ -1,0 +1,17 @@
+.message.text-child {
+  margin-top: -22px;
+}
+
+.message.bot-text.text-child {
+  margin-top:-5px;
+}
+
+.message.bot-text.text-child:before {
+  content: '';
+  position: absolute;
+  left: 66px;
+  right: 0;
+  top:0;
+  height: 0;
+  border-top: 1px dashed #E1E5E8;
+}

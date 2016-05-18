@@ -41,7 +41,7 @@
      */
     function _onClick(clickEvent) {
       var jqTarget = $(clickEvent.target);
-      var id = jqTarget.closest('.msgs-group').attr('id');
+      var id = jqTarget.closest('.message').attr('id');
       var msg = MessageCollection.get(id);
 
       if (jqTarget.closest('._fileDownload').length) {
@@ -52,13 +52,12 @@
         _onClickFileExpand(msg, jqTarget);
       } else if (jqTarget.closest('._fileToggle').length) {
         _onClickFileToggle(msg, jqTarget);
-      } else if (jqTarget.closest('._fileDetailComment').length) {
-        _onClickFileDetail(msg, true);
       } else if (jqTarget.closest('._pdfPreview').length) {
         _onClickPdfPreview(msg);
-      } else if (jqTarget.closest('._fileDetail').length) {
-        _onClickFileDetail(msg);
       }
+      //else if (jqTarget.closest('._fileDetailComment').length) {
+      //  _onClickFileDetail(msg, true);
+      //}
     }
 
     /**
@@ -98,36 +97,6 @@
     function _hasPdfPreview(msg) {
       var file = _getFileData(msg);
       return FileDetail.hasPdfPreview(file);
-    }
-    
-    /**
-     * file detail
-     * @param {object} msg
-     * @param {boolean} [isFocusCommentInput=false]
-     * @private
-     */
-    function _onClickFileDetail(msg, isFocusCommentInput) {
-      //var contentType = msg.message.contentType;
-      //var userName = $filter('getName')(msg.message.writerId);
-      //var itemId = contentType === 'comment' ? msg.feedbackId : msg.message.id;
-      //
-      //if ($state.params.itemId != itemId) {
-      //  if (msg.feedback && contentType !== 'file') {
-      //    userName = $filter('getName')(msg.feedback.writerId);
-      //    itemId = msg.feedback.id;
-      //  }
-      //
-      //  if (isFocusCommentInput) {
-      //    $rootScope.setFileDetailCommentFocus = true;
-      //  }
-      //
-      //  $state.go('files', {
-      //    userName: userName,
-      //    itemId: itemId
-      //  });
-      //} else if (isFocusCommentInput) {
-      //  fileAPIservice.broadcastCommentFocus();
-      //}
     }
 
     /**
@@ -234,7 +203,6 @@
         css: {
           unshared: isUnshared ? 'unshared' : '',
           archived: isArchived ? 'archived' : '',
-          wrapper: isArchived ? '': '',
           star: RendererUtil.getStarCssClass(msg.message),
           starIcon: msg.message.isStarred ? 'icon-star-on' : 'icon-star-off',
           disabledMember: RendererUtil.getDisabledMemberCssClass(msg)

@@ -53,10 +53,10 @@
 .msg-item-more {
   color:#575757;
 }
-.msg-item-pdf,
-.msg-item-image {
-  width: inherit;
-}
+/*.msg-item-pdf,*/
+/*.msg-item-image {*/
+  /*width: inherit;*/
+/*}*/
 
 /* badge count, timestamp */
 .msg-item-info {

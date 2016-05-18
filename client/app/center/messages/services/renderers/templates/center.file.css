@@ -1,13 +1,16 @@
-.msgs-group.file .msg-item-info {
+.message.file .msg-item-info {
   margin-left: 0;
+}
+
+.message.file:hover .card-expand {
+  display: block;
 }
 
 .msg-file {
   display: inline-block;
   position: relative;
-  width: calc(70% - 74px);
-  /* min width 넣으면 badge와 timestamp가 유지안됨 */
-  /*min-width: 450px;*/
+  width: 50%;
+  min-width: 450px;
   max-width: 600px;
   margin: 6px 0 0 0;
 }
@@ -59,14 +62,14 @@
   font-style: normal;
 }
 
-.msgs-group:hover .msg-file-actions-content,
-.medium-thumbnail:hover .msg-file-actions-content {
-  display: block;
-}
+/*.msgs-group:hover .msg-file-actions-content,*/
+/*.medium-thumbnail:hover .msg-file-actions-content {*/
+  /*display: block;*/
+/*}*/
 
-.msg-file-actions-content {
-  display: none;
-}
+/*.msg-file-actions-content {*/
+  /*display: none;*/
+/*}*/
 /*.msg-file-actions-content.actions-dimmed {*/
   /*position: absolute;*/
   /*top: 0;*/
@@ -77,10 +80,10 @@
   /*opacity: .75;*/
 /*}*/
 
-.image_wrapper .msg-file-actions-content {
-  background-color: transparent;
-}
-.msg-file-actions-content .msg-file-actions {
+/*.image_wrapper .msg-file-actions-content {*/
+  /*background-color: transparent;*/
+/*}*/
+.msg-file-actions {
   position: absolute;
   top: 6px;
   right: 5px;
@@ -89,6 +92,10 @@
 .msg-file-actions .action-group {
   cursor: pointer;
   float: left;
+}
+
+.msg-file-actions .action-group {
+  visibility: hidden;
 }
 
 .msg-file-actions .action-group > .action-item:first-child {
@@ -217,10 +224,26 @@
 }
 
 .preview-card .card-type {
-  float: left;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
   padding: 15px;
   background-color: #F2F5F7;
   box-shadow: 1px 0 0 0px rgb(222, 227, 230);
+}
+
+.card-type .card-expand {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e1e1e1;
+  opacity: .4;
+  cursor: zoom-in;
+  cursor: -webkit-zoom-in;
 }
 
 .preview-card .card-info {
@@ -241,7 +264,7 @@
 .info-group .info-writer {
   font-size: 14px;
   font-weight: 500;
-  width: calc(100% - 350px);
+  width: calc(100% - 250px);
   vertical-align: text-bottom;
 }
 
@@ -291,7 +314,7 @@
 .msg-file.unshared .card-info.card-unshared,
 .msg-file.archived .card-info.card-archived {
   padding-left: 12px;
-  line-height: 60px;
+  line-height: 64px;
 }
 
 .msg-file.unshared .info-title,

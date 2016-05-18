@@ -9,9 +9,9 @@
     .module('jandiApp')
     .directive('centerMessagesDirective', centerMessagesDirective);
 
-  function centerMessagesDirective($filter, CenterRenderer, CenterRendererFactory, MessageCollection,
+  function centerMessagesDirective($filter, $state, CenterRenderer, CenterRendererFactory, MessageCollection,
                                    StarAPIService, jndPubSub, FileDetail, memberService, Dialog, currentSessionHelper,
-                                   EntityHandler, JndUtil, RendererUtil) {
+                                   EntityHandler, JndUtil, RendererUtil, fileAPIservice) {
     return {
       restrict: 'E',
       replace: true,
@@ -306,7 +306,7 @@
        */
       function _onClick(clickEvent) {
         var jqTarget = $(clickEvent.target);
-        var id = jqTarget.closest('.msgs-group').attr('id');
+        var id = jqTarget.closest('.message').attr('id');
         var msg = MessageCollection.get(id);
         var hasAction = false;
         var jqElement;
@@ -324,6 +324,8 @@
         } else if (jqTarget.closest('._fileShare').length) {
           _onClickFileShare(msg);
           hasAction = true;
+        } else if (jqTarget.closest('._fileDetail').length) {
+          _onClickFileDetail(msg);
         }
 
         if (hasAction) {
@@ -338,6 +340,36 @@
        */
       function _onClickFileShare(msg) {
         scope.onShareClick(msg.message);
+      }
+
+      /**
+       * file detail
+       * @param {object} msg
+       * @param {boolean} [isFocusCommentInput=false]
+       * @private
+       */
+      function _onClickFileDetail(msg, isFocusCommentInput) {
+        var contentType = msg.message.contentType;
+        var userName = $filter('getName')(msg.message.writerId);
+        var itemId = contentType === 'comment' ? msg.feedbackId : msg.message.id;
+
+        if ($state.params.itemId != itemId) {
+          if (msg.feedback && contentType !== 'file') {
+            userName = $filter('getName')(msg.feedback.writerId);
+            itemId = msg.feedback.id;
+          }
+
+          if (isFocusCommentInput) {
+            $rootScope.setFileDetailCommentFocus = true;
+          }
+
+          $state.go('files', {
+            userName: userName,
+            itemId: itemId
+          });
+        } else if (isFocusCommentInput) {
+          fileAPIservice.broadcastCommentFocus();
+        }
       }
 
       /**
