@@ -18,6 +18,7 @@
     this.parseLeftSideMenuData = parseLeftSideMenuData;
     this.parseChatRoomLists = parseChatRoomLists;
     this.get = get;
+    this.isExist = isExist;
     this.extend = extend;
     this.toggleStarred = toggleStarred;
     _init();
@@ -129,6 +130,15 @@
         BotList.get(id);
     }
 
+    /**
+     * id 에 해당하는 entity 가 존재하는지 반환한다.
+     * @param {number|string} id
+     * @returns {boolean}
+     */
+    function isExist(id) {
+      return !!get(id);
+    }
+    
     /**
      * item 을 확장한다.
      * @override

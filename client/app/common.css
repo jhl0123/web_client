@@ -100,7 +100,7 @@ input[type="email"] {
 }
 
 .z-index-bottom {
-  z-index: 0;
+  display: none;
 }
 
 .body.full-screen {

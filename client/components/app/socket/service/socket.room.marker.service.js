@@ -9,7 +9,7 @@
     .service('jndWebSocketRoomMarker', jndWebSocketRoomMarker);
 
   /* @ngInject */
-  function jndWebSocketRoomMarker(jndPubSub, jndWebSocketCommon, logger) {
+  function jndWebSocketRoomMarker(jndPubSub, jndWebSocketCommon, logger, markerService, EntityHandler) {
     var ROOM_MARKER_UPDATED = 'room_marker_updated';
 
     var events = [
@@ -25,21 +25,27 @@
       return events;
     }
 
-    function _onRoomMarkerUpdated(data) {
-      var room = data.room;
-      var isCurrentEntity = jndWebSocketCommon.isCurrentEntity(room);
-      if (isCurrentEntity) {
-        logger.log('update marker for current entity');
-        jndPubSub.pub('centerOnMarkerUpdated', data);
-      }
+    /**
+     * room marker 업데이트 이벤트 콜백
+     * @param {object} socketEvent
+     * @private
+     */
+    function _onRoomMarkerUpdated(socketEvent) {
+      var room = EntityHandler.get(socketEvent.room.id);
+      var marker = socketEvent.marker;
+      var memberId = marker.memberId;
+      var lastLinkId = marker.lastLinkId;
 
-      var memberId = data.marker.memberId;
+      
+      markerService.updateMarker(memberId, lastLinkId);
 
       if (jndWebSocketCommon.isActionFromMe(memberId)) {
-        logger.log('I read something from somewhere');
-        if (!isCurrentEntity) {
-          jndWebSocketCommon.updateLeft();
-        }
+        jndWebSocketCommon.updateMyLastMessageMarker(room.id, lastLinkId);
+      }
+      
+      if (jndWebSocketCommon.isCurrentEntity(socketEvent.room)) {
+        logger.log('update marker for current entity');
+        jndPubSub.pub('centerOnMarkerUpdated', socketEvent);
       }
     }
   }

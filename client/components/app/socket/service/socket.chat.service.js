@@ -9,7 +9,7 @@
     .service('jndWebSocketChat', jndWebSocketChat);
 
   /* @ngInject */
-  function jndWebSocketChat(jndWebSocketCommon) {
+  function jndWebSocketChat(jndWebSocketCommon, jndPubSub) {
     var CHAT_CLOSE = 'chat_close';
 
     var events = [
@@ -36,7 +36,10 @@
      * @private
      */
     function _onChatClose(socketEvent) {
-      jndWebSocketCommon.updateLeft();
+      if (jndWebSocketCommon.isCurrentEntity({id: socketEvent.chat.id})) {
+        jndPubSub.toDefaultTopic();
+      }
+      jndPubSub.pub('updateChatList');
     }
   }
 })();

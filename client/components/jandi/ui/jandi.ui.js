@@ -10,7 +10,8 @@
       'jandi.ui.intercom',
       'jandi.ui.dialog',
       'jandi.ui.profileImage',
-      'jandi.ui.pdfViewer'
+      'jandi.ui.pdfViewer',
+      'jandi.ui.splitter'
     ])
     .run(run)
     .config(config);

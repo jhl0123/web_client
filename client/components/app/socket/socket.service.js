@@ -31,10 +31,15 @@
 
     var handlers = {};
 
+    var _lastTimestamp = 0;
+
     this.init = init;
     this.disconnect = disconnect;
     this.checkSocketConnection = checkSocketConnection;
     this.disconnectTeam = disconnectTeam;
+
+    this.processSocketEvents = processSocketEvents;
+    this.getLastTimestamp = getLastTimestamp;
 
     /**
      * Initialize variables.
@@ -173,10 +178,52 @@
         handler = handlers[socketEvent.event];
         if (socketEvent.version === handler.version) {
           handler.fn(socketEvent);
+          _updateTimestamp(socketEvent);
         }
       } else {
         jndWebSocketOtherTeamManager.onSocketEvent(socketEvent);
+        _updateTimestamp(socketEvent);
       }
+    }
+
+    /**
+     * 인자로 받은 소켓 이벤트를 처리한다.
+     * @param {Array} socketEvents - 소켓 이벤트q`
+     * @param {Array} [eventNames] - 첫번째 인자로 받은처리할 이벤트 이름 리스트
+     */
+    function processSocketEvents(socketEvents, eventNames) {
+      var eventsMap = {};
+      if (eventNames && eventNames.length) {
+        _.forEach(eventNames, function(type) {
+          eventsMap[type] = true;
+        });
+      }
+
+      _.forEach(socketEvents, function(socketEvent) {
+        if (!eventNames || eventsMap[socketEvent.event]) {
+          _onSocketEvent(socketEvent);
+        }
+      });
+    }
+
+    /**
+     * 소켓의 timestamp 를 기록한다.
+     * @param socketEvent
+     * @private
+     */
+    function _updateTimestamp(socketEvent) {
+      var timestamp = socketEvent.ts;
+      if (timestamp > _lastTimestamp) {
+        _lastTimestamp = timestamp;
+      }
+    }
+
+    /**
+     * 마지막 timestamp 값을 가져온다.
+     * @returns {number}
+     */
+    function getLastTimestamp() {
+      return _lastTimestamp;
     }
 
     /**

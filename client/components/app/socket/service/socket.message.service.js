@@ -6,7 +6,7 @@
     .service('jndWebSocketMessage', jndWebSocketMessage);
 
   /* @ngInject */
-  function jndWebSocketMessage(jndWebSocketCommon, jndPubSub, memberService, currentSessionHelper, markerService,
+  function jndWebSocketMessage(jndWebSocketCommon, jndPubSub, memberService, currentSessionHelper, markerService, RoomTopicList,
                                MessageNotification, MentionNotification, FileShareNotification, TopicInviteNotification) {
 
     var MESSAGE = 'message';
@@ -116,22 +116,7 @@
       });
 
       if (room = jndWebSocketCommon.getNotificationRoom(data.rooms)) {
-        // badge count를 올리기 위함이요.
-        if (jndWebSocketCommon.isActionFromMe(data.writer)) {
-          //내 comment 일 경우 해당 파일이 공유된 타 토픽의 unread marker 를 갱신해야 하므로 leftSideMenu 를 호출한다.
-          jndPubSub.updateLeftPanel();
-        } else {
-          _.forEach(data.rooms, function(room) {
-            //server 의 잘못된 데이터로 인해 rooms 배열에 같은 room 이 2개 이상 포함되는 경우가 있으므로, 중복을 제거한다.
-            if (!map[room.id]) {
-              map[room.id] = true;
-              jndWebSocketCommon.increaseBadgeCount(room.id);
-            }
-          });
-        }
-
-        data.room = room;
-
+       data.room = room;
         if (_hasMention(data)) {
           _sendMentionNotification(data);
         } else {
@@ -144,22 +129,30 @@
      * message -> topic_leave event handler.
      * 누군가가 현재 topic을 나갔다면 센터를 업데이트한다.
      * 누군가가 어떤 topic을 나갔든지 left를 업데이트해서 해당하는 토픽의 정보를 갱신한다.
-     * @param data
+     * @param {object} socketEvent
      * @private
      */
-    function _onTopicLeave(data) {
-      _updateCenterPanelFromOthers(data);
-
-      jndPubSub.pub('topicLeave', data);
+    function _onTopicLeave(socketEvent) {
+      var room = socketEvent.room;
+      if (jndWebSocketCommon.isCurrentEntity(room)) {
+        jndPubSub.updateCenterPanel();
+      }
+      RoomTopicList.removeMember(socketEvent.room.id, socketEvent.writer);
+      jndPubSub.pub('jndWebSocketMessage:topicLeave', socketEvent);
     }
 
     /**
-     * message -> topic_join event handler
-     * @param data
+     * Topic join 이벤트 핸들러
+     * @param {object} socketEvent
      * @private
      */
-    function _onTopicJoin(data) {
-      _updateCenterPanelFromOthers(data);
+    function _onTopicJoin(socketEvent) {
+      var room = socketEvent.room;
+      if (jndWebSocketCommon.isCurrentEntity(room)) {
+        jndPubSub.updateCenterPanel();
+      }
+      RoomTopicList.addMember(socketEvent.room.id, socketEvent.writer);
+      jndPubSub.pub('jndWebSocketMessage:topicJoin', socketEvent);
     }
 
     /**
@@ -179,6 +172,9 @@
         }
         //내가 share 했을 경우 공유한 토픽의 marker 위치를 업데이트 해야하기 때문에 부득이하게 leftSideMenu 를 콜한다.
         if (jndWebSocketCommon.isActionFromMe(data.writer)) {
+          //linkId 정보가 존재한다면, 나의 unreadMarker를 내부적으로 갱신 할 수 있으나,
+          //현재 linkId 정보가 없으므로 leftSideMenu 를 호출한다.
+          //TODO: 백엔드 message_created 소켓 이벤트 작업 이후 leftPanel update 제거해야 함.
           jndPubSub.updateLeftPanel();
         } else {
           jndWebSocketCommon.increaseBadgeCount(room.id);
@@ -216,23 +212,15 @@
 
     /**
      * message가 삭제되었을 때 현재 토픽이면 업데이트한다.
-     * @param data
+     * @param {object} socketEvent
      * @private
      */
     function _onMessageDelete(socketEvent) {
       var room = socketEvent.room;
-
-      if (jndWebSocketCommon.isCurrentEntity(room)) {
-        jndPubSub.updateCenterPanel();
-      } else if (!_updateBadgeCount(socketEvent)) {
-        if (_isDmToMe(socketEvent)) {
-          jndPubSub.pub('updateChatList');
-        } else {
-          jndPubSub.updateLeftBadgeCount();
-        }
+      if (!jndWebSocketCommon.isCurrentEntity(room)) {
+        _updateBadgeCount(socketEvent);
       }
-
-      jndPubSub.pub('jndWebSocketMessage:topicMessageDeleted', socketEvent);
+      jndPubSub.pub('jndWebSocketMessage:messageDeleted', socketEvent);
     }
 
     /**
@@ -241,11 +229,19 @@
      * @private
      */
     function _onNewMessage(data) {
+      var room = data.room;
+      var linkId = data.linkId;
+      
       if (_isDmToMe(data)) {
         _onDm(data);
       } else {
         _onTopic(data);
       }
+
+      if (jndWebSocketCommon.isActionFromMe(data.writer)) {
+        jndWebSocketCommon.updateMyLastMessageMarker(room.id, linkId);
+      }
+
     }
 
     /**
@@ -284,8 +280,8 @@
       var room = socketEvent.room;
       if (jndWebSocketCommon.isCurrentEntity(room)) {
         jndPubSub.updateCenterPanel();
-      } else if (!_updateBadgeCount(socketEvent)) {
-        jndPubSub.updateLeftBadgeCount();
+      } else {
+        _updateBadgeCount(socketEvent)
       }
 
       if (_hasMention(socketEvent)) {
@@ -306,24 +302,18 @@
       var returnVal = false;
       //내부적으로 뱃지 카운트를 처리할 수 있는 경우에는 API 콜을 하지 않는다.
       //ex) 일반 메시지, 스티커, 파일 업로드
-
-      if (!socketEvent.messageType) {
+      if (socketEvent.messageType === 'message_delete') {
+        //TODO: http://its.tosslab.com/browse/BD-326 완료 이후 linkId 로 계산 할 수 있도록 수정 필요
+        if (memberService.isUnreadMessage(room.id, socketEvent.linkId)) {
+          jndWebSocketCommon.decreaseBadgeCount(room.id);
+        }
+      } else if (!socketEvent.messageType) {
         if (jndWebSocketCommon.isActionFromMe(socketEvent.writer)) {
-          memberService.setLastReadMessageMarker(room.id, socketEvent.linkId);
+          jndWebSocketCommon.updateMyLastMessageMarker(room.id, socketEvent.linkId);
         } else {
           jndWebSocketCommon.increaseBadgeCount(room.id);
         }
-        returnVal = true;
-      } else if (socketEvent.messageType === 'message_delete') {
-        //TODO: http://its.tosslab.com/browse/BD-326 완료 이후 linkId 로 계산 할 수 있도록 수정 필요
-        //if (memberService.isUnreadMessage(room.id, socketEvent.linkId)) {
-        //  jndWebSocketCommon.decreaseBadgeCount(room.id);
-        //}
-        returnVal = false;
       }
-
-
-      return returnVal;
     }
 
     /**
@@ -343,35 +333,6 @@
       });
       return foundMentionToMe;
     }
-
-    /**
-     * 나에게서로부터 온 이벤트가 아니라면 우선 왼쪽을 업데이트한다.
-     * 현재 보고 있는 토픽에 관련된 이벤트라면 센터도 업데이트한다.
-     * @param data
-     * @private
-     */
-    function _updateCenterPanelFromOthers(data) {
-      if (!jndWebSocketCommon.isActionFromMe(data.writer)) {
-        _updateCenterForCurrentEntity(data);
-
-        // TODO: left를 업데이트하는 이유는 해당토픽의 가장 최신 정보를 얻기귀함이다.
-        // TODO: 만약 해당 토픽하나에 해당하는 정보를 얻을 수 있는 API가 있다면 그걸로 대체하는 것이 좋을 것같다.
-        // - JIHOON
-        jndPubSub.updateLeftPanel();
-      }
-    }
-
-    /**
-     * data.room이 현재 보고 있는 토픽일때만 센터를 업데이트한다.
-     * @param data
-     * @private
-     */
-    function _updateCenterForCurrentEntity(data) {
-      if (jndWebSocketCommon.isCurrentEntity(data.room)) {
-        jndPubSub.updateCenterPanel();
-      }
-    }
-
     /**
      * right panel에 update 정보를 전달한다.
      * @param data

@@ -216,7 +216,7 @@
 
     txt.regexen.validDomain = regexSupplant(/(?:#{validSubdomain}*#{validDomainName}(?:#{validGTLD}|#{validCCTLD}|#{validPunycode})|#{validIPv4})/);
     txt.regexen.validPortNumber = /[0-9]+/;
-    txt.regexen.validUrlPath = regexSupplant(/(?:\/(?:(?:[a-zA-Z0-9#{validGeneralUrlPathChars};\?:@&=#~.+!*'\(\),-_])|(?:%[a-fA-F0-9]{2}))*)?(?:\b)/);
+    txt.regexen.validUrlPath = regexSupplant(/(?:\/(?:(?:[a-zA-Z0-9#{validGeneralUrlPathChars};\?:@&=#~.+!*'\(\),-_])|(?:%[a-fA-F0-9]{2}))*)?(?:\b)(?:\/)?/);
 
     txt.regexen.extractUrl = regexSupplant(
       '('                                                            + // $1 total match

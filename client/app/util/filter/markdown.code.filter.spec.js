@@ -14,55 +14,38 @@
         var markdownString1 = $filter('*텍스트* 입니다.');
         var expectString1 = '<i>텍스트</i> 입니다.';
 
-        var markdownString2 = $filter('* 텍스트 * 입니다.');
-        var expectString2 = '<i> 텍스트 </i> 입니다.';
+        var markdownString2 = $filter('*텍스트 * 입니다.');
+        var expectString2 = '*텍스트 * 입니다.';
 
-        var markdownString3 = $filter('중간 *텍스트* 입니다.');
-        var expectString3 = '중간 <i>텍스트</i> 입니다.';
+        var markdownString3 = $filter('* 텍스트* 입니다.');
+        var expectString3 = '* 텍스트* 입니다.';
 
-        var markdownString4 = $filter('중간 * 텍스트 * 입니다.');
-        var expectString4 = '중간 <i> 텍스트 </i> 입니다.';
+        var markdownString4 = $filter('* 텍스트 * 입니다.');
+        var expectString4 = '* 텍스트 * 입니다.';
 
-        var markdownString5 = $filter('중간 *텍스트*');
-        var expectString5 = '중간 <i>텍스트</i>';
+        var markdownString5 = $filter('중간 *텍스트* 입니다.');
+        var expectString5 = '중간 <i>텍스트</i> 입니다.';
 
-        var markdownString6 = $filter('중간 * 텍스트 *');
-        var expectString6 = '중간 <i> 텍스트 </i>';
+        var markdownString6 = $filter('중간 *텍스트 * 입니다.');
+        var expectString6 = '중간 *텍스트 * 입니다.';
 
-        expect(markdownString1).toEqual(expectString1);
-        expect(markdownString2).toEqual(expectString2);
-        expect(markdownString3).toEqual(expectString3);
-        expect(markdownString4).toEqual(expectString4);
-        expect(markdownString5).toEqual(expectString5);
-        expect(markdownString6).toEqual(expectString6);
-      });
-    });
+        var markdownString7 = $filter('중간 * 텍스트* 입니다.');
+        var expectString7 = '중간 * 텍스트* 입니다.';
 
-    describe('bold', function() {
-      it('여러가지 케이스를 테스트 한다.', function() {
-        var markdownString1 = $filter('**텍스트** 입니다.');
-        var expectString1 = '<b>텍스트</b> 입니다.';
+        var markdownString8 = $filter('중간 * 텍스트 * 입니다.');
+        var expectString8 = '중간 * 텍스트 * 입니다.';
 
-        var markdownString2 = $filter('** 텍스트 ** 입니다.');
-        var expectString2 = '<b> 텍스트 </b> 입니다.';
+        var markdownString9 = $filter('중간 *텍스트*');
+        var expectString9 = '중간 <i>텍스트</i>';
 
-        var markdownString3 = $filter('중간 **텍스트** 입니다.');
-        var expectString3 = '중간 <b>텍스트</b> 입니다.';
+        var markdownString10 = $filter('중간 *텍스트 *');
+        var expectString10 = '중간 *텍스트 *';
 
-        var markdownString4 = $filter('중간 ** 텍스트 ** 입니다.');
-        var expectString4 = '중간 <b> 텍스트 </b> 입니다.';
+        var markdownString11 = $filter('중간 * 텍스트*');
+        var expectString11 = '중간 * 텍스트*';
 
-        var markdownString5 = $filter('중간 **텍스트**');
-        var expectString5 = '중간 <b>텍스트</b>';
-
-        var markdownString6 = $filter('중간 ** 텍스트 **');
-        var expectString6 = '중간 <b> 텍스트 </b>';
-
-        var markdownString7 = $filter('중간 ~* 텍스트 *~');
-        var expectString7 = '중간 ~<i> 텍스트 </i>~';
-
-        var markdownString8 = $filter('오늘 **3**개의 일정이 있습니다.');
-        var expectString8 = '오늘 <b>3</b>개의 일정이 있습니다.';
+        var markdownString12 = $filter('중간 * 텍스트 *');
+        var expectString12 = '중간 * 텍스트 *';
 
         expect(markdownString1).toEqual(expectString1);
         expect(markdownString2).toEqual(expectString2);
@@ -72,6 +55,79 @@
         expect(markdownString6).toEqual(expectString6);
         expect(markdownString7).toEqual(expectString7);
         expect(markdownString8).toEqual(expectString8);
+        expect(markdownString9).toEqual(expectString9);
+        expect(markdownString10).toEqual(expectString10);
+        expect(markdownString11).toEqual(expectString11);
+        expect(markdownString12).toEqual(expectString12);
+      });
+    });
+
+    describe('bold', function() {
+      it('여러가지 케이스를 테스트 한다.', function() {
+        var markdownString1 = $filter('**텍스트** 입니다.');
+        var expectString1 = '<b>텍스트</b> 입니다.';
+
+        var markdownString2 = $filter('**텍스트 ** 입니다.');
+        var expectString2 = '**텍스트 ** 입니다.';
+
+        var markdownString3 = $filter('** 텍스트** 입니다.');
+        var expectString3 = '** 텍스트** 입니다.';
+
+        var markdownString4 = $filter('** 텍스트 ** 입니다.');
+        var expectString4 = '** 텍스트 ** 입니다.';
+
+        var markdownString5 = $filter('중간 **텍스트** 입니다.');
+        var expectString5 = '중간 <b>텍스트</b> 입니다.';
+
+        var markdownString6 = $filter('중간 **텍스트 ** 입니다.');
+        var expectString6 = '중간 **텍스트 ** 입니다.';
+
+        var markdownString7 = $filter('중간 ** 텍스트** 입니다.');
+        var expectString7 = '중간 ** 텍스트** 입니다.';
+
+        var markdownString8 = $filter('중간 ** 텍스트 ** 입니다.');
+        var expectString8 = '중간 ** 텍스트 ** 입니다.';
+
+        var markdownString9 = $filter('중간 **텍스트**');
+        var expectString9 = '중간 <b>텍스트</b>';
+
+        var markdownString10 = $filter('중간 **텍스트 **');
+        var expectString10 = '중간 **텍스트 **';
+
+        var markdownString11 = $filter('중간 ** 텍스트**');
+        var expectString11 = '중간 ** 텍스트**';
+
+        var markdownString12 = $filter('중간 ** 텍스트 **');
+        var expectString12 = '중간 ** 텍스트 **';
+
+        var markdownString13 = $filter('중간 ~*텍스트 *~');
+        var expectString13 = '중간 ~*텍스트 *~';
+
+        var markdownString14 = $filter('중간 ~* 텍스트*~');
+        var expectString14 = '중간 ~* 텍스트*~';
+
+        var markdownString15 = $filter('중간 ~* 텍스트 *~');
+        var expectString15 = '중간 ~* 텍스트 *~';
+
+        var markdownString16 = $filter('오늘 **3**개의 일정이 있습니다.');
+        var expectString16 = '오늘 <b>3</b>개의 일정이 있습니다.';
+
+        expect(markdownString1).toEqual(expectString1);
+        expect(markdownString2).toEqual(expectString2);
+        expect(markdownString3).toEqual(expectString3);
+        expect(markdownString4).toEqual(expectString4);
+        expect(markdownString5).toEqual(expectString5);
+        expect(markdownString6).toEqual(expectString6);
+        expect(markdownString7).toEqual(expectString7);
+        expect(markdownString8).toEqual(expectString8);
+        expect(markdownString9).toEqual(expectString9);
+        expect(markdownString10).toEqual(expectString10);
+        expect(markdownString11).toEqual(expectString11);
+        expect(markdownString12).toEqual(expectString12);
+        expect(markdownString13).toEqual(expectString13);
+        expect(markdownString14).toEqual(expectString14);
+        expect(markdownString15).toEqual(expectString15);
+        expect(markdownString16).toEqual(expectString16);
       });
     });
 
@@ -81,23 +137,41 @@
         var markdownString1 = $filter('***텍스트*** 입니다.');
         var expectString1 = '<i><b>텍스트</b></i> 입니다.';
 
-        var markdownString2 = $filter('*** 텍스트 *** 입니다.');
-        var expectString2 = '<i><b> 텍스트 </b></i> 입니다.';
+        var markdownString2 = $filter('***텍스트 *** 입니다.');
+        var expectString2 = '***텍스트 *** 입니다.';
 
-        var markdownString3 = $filter('중간 ***텍스트*** 입니다.');
-        var expectString3 = '중간 <i><b>텍스트</b></i> 입니다.';
+        var markdownString3 = $filter('*** 텍스트*** 입니다.');
+        var expectString3 = '*** 텍스트*** 입니다.';
 
-        var markdownString4 = $filter('중간 *** 텍스트 *** 입니다.');
-        var expectString4 = '중간 <i><b> 텍스트 </b></i> 입니다.';
+        var markdownString4 = $filter('*** 텍스트 *** 입니다.');
+        var expectString4 = '*** 텍스트 *** 입니다.';
 
-        var markdownString5 = $filter('중간 ***텍스트***');
-        var expectString5 = '중간 <i><b>텍스트</b></i>';
+        var markdownString5 = $filter('중간 ***텍스트*** 입니다.');
+        var expectString5 = '중간 <i><b>텍스트</b></i> 입니다.';
 
-        var markdownString6 = $filter('중간 *** 텍스트 ***');
-        var expectString6 = '중간 <i><b> 텍스트 </b></i>';
+        var markdownString6 = $filter('중간 ***텍스트 *** 입니다.');
+        var expectString6 = '중간 ***텍스트 *** 입니다.';
 
-        var markdownString7 = $filter('중간 *~* 텍스트 *~*');
-        var expectString7 = '중간 <i>~</i> 텍스트 <i>~</i>';
+        var markdownString7 = $filter('중간 *** 텍스트*** 입니다.');
+        var expectString7 = '중간 *** 텍스트*** 입니다.';
+
+        var markdownString8 = $filter('중간 *** 텍스트 *** 입니다.');
+        var expectString8 = '중간 *** 텍스트 *** 입니다.';
+
+        var markdownString9 = $filter('중간 ***텍스트***');
+        var expectString9 = '중간 <i><b>텍스트</b></i>';
+
+        var markdownString10 = $filter('중간 ***텍스트 ***');
+        var expectString10 = '중간 ***텍스트 ***';
+
+        var markdownString11 = $filter('중간 *** 텍스트***');
+        var expectString11 = '중간 *** 텍스트***';
+
+        var markdownString12 = $filter('중간 *** 텍스트 ***');
+        var expectString12 = '중간 *** 텍스트 ***';
+
+        var markdownString13 = $filter('중간 *~* 텍스트 *~*');
+        var expectString13 = '중간 <i>~</i> 텍스트 <i>~</i>';
 
         expect(markdownString1).toEqual(expectString1);
         expect(markdownString2).toEqual(expectString2);
@@ -106,6 +180,12 @@
         expect(markdownString5).toEqual(expectString5);
         expect(markdownString6).toEqual(expectString6);
         expect(markdownString7).toEqual(expectString7);
+        expect(markdownString8).toEqual(expectString8);
+        expect(markdownString9).toEqual(expectString9);
+        expect(markdownString10).toEqual(expectString10);
+        expect(markdownString11).toEqual(expectString11);
+        expect(markdownString12).toEqual(expectString12);
+        expect(markdownString13).toEqual(expectString13);
       });
       it('공백 테스트', function() {
         var markdownString1 = $filter('***텍스트 입니다.');
@@ -120,7 +200,52 @@
         var markdownString1 = $filter('~~텍스트~~ 입니다.');
         var expectString1 = '<del>텍스트</del> 입니다.';
 
+        var markdownString2 = $filter('~~텍스트 ~~ 입니다.');
+        var expectString2 = '~~텍스트 ~~ 입니다.';
+
+        var markdownString3 = $filter('~~ 텍스트~~ 입니다.');
+        var expectString3 = '~~ 텍스트~~ 입니다.';
+
+        var markdownString4 = $filter('~~ 텍스트 ~~ 입니다.');
+        var expectString4 = '~~ 텍스트 ~~ 입니다.';
+
+        var markdownString5 = $filter('~~텍 스 트~~ 입니다.');
+        var expectString5 = '<del>텍 스 트</del> 입니다.';
+
+        var markdownString6 = $filter('~~텍 스 트 ~~ 입니다.');
+        var expectString6 = '~~텍 스 트 ~~ 입니다.';
+
+        var markdownString7 = $filter('~~ 텍 스 트~~ 입니다.');
+        var expectString7 = '~~ 텍 스 트~~ 입니다.';
+
+        var markdownString8 = $filter('~~ 텍 스 트 ~~ 입니다.');
+        var expectString8 = '~~ 텍 스 트 ~~ 입니다.';
+
+        var markdownString9 = $filter('~~텍 ~~ 스 ~~ 트~~ 입니다.');
+        var expectString9 = '<del>텍 ~~ 스 ~~ 트</del> 입니다.';
+
+        var markdownString10 = $filter('~~텍 ~~ 스 ~~ 트 ~~ 입니다.');
+        var expectString10 = '~~텍 ~~ 스 ~~ 트 ~~ 입니다.';
+
+        var markdownString11 = $filter('~~ 텍 ~~ 스 ~~ 트~~ 입니다.');
+        var expectString11 = '~~ 텍 ~~ 스 ~~ 트~~ 입니다.';
+
+        var markdownString12 = $filter('~~ 텍 ~~ 스 ~~ 트 ~~ 입니다.');
+        var expectString12 = '~~ 텍 ~~ 스 ~~ 트 ~~ 입니다.';
+
         expect(markdownString1).toEqual(expectString1);
+        expect(markdownString2).toEqual(expectString2);
+        expect(markdownString3).toEqual(expectString3);
+        expect(markdownString4).toEqual(expectString4);
+        expect(markdownString5).toEqual(expectString5);
+        expect(markdownString6).toEqual(expectString6);
+        expect(markdownString7).toEqual(expectString7);
+        expect(markdownString8).toEqual(expectString8);
+        expect(markdownString9).toEqual(expectString9);
+        expect(markdownString10).toEqual(expectString10);
+        expect(markdownString11).toEqual(expectString11);
+        expect(markdownString12).toEqual(expectString12);
+
       });
       it('공백 테스트', function() {
         var markdownString1 = $filter('~~텍스트 입니다.');

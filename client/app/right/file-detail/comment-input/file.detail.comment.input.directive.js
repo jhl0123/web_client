@@ -75,7 +75,7 @@
         scope.$on('elasticResize:comment', _onElasticResize);
 
         scope.$on('room:memberAdded', _onMemberUpdate);
-        scope.$on('room:memberDeleted', _onMemberUpdate);
+        scope.$on('jndWebSocketMessage:topicLeave', _onMemberUpdate);
 
         scope.$watch('file', _onFileChange);
         scope.$watch('getMentions', _onGetMentionChange);

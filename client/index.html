@@ -167,6 +167,7 @@
   <link rel="stylesheet" href="components/jandi/ui/pdf-viewer/pdf.viewer.css">
   <link rel="stylesheet" href="components/jandi/ui/profile-image/character-image/character.image.css">
   <link rel="stylesheet" href="components/jandi/ui/profile-image/crop-image/crop.image.css">
+  <link rel="stylesheet" href="components/jandi/ui/splitter/splitter.css">
   <!-- endinjector -->
   <!-- endbuild -->
 </head>
@@ -335,6 +336,7 @@
 <script src="app/util/directive/window.title.directive.js"></script>
 <script src="app/util/filter/camel.to.dot.js"></script>
 <script src="app/util/filter/date.filter.js"></script>
+<script src="app/util/filter/entity.search.filter.js"></script>
 <script src="app/util/filter/html.decode.filter.js"></script>
 <script src="app/util/filter/html.encode.filter.js"></script>
 <script src="app/util/filter/main.filter.js"></script>
@@ -342,7 +344,6 @@
 <script src="app/util/filter/markdown.strip.filter.js"></script>
 <script src="app/util/filter/mention.filter.js"></script>
 <script src="app/util/filter/mention.html.decode.filter.js"></script>
-<script src="app/util/filter/search.filter.js"></script>
 <script src="app/util/filter/template.filter.js"></script>
 <script src="app/util/filter/txt.filter.js"></script>
 <script src="app/util/images/image.loader.directive.js"></script>
@@ -354,10 +355,10 @@
 <script src="app/util/service/analytics.service.js"></script>
 <script src="app/util/service/clipboard.service.js"></script>
 <script src="app/util/service/date.service.js"></script>
+<script src="app/util/service/entity.search.filter.service.js"></script>
 <script src="app/util/service/entity.service.js"></script>
 <script src="app/util/service/file.object.service.js"></script>
 <script src="app/util/service/file.upload.service.js"></script>
-<script src="app/util/service/general.service.js"></script>
 <script src="app/util/service/image.paste.service.js"></script>
 <script src="app/util/service/integration.service.js"></script>
 <script src="app/util/service/jnd.util.service.js"></script>
@@ -389,6 +390,7 @@
 <script src="app/util/storage/jnd.folder.storage.js"></script>
 <script src="app/util/storage/jnd.local.storage.js"></script>
 <script src="app/util/storage/jnd.message.storage.js"></script>
+<script src="app/util/storage/jnd.panel.size.storage.js"></script>
 <script src="app/banner/desktop.notification.banner.controller.js"></script>
 <script src="app/banner/desktop.notification.banner.directive.js"></script>
 <script src="app/banner/desktop.notification.banner.service.js"></script>
@@ -638,7 +640,6 @@
 <script src="components/app/analytics/services/analytics.storage.service.js"></script>
 <script src="components/app/analytics/services/analytics.translate.service.js"></script>
 <script src="components/app/analytics/services/google.analytics.service.js"></script>
-<script src="components/app/analytics/services/mixpanel.analytics.service.js"></script>
 <script src="components/app/cache/cache.topic.service.js"></script>
 <script src="components/app/keyCode/keyCode.js"></script>
 <script src="components/app/keyCode/keyCode.service.js"></script>
@@ -676,6 +677,7 @@
 <script src="components/app/socket/service/socket.team.service.js"></script>
 <script src="components/app/socket/service/socket.topic.service.js"></script>
 <script src="components/app/socket/service/socket.util.service.js"></script>
+<script src="components/app/socket/socket.event.api.service.js"></script>
 <script src="components/app/socket/socket.service.handler.js"></script>
 <script src="components/app/socket/socket.service.helper.js"></script>
 <script src="components/app/socket/socket.service.js"></script>
@@ -716,6 +718,10 @@
 <script src="components/jandi/ui/profile-image/menu/profile.image.menu.directive.js"></script>
 <script src="components/jandi/ui/profile-image/profile.image.controller.js"></script>
 <script src="components/jandi/ui/profile-image/profile.image.js"></script>
+<script src="components/jandi/ui/splitter/splitter.abstract.js"></script>
+<script src="components/jandi/ui/splitter/splitter.controller.js"></script>
+<script src="components/jandi/ui/splitter/splitter.directive.js"></script>
+<script src="components/jandi/ui/splitter/splitter.panel.directive.js"></script>
 <!-- endinjector -->
 <!-- endbuild -->
 </body>

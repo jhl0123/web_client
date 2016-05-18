@@ -9,7 +9,7 @@
     .service('jndWebSocketFile', jndWebSocketFile);
 
   /* @ngInject */
-  function jndWebSocketFile(jndPubSub) {
+  function jndWebSocketFile(jndPubSub, memberService, jndWebSocketCommon) {
     var FILE_CREATED = 'file_created';
     var FILE_IMAGE = 'file_image';
     var FILE_IMAGE_ERROR = 'file_image_error';
@@ -107,32 +107,48 @@
      * @private
      */
     function _onFileDeleted(data) {
-
       jndPubSub.pub('rightFileOnFileDeleted', data);
       jndPubSub.pub('rightFileDetailOnFileDeleted', data);
       jndPubSub.pub('centerOnFileDeleted', data);
     }
 
     /**
-     * 파일에 코멘트가 달렸을 때
-     * @param data
+     * 파일에 코멘트가 달렸을 때 
+     * @param {object} socketEvent
      * @private
      */
-    function _onFileCommentCreated(data) {
-      jndPubSub.pub('jndWebSocketFile:commentCreated', data);
+    function _onFileCommentCreated(socketEvent) {
+      var comment = socketEvent.comment;
+      var linkId = comment.linkId;
+      comment.shareEntities = _.uniq(comment.shareEntities);
+      if (jndWebSocketCommon.isActionFromMe(socketEvent.writer)) {
+        _.forEach(comment.shareEntities, function(roomId) {
+          jndWebSocketCommon.updateMyLastMessageMarker(roomId, linkId);
+        });
+      } else {
+        _.forEach(comment.shareEntities, function(roomId) {
+          jndWebSocketCommon.increaseBadgeCount(roomId);
+        });
+      }
+      jndPubSub.pub('jndWebSocketFile:commentCreated', socketEvent);
     }
 
     /**
      * 파일에 달린 코멘트가 지워졌을 때
-     * @param data
+     * @param socketEvent
      * @private
      */
-    function _onFileCommentDeleted(data) {
-      // badge count update 하기 위함.
-      // delete 는 marker 의 lastLinkId 기준으로 계산하므로 badge count 를 서버로직을 통해 업데이트 받는다.
-      jndPubSub.updateLeftPanel();
-      jndPubSub.pub('jndWebSocketFile:commentDeleted', data);
-      jndPubSub.pub('centerOnFileCommentDeleted', data);
+    function _onFileCommentDeleted(socketEvent) {
+      var comment = socketEvent.comment;
+      var linkId = comment.linkId;
+      
+      _.forEach(comment.shareEntities, function(roomId) {
+        if (memberService.isUnreadMessage(roomId, linkId)) {
+          jndWebSocketCommon.decreaseBadgeCount(roomId);
+        }
+      });
+      
+      jndPubSub.pub('jndWebSocketFile:commentDeleted', socketEvent);
     }
 
     /**

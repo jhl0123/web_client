@@ -204,9 +204,6 @@
           .success(function() {
             _analyticsInviteSuccess(entityType, guestList);
 
-            // TODO -  ASK JOHN FOR AN API THAT RETRIEVES UPDATED INFO OF SPECIFIC TOPIC/PG.
-            $rootScope.$broadcast('updateLeftPanelCaller');
-
             // 토픽에 유저 초대 요청이 성공한 다음 'EntityHandler:parseLeftSideMenuDataDone'이 발생하여 토픽에 멤버 정보가
             // 갱신되기까지 오랜 시간이 소요되므로 초대 성공 후 바로 토픽의 멤버 정보를 갱신하여 사용자가 view에서 느끼는 혼란을 방지한다.
             RoomTopicList.addMember($scope.currentEntity.id, guestList);
@@ -295,6 +292,7 @@
      * @private
      */
     function _focusFilter() {
+      // element 선택 후 바로 focus 수행시 element에 focus가 갔다가 다음 수행에 의하여 focus가 빠질수 있으므로 setTimeout 사용한다.
       setTimeout(function() {
         $('#invite-member-filter').focus();
       });
@@ -319,13 +317,13 @@
 
     /**
      * keyword type select event handler
-     * @param {string} $newValue
-     * @param {string} $oldValue
+     * @param {string} newValue
+     * @param {string} oldValue
      */
-    function onKeywordTypeSelect($newValue, $oldValue) {
-      if ($newValue !== $oldValue) {
+    function onKeywordTypeSelect(newValue, oldValue) {
+      if (newValue !== oldValue) {
         _clearFilter();
-        $scope.keyword.type = $newValue;
+        $scope.keyword.type = newValue;
       }
 
       _focusFilter();

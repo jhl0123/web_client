@@ -10,7 +10,7 @@
     .service('RoomTopicList', RoomTopicList);
 
   /* @ngInject */
-  function RoomTopicList($timeout, $rootScope, EntityCollection, UserList, jndPubSub) {
+  function RoomTopicList($timeout, $rootScope, EntityCollection, UserList, jndPubSub, memberService) {
     var _timerNotifyChange;
     var _collectionMap = {};
     var _changedIdMap = {};
@@ -29,6 +29,9 @@
     this.isPublic = isPublic;
     this.isJoined = isJoined;
 
+    this.join = join;
+    this.unjoin = unjoin;
+    
     this.hasMember = hasMember;
     this.hasUser = hasUser;
     
@@ -115,7 +118,12 @@
     function add(item, isJoin) {
       var collection = _getEntityCollection(isJoin);
       var id = item.id;
-      
+
+      _.extend(item, {
+        subscribe: _.isUndefined(item.subscribe) ? true : item.subscribe,
+        isStarred: _.isUndefined(item.isStarred) ? false : item.isStarred
+      });
+
       collection.add(item);
 
       if (isExist(id, !isJoin)) {
@@ -192,6 +200,37 @@
       _notifyChange();
     }
 
+    /**
+     * 현재 Member 가 roomId 에 해당하는 방에 join 했을 때
+     * @param {number} roomId
+     */
+    function join(roomId) {
+      var room = get(roomId);
+      var memberId = memberService.getMemberId();
+
+      if (!isExist(roomId, true)) {
+        add(room, true);
+        addMember(roomId, memberId);
+      }
+
+      remove(roomId, false);
+    }
+
+    /**
+     * 현재 Member 가 roomId 에 해당하는 방에서 나갔을 때
+     * @param {number} roomId
+     */
+    function unjoin(roomId) {
+      var room = get(roomId);
+      var memberId = memberService.getMemberId();
+      
+      if (isPublic(roomId) && !isExist(roomId, false)) {
+        add(room, false);
+        removeMember(roomId, memberId);
+      }
+      remove(roomId, true);
+    }
+    
     /**
      * id 에 해당하는 데이터를 반환한다.
      * @param {number|string} id

@@ -10,6 +10,7 @@
       link: link,
       scope: true,
       restrict: 'EA',
+      replace: true,
       templateUrl: 'app/left/member/member.html',
       controller: 'currentMemberCtrl'
     };

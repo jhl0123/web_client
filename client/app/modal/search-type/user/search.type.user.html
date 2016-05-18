@@ -5,10 +5,10 @@
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-menu-option"
         ng-class="{active: isActive($index)}"
-        ng-repeat="item in list track by $index"
+        ng-repeat="keywordType in keywordTypes track by $index"
         ng-mouseenter="onSelectActive($index)"
         ng-mousedown="onSelectItem($index)">
-      <span class="option-text">{{::item.text}}</span>
+      <span class="option-text">{{::keywordType.text}}</span>
     </li>
   </ul>
 </div>

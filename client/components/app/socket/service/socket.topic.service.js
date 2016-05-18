@@ -10,7 +10,8 @@
     .service('jndWebSocketTopic', TopicSocket);
 
   /* @ngInject */
-  function TopicSocket(jndPubSub, EntityHandler, memberService, jndWebSocketCommon, currentSessionHelper, RoomTopicList) {
+  function TopicSocket(jndPubSub, EntityHandler, memberService, jndWebSocketCommon, currentSessionHelper, RoomTopicList,
+                       UserList) {
     var TOPIC_LEFT = 'topic_left';
     var TOPIC_JOINED = 'topic_joined';
     var TOPIC_DELETED = 'topic_deleted';
@@ -131,35 +132,43 @@
 
     /**
      * 'topic_left' EVENT HANDLER
+     * 내가 토픽을 나갔을 때
      * @param {object} socketEvent - socket event parameter
      * @private
      */
     function _onTopicLeft(socketEvent) {
       _convertSocketEvent(socketEvent);
 
+      var roomId = socketEvent.room.id;
+
       if (jndWebSocketCommon.isCurrentEntity(socketEvent.room)) {
         jndPubSub.toDefaultTopic();
       }
 
-      jndPubSub.updateLeftPanel();
+      RoomTopicList.unjoin(roomId);
+
       jndPubSub.onChangeShared(socketEvent);
     }
 
     /**
      * 'topic_joined' EVENT HANDLER
+     * 내가 토픽에 join 했을 때
      * @param {object} socketEvent - socket event object
      * @private
      */
     function _onTopicJoined(socketEvent) {
       _convertSocketEvent(socketEvent);
+      
+      var user = socketEvent.member;
+      var room = socketEvent.room;
 
       //message 소켓 이벤트 중 messageType 이 topic_join인 소켓 이벤트 발생 시점에 join 한 member 정보가 없을 수 있기 때문에
       //leftSideMenu request 실행 이전에 소켓 이벤트에 포함된 join 한 member 데이터 추가/업데이트를 먼저 수행한다.
-      jndWebSocketCommon.addUser(socketEvent);
-
-      //현재 상황에서는 초대 받았을 때 좌측 토픽 리스트를 함께 업데이트 해야하기 때문에 leftSideMenu 를 반드시 호출해야 한다.
-      //TODO: http://its.tosslab.com/browse/BD-270 이슈 해결 뒤 아래 로직 제거 검토
-      jndPubSub.updateLeftPanel();
+      if (!UserList.isExist(user.id)) {
+        UserList.add(user);
+      }
+      RoomTopicList.join(room.id);
+      
       jndPubSub.onChangeShared(socketEvent);
     }
 
@@ -170,8 +179,9 @@
      */
     function _onTopicLDeleted(socketEvent) {
       _convertSocketEvent(socketEvent);
+      var roomId = socketEvent.room.id;
 
-      jndPubSub.updateLeftPanel();
+      RoomTopicList.remove(roomId);
       jndPubSub.onChangeShared(socketEvent);
 
       jndPubSub.pub('topicDeleted', socketEvent);
@@ -189,12 +199,23 @@
      * @private
      */
     function _onTopicLCreated(socketEvent) {
+      var room;
       _convertSocketEvent(socketEvent);
-
-      jndPubSub.updateLeftPanel();
+      room = socketEvent.room;
+      RoomTopicList.add(room, _isJoinedTopic(room));
       jndPubSub.onChangeShared(socketEvent);
     }
 
+    /**
+     * room 의 member field 를 참조하여, 현재 사용자가 가입한 room 인지 여부를 반환한다.
+     * @param {object} room
+     * @returns {boolean}
+     * @private
+     */
+    function _isJoinedTopic(room) {
+      var memberId = memberService.getMemberId();
+      return room.members.indexOf(memberId) !== -1;
+    }
     /**
      * 'topic_updated' EVENT HANDLER
      * @param {object} socketEvent - socket event parameter

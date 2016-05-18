@@ -9,10 +9,11 @@
     .controller('FileDetailCtrl', FileDetailCtrl);
 
   /* @ngInject */
-  function FileDetailCtrl($scope, $filter, $q, $state, FileDetail, jndPubSub, JndMessageStorage,
+  function FileDetailCtrl($scope, $filter, $q, $state, $timeout, FileDetail, jndPubSub, JndMessageStorage,
                           memberService, publicService,RightPanel, Sticker, Tutorial, UserList) {
     var _fileId;
     var _requestFile;
+    var _timerFileDetail;
 
     _init();
 
@@ -52,27 +53,11 @@
      * @private
      */
     function _attachEvents() {
-      $scope.$on('fileDetail:updateFile', _onUpdateFile);
-      $scope.$on('fileDetail:updateComments', _onUpdateComments);
+      $scope.$on('fileDetail:updateFile', _requestFileDetail);
+      $scope.$on('fileDetail:updateComments', _requestFileDetail);
 
       $scope.$on('rightFileDetailOnFileDeleted', _onRightFileDetailOnFileDeleted);
       $scope.$on('jndWebSocketMember:memberUpdated', _onUpdateMemberProfile);
-    }
-
-    /**
-     * file 갱신 event handler
-     * @private
-     */
-    function _onUpdateFile() {
-      _requestFileDetail('file');
-    }
-
-    /**
-     * comments 갱신 event handler
-     * @private
-     */
-    function _onUpdateComments() {
-      _requestFileDetail('comment');
     }
 
     /**
@@ -92,44 +77,34 @@
 
     /**
      * request file detail
-     * @param {string} updateType
      * @private
      */
-    function _requestFileDetail(updateType) {
+    function _requestFileDetail() {
       if (_isFileDetailActive()) {
-        _requestFile && _requestFile.abort();
-        _requestFile = FileDetail.get(_fileId)
-          .success(function(response) {
-            _onSuccessFileDetail(response, updateType);
-          })
-          .error(_onErrorFileDetail)
+        $timeout.cancel(_timerFileDetail);
+        _timerFileDetail = $timeout(function() {
+          _requestFile && _requestFile.abort();
+          _requestFile = FileDetail.get(_fileId)
+            .success(_onSuccessFileDetail)
+            .error(_onErrorFileDetail)
+        });
       }
     }
 
     /**
      * success file detail
      * @param {object} response
-     * @param {string} updateType
      * @private
      */
-    function _onSuccessFileDetail(response, updateType) {
+    function _onSuccessFileDetail(response) {
       var messageDetails;
       var fileDetail;
 
       if (response) {
         messageDetails = response.messageDetails;
-        updateType = updateType ? updateType : 'all';
-
-        fileDetail = _getFileDetailData(messageDetails, updateType);
-
-        if (updateType === 'file') {
-          _setFile(fileDetail.file);
-        } else if (updateType === 'comment') {
-          _setComments(fileDetail.comments);
-        } else {
-          _setFile(fileDetail.file);
-          _setComments(fileDetail.comments);
-        }
+        fileDetail = _getFileDetailData(messageDetails);
+        _setFile(fileDetail.file);
+        _setComments(fileDetail.comments);
       }
 
       $scope.hasInitialLoaded = true;
@@ -138,27 +113,22 @@
     /**
      * file과 comments를 분류하여 전달한다.
      * @param {array} messageDetails
-     * @param {string} updateType
      * @returns {{file: *, comments: Array}}
      * @private
      */
-    function _getFileDetailData(messageDetails, updateType) {
+    function _getFileDetailData(messageDetails) {
       var file;
       var comments = [];
 
       _.each(messageDetails, function(item) {
-        if (updateType === 'all' || item.contentType.indexOf(updateType) > -1) {
-          if (item.contentType === 'file') {
-            // file
-
-            file = item;
-            _setExtraData(item, item.writerId);
-            $scope.isArchivedFile = _isArchivedFile(item);
-          } else if (!_isArchivedFile(item)) {
-            // etc
-
-            _pushComment(item, comments);
-          }
+        if (item.contentType === 'file') {
+          // file
+          file = item;
+          _setExtraData(item, item.writerId);
+          $scope.isArchivedFile = _isArchivedFile(item);
+        } else if (!_isArchivedFile(item)) {
+          // etc
+          _pushComment(item, comments);
         }
       });
 

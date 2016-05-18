@@ -45,8 +45,7 @@
 
       $scope.$on('kickedOut', _onKickedOut);
       $scope.$on('jndWebSocketTopic:topicInvited:currentMember', _onTopicInvite);
-      $scope.$on('topicLeave', _onTopicLeave);
-
+      
       $scope.$on('JndConnect:open', _onJndConnectOpen);
       $scope.$on('JndConnect:close', _onJndConnectClose);
 
@@ -192,18 +191,6 @@
     }
 
     /**
-     * invited flag 를 가지는지 여부를 판단한다
-     * @param {object} entity
-     * @param {Array} inviter
-     * @returns {boolean}
-     * @private
-     */
-    function _hasInvitedFlag(entity, inviter) {
-      var currentUserId = memberService.getMemberId();
-      return !_isCurrentEntity(entity)  && inviter.indexOf(currentUserId) !== -1;
-    }
-
-    /**
      * 인자로 들어온 entity 가 현재 entity 인지 반환한다
      * @param {object} entity
      * @returns {boolean}
@@ -211,29 +198,6 @@
      */
     function _isCurrentEntity(entity) {
       return currentSessionHelper.getCurrentEntity().id === (entity && entity.id);
-    }
-
-    /**
-     * topic leave 이벤트 핸들러
-     * 해당 entity 에 member 를 삭제한다
-     * @param {object} angularEvent
-     * @param {object} data
-     * @private
-     */
-    function _onTopicLeave(angularEvent, data) {
-      var room = RoomTopicList.get(data.room.id);
-      var member = data.writer;
-      var memberIdList;
-      var index;
-
-      if (room && (memberIdList = RoomTopicList.getMemberIdList(room))) {
-        if (index = memberIdList.indexOf(member)) {
-          index > -1 && memberIdList.splice(index, 1);
-        }
-      }
-      room.members = memberIdList;
-
-      jndPubSub.pub('room:memberDeleted');
     }
   }
 })();

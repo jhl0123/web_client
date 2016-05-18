@@ -10,7 +10,7 @@
     .module('jandiApp')
     .directive('topicFolderDraggable', topicFolderDraggable);
 
-  function topicFolderDraggable(jndPubSub, TopicUpdateLock, TopicFolderModel) {
+  function topicFolderDraggable(jndPubSub, TopicUpdateLock, TopicFolderModel, JndPanelSizeStorage) {
     return {
       restrict: 'A',
       replace: true,
@@ -198,8 +198,10 @@
        * @private
        */
       function _showDraggable(mouseEvent) {
-        _jqDraggable = $('<div class="lpanel-list topic-folder has-folder topic-folder-draggable"></div>')
-          .append(el.parent().html());
+        _jqDraggable = $('<div class="lpanel-list topic-folder has-folder topic-folder-draggable"></div>');
+        _jqDraggable.css('width', JndPanelSizeStorage.getLeftPanelWidth());
+
+        _jqDraggable.append(el.parent().html());
 
         $('body').append(_jqDraggable);
 

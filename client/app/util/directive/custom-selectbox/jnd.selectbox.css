@@ -227,7 +227,7 @@
   padding-left: 10px;
   font-size: 13px;
   font-weight: 700;
-  color:#969696;
+  color:#6D6D6D;
 }
 
 .custom-select-box__menulist-items ul,
@@ -289,10 +289,16 @@
 }
 
 .menulist-item-topics li.folder-title span,
-.menulist-item-header > span,
+.menulist-item-header span,
 .custom-select-box__menulist-items.toggle-menulist i,
 .custom-select-box__menulist-items .menulist-item-header span {
   color:#A2A2A2;
+}
+.menulist-item-header span {
+  margin-left: 0.05em;
+}
+.menulist-item-header span:lang(en) {
+  margin-left: -0.05em;
 }
 .menulist-item-topics li.folder-title i {
   color:#ACACAC;

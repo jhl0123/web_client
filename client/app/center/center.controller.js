@@ -11,7 +11,7 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
                                                  MessageCollection, MessageSendingCollection, AnalyticsHelper,
                                                  Announcement, TopicMessageCache, NotificationManager, Dialog, RendererUtil,
                                                  JndUtil, HybridAppHelper, TopicInvitedFlagMap, UserList, JndConnect,
-                                                 RoomTopicList) {
+                                                 RoomTopicList, SocketEventApi, jndWebSocket) {
 
   //console.info('::[enter] centerpanelController', $state.params.entityId);
   var _scrollHeightBefore;
@@ -225,7 +225,9 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
   function _initializeListeners() {
     //viewContent load 시 이벤트 핸들러 바인딩
     $scope.$on('connected', _onConnected);
-    $scope.$on('NetInterceptor:onGatewayTimeoutError', _onGatewayTimeoutError);
+    $scope.$on('NetInterceptor:onGatewayTimeoutError', _refreshView);
+    $scope.$on('Auth:refreshTokenSuccess', _refreshView);
+    
     $scope.$on('refreshCurrentTopic',_refreshCurrentTopic);
     $scope.$on('newMessageArrived', _onNewMessageArrived);
     $scope.$on('newSystemMessageArrived', _onNewSystemMessageArrived);
@@ -236,7 +238,7 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
     $scope.$on('centerUpdateChatList', _onChatUpdated);
     $scope.$on('centerOnMarkerUpdated', _onCenterMarkerUpdated);
     $scope.$on('centerOnTopicLeave',_onCenterOnTopicLeave);
-    $scope.$on('centerOnFileCommentDeleted', onCenterOnFileCommentDeleted);
+    $scope.$on('jndWebSocketFile:commentDeleted', _onFileCommentDeleted);
     $scope.$on('onChangeSticker:' + _stickerType, _onChangeSticker);
     $scope.$on('externalFile:fileShareChanged', _onFileShareChanged);
 
@@ -260,6 +262,8 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
 
     $scope.$on('body:dragStart', _onDragStart);
     $scope.$on('topicDeleted', _onTopicDeleted);
+
+    $scope.$on('jndWebSocketMessage:messageDeleted', _onMessageDeleted);
   }
 
   /**
@@ -764,38 +768,76 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
   }
 
   /**
-   * update 된 메시지 정보를 조회한다.
-   * @param {boolean} [isUpdateMessageMarker=false] - updateMessageMarker 를 호출할지 여부를 결정한다.
+   * 최신 목록을 조회한다.
+   * @param {boolean} [isUpdateMessageMarker=false] - 현재 사용자의 read marker 를 업데이트 할 지 여부
    */
   function updateList(isUpdateMessageMarker) {
     if (!_isDestroyed) {
       //  when 'updateList' gets called, there may be a situation where 'getMessages' is still in progress.
       //  In such case, don't update list and just return it.
-      if (!_hasUpdate && ($scope.msgLoadStatus.loading || _isUpdateListLock)) {
+      if (_isUpdateListLock) {
         _hasUpdate = true;
-        return;
+      } else {
+        _isUpdateListLock = true;
+        $scope.isPolling = true;
+        
+        deferredObject.updateMessages = $q.defer();
+        messageAPIservice.getMessages(entityType, entityId, {
+            linkId: globalLastLinkId,
+            type: 'new',
+            count: 50
+          }, deferredObject.updateMessages)
+          .success(_.bind(_onUpdateListSuccess, this, isUpdateMessageMarker))
+          .error(_.bind(_onUpdateListError, this, isUpdateMessageMarker));
       }
-      _isUpdateListLock = true;
-      $scope.isPolling = true;
-      //todo: deprecated 되었으므로 해당 API 제거해야함
-      deferredObject.updateMessages = $q.defer();
-      messageAPIservice.getUpdatedMessages(entityType, entityId, globalLastLinkId, deferredObject.updateMessages)
-        .success(_.bind(_onUpdateListSuccess, this, isUpdateMessageMarker))
-        .error(_onUpdateListError);
-
-
-      // TODO: async 호출이 보다 안정적이므로 callback에서 추후 처리 필요
-      //$scope.promise = $timeout(updateList, updateInterval)
     }
   }
 
+  /**
+   * update list 성공 핸들러
+   * @param {boolean} [isUpdateMessageMarker=false] - 현재 사용자의 read marker 를 업데이트 할 지 여부
+   * @param {object} response
+   * @private
+   */
+  function _onUpdateListSuccess(isUpdateMessageMarker, response) {
+    var messagesList = response.records;
+    if (!_isDestroyed) {
+      _isUpdateListLock = false;
+      if (messagesList.length) {
+        messagesList = _.sortBy(messagesList, 'id');
+        if (_isBottomReached() && _isChatPanelActive()) {
+          _scrollToBottom();
+        }
+        // 업데이트 된 메세지 처리
+        _updateMessages(messagesList, hasMoreNewMessageToLoad());
 
-  function _onUpdateListError(response) {
+        firstMessageId = response.firstLinkId;
+        lastMessageId = response.lastLinkId;
+        globalLastLinkId = response.globalLastLinkId;
+
+        MessageCollection.updateUnreadCount();
+        if (isUpdateMessageMarker) {
+          updateMessageMarker();
+        }
+        _checkEntityMessageStatus();
+      } else {
+        MessageSendingCollection.clearSentMessages();
+      }
+    }
+  }
+
+  /**
+   * update list 실패 핸들러
+   * @param {boolean} [isUpdateMessageMarker=false] - 현재 사용자의 read marker 를 업데이트 할 지 여부
+   * @param {object} response
+   * @private
+   */
+  function _onUpdateListError(isUpdateMessageMarker, response) {
     _isUpdateListLock = false;
     if (!_isDestroyed) {
       if (_updateRetryCnt === 0) {
         _updateRetryCnt++;
-        updateList();
+        updateList(isUpdateMessageMarker);
       } else {
         _updateRetryCnt = 0;
         MessageSendingCollection.clearSentMessages();
@@ -804,47 +846,6 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
     }
   }
 
-  /**
-   * 메세지 success 핸들러
-   * @param {boolean} isUpdateMessageMarker - updateMessageMarker 를 호출할 지 여부를 결정한다.
-   * @param {object} response 서버 응답
-   * @private
-   */
-  function _onUpdateListSuccess(isUpdateMessageMarker, response) {
-    isUpdateMessageMarker = _.isBoolean(isUpdateMessageMarker) ? isUpdateMessageMarker : false;
-    if (!_isDestroyed) {
-      _isUpdateListLock = false;
-
-      var updateInfo = response.updateInfo;
-      if (!_.isUndefined(updateInfo)) {
-
-        globalLastLinkId = response.lastLinkId;
-        updateInfo.messages = _.sortBy(updateInfo.messages, 'id');
-
-        if (updateInfo.messageCount) {
-          if (_isBottomReached() && _isChatPanelActive()) {
-            _scrollToBottom();
-          }
-          // 업데이트 된 메세지 처리
-          _updateMessages(updateInfo.messages, hasMoreNewMessageToLoad());
-          MessageCollection.updateUnreadCount();
-          lastMessageId = updateInfo.messages[updateInfo.messages.length - 1].id;
-          if (isUpdateMessageMarker) {
-            updateMessageMarker();
-          }
-          //console.log('::_onUpdateListSuccess', lastMessageId);
-          _checkEntityMessageStatus();
-        } else {
-          MessageSendingCollection.clearSentMessages();
-        }
-      }
-
-      if (_hasUpdate) {
-        updateList();
-        _hasUpdate = false;
-      }
-    }
-  }
 
   /**
    * messages 를 loop 돌며 업데이트 한다.
@@ -927,14 +928,6 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
   }
 
   /**
-   * gateway timeout error event handler
-   * @private
-   */
-  function _onGatewayTimeoutError() {
-    _refreshView();
-  }
-
-  /**
    * 네트워크 연결 되었을때 콜백
    * @private
    */
@@ -950,11 +943,34 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
     _initMarkers();
     if (MessageSendingCollection.queue.length) {
       _requestPostMessages(true);
-    } else {
-      updateList();
     }
+    _requestEventsHistory();
   }
 
+  /**
+   * disconnect 동안 누락된 이벤트를 조회하기 위해 
+   * event history API 를 호출한다.
+   * @private
+   */
+  function _requestEventsHistory() {
+    var lastTimeStamp = jndWebSocket.getLastTimestamp();
+    
+    SocketEventApi.get({
+      ts: lastTimeStamp
+    }).success(_onSuccessGetEventsHistory)
+      .error(_.bind(_refreshCurrentTopic, this, true));
+  }
+
+  /**
+   * event history 조회 성공 이벤트 핸들러
+   * @param {object} response
+   * @private
+   */
+  function _onSuccessGetEventsHistory(response) {
+    var socketEvents = response.records; 
+    jndWebSocket.processSocketEvents(socketEvents);
+  }
+  
   /**
    * input 박스에서 메세지를 포스팅 한다.
    */
@@ -1524,15 +1540,22 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
   }
 
   /**
-   * file comment delete handler.
-   * Loop through messages list and find matching file comment.
-   *
-   * File comment delete -> Hide corresponding comment for now.
-   *
-   * TODO: this is still o(n). make it o(1)!!!!!
+   * message 삭제 시 콜백
+   * @param {object} angularEvent
+   * @param {object} socketEvent
+   * @private
    */
-  function onCenterOnFileCommentDeleted(event, param) {
-    MessageCollection.remove(param.comment.id);
+  function _onMessageDeleted(angularEvent, socketEvent) {
+    MessageCollection.remove(socketEvent.messageId, true);
+  }
+
+  /**
+   * file comment 삭제 시 콜백
+   * @param {object} angularEvent
+   * @param {object} socketEvent
+   */
+  function _onFileCommentDeleted(angularEvent, socketEvent) {
+    MessageCollection.remove(socketEvent.comment.id);
   }
 
   /**
@@ -1554,7 +1577,6 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    */
   function _onCenterMarkerUpdated(event, param) {
     log('centerOnMarkerUpdated');
-    markerService.updateMarker(param.marker.memberId, param.marker.lastLinkId);
     MessageCollection.updateUnreadCount();
   }
 

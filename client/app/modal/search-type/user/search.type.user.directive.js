@@ -13,7 +13,7 @@
       restrict: 'E',
       replace: false,
       scope: {
-        keywordTypes: '&',
+        keywordTypes: '=',
         keywordType: '=',
         onKeywordTypeSelectCallback: '&onKeywordTypeSelect'
       },
@@ -29,10 +29,8 @@
        * @private
        */
       function _init() {
-        scope.list = scope.keywordTypes();
-
-        scope.activeIndex = _.findIndex(scope.list, 'value', scope.keywordType);
-        scope.selectItemText = scope.list[scope.activeIndex].text;
+        scope.activeIndex = _.findIndex(scope.keywordTypes, 'value', scope.keywordType);
+        scope.selectItemText = scope.keywordTypes[scope.activeIndex].text;
 
         scope.isActive = isActive;
         scope.onSelectItem = onSelectItem;
@@ -61,16 +59,16 @@
        * @param {number} index
        */
       function onSelectItem(index) {
-        var selectItem = scope.list[index];
+        var selectItem = scope.keywordTypes[index];
         var oldValue = scope.keywordType;
 
         scope.selectItemText = selectItem.text;
         scope.keywordType = selectItem.value;
 
         scope.onKeywordTypeSelectCallback({
-          $index: index,
-          $newValue: selectItem.value,
-          $oldValue: oldValue
+          index: index,
+          newValue: selectItem.value,
+          oldValue: oldValue
         });
       }
     }

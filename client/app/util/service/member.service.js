@@ -518,9 +518,12 @@
         var _tempMessageMarker = _messageMarkers[entityId][field];
         if (_.isUndefined(_tempMessageMarker) || !!_tempMessageMarker) {
           return true;
+        } else {
+          return false;
         }
+      } else {
+        return true;
       }
-      return false;
     }
 
     /**

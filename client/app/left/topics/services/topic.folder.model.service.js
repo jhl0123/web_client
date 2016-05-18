@@ -391,7 +391,7 @@
      * raw 데이터를 기반으로 view 에 반영하기 위한 데이터를 가공한다.
      */
     function update() {
-      var currentEntity = currentSessionHelper.getCurrentEntity();
+      _setUnassignedTopic();
       _folderList = _.sortBy(_raw.folderList, 'seq');
 
       _.forEach(_folderList, function(folder) {
@@ -412,6 +412,24 @@
       $timeout(function() {
         jndPubSub.updateBadgePosition();
       }, 100);
+    }
+
+    /**
+     * folder 정보가 없는 토픽 대상으로 folderId 를 -1 로 할당한다. 
+     * @private
+     */
+    function _setUnassignedTopic() {
+      var roomIds = _.pluck(_raw.entityList, 'roomId');
+      var joinedTopics = RoomTopicList.toJSON(true);
+      
+      _.forEach(joinedTopics, function(topic) {
+        if (!_.contains(roomIds, topic.id)) {
+          _raw.entityList.push({
+            roomId: topic.id,
+            folderId: -1
+          });
+        }
+      });
     }
 
     /**

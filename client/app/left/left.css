@@ -9,6 +9,7 @@
   background: #f1f4f8;
   z-index: 500;
   overflow: visible;
+  border-right: 1px solid #e1e1e1;
 }
 
 
@@ -31,7 +32,7 @@
 .lpanel-list__header .tooltip {
 }
 .lpanel-list {
-  width: 239px;
+  width: 100%;
   overflow-y: auto;
   overflow-x:hidden;
   position: absolute;
@@ -40,7 +41,6 @@
   left: 0;
   top: 88px;
   background: #F9F9F9;
-  border-right: 1px solid #e1e1e1;
   box-sizing: content-box;
 }
 .lpanel-list__topics {
@@ -267,11 +267,11 @@ last element of list
 }
 
 .left-panel__name {
-  max-width: 70%;
+  max-width: calc(100% - 69px);
   float: left;
 }
 .left-panel__name.with-bell {
-  max-width: 60%;
+  max-width: calc(100% - 78px);
 }
 .private-topic-icon {
   width: 9px;

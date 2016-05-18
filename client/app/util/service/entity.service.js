@@ -7,8 +7,7 @@
 
   /* @ngInject */
   function entityAPIservice(CoreUtil, $state, $window, storageAPIservice, jndPubSub, currentSessionHelper,
-                            HybridAppHelper, NotificationManager, EntityHandler, BotList, UserList, RoomTopicList,
-                            RoomChatDmList) {
+                            HybridAppHelper, NotificationManager, EntityHandler, RoomChatDmList) {
     var service = {
       setCurrentEntityWithId: setCurrentEntityWithId,
       setCurrentEntity: setCurrentEntity,
@@ -114,12 +113,14 @@
      * @param {number} alarmCount
      */
     function updateBadgeValue (entity, alarmCount) {
-      _setBadgeValue(entity, alarmCount);
-      NotificationManager.set(entity, alarmCount);
-      jndPubSub.pub('badgeCountChange', {
-        entity: entity,
-        count: alarmCount
-      });
+      if (entity) {
+        _setBadgeValue(entity, alarmCount);
+        NotificationManager.set(entity, alarmCount);
+        jndPubSub.pub('badgeCountChange', {
+          entity: entity,
+          count: alarmCount
+        });
+      }
     }
 
     /**
@@ -129,8 +130,15 @@
      * @param alarmCount
      * TODO: EXPLAIN THE SITUATION WHEN 'alarmCount' is 0.
      */
-    function _setBadgeValue (entity, alarmCount) {
-      var curEntity = EntityHandler.get(entity.id);
+    function _setBadgeValue(entity, alarmCount) {
+      var curEntity;
+
+      if (RoomChatDmList.isExist(entity.id)) {
+        curEntity = RoomChatDmList.getMember(entity.id)
+      } else {
+        curEntity = EntityHandler.get(entity.id)
+      }
+
       if (curEntity) {
         if (alarmCount == -1) {
           if (angular.isUndefined(curEntity.alarmCnt)) {

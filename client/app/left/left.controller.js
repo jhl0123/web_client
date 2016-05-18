@@ -6,7 +6,7 @@ app.controller('leftPanelController', function(
   $scope, $state, $timeout, $q, leftpanelAPIservice, entityAPIservice, accountService,
   publicService, memberService, storageAPIservice, analyticsService, currentSessionHelper, jndWebSocket, jndPubSub,
   modalHelper, UnreadBadge, AnalyticsHelper, HybridAppHelper, NotificationManager, TopicFolderModel, TopicUpdateLock,
-  JndUtil, EntityFilterMember, EntityHandler, Auth, initialPromise) {
+  JndUtil, EntityFilterMember, EntityHandler, Auth, initialPromise, JndPanelSizeStorage) {
 
   var _that = this;
   var _getLeftListDeferredObject;
@@ -48,6 +48,7 @@ app.controller('leftPanelController', function(
   $scope.enterEntity = enterEntity;
   $scope.openModal = openModal;
   $scope.onMemberClick = onMemberClick;
+  $scope.onPanelSizeChanged = onPanelSizeChanged;
   
   _init();
   
@@ -57,6 +58,9 @@ app.controller('leftPanelController', function(
    */
   function _init() {
     var responseLeftSideMenu = initialPromise[0].data;
+
+    $scope.leftPanelWidth = JndPanelSizeStorage.getLeftPanelWidth();
+
     if (initialPromise[0].data) {
       publicService.showDummyLayout();
       publicService.hideInitialLoading();
@@ -94,7 +98,8 @@ app.controller('leftPanelController', function(
     $scope.$on('updateLeftBadgeCount', _onUpdateLeftBadgeCount);
     $scope.$on('updateLeftPanelCaller', _requestLeftSideMenu);
     $scope.$on('connected', _onConnected);
-    $scope.$on('NetInterceptor:onGatewayTimeoutError', _onGatewayTimeoutError);
+    $scope.$on('NetInterceptor:onGatewayTimeoutError', _requestLeftSideMenu);
+    $scope.$on('Auth:refreshTokenSuccess', _requestLeftSideMenu);
     $scope.$on('onMemberClick', function(event, user) {
       $scope.onMemberClick(user);
     });
@@ -149,14 +154,6 @@ app.controller('leftPanelController', function(
   function _onStateChangeSuccess(event, toState, toParams, fromState, fromParams) {
     $scope.entityId = toParams.entityId;
     TopicFolderModel.setCurrentEntity($scope.entityId);
-  }
-
-  /**
-   * gateway timeout error event handler
-   * @private
-   */
-  function _onGatewayTimeoutError() {
-    _requestLeftSideMenu();
   }
 
   /**
@@ -477,5 +474,14 @@ app.controller('leftPanelController', function(
     var top = scrollTop + offsetTop;
     var bottom = top + height;
     $scope.unread = UnreadBadge.getUnreadPos(top, bottom);
+  }
+
+  /**
+   * panel size changed event handler
+   * @param {object} $panels
+   * @param {object} $panelSize
+   */
+  function onPanelSizeChanged($panels, $panelSize) {
+    JndPanelSizeStorage.setLeftPanelWidth($panelSize);
   }
 });

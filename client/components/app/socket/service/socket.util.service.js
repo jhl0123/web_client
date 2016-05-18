@@ -30,9 +30,10 @@
 
     this.getNotificationRoom = getNotificationRoom;
     this.increaseBadgeCount = increaseBadgeCount;
+    this.decreaseBadgeCount = decreaseBadgeCount;
 
-    this.addUser = addUser;
-
+    this.updateMyLastMessageMarker = updateMyLastMessageMarker;
+    
     function updateLeft() {
       jndPubSub.updateLeftPanel();
     }
@@ -74,11 +75,37 @@
     function increaseBadgeCount(roomId, count) {
       var entity = EntityHandler.get(roomId);
 
-      if (!isCurrentEntity(entity)) {
+      if (entity && !isCurrentEntity(entity)) {
         entityAPIservice.increaseBadgeCount(entity.id, count);
       }
     }
 
+    /**
+     * badge count 를 감소시킨다.
+     * @param {number} roomId
+     * @param {number} [count=1]
+     */
+    function decreaseBadgeCount(roomId, count) {
+      var entity = EntityHandler.get(roomId);
+
+      if (!isCurrentEntity(entity)) {
+        entityAPIservice.decreaseBadgeCount(entity.id, count);
+      }
+    }
+
+    /**
+     * 현재 사용자의 room 에 대한 read message marker 를 갱신한다.
+     * @param {number} roomId
+     * @param {number} linkId
+     */
+    function updateMyLastMessageMarker(roomId, linkId) {
+      var room = EntityHandler.get(roomId);
+      if (room) {
+        memberService.setLastReadMessageMarker(room.id, linkId);
+        entityAPIservice.updateBadgeValue(room, 0);
+      }
+    }
+    
     /**
      * 'chat' type인지 아닌지 확인한다.
      * @param {object} room - room object inside of socket event parameter
@@ -136,34 +163,6 @@
       var entity = EntityHandler.get(room.id);
       //DM 일 경우 해당 chat room 의 member 정보를 반환해야 한다.
       return CoreUtil.pick(entity, 'extMember') || entity;
-    }
-
-    /**
-     * center panel을 업데이트한다.
-     * @private
-     */
-    function updateCenterMessage() {
-      logger.log('udpate center message');
-      jndPubSub.updateChatList();
-    }
-
-    /**
-     * left에 1:1 chat list를 업데이트한다.
-     * @private
-     */
-    function updateDmList() {
-      jndPubSub.updateLeftChatList();
-    }
-
-    /**
-     * 현재 오른쪽 페널에서 보고 있는 파일 아이디와 비교해서 같으면  true를 리턴한다.
-     *
-     * @param fileId {number} id of file
-     * @returns {boolean}
-     * @private
-     */
-    function isCurrentFile(fileId) {
-      return fileId === currentSessionHelper.getCurrentFileId();
     }
 
     /**
@@ -329,30 +328,6 @@
       });
 
       return notificationRoom;
-    }
-
-    /**
-     * socketEvent에서 member object를 전달함.
-     * @param {object} socketEvent
-     * @returns {*|Object|member}
-     * @private
-     */
-    function _getMember(socketEvent) {
-      return socketEvent.member;
-    }
-
-    /**
-     * socketEvent에서 전달한 user를 user entity 목록에 추가함.
-     * @param {object} socketEvent
-     */
-    function addUser(socketEvent) {
-      var user = _getMember(socketEvent);
-
-      if (user && !memberService.isUser(user.id)) {
-        // user의 값이 존재하지 않음을 확인하여 기존에 존재하던 user의 값이 안 덮어씌어 지도록 한다.
-        // 기존에 존재하던 user의 값은 즐겨찾기, 마지막은 읽은 메세지등 여러 data를 가지고 있다.
-        UserList.add(user);
-      }
     }
   }
 })();

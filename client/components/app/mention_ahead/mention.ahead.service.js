@@ -206,7 +206,7 @@
 
         // 공유된 room 마다 mention 가능한 member를 설정함
         _.each(sharedEntities, function (sharedEntity) {
-          if (RoomTopicList.isPublic(sharedEntity) || RoomTopicList.isPrivate(sharedEntity)) {
+          if (RoomTopicList.isExist(sharedEntity)) {
             hasTopic = true;
 
             mentionList = _getMentionList(sharedEntity, mentionList);

@@ -199,13 +199,13 @@
 
     /**
      * keyword type select event handler
-     * @param {string} $newValue
-     * @param {string} $oldValue
+     * @param {string} newValue
+     * @param {string} oldValue
      */
-    function onKeywordTypeSelect($newValue, $oldValue) {
-      if ($newValue !== $oldValue) {
+    function onKeywordTypeSelect(newValue, oldValue) {
+      if (newValue !== oldValue) {
         _clearFilter();
-        $scope.keyword.type = $newValue;
+        $scope.keyword.type = newValue;
       }
 
       _focusFilter();

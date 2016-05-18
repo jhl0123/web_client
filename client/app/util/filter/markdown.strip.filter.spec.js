@@ -15,19 +15,19 @@
         var expectString1 = '텍스트 입니다.';
 
         var markdownString2 = stripMarkdown('* 텍스트 * 입니다.');
-        var expectString2 = ' 텍스트  입니다.';
+        var expectString2 = '* 텍스트 * 입니다.';
 
         var markdownString3 = stripMarkdown('중간 *텍스트* 입니다.');
         var expectString3 = '중간 텍스트 입니다.';
 
         var markdownString4 = stripMarkdown('중간 * 텍스트 * 입니다.');
-        var expectString4 = '중간  텍스트  입니다.';
+        var expectString4 = '중간 * 텍스트 * 입니다.';
 
         var markdownString5 = stripMarkdown('중간 *텍스트*');
         var expectString5 = '중간 텍스트';
 
         var markdownString6 = stripMarkdown('중간 * 텍스트 *');
-        var expectString6 = '중간  텍스트 ';
+        var expectString6 = '중간 * 텍스트 *';
 
         expect(markdownString1).toEqual(expectString1);
         expect(markdownString2).toEqual(expectString2);
@@ -44,22 +44,22 @@
         var expectString1 = '텍스트 입니다.';
 
         var markdownString2 = stripMarkdown('** 텍스트 ** 입니다.');
-        var expectString2 = ' 텍스트  입니다.';
+        var expectString2 = '** 텍스트 ** 입니다.';
 
         var markdownString3 = stripMarkdown('중간 **텍스트** 입니다.');
         var expectString3 = '중간 텍스트 입니다.';
 
         var markdownString4 = stripMarkdown('중간 ** 텍스트 ** 입니다.');
-        var expectString4 = '중간  텍스트  입니다.';
+        var expectString4 = '중간 ** 텍스트 ** 입니다.';
 
         var markdownString5 = stripMarkdown('중간 **텍스트**');
         var expectString5 = '중간 텍스트';
 
         var markdownString6 = stripMarkdown('중간 ** 텍스트 **');
-        var expectString6 = '중간  텍스트 ';
+        var expectString6 = '중간 ** 텍스트 **';
 
         var markdownString7 = stripMarkdown('중간 ~* 텍스트 *~');
-        var expectString7 = '중간 ~ 텍스트 ~';
+        var expectString7 = '중간 ~* 텍스트 *~';
 
         var markdownString8 = stripMarkdown('오늘 **3**개의 일정이 있습니다.');
         var expectString8 = '오늘 3개의 일정이 있습니다.';
@@ -82,19 +82,19 @@
         var expectString1 = '텍스트 입니다.';
 
         var markdownString2 = stripMarkdown('*** 텍스트 *** 입니다.');
-        var expectString2 = ' 텍스트  입니다.';
+        var expectString2 = '*** 텍스트 *** 입니다.';
 
         var markdownString3 = stripMarkdown('중간 ***텍스트*** 입니다.');
         var expectString3 = '중간 텍스트 입니다.';
 
         var markdownString4 = stripMarkdown('중간 *** 텍스트 *** 입니다.');
-        var expectString4 = '중간  텍스트  입니다.';
+        var expectString4 = '중간 *** 텍스트 *** 입니다.';
 
         var markdownString5 = stripMarkdown('중간 ***텍스트***');
         var expectString5 = '중간 텍스트';
 
         var markdownString6 = stripMarkdown('중간 *** 텍스트 ***');
-        var expectString6 = '중간  텍스트 ';
+        var expectString6 = '중간 *** 텍스트 ***';
 
         var markdownString7 = stripMarkdown('중간 *~* 텍스트 *~*');
         var expectString7 = '중간 ~ 텍스트 ~';

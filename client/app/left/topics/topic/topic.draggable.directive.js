@@ -10,7 +10,7 @@
     .module('jandiApp')
     .directive('topicDraggable', topicDraggable);
 
-  function topicDraggable(jndPubSub, memberService, TopicFolderModel, TopicUpdateLock) {
+  function topicDraggable(jndPubSub, memberService, TopicFolderModel, TopicUpdateLock, JndPanelSizeStorage) {
 
     return {
       restrict: 'A',
@@ -190,6 +190,7 @@
       function _showDraggable(mouseEvent) {
         var currentRoom = scope.currentRoom;
         var isNotificationOff = scope.isNotificationOff;
+
         if (!_jqDraggable || !_jqDraggable.length) {
           _jqDraggable = $(_template({
             isNotificationOff: isNotificationOff,
@@ -201,6 +202,7 @@
             },
             currentRoom: currentRoom
           }));
+          _jqDraggable.css('width', JndPanelSizeStorage.getLeftPanelWidth());
 
           $('body').append(_jqDraggable);
           _width = _jqDraggable.width();
