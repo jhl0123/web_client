@@ -1,3 +1,4 @@
+.msg-extra,
 .msg-text-extra {
   display: inline;
 }
@@ -88,7 +89,7 @@
   display: none;
 }
 
-.msg-item-header__created {
+.msg-time {
   font-size: 10px;
   line-height: 10px;
   color: #666666;

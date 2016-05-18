@@ -42,6 +42,8 @@
     this.hasChildText = hasChildText;
     this.isChildComment = isChildComment;
     this.hasChildComment = hasChildComment;
+    this.isFirstComment = isFirstComment;
+    this.isLastComment = isLastComment;
     this.isTitleComment = isTitleComment;
     this.isNewDate = isNewDate;
 
@@ -319,6 +321,26 @@
     function hasChildComment(index) {
       var contentType = getContentType(index);
       return !!(centerService.isCommentType(contentType) && MessageComment.isChild(index + 1, that.list));
+    }
+
+    /**
+     * 파일에 달린 comment 목록에서 첫번째 인지 여부를 반환한다.
+     * @param {number} index
+     * @returns {boolean}
+     */
+    function isFirstComment(index) {
+      var contentType = getContentType(index);
+      return !!(centerService.isCommentType(contentType) && MessageComment.isFirst(index, that.list));
+    }
+
+    /**
+     * 파일에 달린 comment 목록에서 마지막 인지 여부를 반환한다.
+     * @param {number} index
+     * @returns {boolean}
+     */
+    function isLastComment(index) {
+      var contentType = getContentType(index);
+      return !!(centerService.isCommentType(contentType) && MessageComment.isLast(index, that.list));
     }
 
     /**

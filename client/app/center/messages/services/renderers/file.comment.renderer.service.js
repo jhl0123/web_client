@@ -75,6 +75,9 @@
 
       var isTitle = MessageCollection.isTitleComment(index);
       var isChild = MessageCollection.isChildComment(index);
+      var isFirst = MessageCollection.isFirstComment(index);
+      var isLast = MessageCollection.isLastComment(index);
+
       var template = isTitle ? _templateTitle : _template;
 
       var commentCount = RendererUtil.getCommentCount(msg);
@@ -83,6 +86,7 @@
 
       var data = {
         css: {
+          last: isLast ? 'last' : '',
           unshared: isUnshared ? 'unshared' : '',
           archived: isArchived ? 'archived' : '',
           star: RendererUtil.getStarCssClass(msg.message),
@@ -116,7 +120,10 @@
         hasStar: RendererUtil.hasStar(msg),
         isSticker: RendererUtil.isSticker(msg),
         isChild: isChild,
+        hasChild: MessageCollection.hasChildComment(index),
         isTitle: isTitle,
+        isFirst: isFirst,
+        isLast: isLast,
         isArchived: isArchived,
         translate: {
           commentAllDesc: _getCommentAllDesc(msg.feedbackId, commentCount)
@@ -129,7 +136,7 @@
       }
 
       return {
-        className: _getClassName(isTitle, isChild),
+        className: _getClassName(isTitle, isChild, isFirst, isLast),
         template: template(data)
       };
     }
@@ -141,7 +148,7 @@
      * @returns {string}
      * @private
      */
-    function _getClassName(isTitle, isChild) {
+    function _getClassName(isTitle, isChild, isFirst, isLast) {
       var result = ['text'];
 
       if (isTitle) {
@@ -149,9 +156,15 @@
       } else {
         result.push('comment');
         if (isChild) {
-          result.push('continue');
-        } else {
+          result.push('comment-child');
+        }
+
+        if (isFirst) {
           result.push('first');
+        }
+
+        if (isLast) {
+          result.push('last');
         }
       }
 

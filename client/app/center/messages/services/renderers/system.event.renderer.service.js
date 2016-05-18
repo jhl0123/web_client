@@ -64,7 +64,6 @@
      * @returns {*}
      */
     function render(index) {
-
       var msg = MessageCollection.list[index];
       var filter = $filter('getName');
       var length = (msg && msg.message && msg.message.invites && msg.message.invites.length) || 0;
@@ -80,22 +79,25 @@
         });
       });
 
-      return _template({
-        text: {
-          announcement:  {
-            deleted: _getPreTranslation('@system-msg-announcement-deleted', {
-              msg: msg
-            }),
-            created: _getPreTranslation('@system-msg-announcement-created', {
-              msg: msg
-            })
-          }
-        },
-        status: status,
-        hasPostfix: hasPostfix,
-        msg: msg,
-        invitees: invitees
-      });
+      return {
+        className: 'system-event noti',
+        template: _template({
+          text: {
+            announcement:  {
+              deleted: _getPreTranslation('@system-msg-announcement-deleted', {
+                msg: msg
+              }),
+              created: _getPreTranslation('@system-msg-announcement-created', {
+                msg: msg
+              })
+            }
+          },
+          status: status,
+          hasPostfix: hasPostfix,
+          msg: msg,
+          invitees: invitees
+        })
+      };
     }
   }
 })();

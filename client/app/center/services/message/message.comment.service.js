@@ -13,10 +13,13 @@
   function MessageComment(centerService) {
     this.isChild = isChild;
     this.isTitle = isTitle;
+    this.isFirst = isFirst;
+    this.isLast = isLast;
 
     /**
-     *
-     * @param index
+     * title comment 인지 여부
+     * @param {number} index
+     * @param {array} list
      * @returns {boolean}
      */
     function isTitle(index, list) {
@@ -37,24 +40,68 @@
     }
 
     /**
-     *
-     * @param index
+     * child comment 인지 여부
+     * @param {number} index
+     * @param {array} list
      * @returns {boolean}
      */
     function isChild(index, list) {
       var messages = list;
       var message = messages[index];
       var prevMessage = messages[index - 1];
-      var writerId = message.message.writerId;
+      var isChild = false;
+      var writerId;
 
-      if (!isTitle(index, list) &&
-        prevMessage.message.contentType === 'comment' &&
-        prevMessage.message.writerId === writerId &&
-        !centerService.isElapsed(prevMessage.time, message.time)) {
-        return true;
-      } else {
-        return false;
+      if (message) {
+        writerId = message.message.writerId;
+        if (!isTitle(index, list) &&
+          prevMessage.message.contentType === 'comment' &&
+          prevMessage.message.writerId === writerId &&
+          !centerService.isElapsed(prevMessage.time, message.time)) {
+          isChild = true;
+        }
       }
+
+      return isChild;
+    }
+
+    /**
+     * 파일에 달린 comment 중 첫번째 comment 인지 여부
+     * @param {number} index
+     * @param {array} list
+     * @returns {boolean}
+     */
+    function isFirst(index, list) {
+      var isFirst = false;
+      var prevMessage;
+
+      if (isTitle(index, list)) {
+        isFirst = true;
+      } else {
+        prevMessage = list[index - 1];
+        if (prevMessage && prevMessage.message.contentType === 'file') {
+          isFirst = true;
+        }
+      }
+
+      return isFirst;
+    }
+
+    /**
+     * 파일에 달린 comment 중 마지막 comment 인지 여부
+     * @param {number} index
+     * @param {array} list
+     * @returns {boolean}
+     */
+    function isLast(index, list) {
+      var isLast = false;
+      var nextMessage = list[index + 1];
+
+      if (!nextMessage || nextMessage.message.contentType !== 'comment') {
+        isLast = true;
+      }
+
+      return isLast;
     }
   }
 })();

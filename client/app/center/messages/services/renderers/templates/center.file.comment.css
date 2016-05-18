@@ -1,11 +1,11 @@
-.msg-extra.msg-extra-comment-continue {
-  margin-right: 35px;
-  margin-bottom: 8px;
-}
+/*.msg-extra.msg-extra-comment-continue {*/
+  /*margin-right: 35px;*/
+  /*margin-bottom: 8px;*/
+/*}*/
 
-.msg-extra.msg-extra-comment-title {
-  margin-right:20px
-}
+/*.msg-extra.msg-extra-comment-title {*/
+  /*margin-right:20px*/
+/*}*/
 
 .file__name.unshared {
   text-decoration: line-through;
@@ -16,7 +16,7 @@
   background-position: 0 -155px;
 }
 
-.msg-item .msg-item-header .continue-comment-body .msg-item-header__name,
-.msg-item .msg-item-header .continue-comment-body .comment-content {
-  vertical-align: middle;
-}
+/*.msg-item .msg-item-header .continue-comment-body .msg-item-header__name,*/
+/*.msg-item .msg-item-header .continue-comment-body .comment-content {*/
+  /*vertical-align: middle;*/
+/*}*/

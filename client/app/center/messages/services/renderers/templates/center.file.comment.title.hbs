@@ -198,68 +198,44 @@
       {{/if}}
     {{/if}}
   </div>
-
-  {{#if hasCommentAllDesc}}
-    <div class="msg-item comment-all">
-      <div class="continue-comment-body">
-        <!--    COMMENT CONTENT -->
-        <div class="comment-content">
-        <span class="comment-all-desc _fileDetail">
-          {{{translate.commentAllDesc}}}
-        </span>
-        </div>
-      </div>
-    </div>
-  {{/if}}
 </div>
 
-<div class="message comment first" id="{{msg.id}}">
-  <!--    HEADER PART -->
-  <!--    DISPLAYS WRITER WHEN IT IS NOT TITLE COMMENT    -->
-  <!--    WHEN IT IS TITLE COMMENT, APPLIES DIFFERENT CSS FORMAT  -->
-  <div class="msg-item msg-item-header">
-    <!--    CONTINUED COMMENT ON SAME FILE  -->
-    <div class="continue-comment-body">
-      <!-- COMMENT GUIDE LINE -->
-      <div class="comment-guide">
-        <div class="guide-line"></div>
-        <div class="guide-line-bg"></div>
-        {{#unless isChild}}
-          <!--  User Thumbnail -->
-          <img class="comment-writer cursor_pointer member-profile member-thumb _user" src="{{ msg.exProfileImg }}"/>
-        {{/unless}}
-      </div>
-      <!--    COMMENT CONTENT -->
-      <div class="comment-content">
-        <!--    WRITER  -->
-        <span class="msg-item-header__name cursor_pointer {{css.disabledMember}} _user">
-          <!-- TODO: WHAT IS THIS??   정책상 항상 댓글의 작성자가 다 보여야 한다면 extWriterName을 그냥 무조건 사용합시다. -->
-          <span> {{ msg.extWriterName }} </span>
-        </span>
-        {{#if isSticker}}
-          <div>
-            <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
-            <span class="msg-item-header__created">{{ msg.extTime }}</span>
-            <span class="badge unread-badge">{{ msg.unreadCount }}</span>
-          </div>
-        {{else}}
-          <!--    CONTENT TEXT    -->
-        <span class="comment-text">
-          <span class="keep _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
-          <!--    CREATED TIME    -->
-          <span class="msg-item-header__created">{{ msg.extTime }}</span>
-          <span class="badge unread-badge">{{ msg.unreadCount }}</span>
-        </span>
-        {{/if}}
-      </div>
+<div class="message comment first {{css.last}}" id="{{msg.id}}">
+  {{#if hasCommentAllDesc}}
+    <div class="msg-item comment-all cursor_pointer _fileDetail">
+      <i class="icon-more"></i>
+      <span class="comment-all-desc">{{{translate.commentAllDesc}}}</span>
     </div>
-    <!-- Star -->
-    <div class="msg-extra msg-extra-comment-continue non-selectable">
-      {{#if hasStar}}
-        <span class="cursor_pointer msg-item-star msg-item-icon msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
-        <i class="{{css.starIcon}}"></i>
-      </span>
+  {{/if}}
+  <div class="msg-item _fileDetail">
+    {{#unless isChild}}
+      <div class="msg-header">
+        <!--  User Thumbnail -->
+        <img class="member-profile member-thumb cursor_pointer _user" src="{{ msg.exProfileImg }}"/>
+        <span class="member-name inline-overflow-ellipsis cursor_pointer _user {{css.disabledMember}}">{{ msg.extWriterName }}</span>
+      </div>
+    {{/unless}}
+    <div class="comment-content">
+      {{#if isSticker}}
+        <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
+      {{else}}
+        <span class="keep _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
       {{/if}}
+      <div class="msg-extra">
+        <div class="msg-item-info no-select">
+          <span class="msg-badge unread-badge">{{ msg.unreadCount }}</span>
+          {{#unless hasChild}}
+            <span class="msg-time">{{ msg.extTime }}</span>
+          {{/unless}}
+        </div>
+        <div class="msg-comment-actions">
+          {{#if hasStar}}
+            <span class="cursor_pointer msg-item-star msg-item-icon msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
+          <i class="{{css.starIcon}}"></i>
+        </span>
+          {{/if}}
+        </div>
+      </div>
     </div>
   </div>
 </div>

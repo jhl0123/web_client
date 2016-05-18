@@ -83,6 +83,7 @@
 /*.image_wrapper .msg-file-actions-content {*/
   /*background-color: transparent;*/
 /*}*/
+.msg-comment-actions,
 .msg-file-actions {
   position: absolute;
   top: 6px;

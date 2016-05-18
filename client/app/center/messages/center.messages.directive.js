@@ -635,7 +635,8 @@
           index++;
         });
 
-        if (MessageCollection.isChildText(MessageCollection.list.length - 1)) {
+        if (MessageCollection.isChildText(MessageCollection.list.length - 1) ||
+          MessageCollection.isChildComment(MessageCollection.list.length - 1)) {
           prevIndex = MessageCollection.list.length - 2;
           prevMessage = MessageCollection.list[prevIndex];
           _refresh(prevMessage.id, prevIndex);

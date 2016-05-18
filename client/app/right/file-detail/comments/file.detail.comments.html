@@ -69,13 +69,13 @@
     <div class="comment-item-body">
       <span ng-if="::comment.extIsSticker">
         <div class="sticker size_5"  ng-style="::{'background-image': 'url({{::comment.content.url}})'}"></div>
-        <span class="msg-item-header__retry cursor_pointer" ng-click="retry($index, comment)">
+        <span class="post-retry cursor_pointer" ng-click="retry($index, comment)">
           <i class="icon-refresh"></i> Retry
         </span>
       </span>
       <span ng-if="::!comment.extIsSticker">
         <span class="comment selectable keep" ng-bind-html="::comment.content.body"></span>
-        <span class="msg-item-header__retry cursor_pointer" ng-click="retry($index, comment)">
+        <span class="post-retry cursor_pointer" ng-click="retry($index, comment)">
           <i class="icon-refresh"></i> Retry
         </span>
       </span>

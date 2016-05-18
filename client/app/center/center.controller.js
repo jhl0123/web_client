@@ -737,13 +737,13 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
 
   function _animateBackgroundColor(element) {
     //console.log('::_animateBackgroundColor');
-    element.addClass('last');
+    element.addClass('message-highlight');
 
     $timeout(function() {
-      element.addClass('last-out');
+      element.addClass('message-highlight-out');
       $timeout(function() {
-        element.removeClass('last');
-        element.removeClass('last-out');
+        element.removeClass('message-highlight');
+        element.removeClass('message-highlight-out');
       }, 517)
     }, 500);
   }

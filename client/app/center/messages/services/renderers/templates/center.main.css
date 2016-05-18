@@ -4,20 +4,6 @@
   padding: 0 10px 0 58px;
 }
 
-.message:hover .action-group {
-  visibility: visible;
-}
-
-.message-group {
-  position: static;
-  margin: 0;
-  padding: 0;
-}
-
-.message:not(.message-group):hover .msg-item-icon {
-  visibility: visible;
-}
-
 .message .member-profile {
   position: absolute;
   left: -44px;
@@ -42,4 +28,19 @@
   color: #333;
   font-weight: 700;
   font-size: 15px;
+}
+
+.message:not(.message-group):hover .action-group,
+.message:not(.message-group):hover .msg-item-icon {
+  visibility: visible;
+}
+
+.message.message-group .msg-item + .msg-item {
+  display: block;
+}
+
+.message-group {
+  position: static;
+  margin: 0;
+  padding: 0;
 }

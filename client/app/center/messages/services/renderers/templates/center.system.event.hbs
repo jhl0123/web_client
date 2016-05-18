@@ -1,35 +1,22 @@
-<div class="msg-item system-event">
-  <!-- SYSTEM EVENT -->
-  <div class="msg-item-float cursor_pointer">
-    <img class="member-profile member-thumb"/>
-  </div>
-
-  <div class="msg-item-body">
-    <div class="msg-text">
-      <div class="msg-comment-header">
-          {{#if status.isInvite}}
-            <!--1-->
-            <span class="msg-comment_userType">{{msg.message.content.actionOwner}}</span>
-            <span class="keep">{{{msg.message.content.body}}}</span>
-            {{#each invitees}}
-                    <span class="msg-comment_userType">
-                      <span>{{name}}{{#unless isLast}}<span style="padding-right: 4px;">, </span>{{/unless}}</span>
-                    </span>
-            {{/each}}
-            {{#if hasPostfix}}
-            <span>{{translate '@msg-invited-postfix'}}</span>
-            {{/if}}
-          {{else if status.isAnnouncementDeleted}}
-            <span>{{ text.announcement.deleted }}</span>
-          {{else if status.isAnnouncementCreated}}
-            <span>{{ text.announcement.created }}</span>
-          {{else}}
-            <span class="msg-comment_userType">{{msg.message.content.actionOwner}}</span>
-            <span class="keep">{{{msg.message.content.body}}}</span>
-          {{/if}}
-        <span class="msg-item-header__created">{{msg.extTime}}</span>
-      </div>
-    </div>
-  </div>
-</div>
-
+<span class="noti-content">
+  {{#if status.isInvite}}
+    <span>{{msg.message.content.actionOwner}}</span>
+    <span class="keep">{{{msg.message.content.body}}}</span>
+    {{#each invitees}}
+      <span>
+        <span>{{name}}{{#unless isLast}}<span style="padding-right: 4px;">, </span>{{/unless}}</span>
+      </span>
+    {{/each}}
+    {{#if hasPostfix}}
+      <span>{{translate '@msg-invited-postfix'}}</span>
+    {{/if}}
+  {{else if status.isAnnouncementDeleted}}
+    <span>{{ text.announcement.deleted }}</span>
+  {{else if status.isAnnouncementCreated}}
+    <span>{{ text.announcement.created }}</span>
+  {{else}}
+    <span>{{msg.message.content.actionOwner}}</span>
+    <span class="keep">{{{msg.message.content.body}}}</span>
+  {{/if}}
+</span>
+<span class="msg-time">{{msg.extTime}}</span>

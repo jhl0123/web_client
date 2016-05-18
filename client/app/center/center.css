@@ -62,12 +62,12 @@ article {
   bottom: 2px;
   z-index: 12;
   text-align: center;
-  background: linear-gradient(rgba(255,255,255, 1), rgba(255,255,255, 0));
+  background: linear-gradient(rgba(239,243,250,1), rgba(239,243,250,0));
 }
 .msgs__loading.initial {
   height: 100%;
   /*background-size: 100px 100px;*/
-  background:#FFFFFF;
+  background:#EFF3FA;
 }
 .msgs__loading.load-more-top {
   position: absolute;
@@ -133,40 +133,40 @@ article {
   color: #929498;
 }
 
-.msg-item-float {
-  position: absolute;
-  top: 7px;
-  left: 23px;
-}
-.msg-item-header {
-  padding: 1px 0 6px;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.3rem;
-}
-.msg-item-header .tooltip {
-  width: 64px;
-}
+/*.msg-item-float {*/
+  /*position: absolute;*/
+  /*top: 7px;*/
+  /*left: 23px;*/
+/*}*/
+/*.msg-item-header {*/
+  /*padding: 1px 0 6px;*/
+  /*font-size: 15px;*/
+  /*font-weight: 700;*/
+  /*line-height: 1.3rem;*/
+/*}*/
+/*.msg-item-header .tooltip {*/
+  /*width: 64px;*/
+/*}*/
 
-.msg-item.comment-continue .msg-item-header {
-  padding: 0 45px 0 0;
-}
+/*.msg-item.comment-continue .msg-item-header {*/
+  /*padding: 0 45px 0 0;*/
+/*}*/
 
 /* continued comment writer name */
 
-.msg-comment .msg-comment-body .msg-item-header__name,
-.msg-item.comment-continue .msg-item-header .msg-item-header__name {
-  font-size: 14px;
-  display: inline-block;
-  vertical-align: top;
-}
+/*.msg-comment .msg-comment-body .msg-item-header__name,*/
+/*.msg-item.comment-continue .msg-item-header .msg-item-header__name {*/
+  /*font-size: 14px;*/
+  /*display: inline-block;*/
+  /*vertical-align: top;*/
+/*}*/
 
-.msg-item-header__name {
-  color: #333;
-  font-weight: 700;
-  font-size: 15px;
-}
-.msg-item-header__retry {
+/*.msg-item-header__name {*/
+  /*color: #333;*/
+  /*font-weight: 700;*/
+  /*font-size: 15px;*/
+/*}*/
+.post-retry {
   font-size: 12px;
   line-height: 12px;
   font-weight: 500;
@@ -174,13 +174,13 @@ article {
   color: #1C6C88;
   text-decoration: none;
 }
-.msg-item-header__retry:hover {
+.post-retry:hover {
   color: #154a67;
 }
 /* continued comment created time   */
-.msg-item.comment-continue .msg-item-header .msg-item-header__created {
-  padding-left: 5px;
-}
+/*.msg-item.comment-continue .msg-item-header .msg-item-header__created {*/
+  /*padding-left: 5px;*/
+/*}*/
 .msg-item-body {
   position: relative;
 }
@@ -199,13 +199,13 @@ article {
   word-wrap: break-word;
   margin-right: 55px;
 }
-.msg-extra {
-  position: absolute;
-  bottom: 3px;
-  right: 0;
-  width: 50px;
-  vertical-align: text-bottom;
-}
+/*.msg-extra {*/
+  /*position: absolute;*/
+  /*bottom: 3px;*/
+  /*right: 0;*/
+  /*width: 50px;*/
+  /*vertical-align: text-bottom;*/
+/*}*/
 
 .msg-text-body {
   margin: 0;
@@ -420,11 +420,11 @@ by ysyun 2015.2.25
 /*
   animation을 사용해봤으나 효과가 매끄럽지 못해 부득이하게 클래스 2개를 사용해서 효과를 줬음. -jihoon
 */
-.last {
+.message-highlight {
   background-color: #f2fbff;
   /*animation: backgroundcolor-to-white  1510ms linear;*/
 }
-.last-out {
+.message-highlight-out {
   background-color: white;
   transition: background-color 517ms linear;
 }

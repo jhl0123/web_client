@@ -1,4 +1,4 @@
-.system-event.date-divider {
+.message.system-event.date-divider {
   display: block;
   margin-left: 36px;
   padding: 5px 12px;
@@ -7,14 +7,14 @@
   color: #879AA3;
 }
 
-.system-event.date-divider:before {
+.message.system-event.date-divider:before {
   background-color: #C0CCD2;
   right: 16px;
   width: auto;
-  left: -44px;
+  left: -20px;
 }
 
-.system-event.date-divider span {
+.message.system-event.date-divider span {
   padding: 0 10px;
   background-color: #EFF3FA;
 }
