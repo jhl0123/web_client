@@ -53,28 +53,6 @@
                  image-max-width="360"
                  image-max-height="270"
                  has-loading-bar="true">
-              <div class="msg-file-actions non-selectable">
-                {{#unless file.isUnshared}}
-                <div class="action-group">
-                  {{#unless file.isIntegrateFile}}
-                  <div class="action-item"
-                       jnd-tooltip-trigger="{{translate '@common-download'}}"
-                       data-direction="top">
-                    <!--  DOWNLOAD  -->
-                    <a class="action-file-download file_action _fileDownload" {{{ attrs.download }}}>
-                      <i class="icon-download"></i>
-                    </a>
-                  </div>
-                  {{/unless}}
-                  <div class="action-item"
-                       jnd-tooltip-trigger="{{translate '@file-action-more'}}"
-                       data-direction="top">
-                    <!--  MORE  -->
-                    <i class="action-file-more icon-cog _fileMore"></i>
-                  </div>
-                </div>
-                {{/unless}}
-              </div>
             </div>
           {{else}}
             <div class="image_wrapper medium-thumbnail medium-thumbnail-wrapper cursor_pointer"
@@ -87,12 +65,33 @@
                  has-loading-bar="true"></div>
           {{/if}}
         </div>
-
+        <div class="msg-file-actions non-selectable">
+          {{#unless file.isUnshared}}
+            <div class="action-group">
+              {{#unless file.isIntegrateFile}}
+                <div class="action-item"
+                     jnd-tooltip-trigger="{{translate '@common-download'}}"
+                     data-direction="top">
+                  <!--  DOWNLOAD  -->
+                  <a class="action-file-download file_action _fileDownload" {{{ attrs.download }}}>
+                    <i class="icon-download"></i>
+                  </a>
+                </div>
+              {{/unless}}
+              <div class="action-item"
+                   jnd-tooltip-trigger="{{translate '@file-action-more'}}"
+                   data-direction="top">
+                <!--  MORE  -->
+                <i class="action-file-more icon-cog _fileMore"></i>
+              </div>
+            </div>
+          {{/unless}}
+        </div>
         {{#unless file.isUnshared}}
           <!-- Star -->
           <div class="msg-extra file-uploaded-extra non-selectable">
             <span class="cursor_pointer msg-item-star msg-item-icon msg-item-circle _fileStar _star-{{msg.message.id}} {{css.star}}">
-              <i class="icon-star-on"></i>
+              <i class="{{css.starIcon}}"></i>
             </span>
           </div>
         {{/unless}}
@@ -101,39 +100,6 @@
         <!--  FILE PREVIEW IMAGE  -->
         <div class="preview-container">
           <div class="preview-card cursor_pointer _compile _fileDetail">
-            <div class="msg-file-actions non-selectable">
-              {{#unless file.isUnshared}}
-                {{#unless file.isIntegrateFile}}
-                  <div class="action-group">
-                    <div class="action-item"
-                         jnd-tooltip-trigger="{{translate '@common-download'}}"
-                         data-direction="top">
-                      <!--  DOWNLOAD  -->
-                      <a class="msg-item-icon _fileDownload" {{{attrs.download}}}>
-                        <i class="icon-download"></i>
-                      </a>
-                    </div>
-                  </div>
-                {{/unless}}
-                <div class="action-group">
-                  <div class="action-item"
-                       jnd-tooltip-trigger="{{translate '@file-action-more'}}"
-                       data-direction="top">
-                    <!--  MORE  -->
-                    <span class="msg-item-icon msg-item-circle msg-item-more">
-                      <i class="action-file-more icon-cog _fileMore"></i>
-                    </span>
-                  </div>
-                  <!-- Star -->
-                  <div class="action-item">
-                    <span class="msg-item-icon msg-item-star msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
-                      <i class="{{css.starIcon}}"></i>
-                    </span>
-                  </div>
-                </div>
-              {{/unless}}
-            </div>
-
             <!--    FILE TYPE THUMBNAIL -->
             <div class="card-info _fileDetail">
               <div class="card-type">
@@ -173,6 +139,38 @@
                 <span class="info-type">{{ file.type }}</span>
               </div>
             </div>
+          </div>
+          <div class="msg-file-actions non-selectable">
+            {{#unless file.isUnshared}}
+              {{#unless file.isIntegrateFile}}
+                <div class="action-group">
+                  <div class="action-item"
+                       jnd-tooltip-trigger="{{translate '@common-download'}}"
+                       data-direction="top">
+                    <!--  DOWNLOAD  -->
+                    <a class="msg-item-icon _fileDownload" {{{attrs.download}}}>
+                      <i class="icon-download"></i>
+                    </a>
+                  </div>
+                </div>
+              {{/unless}}
+              <div class="action-group">
+                <div class="action-item"
+                     jnd-tooltip-trigger="{{translate '@file-action-more'}}"
+                     data-direction="top">
+                  <!--  MORE  -->
+                    <span class="msg-item-icon msg-item-circle msg-item-more">
+                      <i class="action-file-more icon-cog _fileMore"></i>
+                    </span>
+                </div>
+                <!-- Star -->
+                <div class="action-item">
+                    <span class="msg-item-icon msg-item-star msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
+                      <i class="{{css.starIcon}}"></i>
+                    </span>
+                </div>
+              </div>
+            {{/unless}}
           </div>
         </div>
       {{/if}}
