@@ -1,9 +1,9 @@
-<div ng-if="isConnected && isMember"
+<div ng-if="!isShowConnectionWarning && isMember"
      entity-header-dm></div>
-<div ng-if="isConnected && !isMember"
+<div ng-if="!isShowConnectionWarning && !isMember"
      entity-header-topic></div>
-<div ng-if='!isConnected'
-     entity-header-disconnect>
+<div ng-if='isShowConnectionWarning'
+     entity-header-connection>
 </div>
 
 <span ng-if="false" translate>@no-topic-description</span>

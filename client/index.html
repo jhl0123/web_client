@@ -165,6 +165,7 @@
   <link rel="stylesheet" href="app/util/css/jandi-icon.css">
   <link rel="stylesheet" href="app/util/css/spinners.css">
   <link rel="stylesheet" href="app/util/directive/custom-selectbox/jnd.selectbox.css">
+  <link rel="stylesheet" href="app/util/directive/custom-selectbox/jnd.selectbox.topic.member.css">
   <link rel="stylesheet" href="app/util/directive/dropdown-position/dropdown.position.css">
   <link rel="stylesheet" href="app/util/directive/dropdown-selectbox/jnd.dropdown.selectbox.css">
   <link rel="stylesheet" href="app/util/directive/file-drop/jnd.file.drop.css">
@@ -176,14 +177,14 @@
   <link rel="stylesheet" href="assets/components/google-code-prettify/prettify.css">
   <link rel="stylesheet" href="assets/components/pdfjs/pdf_viewer.css">
   <link rel="stylesheet" href="components/app/mention_ahead/mention.ahead.css">
-  <link rel="stylesheet" href="components/jandi/ui/dialog/dialog.css">
-  <link rel="stylesheet" href="components/jandi/ui/dialog/modal/modal.css">
-  <link rel="stylesheet" href="components/jandi/ui/dialog/toast/toast.css">
-  <link rel="stylesheet" href="components/jandi/ui/intercom/intercom.css">
-  <link rel="stylesheet" href="components/jandi/ui/pdf-viewer/pdf.viewer.css">
-  <link rel="stylesheet" href="components/jandi/ui/profile-image/character-image/character.image.css">
-  <link rel="stylesheet" href="components/jandi/ui/profile-image/crop-image/crop.image.css">
-  <link rel="stylesheet" href="components/jandi/ui/splitter/splitter.css">
+  <link rel="stylesheet" href="components/jandi/ui/component/dialog/dialog.css">
+  <link rel="stylesheet" href="components/jandi/ui/component/dialog/modal/modal.css">
+  <link rel="stylesheet" href="components/jandi/ui/component/dialog/toast/toast.css">
+  <link rel="stylesheet" href="components/jandi/ui/component/intercom/intercom.css">
+  <link rel="stylesheet" href="components/jandi/ui/component/pdf-viewer/pdf.viewer.css">
+  <link rel="stylesheet" href="components/jandi/ui/component/profile-image/character-image/character.image.css">
+  <link rel="stylesheet" href="components/jandi/ui/component/profile-image/crop-image/crop.image.css">
+  <link rel="stylesheet" href="components/jandi/ui/component/splitter/splitter.css">
   <!-- endinjector -->
   <!-- endbuild -->
 </head>
@@ -315,108 +316,16 @@
 <script src="components/app/app.framework.js"></script>
 <script src="app/app.js"></script>
 <!-- injector:js -->
-<script src="assets/components/google-code-prettify/prettify.js"></script>
-<script src="assets/components/pdfjs/compatibility.js"></script>
-<script src="assets/components/pdfjs/pdf_viewer.js"></script>
-<script src="assets/javascripts/core.js"></script>
-<script src="assets/javascripts/detectmobilebrowser.js"></script>
-<script src="assets/javascripts/handlebars.templates.js"></script>
-<script src="assets/javascripts/jquery.highlight.js"></script>
-<script src="app/util/directive/animate.text.directive.js"></script>
-<script src="app/util/directive/custom-selectbox/jnd.custom.focus.directive.js"></script>
-<script src="app/util/directive/custom-selectbox/jnd.selectbox.common.directive.js"></script>
-<script src="app/util/directive/custom-selectbox/jnd.selectbox.file.directive.js"></script>
-<script src="app/util/directive/custom-selectbox/jnd.selectbox.member.directive.js"></script>
-<script src="app/util/directive/custom-selectbox/jnd.selectbox.member.service.js"></script>
-<script src="app/util/directive/custom-selectbox/jnd.selectbox.room.directive.js"></script>
-<script src="app/util/directive/dropdown-position/dropdown.position.directive.js"></script>
-<script src="app/util/directive/dropdown-selectbox/jnd.dropdown.selectbox.directive.js"></script>
-<script src="app/util/directive/file-drop/jnd.file.drop.controller.js"></script>
-<script src="app/util/directive/file-drop/jnd.file.drop.directive.js"></script>
-<script src="app/util/directive/jnd.code.prettify.directive.js"></script>
-<script src="app/util/directive/jnd.elastic.directive.js"></script>
-<script src="app/util/directive/jnd.ignore.braces.js"></script>
-<script src="app/util/directive/jnd.main.key.handler.directive.js"></script>
-<script src="app/util/directive/jnd.tooltip.directive.js"></script>
-<script src="app/util/directive/jnd.tooltip.trigger.directive.js"></script>
-<script src="app/util/directive/jnd.translate.html.js"></script>
-<script src="app/util/directive/jnd.version.directive.js"></script>
-<script src="app/util/directive/loading/initial/loading-initial.directive.js"></script>
-<script src="app/util/directive/main.directive.js"></script>
-<script src="app/util/directive/pdf-viewer/jnd.pdf.viewer.directive.js"></script>
-<script src="app/util/directive/pdf-viewer/jnd.pdf.viewer.service.js"></script>
-<script src="app/util/directive/scaleup.directive.js"></script>
-<script src="app/util/directive/switch-button/switch.button.directive.js"></script>
-<script src="app/util/directive/typeahead.directive.js"></script>
-<script src="app/util/directive/window.post.message.directive.js"></script>
-<script src="app/util/directive/window.title.directive.js"></script>
-<script src="app/util/filter/camel.to.dot.js"></script>
-<script src="app/util/filter/date.filter.js"></script>
-<script src="app/util/filter/entity.search.filter.js"></script>
-<script src="app/util/filter/html.decode.filter.js"></script>
-<script src="app/util/filter/html.encode.filter.js"></script>
-<script src="app/util/filter/main.filter.js"></script>
-<script src="app/util/filter/markdown.code.filter.js"></script>
-<script src="app/util/filter/markdown.strip.filter.js"></script>
-<script src="app/util/filter/mention.filter.js"></script>
-<script src="app/util/filter/mention.html.decode.filter.js"></script>
-<script src="app/util/filter/template.filter.js"></script>
-<script src="app/util/filter/txt.filter.js"></script>
-<script src="app/util/images/image.loader.directive.js"></script>
-<script src="app/util/images/image_view/image.view.directive.js"></script>
-<script src="app/util/images/images.service.js"></script>
-<script src="app/util/images/on.image.load.directive.js"></script>
-<script src="app/util/service/account.hasSeen.service.js"></script>
-<script src="app/util/service/account.service.js"></script>
-<script src="app/util/service/analytics.service.js"></script>
-<script src="app/util/service/clipboard.service.js"></script>
-<script src="app/util/service/date.service.js"></script>
-<script src="app/util/service/entity.search.filter.service.js"></script>
-<script src="app/util/service/entity.service.js"></script>
-<script src="app/util/service/file.object.service.js"></script>
-<script src="app/util/service/file.upload.service.js"></script>
-<script src="app/util/service/image.paste.service.js"></script>
-<script src="app/util/service/integration.service.js"></script>
-<script src="app/util/service/jnd.util.service.js"></script>
-<script src="app/util/service/jnd.zoom.service.js"></script>
-<script src="app/util/service/link.txt.service.js"></script>
-<script src="app/util/service/markdown.regx.service.js"></script>
-<script src="app/util/service/member.service.js"></script>
-<script src="app/util/service/model/bot.list.service.js"></script>
-<script src="app/util/service/model/entity.collection.service.js"></script>
-<script src="app/util/service/model/entity.handler.service.js"></script>
-<script src="app/util/service/model/filter/entity.filter.common.service.js"></script>
-<script src="app/util/service/model/filter/entity.filter.member.service.js"></script>
-<script src="app/util/service/model/filter/entity.filter.room.service.js"></script>
-<script src="app/util/service/model/room.chat.dm.list.service.js"></script>
-<script src="app/util/service/model/room.topic.list.service.js"></script>
-<script src="app/util/service/model/user.list.service.js"></script>
-<script src="app/util/service/notification.service.helper.js"></script>
-<script src="app/util/service/notification.service.js"></script>
-<script src="app/util/service/privacy.service.js"></script>
-<script src="app/util/service/public.service.js"></script>
-<script src="app/util/service/session.service.js"></script>
-<script src="app/util/service/sticker.service.js"></script>
-<script src="app/util/service/team.data.service.js"></script>
-<script src="app/util/service/textbuffer.service.js"></script>
-<script src="app/util/service/unread.badge.service.js"></script>
-<script src="app/util/service/urlScheme.service.js"></script>
-<script src="app/util/service/user.service.js"></script>
-<script src="app/util/service/watch.dog.service.js"></script>
-<script src="app/util/storage/jnd.folder.storage.js"></script>
-<script src="app/util/storage/jnd.local.storage.js"></script>
-<script src="app/util/storage/jnd.message.storage.js"></script>
-<script src="app/util/storage/jnd.panel.size.storage.js"></script>
 <script src="app/banner/desktop.notification.banner.controller.js"></script>
 <script src="app/banner/desktop.notification.banner.directive.js"></script>
 <script src="app/banner/desktop.notification.banner.service.js"></script>
+<script src="app/center/center.controller.js"></script>
+<script src="app/center/center.directive.js"></script>
+<script src="app/center/center.event.handler.js"></script>
 <script src="app/center/announcement/announcement.controller.js"></script>
 <script src="app/center/announcement/announcement.data.service.js"></script>
 <script src="app/center/announcement/announcement.directive.js"></script>
 <script src="app/center/announcement/announcement.service.js"></script>
-<script src="app/center/center.controller.js"></script>
-<script src="app/center/center.directive.js"></script>
-<script src="app/center/center.event.handler.js"></script>
 <script src="app/center/help_messages/help.messages.controller.js"></script>
 <script src="app/center/help_messages/help.messages.directive.js"></script>
 <script src="app/center/messages/center.messages.directive.js"></script>
@@ -450,23 +359,23 @@
 <script src="app/center/view_components/entity_header/entity.header.controller.js"></script>
 <script src="app/center/view_components/entity_header/entity.header.directive.js"></script>
 <script src="app/center/view_components/entity_header/entity.header.service.js"></script>
-<script src="app/center/view_components/entity_header/room-connector/connect-plug/connect.plug.directive.js"></script>
 <script src="app/center/view_components/entity_header/room-connector/room.connector.directive.js"></script>
+<script src="app/center/view_components/entity_header/room-connector/connect-plug/connect.plug.directive.js"></script>
 <script src="app/center/view_components/entity_header/topic_description/topic.description.controller.js"></script>
 <script src="app/center/view_components/entity_header/topic_description/topic.description.directive.js"></script>
-<script src="app/center/view_components/entity_header/views/entity.header.disconnect.directive.js"></script>
+<script src="app/center/view_components/entity_header/views/entity.header.connection.directive.js"></script>
 <script src="app/center/view_components/entity_header/views/entity.header.dm.directive.js"></script>
 <script src="app/center/view_components/entity_header/views/entity.header.topic.directive.js"></script>
-<script src="app/connect/card/jnd.connect.card.controller.js"></script>
-<script src="app/connect/card/jnd.connect.card.directive.js"></script>
-<script src="app/connect/card/jnd.connect.card.plug.controller.js"></script>
-<script src="app/connect/card/jnd.connect.card.plug.directive.js"></script>
-<script src="app/connect/filter/connect.create.date.filter.js"></script>
 <script src="app/connect/jnd.connect.api.service.js"></script>
 <script src="app/connect/jnd.connect.controller.js"></script>
 <script src="app/connect/jnd.connect.directive.js"></script>
 <script src="app/connect/jnd.connect.loading.directive.js"></script>
 <script src="app/connect/jnd.connect.service.js"></script>
+<script src="app/connect/card/jnd.connect.card.controller.js"></script>
+<script src="app/connect/card/jnd.connect.card.directive.js"></script>
+<script src="app/connect/card/jnd.connect.card.plug.controller.js"></script>
+<script src="app/connect/card/jnd.connect.card.plug.directive.js"></script>
+<script src="app/connect/filter/connect.create.date.filter.js"></script>
 <script src="app/connect/submenu/jnd.connect.submenu.directive.js"></script>
 <script src="app/connect/submenu/jnd.connect.submenu.member.directive.js"></script>
 <script src="app/connect/submenu/jnd.connect.submenu.union.directive.js"></script>
@@ -511,9 +420,9 @@
 <script src="app/header/header.service.js"></script>
 <script src="app/layer/guide/guide.privacy.directive.js"></script>
 <script src="app/layer/guide/guide.zoom.directive.js"></script>
-<script src="app/left/badge/badge.directive.js"></script>
 <script src="app/left/left.controller.js"></script>
 <script src="app/left/left.service.js"></script>
+<script src="app/left/badge/badge.directive.js"></script>
 <script src="app/left/member/member.controller.js"></script>
 <script src="app/left/member/user.directive.js"></script>
 <script src="app/left/messages/messages.controller.js"></script>
@@ -521,6 +430,8 @@
 <script src="app/left/messages/messages.service.js"></script>
 <script src="app/left/team-switch/left.team.switch.controller.js"></script>
 <script src="app/left/team-switch/left.team.switch.directive.js"></script>
+<script src="app/left/topics/topics.controller.js"></script>
+<script src="app/left/topics/topics.directive.js"></script>
 <script src="app/left/topics/dropdown/left.folder.dropdown.directive.js"></script>
 <script src="app/left/topics/dropdown/left.folder.dropdown.layer.controller.js"></script>
 <script src="app/left/topics/dropdown/left.folder.dropdown.layer.directive.js"></script>
@@ -533,12 +444,11 @@
 <script src="app/left/topics/topic/topic.controller.js"></script>
 <script src="app/left/topics/topic/topic.directive.js"></script>
 <script src="app/left/topics/topic/topic.draggable.directive.js"></script>
-<script src="app/left/topics/topics.controller.js"></script>
-<script src="app/left/topics/topics.directive.js"></script>
 <script src="app/main/jnd.main.controller.js"></script>
 <script src="app/main/jnd.main.directive.js"></script>
 <script src="app/mention/mention.view.directive.js"></script>
 <script src="app/mobile/mobile.catcher.controller.js"></script>
+<script src="app/modal/modal.service.js"></script>
 <script src="app/modal/files/integration/integration.controller.js"></script>
 <script src="app/modal/files/share/share.controller.js"></script>
 <script src="app/modal/files/upload/upload.controller.js"></script>
@@ -554,41 +464,42 @@
 <script src="app/modal/lists/services/renderers/member.item.renderer.service.js"></script>
 <script src="app/modal/lists/services/renderers/room.item.renderer.service.js"></script>
 <script src="app/modal/lists/services/renderers/topic.item.renderer.service.js"></script>
+<script src="app/modal/members/member.profile.service.js"></script>
 <script src="app/modal/members/bot-profile/bot.profile.controller.js"></script>
 <script src="app/modal/members/bot-profile/bot.profile.directive.js"></script>
 <script src="app/modal/members/expanding-input/expanding.input.directive.js"></script>
-<script src="app/modal/members/member.profile.service.js"></script>
 <script src="app/modal/members/user-profile/user.profile.controller.js"></script>
 <script src="app/modal/members/user-profile/user.profile.directive.js"></script>
-<script src="app/modal/modal.service.js"></script>
 <script src="app/modal/password/password.reset.request.controller.js"></script>
 <script src="app/modal/rooms/quick_launcher/quick.launcher.controller.js"></script>
 <script src="app/modal/rooms/quick_launcher/quick.launcher.directive.js"></script>
 <script src="app/modal/search-type/user/search.type.user.directive.js"></script>
 <script src="app/modal/search-type/user/search.type.user.service.js"></script>
+<script src="app/modal/settings/notification/setting.notification.controller.js"></script>
 <script src="app/modal/settings/notification/alert/setting.notification.alert.audio.menu.directive.js"></script>
 <script src="app/modal/settings/notification/alert/setting.notification.alert.controller.js"></script>
 <script src="app/modal/settings/notification/alert/setting.notification.alert.directive.js"></script>
 <script src="app/modal/settings/notification/email/setting.notification.email.api.service.js"></script>
 <script src="app/modal/settings/notification/email/setting.notification.email.controller.js"></script>
 <script src="app/modal/settings/notification/email/setting.notification.email.directive.js"></script>
-<script src="app/modal/settings/notification/setting.notification.controller.js"></script>
 <script src="app/modal/shortcut/modal.shortcut.controller.js"></script>
-<script src="app/modal/teams/team_invite/invite_emails/invite.emails.directive.js"></script>
 <script src="app/modal/teams/team_invite/team.invite.controller.js"></script>
 <script src="app/modal/teams/team_invite/team.invite.directive.js"></script>
+<script src="app/modal/teams/team_invite/invite_emails/invite.emails.directive.js"></script>
 <script src="app/modal/teams/team_member_list/team.member.list.controller.js"></script>
 <script src="app/modal/topics/topic_create/topic.create.controller.js"></script>
 <script src="app/modal/topics/topic_invite/topic.invite.controller.js"></script>
 <script src="app/modal/topics/topic_invite_from_dm/topic.invite.direct.controller.js"></script>
 <script src="app/modal/topics/topic_join/topic.join.controller.js"></script>
 <script src="app/modal/topics/topic_rename/topic.rename.controller.js"></script>
-<script src="app/right/file-detail/comment-input/file.detail.comment.input.controller.js"></script>
-<script src="app/right/file-detail/comment-input/file.detail.comment.input.directive.js"></script>
-<script src="app/right/file-detail/comments/comment/file.detail.comment.directive.js"></script>
-<script src="app/right/file-detail/comments/file.detail.comments.directive.js"></script>
+<script src="app/right/right.controller.js"></script>
+<script src="app/right/right.service.js"></script>
 <script src="app/right/file-detail/file.detail.controller.js"></script>
 <script src="app/right/file-detail/file.detail.service.js"></script>
+<script src="app/right/file-detail/comment-input/file.detail.comment.input.controller.js"></script>
+<script src="app/right/file-detail/comment-input/file.detail.comment.input.directive.js"></script>
+<script src="app/right/file-detail/comments/file.detail.comments.directive.js"></script>
+<script src="app/right/file-detail/comments/comment/file.detail.comment.directive.js"></script>
 <script src="app/right/file-detail/header/file.detail.header.directive.js"></script>
 <script src="app/right/file-detail/meta/file.detail.meta.directive.js"></script>
 <script src="app/right/file-detail/preview/file.detail.preview.directive.js"></script>
@@ -609,12 +520,10 @@
 <script src="app/right/message/message.controller.js"></script>
 <script src="app/right/message/message.directive.js"></script>
 <script src="app/right/message/message.service.js"></script>
-<script src="app/right/messages/message-group/message.group.controller.js"></script>
-<script src="app/right/messages/message-group/message.group.directive.js"></script>
 <script src="app/right/messages/messages.controller.js"></script>
 <script src="app/right/messages/messages.directive.js"></script>
-<script src="app/right/right.controller.js"></script>
-<script src="app/right/right.service.js"></script>
+<script src="app/right/messages/message-group/message.group.controller.js"></script>
+<script src="app/right/messages/message-group/message.group.directive.js"></script>
 <script src="app/right/scroll-loading/scroll.loading.directive.js"></script>
 <script src="app/right/search/search.controller.js"></script>
 <script src="app/right/search/search.directive.js"></script>
@@ -635,13 +544,107 @@
 <script src="app/tpl/loading/loading.directive.js"></script>
 <script src="app/tpl/loading/loading.service.js"></script>
 <script src="app/translation/translation.js"></script>
+<script src="app/tutorial/tutorial.service.js"></script>
 <script src="app/tutorial/popover/tutorial.popover.directive.js"></script>
 <script src="app/tutorial/tooltip/tutorial.tooltip.controller.js"></script>
 <script src="app/tutorial/tooltip/tutorial.tooltip.directive.js"></script>
-<script src="app/tutorial/tutorial.service.js"></script>
 <script src="app/tutorial/welcome/tutorial.welcome.controller.js"></script>
 <script src="app/tutorial/welcome/tutorial.welcome.directive.js"></script>
+<script src="app/util/directive/animate.text.directive.js"></script>
+<script src="app/util/directive/jnd.code.prettify.directive.js"></script>
+<script src="app/util/directive/jnd.elastic.directive.js"></script>
+<script src="app/util/directive/jnd.ignore.braces.js"></script>
+<script src="app/util/directive/jnd.main.key.handler.directive.js"></script>
+<script src="app/util/directive/jnd.tooltip.directive.js"></script>
+<script src="app/util/directive/jnd.tooltip.trigger.directive.js"></script>
+<script src="app/util/directive/jnd.translate.html.js"></script>
+<script src="app/util/directive/jnd.version.directive.js"></script>
+<script src="app/util/directive/main.directive.js"></script>
+<script src="app/util/directive/scaleup.directive.js"></script>
+<script src="app/util/directive/typeahead.directive.js"></script>
+<script src="app/util/directive/window.post.message.directive.js"></script>
+<script src="app/util/directive/window.title.directive.js"></script>
+<script src="app/util/directive/custom-selectbox/jnd.custom.focus.directive.js"></script>
+<script src="app/util/directive/custom-selectbox/jnd.selectbox.common.directive.js"></script>
+<script src="app/util/directive/custom-selectbox/jnd.selectbox.file.directive.js"></script>
+<script src="app/util/directive/custom-selectbox/jnd.selectbox.member.directive.js"></script>
+<script src="app/util/directive/custom-selectbox/jnd.selectbox.member.service.js"></script>
+<script src="app/util/directive/custom-selectbox/jnd.selectbox.room.directive.js"></script>
+<script src="app/util/directive/custom-selectbox/jnd.selectbox.topic.member.directive.js"></script>
+<script src="app/util/directive/dropdown-position/dropdown.position.directive.js"></script>
+<script src="app/util/directive/dropdown-selectbox/jnd.dropdown.selectbox.directive.js"></script>
+<script src="app/util/directive/file-drop/jnd.file.drop.controller.js"></script>
+<script src="app/util/directive/file-drop/jnd.file.drop.directive.js"></script>
+<script src="app/util/directive/loading/initial/loading-initial.directive.js"></script>
+<script src="app/util/directive/pdf-viewer/jnd.pdf.viewer.directive.js"></script>
+<script src="app/util/directive/pdf-viewer/jnd.pdf.viewer.service.js"></script>
+<script src="app/util/directive/switch-button/switch.button.directive.js"></script>
+<script src="app/util/filter/camel.to.dot.js"></script>
+<script src="app/util/filter/date.filter.js"></script>
+<script src="app/util/filter/entity.search.filter.js"></script>
+<script src="app/util/filter/html.decode.filter.js"></script>
+<script src="app/util/filter/html.encode.filter.js"></script>
+<script src="app/util/filter/main.filter.js"></script>
+<script src="app/util/filter/markdown.code.filter.js"></script>
+<script src="app/util/filter/markdown.strip.filter.js"></script>
+<script src="app/util/filter/mention.filter.js"></script>
+<script src="app/util/filter/mention.html.decode.filter.js"></script>
+<script src="app/util/filter/template.filter.js"></script>
+<script src="app/util/filter/txt.filter.js"></script>
+<script src="app/util/images/image.loader.directive.js"></script>
+<script src="app/util/images/images.service.js"></script>
+<script src="app/util/images/on.image.load.directive.js"></script>
+<script src="app/util/images/image_view/image.view.directive.js"></script>
+<script src="app/util/service/account.hasSeen.service.js"></script>
+<script src="app/util/service/account.service.js"></script>
+<script src="app/util/service/analytics.service.js"></script>
+<script src="app/util/service/clipboard.service.js"></script>
+<script src="app/util/service/date.service.js"></script>
+<script src="app/util/service/entity.search.filter.service.js"></script>
+<script src="app/util/service/entity.service.js"></script>
+<script src="app/util/service/file.object.service.js"></script>
+<script src="app/util/service/file.upload.service.js"></script>
+<script src="app/util/service/image.paste.service.js"></script>
+<script src="app/util/service/integration.service.js"></script>
+<script src="app/util/service/jnd.util.service.js"></script>
+<script src="app/util/service/jnd.zoom.service.js"></script>
+<script src="app/util/service/link.txt.service.js"></script>
+<script src="app/util/service/markdown.regx.service.js"></script>
+<script src="app/util/service/member.service.js"></script>
+<script src="app/util/service/notification.service.js"></script>
+<script src="app/util/service/notification.service.helper.js"></script>
+<script src="app/util/service/privacy.service.js"></script>
+<script src="app/util/service/public.service.js"></script>
+<script src="app/util/service/session.service.js"></script>
+<script src="app/util/service/sticker.service.js"></script>
+<script src="app/util/service/team.data.service.js"></script>
+<script src="app/util/service/textbuffer.service.js"></script>
+<script src="app/util/service/unread.badge.service.js"></script>
+<script src="app/util/service/urlScheme.service.js"></script>
+<script src="app/util/service/user.service.js"></script>
+<script src="app/util/service/watch.dog.service.js"></script>
+<script src="app/util/service/model/bot.list.service.js"></script>
+<script src="app/util/service/model/entity.collection.service.js"></script>
+<script src="app/util/service/model/entity.handler.service.js"></script>
+<script src="app/util/service/model/room.chat.dm.list.service.js"></script>
+<script src="app/util/service/model/room.topic.list.service.js"></script>
+<script src="app/util/service/model/user.list.service.js"></script>
+<script src="app/util/service/model/filter/entity.filter.common.service.js"></script>
+<script src="app/util/service/model/filter/entity.filter.member.service.js"></script>
+<script src="app/util/service/model/filter/entity.filter.room.service.js"></script>
+<script src="app/util/storage/jnd.folder.storage.js"></script>
+<script src="app/util/storage/jnd.local.storage.js"></script>
+<script src="app/util/storage/jnd.message.storage.js"></script>
+<script src="app/util/storage/jnd.panel.size.storage.js"></script>
+<script src="assets/components/google-code-prettify/prettify.js"></script>
+<script src="assets/components/pdfjs/compatibility.js"></script>
+<script src="assets/components/pdfjs/pdf_viewer.js"></script>
+<script src="assets/javascripts/core.js"></script>
+<script src="assets/javascripts/detectmobilebrowser.js"></script>
+<script src="assets/javascripts/handlebars.templates.js"></script>
+<script src="assets/javascripts/jquery.highlight.js"></script>
 <script src="components/app/active_notifier/active.notifier.directive.js"></script>
+<script src="components/app/active_notifier/active.notifier.service.js"></script>
 <script src="components/app/analytics/analyticsv1.service.js"></script>
 <script src="components/app/analytics/directives/buttonTrakcer.directive.js"></script>
 <script src="components/app/analytics/directives/downloadTracker.directive.js"></script>
@@ -680,6 +683,10 @@
 <script src="components/app/pubsub/pubsub.service.js"></script>
 <script src="components/app/router/router.helper.js"></script>
 <script src="components/app/router/router.service.js"></script>
+<script src="components/app/socket/socket.event.api.service.js"></script>
+<script src="components/app/socket/socket.service.js"></script>
+<script src="components/app/socket/socket.service.handler.js"></script>
+<script src="components/app/socket/socket.service.helper.js"></script>
 <script src="components/app/socket/service/socket.announcement.service.js"></script>
 <script src="components/app/socket/service/socket.chat.service.js"></script>
 <script src="components/app/socket/service/socket.connect.service.js"></script>
@@ -694,10 +701,6 @@
 <script src="components/app/socket/service/socket.team.service.js"></script>
 <script src="components/app/socket/service/socket.topic.service.js"></script>
 <script src="components/app/socket/service/socket.util.service.js"></script>
-<script src="components/app/socket/socket.event.api.service.js"></script>
-<script src="components/app/socket/socket.service.handler.js"></script>
-<script src="components/app/socket/socket.service.helper.js"></script>
-<script src="components/app/socket/socket.service.js"></script>
 <script src="components/app/storage/storage.service.js"></script>
 <script src="components/base/highlight/highlight.js"></script>
 <script src="components/base/highlight/highlight.service.js"></script>
@@ -718,27 +721,30 @@
 <script src="components/jandi/popup/popup.js"></script>
 <script src="components/jandi/popup/popup.service.js"></script>
 <script src="components/jandi/preloader/preloader.service.js"></script>
-<script src="components/jandi/ui/dialog/dialog.js"></script>
-<script src="components/jandi/ui/dialog/dialog.service.js"></script>
-<script src="components/jandi/ui/dialog/modal/modal.controller.js"></script>
-<script src="components/jandi/ui/dialog/modal/modal.directive.js"></script>
-<script src="components/jandi/ui/dialog/toast/toast.service.js"></script>
-<script src="components/jandi/ui/intercom/intercom.abstract.js"></script>
-<script src="components/jandi/ui/intercom/intercom.directive.js"></script>
 <script src="components/jandi/ui/jandi.ui.js"></script>
-<script src="components/jandi/ui/pdf-viewer/pdf.viewer.abstract.js"></script>
-<script src="components/jandi/ui/pdf-viewer/pdf.viewer.directive.js"></script>
-<script src="components/jandi/ui/pdf-viewer/pdf.viewer.service.js"></script>
-<script src="components/jandi/ui/profile-image/character-image/character.image.directive.js"></script>
-<script src="components/jandi/ui/profile-image/character-image/character.image.service.js"></script>
-<script src="components/jandi/ui/profile-image/crop-image/crop.image.directive.js"></script>
-<script src="components/jandi/ui/profile-image/menu/profile.image.menu.directive.js"></script>
-<script src="components/jandi/ui/profile-image/profile.image.controller.js"></script>
-<script src="components/jandi/ui/profile-image/profile.image.js"></script>
-<script src="components/jandi/ui/splitter/splitter.abstract.js"></script>
-<script src="components/jandi/ui/splitter/splitter.controller.js"></script>
-<script src="components/jandi/ui/splitter/splitter.directive.js"></script>
-<script src="components/jandi/ui/splitter/splitter.panel.directive.js"></script>
+<script src="components/jandi/ui/component/jandi.ui.component.js"></script>
+<script src="components/jandi/ui/component/dialog/dialog.js"></script>
+<script src="components/jandi/ui/component/dialog/dialog.service.js"></script>
+<script src="components/jandi/ui/component/dialog/modal/modal.controller.js"></script>
+<script src="components/jandi/ui/component/dialog/modal/modal.directive.js"></script>
+<script src="components/jandi/ui/component/dialog/toast/toast.service.js"></script>
+<script src="components/jandi/ui/component/intercom/intercom.js"></script>
+<script src="components/jandi/ui/component/intercom/intercom.directive.js"></script>
+<script src="components/jandi/ui/component/pdf-viewer/pdf.viewer.js"></script>
+<script src="components/jandi/ui/component/pdf-viewer/pdf.viewer.directive.js"></script>
+<script src="components/jandi/ui/component/pdf-viewer/pdf.viewer.service.js"></script>
+<script src="components/jandi/ui/component/profile-image/profile.image.js"></script>
+<script src="components/jandi/ui/component/profile-image/profile.image.controller.js"></script>
+<script src="components/jandi/ui/component/profile-image/character-image/character.image.directive.js"></script>
+<script src="components/jandi/ui/component/profile-image/character-image/character.image.service.js"></script>
+<script src="components/jandi/ui/component/profile-image/crop-image/crop.image.directive.js"></script>
+<script src="components/jandi/ui/component/profile-image/menu/profile.image.menu.directive.js"></script>
+<script src="components/jandi/ui/component/splitter/splitter.abstract.js"></script>
+<script src="components/jandi/ui/component/splitter/splitter.controller.js"></script>
+<script src="components/jandi/ui/component/splitter/splitter.directive.js"></script>
+<script src="components/jandi/ui/component/splitter/splitter.panel.directive.js"></script>
+<script src="components/jandi/ui/util/jandi.ui.util.js"></script>
+<script src="components/jandi/ui/util/directive/jnd.input.model.directive.js"></script>
 <!-- endinjector -->
 <!-- endbuild -->
 </body>

@@ -51,9 +51,10 @@
       $scope.$on('jndWebSocketFile:commentDeleted', _onCommentDeleted);
 
       // 컨넥션이 끊어졌다 연결되었을 때, refreshFileList 를 호출한다.
-      $scope.$on('connected', _onConnected);
-      $scope.$on('disconnected', _onDisconnected);
-      $scope.$on('NetInterceptor:onGatewayTimeoutError', _onGatewayTimeoutError);
+      $scope.$on('NetInterceptor:connect', _onConnected);
+      $scope.$on('NetInterceptor:disconnect', _onDisconnected);
+      $scope.$on('NetInterceptor:onGatewayTimeoutError', _refreshView);
+      $scope.$on('Auth:refreshTokenSuccess', _refreshView);
     }
 
     /**
@@ -116,7 +117,7 @@
 
     /**
      * mention 삭제함
-     * @param {object} mention
+     * @param {object} mentionId
      * @private
      */
     function _removeMention(mentionId) {
@@ -179,7 +180,7 @@
 
       $scope.records = [];
       $scope.isEndOfList = $scope.isLoading = $scope.isScrollLoading = false;
-      $scope.searchStatus = _getSearchStatus();
+      _setStatus();
     }
 
     /**
@@ -192,8 +193,7 @@
 
         $scope.isEmpty = false;
         $scope.isLoading = true;
-        $scope.searchStatus = _getSearchStatus();
-
+        _setStatus();
         _getMentionList();
       }
     }
@@ -214,10 +214,10 @@
 
           _setStatus();
         })
-        .error(JndUtil.salertUnknownError)
+        .error(JndUtil.alertUnknownError)
         .finally(function() {
           $scope.isLoading = $scope.isScrollLoading = false;
-          $scope.searchStatus = _getSearchStatus();
+          _setStatus();
         });
     }
 
@@ -228,12 +228,12 @@
     function _setStatus() {
       $scope.isInitDone = true;
       $scope.isEmpty = !$scope.records.length;
-
+      $scope.searchStatus = _getSearchStatus();
     }
 
     /**
      * mention의 list를 설정
-     * @param {object} records
+     * @param {object} mentions
      * @param {boolean} [isPush] - true가 아니면 unshift 함
      * @private
      */
@@ -249,6 +249,7 @@
           $scope.records[fn](mention);
         }
       });
+      _setStatus();
     }
 
     /**
@@ -282,14 +283,6 @@
       }
 
       return searchStatus;
-    }
-
-    /**
-     * gateway timeout error event handler
-     * @private
-     */
-    function _onGatewayTimeoutError() {
-      _refreshView();
     }
 
     /**

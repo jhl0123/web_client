@@ -17,9 +17,15 @@
    * @constructor
    */
   /* @ngInject */
-  function NetInterceptor($rootScope, $q, configuration, jndPubSub) {
+  function NetInterceptor($rootScope, $q, $timeout, jndPubSub) {
+    /**
+     * Network 연결 상태 변경사항 감지 시 설정할 delay time
+     * @type {number}
+     */
+    var TIMEOUT_THRESHOLD = 2000;
+    
     var _isConnected = true;
-
+    var _timer;
     /**
      * 응답에러가 발생한 상태 맵
      * @type {{responseErrorStatusCode: count}}
@@ -28,10 +34,8 @@
     var _responseErrorStatusMap = {};
 
     var _$scope = $rootScope.$new();
-
-    this.setStatus = setStatus;
+    
     this.isConnected = isConnected;
-
     this.responseError = responseError;
 
     _init();
@@ -41,6 +45,7 @@
      * @private
      */
     function _init() {
+      _setStatus(window.navigator.onLine);
       _attachScopeEvent();
       _attachDomEvent();
     }
@@ -58,8 +63,8 @@
      * @private
      */
     function _attachDomEvent() {
-      $(window).on("offline", _.bind(setStatus, this, false));
-      $(window).on("online", _.bind(setStatus, this, true));
+      $(window).on("offline", _.bind(_setStatus, this, false));
+      $(window).on("online", _.bind(_setStatus, this, true));
     }
 
     /**
@@ -73,7 +78,7 @@
         // 크롬 브라우저에서 'ERR_NETWORK_IO_SUSPENDED'가 발생하여 정상적인 xhr이 수행되지 않으므로 timeout을 사용한다.
         setTimeout(function() {
           jndPubSub.pub('NetInterceptor:onGatewayTimeoutError');
-        }, 1000);
+        }, TIMEOUT_THRESHOLD);
       }
       _clearResponseErrorStatus();
     }
@@ -89,8 +94,21 @@
     /**
      * 커넥션 상태를 설정한다.
      * @param {boolean} isConnected 네트워크 연결상태
+     * @private
      */
-    function setStatus(isConnected) {
+    function _setStatus(isConnected) {
+      //Linux 의 경우 연결이 정상적으로 이루어졌을 경우, 즉시 request 를 수행하면 ERR_NAME_RESOLUTION_FAILED 등의 오류가 발생하므로
+      //timeout 을 사용한다.
+      $timeout.cancel(_timer);
+      _timer = $timeout(_.bind(_applyStatus, this, isConnected), TIMEOUT_THRESHOLD);
+    }
+
+    /**
+     * network status 상태를 설정한다.
+     * @param {boolean} isConnected 네트워크 연결상태
+     * @private
+     */
+    function _applyStatus(isConnected) {
       var currentStatus = _isConnected;
       _isConnected = isConnected;
       if (currentStatus !== isConnected) {
@@ -105,10 +123,10 @@
      */
     function _broadcast(isConnected) {
       if (isConnected) {
-        jndPubSub.pub('connected');
+        jndPubSub.pub('NetInterceptor:connect');
         $('.content-wrapper').removeClass('offline')
       } else {
-        jndPubSub.pub('disconnected');
+        jndPubSub.pub('NetInterceptor:disconnect');
         $('.content-wrapper').addClass('offline');
       }
     }
@@ -119,10 +137,8 @@
      * @returns {Promise}
      */
     function responseError(rejection) {
-      setStatus(window.navigator.onLine);
-
+      _setStatus(window.navigator.onLine);
       _setResponseErrorStatus(rejection.status);
-
       return $q.reject(rejection);
     }
 

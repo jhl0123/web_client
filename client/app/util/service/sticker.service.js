@@ -29,6 +29,10 @@
       {
         className: 'pangya',
         id: 100
+      },
+      {
+        className: 'dingo',
+        id: 103
       }
     ];
 

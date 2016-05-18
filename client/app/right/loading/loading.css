@@ -5,7 +5,6 @@
   right: 0;
   color: #999999;
   background-color: #fff;
-  border-bottom:1px solid #E1E1E1;
 }
 
 .search-result-container .search-result-summary-ing > span {
@@ -18,14 +17,13 @@
   left:-12px;
 }
 
-.search-result-container .search-result-summary-ing,
-.search-result-container .search-result-summary {
-  margin: 13px 0 13px 40px;
-  padding-top:0px;
-  padding-bottom:1px;
+.search-result-container .search-result-summary-ing{
+  padding: 14px 0 13px 40px;
+  border-bottom:1px solid #E1E1E1;
 }
 .search-result-container .search-result-summary {
-  margin-left: 16px;
+  padding: 14px 0 13px 16px;
+  border-bottom:1px solid #E1E1E1;
 }
 .search-result-container .search-result-summary .searchQueryKeyword {
   font-weight: bold;

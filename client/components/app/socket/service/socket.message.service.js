@@ -217,7 +217,7 @@
      */
     function _onMessageDelete(socketEvent) {
       var room = socketEvent.room;
-      if (!jndWebSocketCommon.isCurrentEntity(room)) {
+      if (!jndWebSocketCommon.isCurrentEntity(room) || !ActiveNotifier.getStatus()) {
         _updateBadgeCount(socketEvent);
       }
       jndPubSub.pub('jndWebSocketMessage:messageDeleted', socketEvent);
@@ -280,8 +280,13 @@
       var room = socketEvent.room;
       if (jndWebSocketCommon.isCurrentEntity(room)) {
         jndPubSub.updateCenterPanel();
+
+        //inactive 라면 badge count 를 올린다.
+        if (!ActiveNotifier.getStatus()) {
+          _updateBadgeCount(socketEvent);
+        }
       } else {
-        _updateBadgeCount(socketEvent)
+        _updateBadgeCount(socketEvent);
       }
 
       if (_hasMention(socketEvent)) {

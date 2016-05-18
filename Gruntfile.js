@@ -526,17 +526,48 @@ module.exports = function (grunt) {
     },
 
     injector: {
-      options: {
-
-      },
       // Inject application script files into index.html (doesn't include bower)
       scripts: {
         options: {
+          sort: function (a, b) {
+            a = a.replace(/\.js$/, '');
+            b = b.replace(/\.js$/, '');
+            
+            var temp1 = a.split("/");
+            var temp2 = b.split("/");
+            var result = 0;
+            var i;
+            var length = Math.min(temp1.length, temp2.length);
+
+            for (i = 0; i < length; i++) {
+              if (temp1[i] !== temp2[i]) {
+                if (i === length -1) {
+                  if (temp1.length > temp2.length) {
+                    result = 1;
+                  } else if (temp1.length < temp2.length) {
+                    result = -1;
+                  }
+                } else {
+                  break;
+                }
+              }
+            }
+            
+            if (result === 0) {
+              if (a > b) {
+                result = 1;
+              } else if (a < b) {
+                result = -1;
+              }
+            }
+            return result;
+          },
           transform: function(filePath) {
             filePath = filePath.replace('/client/', '');
             filePath = filePath.replace('/.tmp/', '');
             return '<script src="' + filePath + '"></script>';
           },
+
           starttag: '<!-- injector:js -->',
           endtag: '<!-- endinjector -->'
         },

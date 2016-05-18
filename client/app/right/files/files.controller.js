@@ -91,9 +91,10 @@
       $scope.$on('onChangeShared', _onChangeShared);
 
       // 컨넥션이 끊어졌다 연결되었을 때, refreshFileList 를 호출한다.
-      $scope.$on('connected', _onConnected);
-      $scope.$on('disconnected', _onDisconnected);
-      $scope.$on('NetInterceptor:onGatewayTimeoutError', _onGatewayTimeoutError);
+      $scope.$on('NetInterceptor:connect', _onConnected);
+      $scope.$on('NetInterceptor:disconnect', _onDisconnected);
+      $scope.$on('NetInterceptor:onGatewayTimeoutError', _refreshView);
+      $scope.$on('Auth:refreshTokenSuccess', _refreshView);
 
       $scope.$watch('searchStatus.sharedEntityId', _onSearchEntityChange);
       $scope.$watch('searchStatus.writerId', _onSearchWriterChange);
@@ -776,14 +777,6 @@
      */
     function isKeywordEmpty() {
       return !$scope.searchStatus.keyword;
-    }
-
-    /**
-     * gateway timeout error event handler
-     * @private
-     */
-    function _onGatewayTimeoutError() {
-      _refreshView();
     }
 
     /**
