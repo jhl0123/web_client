@@ -232,6 +232,12 @@ msgstr ""
 msgid "@comment-all-desc"
 msgstr ""
 
+#: client/app/tutorial/popup/tutorial.main.html
+#: client/app/tutorial/popup/view_components/tutor/tutorial.tutor.html
+#: client/app/tutorial/welcome/tutorial.welcome.html
+msgid "@common_skip_all"
+msgstr ""
+
 #: client/app/modal/teams/team_member_list/team.member.list.html
 msgid "@common-active-member"
 msgstr ""
@@ -774,12 +780,6 @@ msgstr ""
 msgid "@common-zoom-reset"
 msgstr ""
 
-#: client/app/tutorial/popup/tutorial.main.html
-#: client/app/tutorial/popup/view_components/tutor/tutorial.tutor.html
-#: client/app/tutorial/welcome/tutorial.welcome.html
-msgid "@common_skip_all"
-msgstr ""
-
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@confirm-kickout"
 msgstr ""
@@ -994,6 +994,10 @@ msgstr ""
 msgid "@filecard-button-preview-tooltip"
 msgstr ""
 
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@filecard-unshared-file"
+msgstr ""
+
 #: client/app/left/topics/topics.html
 msgid "@folder-enter-name"
 msgstr ""
@@ -1124,6 +1128,10 @@ msgid "@integration-title-google-drive"
 msgstr ""
 
 #: client/app/modal/teams/team_invite/team.invite.html
+msgid "@invitation_success_copy_link"
+msgstr ""
+
+#: client/app/modal/teams/team_invite/team.invite.html
 msgid "@invitation-already-member"
 msgstr ""
 
@@ -1146,10 +1154,6 @@ msgstr ""
 #: client/app/modal/teams/team_invite/team.invite.html
 #: client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.html
 msgid "@invitation-link-desc"
-msgstr ""
-
-#: client/app/modal/teams/team_invite/team.invite.html
-msgid "@invitation_success_copy_link"
 msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
@@ -2894,164 +2898,6 @@ msgstr ""
 msgid "@turn-on-topic-alarm"
 msgstr ""
 
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-click-blink"
-msgstr ""
-
-#: client/app/modal/change_log/changeLog.html
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-done"
-msgstr ""
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-msg1"
-msgstr ""
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-msg2"
-msgstr ""
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-msg3"
-msgstr ""
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-title"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-message-file-title"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal1-content"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal1-title"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal2-content"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal2-title"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal3-content"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal3-title"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal4-content"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal4-title"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal5-content"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal5-title"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal6-content"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal6-title"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal7-content"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal7-title"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-msg-explanation"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-skip"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-slide-1"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-slide-2"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-slide-3"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-tips"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-1"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-2"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-3"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-4"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-dm-explanation"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-group-explanation"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-title"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-topic-explanation"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-tour"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-welcome-intro"
-msgstr ""
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-welcome-title"
-msgstr ""
-
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_awesome"
 msgstr ""
@@ -3240,6 +3086,164 @@ msgstr ""
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_welcome_title"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-click-blink"
+msgstr ""
+
+#: client/app/modal/change_log/changeLog.html
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-done"
+msgstr ""
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-msg1"
+msgstr ""
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-msg2"
+msgstr ""
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-msg3"
+msgstr ""
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-title"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-message-file-title"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal1-content"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal1-title"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal2-content"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal2-title"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal3-content"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal3-title"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal4-content"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal4-title"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal5-content"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal5-title"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal6-content"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal6-title"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal7-content"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal7-title"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-msg-explanation"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-skip"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-slide-1"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-slide-2"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-slide-3"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-tips"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-1"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-2"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-3"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-4"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-dm-explanation"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-group-explanation"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-title"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-topic-explanation"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-tour"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-welcome-intro"
+msgstr ""
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-welcome-title"
 msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
