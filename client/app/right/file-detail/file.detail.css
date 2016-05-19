@@ -11,10 +11,10 @@
 .rpanel-body-content.file-detail {
   top: 35px;
 }
-.file__name {
-  font-weight: 900;
-  font-size: 1rem;
-}
+/*.file__name {*/
+  /*font-weight: 900;*/
+  /*font-size: 1rem;*/
+/*}*/
 .file__owner {
   color: #4bbe2e !important;
   font-weight: 900;

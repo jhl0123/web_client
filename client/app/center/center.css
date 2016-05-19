@@ -307,12 +307,12 @@ issue : JND-974
 fix : change min-height:65px to minheight:65px !important
 by ysyun 2015.2.25
 */
-.msg-file-meta {
-  font-size: 12px;
-  line-height: 1.3rem;
-  padding-left: 75px;
-  min-height: 65px !important;
-}
+/*.msg-file-meta {*/
+  /*font-size: 12px;*/
+  /*line-height: 1.3rem;*/
+  /*padding-left: 75px;*/
+  /*min-height: 65px !important;*/
+/*}*/
 
 /*
 issue : JND-974
@@ -320,39 +320,39 @@ fix : add comma(,) between .large-thumbnail-grand-parent and .msg-file-meta
       add width: 100%;
 by ysyun 2015.2.25
 */
-.large-thumbnail-grand-parent, .msg-file-meta {
-  padding-left: 0;
-  min-height: 0;
-  width: 100%;
-}
-.msg-file-meta-up {
-  margin-bottom: 3px;
-}
-.archived-msg-file-meta__title {
-  color: #b7b7b7;
-  padding-bottom: 2px;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 35px;
-}
-.archived-msg-file-meta__title:hover {
-  color: #b7b7b7;
-}
+/*.large-thumbnail-grand-parent, .msg-file-meta {*/
+  /*padding-left: 0;*/
+  /*min-height: 0;*/
+  /*width: 100%;*/
+/*}*/
+/*.msg-file-meta-up {*/
+  /*margin-bottom: 3px;*/
+/*}*/
+/*.archived-msg-file-meta__title {*/
+  /*color: #b7b7b7;*/
+  /*padding-bottom: 2px;*/
+  /*font-weight: 700;*/
+  /*font-size: 14px;*/
+  /*line-height: 35px;*/
+/*}*/
+/*.archived-msg-file-meta__title:hover {*/
+  /*color: #b7b7b7;*/
+/*}*/
 
-.msg-file-meta .msg-file-meta__title,
-.msg-comment .msg-file-meta__title {
-  color: #333;
-  padding-bottom: 2px;
-  font-weight: 700;
-  font-size: 15px;
-}
-.msg-file-meta__title:hover {
-  color: #404040;
-}
-.msg-file-meta-info {
-  color: #666;
-  letter-spacing: 0.02em;
-}
+/*.msg-file-meta .msg-file-meta__title,*/
+/*.msg-comment .msg-file-meta__title {*/
+  /*color: #333;*/
+  /*padding-bottom: 2px;*/
+  /*font-weight: 700;*/
+  /*font-size: 15px;*/
+/*}*/
+/*.msg-file-meta__title:hover {*/
+  /*color: #404040;*/
+/*}*/
+/*.msg-file-meta-info {*/
+  /*color: #666;*/
+  /*letter-spacing: 0.02em;*/
+/*}*/
 .msg-file-meta-down a {
   /*color:#999999 !important;*/
   /*letter-spacing: 0.02em;*/
@@ -373,12 +373,12 @@ by ysyun 2015.2.25
   letter-spacing: 0;
 }
 
-.msg-comment-header .file__name {
-  font-size: 15px;
-  line-height: 15px;
-  color: #333;
-  font-weight: 700;
-}
+/*.msg-comment-header .file__name {*/
+  /*font-size: 15px;*/
+  /*line-height: 15px;*/
+  /*color: #333;*/
+  /*font-weight: 700;*/
+/*}*/
 .msg-comment-body {
   margin-top: 10px;
 }
