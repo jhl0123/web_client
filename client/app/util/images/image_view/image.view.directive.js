@@ -65,7 +65,7 @@
        * @private
        */
       function _createLoadingBar() {
-        jqLoadingBar = $('<div class="loading-bar-wrapper">' + Loading.getTemplate() + '</div>')
+        jqLoadingBar = $('<div class="loading-content">' + Loading.getTemplate() + '</div>')
           .css({width: dimention.width, height: dimention.height})
           .appendTo(jqEle);
       }
@@ -75,7 +75,7 @@
        * @private
        */
       function _createImage() {
-        jqImage = $('<img class="opac-zero _fileExpand" src="' + imageView + '">')
+        jqImage = $('<img class="opac-zero" src="' + imageView + '">')
           .css({width: dimention.width, height: dimention.height})
           .one('load', _onImageLoad)
           .appendTo(jqEle);

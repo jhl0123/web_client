@@ -324,8 +324,6 @@
         } else if (jqTarget.closest('._fileShare').length) {
           _onClickFileShare(msg);
           hasAction = true;
-        } else if (jqTarget.closest('._fileDetail').length) {
-          _onClickFileDetail(msg);
         }
 
         if (hasAction) {
@@ -340,36 +338,6 @@
        */
       function _onClickFileShare(msg) {
         scope.onShareClick(msg.message);
-      }
-
-      /**
-       * file detail
-       * @param {object} msg
-       * @param {boolean} [isFocusCommentInput=false]
-       * @private
-       */
-      function _onClickFileDetail(msg, isFocusCommentInput) {
-        var contentType = msg.message.contentType;
-        var userName = $filter('getName')(msg.message.writerId);
-        var itemId = contentType === 'comment' ? msg.feedbackId : msg.message.id;
-
-        if ($state.params.itemId != itemId) {
-          if (msg.feedback && contentType !== 'file') {
-            userName = $filter('getName')(msg.feedback.writerId);
-            itemId = msg.feedback.id;
-          }
-
-          if (isFocusCommentInput) {
-            $rootScope.setFileDetailCommentFocus = true;
-          }
-
-          $state.go('files', {
-            userName: userName,
-            itemId: itemId
-          });
-        } else if (isFocusCommentInput) {
-          fileAPIservice.broadcastCommentFocus();
-        }
       }
 
       /**

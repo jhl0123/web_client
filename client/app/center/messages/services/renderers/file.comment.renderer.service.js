@@ -70,8 +70,6 @@
       var isUnshared = publicService.isFileUnshared(msg, true);
 
       var hasPermission = publicService.hasFilePermission(msg, true);
-      var isMustPreview = $filter('mustPreview')(content);
-      var hasPreview = $filter('hasPreview')(content);
 
       var isTitle = MessageCollection.isTitleComment(index);
       var isChild = MessageCollection.isChildComment(index);
@@ -83,6 +81,11 @@
       var commentCount = RendererUtil.getCommentCount(msg);
 
       var feedback = RendererUtil.getFeedbackMessage(msg);
+
+      var hasOriginalImage = !!(feedback.content && feedback.content.extraInfo);
+      var isMustPreview = $filter('mustPreview')(content);
+      var hasPreview = $filter('hasPreview')(content);
+      var hasPdfPreview = FileDetail.hasPdfPreview(feedback);
 
       var data = {
         css: {
@@ -103,11 +106,10 @@
           isUnshared: isUnshared,
           hasPermission: hasPermission,
           icon: icon,
-          hasOriginalImageView: !!(feedback.content && feedback.content.extraInfo),
           mustPreview: isMustPreview,
           hasPreview: hasPreview,
-          hasPdfPreview: _hasPdfPreview(msg),
           imageUrl: $filter('getPreview')(content, 'large'),
+          smallImageUrl: $filter('getPreview')(content, 'small'),
           title: $filter('fileTitle')(content),
           type: $filter('fileType')(content),
           size: $filter('bytes')(content.size),
@@ -134,6 +136,12 @@
       if (hasPreview && content.extraInfo) {
         _setExtraInfo(data.file, content.extraInfo);
       }
+
+      RendererUtil.convertToPreview(data, {
+        hasOriginalImage: hasOriginalImage,
+        isMustPreview: isMustPreview,
+        hasPdfPreview: hasPdfPreview
+      });
 
       return {
         className: _getClassName(isTitle, isChild, isFirst, isLast),

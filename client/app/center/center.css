@@ -272,35 +272,35 @@ by ysyun 2015.2.25
   overflow: hidden;
 }
 
-.preview-container:hover .large-thumbnail-full-screen {
-  display: block;
-  -webkit-animation: opacIn-from-0 1s; /* Chrome, Safari, Opera */
-  animation: opacIn-from-0 1s;
-}
+/*.preview-container:hover .large-thumbnail-full-screen {*/
+  /*display: block;*/
+  /*-webkit-animation: opacIn-from-0 1s; /!* Chrome, Safari, Opera *!/*/
+  /*animation: opacIn-from-0 1s;*/
+/*}*/
 
 .large-thumbnail-parent .fa-comment {
   display: none;
 }
 
-.large-thumbnail-full-screen {
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  display: none;
-  padding: 7px;
-  background-color: rgba(0,0,0,0.3);
-  border-radius: 3px;
-  color: #ECECEC;
-  font-size: 22px;
-}
-.large-thumbnail-full-screen:hover {
-  color: white;
-}
-.large-thumbnail-full-screen:active {
-  margin-top: 1px;
-  margin-right: -1px;
-}
+/*.large-thumbnail-full-screen {*/
+  /*cursor: pointer;*/
+  /*position: absolute;*/
+  /*top: 10px;*/
+  /*left: 10px;*/
+  /*display: none;*/
+  /*padding: 7px;*/
+  /*background-color: rgba(0,0,0,0.3);*/
+  /*border-radius: 3px;*/
+  /*color: #ECECEC;*/
+  /*font-size: 22px;*/
+/*}*/
+/*.large-thumbnail-full-screen:hover {*/
+  /*color: white;*/
+/*}*/
+/*.large-thumbnail-full-screen:active {*/
+  /*margin-top: 1px;*/
+  /*margin-right: -1px;*/
+/*}*/
 
 /*
 issue : JND-974
@@ -353,18 +353,18 @@ by ysyun 2015.2.25
   /*color: #666;*/
   /*letter-spacing: 0.02em;*/
 /*}*/
-.msg-file-meta-down a {
-  /*color:#999999 !important;*/
-  /*letter-spacing: 0.02em;*/
-}
-.msg-file-meta-down a:hover {
-  text-decoration: none;
-}
-.msg-file-meta-down .file-item-meta__shared {
-  color: #00a5e9;
-  font-size: 12px;
-}
-.msg-file-meta__writer {  }
+/*.msg-file-meta-down a {*/
+  /*/!*color:#999999 !important;*!/*/
+  /*/!*letter-spacing: 0.02em;*!/*/
+/*}*/
+/*.msg-file-meta-down a:hover {*/
+  /*text-decoration: none;*/
+/*}*/
+/*.msg-file-meta-down .file-item-meta__shared {*/
+  /*color: #00a5e9;*/
+  /*font-size: 12px;*/
+/*}*/
+/*.msg-file-meta__writer {  }*/
 
 .msg-comment-header {
   color: #999999;

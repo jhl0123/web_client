@@ -12,6 +12,7 @@
   function FileRenderer($rootScope, $filter, $state, modalHelper, MessageCollection, RendererUtil, CoreUtil, JndPdfViewer,
                         FileDetail, memberService, fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper,
                         publicService) {
+    var messageHeightMap = {};
     var _template = '';
 
     this.render = render;
@@ -41,118 +42,148 @@
      */
     function _onClick(clickEvent) {
       var jqTarget = $(clickEvent.target);
-      var id = jqTarget.closest('.message').attr('id');
+      var jqMessage = jqTarget.closest('.message');
+      var id = jqMessage.attr('id');
       var msg = MessageCollection.get(id);
 
       if (jqTarget.closest('._fileDownload').length) {
         _onClickFileDownload(msg);
       } else if (jqTarget.closest('._fileMore').length) {
         _onClickFileMore(msg, jqTarget);
-      } else if (jqTarget.closest('._fileExpand').length) {
-        _onClickFileExpand(msg, jqTarget);
-      } else if (jqTarget.closest('._fileToggle').length) {
-        _onClickFileToggle(msg, jqTarget);
-      } else if (jqTarget.closest('._pdfPreview').length) {
-        _onClickPdfPreview(msg);
+      } else if (jqTarget.closest('._previewToggle').length) {
+        _onClickPreviewToggle(msg, jqMessage);
+      } else if (jqTarget.closest('._previewExpand').length) {
+        _onClickPreviewExpand(msg);
+      } else if (jqTarget.closest('._fileDetail').length) {
+        _onClickFileDetail(msg);
       }
-      //else if (jqTarget.closest('._fileDetailComment').length) {
-      //  _onClickFileDetail(msg, true);
-      //}
     }
 
     /**
-     * PDF preview 버튼 클릭 이벤트 핸들러
+     * preview toggle click event handler
      * @param {object} msg
+     * @param {object} jqMessage
      * @private
      */
-    function _onClickPdfPreview(msg) {
-      var file = _getFileData(msg);
-      var content = file.content;
-      JndPdfViewer.load(content.fileUrl, file);
-    }
+    function _onClickPreviewToggle(msg, jqMessage) {
+      var jqCardContent = jqMessage.find('.card-content');
+      var jqPreviewImage = jqMessage.find('.preview-image');
 
-    /**
-     * msg 로 부터 file data 를 조회한다.
-     * @param {object} msg
-     * @returns {object}
-     * @private
-     */
-    function _getFileData(msg) {
-      var contentType = CoreUtil.pick(msg, 'message', 'contentType');
-      var file;
-      if (contentType === 'comment') {
-        file = CoreUtil.pick(msg, 'feedback');
+      if (jqCardContent.hasClass('open')) {
+        messageHeightMap[msg.id] = jqPreviewImage.height();
+
+        jqPreviewImage.height(12);
+        jqCardContent.removeClass('open');
       } else {
-        file = CoreUtil.pick(msg, 'message');
+        jqPreviewImage.height(messageHeightMap[msg.id]);
+        jqCardContent.addClass('open');
       }
-      return file;
     }
 
     /**
-     * pdf preview 가 있는 메시지인지 확인한다.
+     * preview expand click event handler
      * @param {object} msg
-     * @returns {boolean}
      * @private
      */
-    function _hasPdfPreview(msg) {
-      var file = _getFileData(msg);
-      return FileDetail.hasPdfPreview(file);
-    }
+    function _onClickPreviewExpand(msg) {
+      var message = RendererUtil.getFeedbackMessage(msg);
 
-    /**
-     * file show/hide event handler
-     * @param {object} msg
-     * @param {object} jqTarget
-     * @private
-     */
-    function _onClickFileToggle(msg, jqTarget) {
-      var jqMsg = $('#' + msg.id);
-      var jqToggleTarget = jqMsg.find('._fileToggleTarget');
-      var jqToogle = jqMsg.find('._fileToggle');
-      var isHide = jqToggleTarget.css('display') === 'none';
+      if (FileDetail.hasPdfPreview(message)) {
+        // pdf preview
 
-      if (isHide) {
-        jqToggleTarget.show();
-        jqToogle.addClass('icon-arrow-up-fill').removeClass('icon-arrow-down-fill');
+        _openPdfPreview(message);
       } else {
-        jqToggleTarget.hide();
-        jqToogle.addClass('icon-arrow-down-fill').removeClass('icon-arrow-up-fill');
+        // image preview
+
+        _openImagePreview(msg, message);
       }
     }
 
     /**
-     * thumbnail image를 original image로 보기 위한 클릭 핸들러
+     * file detail
      * @param {object} msg
-     * @param {object} jqTarget
+     * @param {boolean} [isFocusCommentInput=false]
      * @private
      */
-    function _onClickFileExpand(msg, jqTarget) {
-      var message;
-      var content;
-      var currentEntity;
+    function _onClickFileDetail(msg, isFocusCommentInput) {
+      var contentType = msg.message.contentType;
+      var userName = $filter('getName')(msg.message.writerId);
+      var itemId = contentType === 'comment' ? msg.feedbackId : msg.message.id;
 
-      if (!jqTarget.hasClass('no-image-preview')) {
-        message = RendererUtil.getFeedbackMessage(msg);
-        content = message.content;
-        currentEntity = currentSessionHelper.getCurrentEntity();
+      if ($state.params.itemId != itemId) {
+        if (msg.feedback && contentType !== 'file') {
+          userName = $filter('getName')(msg.feedback.writerId);
+          itemId = msg.feedback.id;
+        }
 
-        modalHelper.openImageCarouselModal({
-          // server api
-          getImage: fileAPIservice.getImageListOnRoom,
+        if (isFocusCommentInput) {
+          $rootScope.setFileDetailCommentFocus = true;
+        }
 
-          // image file api data
-          messageId: message.id,
-          entityId: currentEntity.entityId || currentEntity.id,
-          // image carousel view data
-          userName: $filter('getName')(message.writerId),
-          uploadDate: msg.time,
-          fileTitle: content.title,
-          fileUrl: content.fileUrl,
-          extraInfo: content.extraInfo,
-          // single file
-          isSingle: msg.status === 'unshared'
+        $state.go('files', {
+          userName: userName,
+          itemId: itemId
         });
+      } else if (isFocusCommentInput) {
+        fileAPIservice.broadcastCommentFocus();
       }
+    }
+
+    ///**
+    // * file show/hide event handler
+    // * @param {object} msg
+    // * @param {object} jqTarget
+    // * @private
+    // */
+    //function _onClickFileToggle(msg, jqTarget) {
+    //  var jqMsg = $('#' + msg.id);
+    //  var jqToggleTarget = jqMsg.find('._fileToggleTarget');
+    //  var jqToogle = jqMsg.find('._fileToggle');
+    //  var isHide = jqToggleTarget.css('display') === 'none';
+    //
+    //  if (isHide) {
+    //    jqToggleTarget.show();
+    //    jqToogle.addClass('icon-arrow-up-fill').removeClass('icon-arrow-down-fill');
+    //  } else {
+    //    jqToggleTarget.hide();
+    //    jqToogle.addClass('icon-arrow-down-fill').removeClass('icon-arrow-up-fill');
+    //  }
+    //}
+
+    /**
+     * pdf preview 보기 열림
+     * @param {object} message
+     * @private
+     */
+    function _openPdfPreview(message) {
+      JndPdfViewer.load(message.content.fileUrl, message);
+    }
+
+    /**
+     * thumbnail image를 original image로 보기 열림
+     * @param {object} message
+     * @private
+     */
+    function _openImagePreview(msg, message) {
+      var content = message.content;
+      var currentEntity = currentSessionHelper.getCurrentEntity();
+
+      modalHelper.openImageCarouselModal({
+        // server api
+        getImage: fileAPIservice.getImageListOnRoom,
+
+        // image file api data
+        messageId: message.id,
+        entityId: currentEntity.entityId || currentEntity.id,
+        // image carousel view data
+        userName: $filter('getName')(message.writerId),
+        uploadDate: msg.time,
+        fileTitle: content.title,
+        fileUrl: content.fileUrl,
+        extraInfo: content.extraInfo,
+        // single file
+        isSingle: msg.status === 'unshared'
+      });
     }
 
     /**
@@ -188,18 +219,20 @@
     function render(index) {
       var msg = MessageCollection.list[index];
       var content = msg.message.content;
-
       var icon = $filter('fileIcon')(content);
-
       var isArchived = (msg.message.status === 'archived');
       var isUnshared = publicService.isFileUnshared(msg);
-
       var hasPermission = publicService.hasFilePermission(msg);
-      var isMustPreview = $filter('mustPreview')(content);
-
       var feedback = RendererUtil.getFeedbackMessage(msg);
 
-      var data = {
+      var hasOriginalImage = !!(feedback.content && feedback.content.extraInfo);
+      var isMustPreview = $filter('mustPreview')(content);
+      var hasPreview = $filter('hasPreview')(content);
+      var hasPdfPreview = FileDetail.hasPdfPreview(feedback);
+
+      var data;
+
+      data = {
         css: {
           unshared: isUnshared ? 'unshared' : '',
           archived: isArchived ? 'archived' : '',
@@ -215,11 +248,11 @@
           isUnshared: isUnshared,
           hasPermission: hasPermission,
           icon: icon,
-          hasOriginalImageView: !!(feedback.content && feedback.content.extraInfo),
           mustPreview: isMustPreview,
-          hasPreview: $filter('hasPreview')(content),
-          hasPdfPreview: _hasPdfPreview(msg), 
+          hasPreview: hasPreview,
+          hasPdfPreview: hasPdfPreview,
           imageUrl: $filter('getPreview')(content, 'large'),
+          smallImageUrl: $filter('getPreview')(content, 'small'),
           title: $filter('fileTitle')(content),
           type: $filter('fileType')(content),
           size: $filter('bytes')(content.size),
@@ -237,11 +270,18 @@
         _setExtraInfo(data.file, content.extraInfo);
       }
 
+      RendererUtil.convertToPreview(data, {
+        hasOriginalImage: hasOriginalImage,
+        isMustPreview: isMustPreview,
+        hasPdfPreview: hasPdfPreview
+      });
+
       return {
         className: 'file',
         template: _template(data)
       };
     }
+
 
     /**
      * set extraInfo
