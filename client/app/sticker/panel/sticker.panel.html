@@ -38,6 +38,9 @@
           <div class="sticker_panel_tab_item {{::group.className}}">
             <i ng-if="isRecentGroup($index)" class="icon-clock"></i>
           </div>
+          <span ng-if="group.isNew" class="new-sticker on">
+            N
+          </span>
         </li>
       </ul>
     </div>

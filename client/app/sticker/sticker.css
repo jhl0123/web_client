@@ -160,6 +160,23 @@
   background-color: white;
 }
 
+.sticker_panel_tab .new-sticker {
+  display:none;
+  background-color:#FF5B49;
+  position:absolute;
+  top:-8px;
+  right:-8px;
+  font-size:11px;
+  border-radius:10px;
+  color:#fff;
+  padding:2px 7px 1px;
+  line-height:1.2;
+  z-index:5;
+}
+.sticker_panel_tab .new-sticker.on{
+  display:block;
+}
+
 .sticker_panel_tab_item {
   min-height: 20px;
   background-repeat: no-repeat;
