@@ -54,8 +54,6 @@
 .message.comment .comment-content {
   line-height: 19px;
   font-size: 14px;
-  margin-right: 8px;
-  display: inline-block;
   vertical-align: top;
 }
 
@@ -101,6 +99,6 @@
   height: calc(100% + 1px);
   left: 0px;
   width: 54px;
-  background-color: inherit;
+  background-color: transparent;
   z-index: 1;
 }

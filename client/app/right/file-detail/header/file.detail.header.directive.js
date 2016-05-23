@@ -30,6 +30,16 @@
     };
 
     function link(scope) {
+      scope.isStarred = undefined;
+      scope.isFileOwner = undefined;
+
+      scope.backToFileList = backToFileList;
+      scope.onClickDownload = onClickDownload;
+      scope.onClickShare = onClickShare;
+      scope.onCommentFocusClick = onCommentFocusClick;
+      scope.onStarClick = onStarClick;
+      scope.onFileDeleteClick = onFileDeleteClick;
+
       _init();
 
       /**
@@ -37,18 +47,9 @@
        * @private
        */
       function _init() {
-        var file = scope.file;
-
         if (!scope.isInvalidRequest) {
-          scope.isStarred = file.isStarred;
-          scope.isFileOwner = $filter('isFileWriter')(file);
-
-          scope.backToFileList = backToFileList;
-          scope.onClickDownload = onClickDownload;
-          scope.onClickShare = onClickShare;
-          scope.onCommentFocusClick = onCommentFocusClick;
-          scope.onStarClick = onStarClick;
-          scope.onFileDeleteClick = onFileDeleteClick;
+          scope.isStarred = scope.file.isStarred;
+          scope.isFileOwner = $filter('isFileWriter')(scope.file);
 
           _attachScopeEvents();
         }

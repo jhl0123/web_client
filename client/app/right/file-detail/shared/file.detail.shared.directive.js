@@ -1,12 +1,12 @@
 /**
- * @fileoverview file detail의 meta directive
+ * @fileoverview file detail의 shared directive
  */
 (function() {
   'use strict';
 
   angular
     .module('jandiApp')
-    .directive('fileDetailMeta', fileDetailMeta);
+    .directive('fileDetailShared', fileDetailMeta);
 
   /* @ngInject */
   function fileDetailMeta($state, $filter, AnalyticsHelper, analyticsService, Dialog, EntityHandler,
@@ -14,17 +14,18 @@
     return {
       restrict: 'E',
       replace: true,
-      scope: {
-        file: '=',
-        isArchivedFile: '=',
-        isInvalidRequest: '='
-      },
-      templateUrl : 'app/right/file-detail/meta/file.detail.meta.html',
+      templateUrl : 'app/right/file-detail/shared/file.detail.shared.html',
       link: link
     };
 
     function link(scope) {
       var _unsharedForMe;
+
+      // 공유 토픽을 가지고 있는지 여부
+      scope.hasTopic = undefined;
+
+      scope.onClickSharedEntity = onClickSharedEntity;
+      scope.onClickUnshare = onClickUnshare;
 
       _init();
 
@@ -33,14 +34,7 @@
        * @private
        */
       function _init() {
-        var file = scope.file;
-
         if (!scope.isInvalidRequest) {
-          scope.fileIcon = $filter('fileIcon')(file.content);
-
-          scope.onClickSharedEntity = onClickSharedEntity;
-          scope.onClickUnshare = onClickUnshare;
-
           _setShared();
 
           _attachEvents();

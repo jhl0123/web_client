@@ -696,6 +696,16 @@
        */
       function _onRemove(angularEvent, index) {
         var msg = MessageCollection.list[index];
+        var prevIndex;
+        var prevMessage;
+
+        if (!MessageCollection.hasChildText(index) ||
+          !MessageCollection.hasChildComment(index)) {
+          prevIndex = index - 1;
+          prevMessage = MessageCollection.list[prevIndex];
+          _refresh(prevMessage.id, prevIndex);
+        }
+
         if (msg) {
           _refresh(msg.id, index);
         }

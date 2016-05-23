@@ -1,9 +1,9 @@
-.attachment-content-wrapper {
+.message .attachment-content-wrapper {
   display: block;
   position: relative;
   margin-top: 3px;
-  background-color: transparent;
-  border-color: transparent;
+  background-color: transparent !important;
+  border-color: transparent !important;
   overflow: hidden;
 }
 .attachment-content-wrapper .attachment-content-bar {

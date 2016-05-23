@@ -9,8 +9,9 @@
     .controller('FileDetailCtrl', FileDetailCtrl);
 
   /* @ngInject */
-  function FileDetailCtrl($scope, $filter, $q, $state, $timeout, FileDetail, jndPubSub, JndMessageStorage, CoreUtil,
-                          memberService, publicService,RightPanel, Sticker, Tutorial, UserList, JndUtil) {
+  function FileDetailCtrl($scope, $filter, $q, $state, $timeout, centerService, DateFormatter, FileDetail, jndPubSub,
+                          JndMessageStorage, CoreUtil, memberService, publicService,RightPanel, Sticker, Tutorial,
+                          UserList) {
     var _fileId;
     var _requestFile;
     var _timerFileDetail;
@@ -19,6 +20,7 @@
     $scope.postComment = postComment;
     $scope.setMentionsGetter = setMentionsGetter;
     $scope.backToPrevState = backToPrevState;
+    $scope.closeRightPanel = closeRightPanel;
 
     _init();
 
@@ -314,25 +316,48 @@
      * @returns {string} comment 작성 날짜
      */
     function _setCreateTime(comments) {
-      var prevComment;
-
       _.each(comments, function(comment, index) {
-        var createTime;
+        //var createTime;
 
-        comment.extCreateTime = new Date(comment.createTime);
-        prevComment = comments[index -1];
+        comment.extCreateDate = DateFormatter.getFormattedDate(comment.createTime);
 
-        if (!prevComment ||
-          prevComment.extCreateTime.getYear() !== comment.extCreateTime.getYear() ||
-          prevComment.extCreateTime.getMonth() !== comment.extCreateTime.getMonth() ||
-          prevComment.extCreateTime.getDate() !== comment.extCreateTime.getDate()) {
-          createTime = $filter('getyyyyMMddformat')(comment.createTime);
-        } else {
-          createTime = $filter('date')(comment.createTime, 'h:mm a');
+        if (_isLastChild(comments[index + 1], comment)) {
+          comment.extIsLastChild = true;
+          comment.extCreateTime = $filter('date')(comment.createTime, 'h:mm a');
         }
 
-        comment.extCreateTimeView = createTime;
+        if (_isChild(comments[index - 1], comment)) {
+          comment.extIsChild = true;
+        }
+
+        comment.extHasCreateTime = !comment.isSendingComment && comment.extIsLastChild;
       });
+    }
+
+    /**
+     * 마지막 자식 코멘트 인지 여부
+     * @param {object} nextComment
+     * @param {object} currentComment
+     * @returns {boolean|*}
+     * @private
+     */
+    function _isLastChild(nextComment, currentComment) {
+      return !nextComment ||
+        nextComment.writerId === currentComment.writerId &&
+        centerService.isElapsed(currentComment.createTime, nextComment.createTime);
+    }
+
+    /**
+     * 자식 코멘트 인지 여부
+     * @param {object} prevComment
+     * @param {object} currentComment
+     * @returns {*|boolean}
+     * @private
+     */
+    function _isChild(prevComment, currentComment) {
+      return prevComment &&
+        prevComment.writerId === currentComment.writerId &&
+        !centerService.isElapsed(prevComment.createTime, currentComment.createTime);
     }
 
     /**
@@ -509,6 +534,13 @@
      */
     function backToPrevState() {
       $state.go('messages.detail.' + (RightPanel.getTail() || 'files'));
+    }
+
+    /**
+     * close right panel publish
+     */
+    function closeRightPanel() {
+      jndPubSub.pub('closeRightPanel');
     }
 
     /**

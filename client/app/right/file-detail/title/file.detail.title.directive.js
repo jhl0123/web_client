@@ -17,7 +17,8 @@
         file: '=',
         hasInitialLoaded: '=',
         isArchivedFile: '=',
-        backToPrevState: '='
+        backToPrevState: '=',
+        closeRightPanel: '='
       },
       templateUrl : 'app/right/file-detail/title/file.detail.title.html',
       link: angular.noop

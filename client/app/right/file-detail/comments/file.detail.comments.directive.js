@@ -9,7 +9,7 @@
     .directive('fileDetailComments', fileDetailComments);
 
   /* @ngInject */
-  function fileDetailComments($filter, $state, Dialog, FileDetail, jndPubSub, JndUtil, memberService) {
+  function fileDetailComments($filter, $state, DateFormatter, Dialog, FileDetail, jndPubSub, JndUtil, memberService) {
     return {
       restrict: 'E',
       replace: true,
@@ -125,9 +125,7 @@
        * @param {object} $event
        */
       function starComment($event) {
-        setTimeout(function() {
-          $($event.target).parents('.comment-item-header__action').find('.comment-star i').trigger('click');
-        });
+        $($event.target).parents('.comment-item-header__action').find('.comment-star i').trigger('click');
       }
 
       /**

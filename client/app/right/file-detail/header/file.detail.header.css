@@ -1,59 +1,89 @@
 .file-detail-header {
-  padding: 15px;
-  border-bottom: 1px solid #f2f2f2;
   position: relative;
+  padding: 15px;
   font-size: 14px;
   color: #666;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid #D5DADE;
+  box-shadow: 0 1px 2px 0px rgba(7, 37, 53, 0.08);
 }
 
-.file-detail-header-box {
+.file-detail-header .file-creator {
   position: relative;
   width: 290px;
   padding: 0px 20px 0px 38px;
 }
 
-.file-detail-header__thumbnail {
+.file-detail-header .file-creator-profile {
   position: absolute;
   left: 0;
   top: 3px;
 }
 
-.file-detail-header__writer {
+.file-detail-header .file-creator-name {
+  max-width: 240px;
+  font-weight: 600;
   font-size: 14px;
-  margin-bottom: 3px;
   color: #333;
-  font-weight: 700;
 }
 
-.file-detail-header__writer > span {
+.file-detail-header .file-creator-time {
+  font-size: 11px;
+  color: #9DA7AD;
+}
+
+.file-detail-header .file-creator-name > span {
   cursor: pointer;
 }
 
-.file-detail-header__title {
-  word-wrap: break-word;
-  line-height: 1.5em;
+.file-detail-header .file-meta {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #363636;
 }
 
-.file-detail-header__title > a {
+.file-detail-header .file-meta .file-title {
+  margin-right: 2px;
+  line-height: 20px;
+  font-size: 15px;
+  font-weight: 700;
   color: #333;
 }
 
-.file-item-meta__action {
+.file-detail-header .file-meta .file-meta-extra {
+  display: inline-block;
+  color: #8F9A9F;
+  font-size: 11px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.file-detail-header .file-actions {
   position: absolute;
   top: 18px;
   right: 0px;
 }
 
-.file-item-meta__action > div {
+.file-detail-header .file-actions > div {
   display: inline-block;
   margin-right: 5px;
 }
 
-.file-item-meta__action > div:last-child {
+.file-detail-header .file-actions > div:last-child {
   margin-right: 12px;
 }
 
-.file-item-meta__action:hover {
+.file-detail-header .file-actions:hover {
   color: #333;
+}
+
+.file-detail-header .file-action {
+  cursor:pointer;
+  color: #A0B3C0;;
+  font-size: 18px;
+}
+.file-detail-header .file-action:focus,
+.file-detail-header .file-action:hover {
+  text-decoration: none;
+  color: #5C6D79;
 }

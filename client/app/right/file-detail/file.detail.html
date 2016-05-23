@@ -1,11 +1,12 @@
 <file-detail-title file="file"
                    has-initial-loaded="hasInitialLoaded"
                    is-archived-file="isArchivedFile"
-                   back-to-prev-state="backToPrevState"></file-detail-title>
+                   back-to-prev-state="backToPrevState"
+                   close-right-panel="closeRightPanel"></file-detail-title>
 <div class="rpanel-body">
 
   <!-- FILE -->
-  <div class="rpanel-body-content file-detail private-effect" ng-if="hasInitialLoaded" ng-class="{'archived-file-detail': isArchivedFile || isInvalidRequest}">
+  <div class="file-detail private-effect" ng-if="hasInitialLoaded" ng-class="{'archived-file-detail': isArchivedFile || isInvalidRequest}">
     <div class="file-detail-body-container">
       <page-tracker page="files/detail" title="File Detail"></page-tracker>
       <file-detail-header file="file"
@@ -25,22 +26,22 @@
         <file-detail-meta  file="file"
                            is-archived-file="isArchivedFile"
                            is-invalid-request="isInvalidRequest"></file-detail-meta>
+        <file-detail-comments ng-if="!isInvalidRequest"
+                              file="file"
+                              comments="comments"
+                              error-comments="errorComments"
+                              is-archived-file="isArchivedFile"
+                              is-invalid-request="isInvalidRequest"
+                              is-admin="isAdmin"
+                              post-comment="postComment($comment, $sticker)"
+                              on-member-click="onMemberClick"></file-detail-comments>
+        <file-detail-comment-input ng-if="!isArchivedFile && !isInvalidRequest"
+                                   file="file"
+                                   has-initial-loaded="hasInitialLoaded"
+                                   post-comment="postComment($comment, $sticker)"
+                                   set-mentions-getter="setMentionsGetter($getter)"
+                                   on-member-click="onMemberClick"></file-detail-comment-input>
       </div>
-      <file-detail-comments ng-if="!isInvalidRequest"
-                            file="file"
-                            comments="comments"
-                            error-comments="errorComments"
-                            is-archived-file="isArchivedFile"
-                            is-invalid-request="isInvalidRequest"
-                            is-admin="isAdmin"
-                            post-comment="postComment($comment, $sticker)"
-                            on-member-click="onMemberClick"></file-detail-comments>
     </div>
-    <file-detail-comment-input ng-if="!isArchivedFile && !isInvalidRequest"
-                               file="file"
-                               has-initial-loaded="hasInitialLoaded"
-                               post-comment="postComment($comment, $sticker)"
-                               set-mentions-getter="setMentionsGetter($getter)"
-                               on-member-click="onMemberClick"></file-detail-comment-input>
   </div>
 </div>
