@@ -80,7 +80,7 @@
       });
 
       return {
-        className: 'system-event noti',
+        conditions: ['system-event', 'noti'],
         template: _template({
           text: {
             announcement:  {

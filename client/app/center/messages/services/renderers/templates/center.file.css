@@ -3,10 +3,6 @@
   line-height: 20px;
 }
 
-/*.message.file:hover .card-expand {*/
-  /*display: block;*/
-/*}*/
-
 .msg-file {
   display: inline-block;
   position: relative;
@@ -39,7 +35,6 @@
 
 .card-preview .preview-image {
   display: block;
-  /*position: relative;*/
   margin: 0 auto;
 }
 
@@ -52,17 +47,6 @@
   transition: height ease-in-out .4s;
 }
 
-/*.medium-thumbnail.medium-thumbnail-wrapper img {*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-/*}*/
-
-/*.medium-thumbnail.msg-file-body__img__background {*/
-  /*position: relative;*/
-  /*margin-top: 10px;*/
-  /*margin-bottom: 7px;*/
-/*}*/
-
 .file-action {
   line-height: 16px !important;
   font-size: 16px;
@@ -74,37 +58,6 @@
   text-decoration: none !important;
 }
 
-/*.msg-file-meta-up .preview-icon {*/
-  /*vertical-align: middle;*/
-  /*cursor: pointer;*/
-  /*font-size: 10px;*/
-  /*line-height: 15px;*/
-  /*color: #575757;*/
-  /*margin-left: 3px;*/
-  /*font-style: normal;*/
-/*}*/
-
-/*.msgs-group:hover .msg-file-actions-content,*/
-/*.medium-thumbnail:hover .msg-file-actions-content {*/
-  /*display: block;*/
-/*}*/
-
-/*.msg-file-actions-content {*/
-  /*display: none;*/
-/*}*/
-/*.msg-file-actions-content.actions-dimmed {*/
-  /*position: absolute;*/
-  /*top: 0;*/
-  /*left: 0;*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*background-color: #f8f8f8;*/
-  /*opacity: .75;*/
-/*}*/
-
-/*.image_wrapper .msg-file-actions-content {*/
-  /*background-color: transparent;*/
-/*}*/
 .msg-comment-actions,
 .msg-file-actions {
   position: absolute;
@@ -137,46 +90,16 @@
   color: #575757;
   opacity: 0.45;
 }
-/*.action-group .action-item:hover {*/
-  /*background-color: #F0F6FB;*/
-  /*color: #154a67;*/
-/*}*/
-/*.action-group .action-item:hover .action-comment span {*/
-  /*color: #154a67;*/
-/*}*/
-/*.action-group .action-item:hover i {*/
-  /*color: #154a67;*/
-/*}*/
-/*.action-group .action-item:active {*/
-  /*box-shadow: inset 0 1px 2px rgba(0, 0, 0, .125);*/
-/*}*/
 
 .action-group:not(:last-child) {
   border-right: 1px solid #e1e1e1;
 }
-
-/*.action-item .action-comment,*/
-/*.action-item .action-file-download,*/
-/*.action-item .action-file-more,*/
-/*.action-item .action-file-detail {*/
-  /*display: inline-block;*/
-  /*padding: 4px 7px;*/
-/*}*/
-
-/*.action-item .action-file-download {*/
-  /*padding-top: 2px;*/
-/*}*/
 
 .msg-file-actions .action-comment span {
   font-size: 13px;
   color: #333;
   font-weight: 500;
 }
-/*.msg-file-actions i {*/
-  /*font-size: 16px;*/
-  /*color: #575757;*/
-  /*opacity: 0.45;*/
-/*}*/
 
 .msg-file-actions i.fa-search-plus {
   font-style: normal;
@@ -203,30 +126,9 @@
   cursor: default;
 }
 
-/* FILE DOWN */
-/*.msg-file-meta-down {*/
-   /*padding-top: 3px;*/
-/*}*/
-/*.msg-file-meta-down .separator {*/
-   /*width: 1px;*/
-   /*height: 17px;*/
-   /*background-color: #e2e2e2;*/
-   /*margin: 0px 4px -3px 3px;*/
-   /*display: inline-block;*/
-/*}*/
-
 .file-uploaded-more {
   position: relative;
 }
-/*.msg-file-meta-down .icon-cog-fill{*/
-  /*font-size: 14px;*/
-  /*padding-left: 0px;*/
-/*}*/
-/*.msg-file-meta-down .icon-share-right-fill{*/
-  /*padding-left: 0px;*/
-  /*padding-right: 0px;*/
-  /*font-size: 15px;*/
-/*}*/
 
 .card-content {
   overflow: hidden;
@@ -240,9 +142,6 @@
 .card-body {
   position: relative;
 }
-/*.card-body {*/
-  /*height: 64px;*/
-/*}*/
 
 .card-image {
   position: absolute;
@@ -274,25 +173,11 @@
   transform: translate(-50%, -50%);
 }
 
-/*.card-type .card-expand {*/
-  /*display: none;*/
-  /*position: absolute;*/
-  /*top: 0;*/
-  /*left: 0;*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*background-color: #e1e1e1;*/
-  /*opacity: .4;*/
-  /*cursor: -webkit-zoom-in;*/
-  /*cursor: zoom-in;*/
-/*}*/
-
 .card-content.open .card-image {
   left: -60px;
 }
 
 .card-info {
-  /*position: relative;*/
   background-color: #fff;
   margin-left: 55px;
   -webkit-transition: margin-left ease-in-out .3s .4s;
@@ -378,18 +263,10 @@
   margin-left: 8px;
   line-height: 18px;
 }
-/*.msg-file.unshared .info-title,*/
+
 .msg-file.archived .info-title {
   color: #b7b7b7;
 }
-
-/*.msg-file.unshared .info-title {*/
-  /*text-decoration: line-through;*/
-/*}*/
-
-/*.msg-file.unshared .msg-file-meta {*/
-  /*opacity: .4;*/
-/*}*/
 
 .msg-file.unshared .unshared-label {
   display: inline-block;
@@ -398,10 +275,6 @@
   background-color: #e1e1e1;
   color: #8F9A9F;
 }
-
-/*.msg-file.unshared .info-group-bottom .info-title {*/
-  /*text-decoration: line-through;*/
-/*}*/
 
 .msg-item ._fileExpand {
   cursor: zoom-in;

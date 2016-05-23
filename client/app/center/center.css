@@ -66,7 +66,6 @@ article {
 }
 .msgs__loading.initial {
   height: 100%;
-  /*background-size: 100px 100px;*/
   background:#EFF3FA;
 }
 .msgs__loading.load-more-top {
@@ -104,18 +103,6 @@ article {
   background-color: #fff;
   color: #333;
 }
-/*#unread-bookmark.msg-item {*/
-  /*margin-bottom: 10px;*/
-  /*margin-top: 8px;*/
-  /*padding-top: 0;*/
-/*}*/
-/*#unread-bookmark.msg-item .msg-unread-bookmark {*/
-  /*margin: 0;*/
-  /*line-height: 28px;*/
-/*}*/
-/*#unread-bookmark.msg-item .system-event-msg .msg-item-float {*/
-  /*top: -1px;*/
-/*}*/
 
 .msg-item.file-upload {
   margin: 13px 0 15px;
@@ -133,39 +120,6 @@ article {
   color: #929498;
 }
 
-/*.msg-item-float {*/
-  /*position: absolute;*/
-  /*top: 7px;*/
-  /*left: 23px;*/
-/*}*/
-/*.msg-item-header {*/
-  /*padding: 1px 0 6px;*/
-  /*font-size: 15px;*/
-  /*font-weight: 700;*/
-  /*line-height: 1.3rem;*/
-/*}*/
-/*.msg-item-header .tooltip {*/
-  /*width: 64px;*/
-/*}*/
-
-/*.msg-item.comment-continue .msg-item-header {*/
-  /*padding: 0 45px 0 0;*/
-/*}*/
-
-/* continued comment writer name */
-
-/*.msg-comment .msg-comment-body .msg-item-header__name,*/
-/*.msg-item.comment-continue .msg-item-header .msg-item-header__name {*/
-  /*font-size: 14px;*/
-  /*display: inline-block;*/
-  /*vertical-align: top;*/
-/*}*/
-
-/*.msg-item-header__name {*/
-  /*color: #333;*/
-  /*font-weight: 700;*/
-  /*font-size: 15px;*/
-/*}*/
 .post-retry {
   font-size: 12px;
   line-height: 12px;
@@ -177,10 +131,7 @@ article {
 .post-retry:hover {
   color: #154a67;
 }
-/* continued comment created time   */
-/*.msg-item.comment-continue .msg-item-header .msg-item-header__created {*/
-  /*padding-left: 5px;*/
-/*}*/
+
 .msg-item-body {
   position: relative;
 }
@@ -199,13 +150,6 @@ article {
   word-wrap: break-word;
   margin-right: 55px;
 }
-/*.msg-extra {*/
-  /*position: absolute;*/
-  /*bottom: 3px;*/
-  /*right: 0;*/
-  /*width: 50px;*/
-  /*vertical-align: text-bottom;*/
-/*}*/
 
 .msg-text-body {
   margin: 0;
@@ -272,99 +216,9 @@ by ysyun 2015.2.25
   overflow: hidden;
 }
 
-/*.preview-container:hover .large-thumbnail-full-screen {*/
-  /*display: block;*/
-  /*-webkit-animation: opacIn-from-0 1s; /!* Chrome, Safari, Opera *!/*/
-  /*animation: opacIn-from-0 1s;*/
-/*}*/
-
 .large-thumbnail-parent .fa-comment {
   display: none;
 }
-
-/*.large-thumbnail-full-screen {*/
-  /*cursor: pointer;*/
-  /*position: absolute;*/
-  /*top: 10px;*/
-  /*left: 10px;*/
-  /*display: none;*/
-  /*padding: 7px;*/
-  /*background-color: rgba(0,0,0,0.3);*/
-  /*border-radius: 3px;*/
-  /*color: #ECECEC;*/
-  /*font-size: 22px;*/
-/*}*/
-/*.large-thumbnail-full-screen:hover {*/
-  /*color: white;*/
-/*}*/
-/*.large-thumbnail-full-screen:active {*/
-  /*margin-top: 1px;*/
-  /*margin-right: -1px;*/
-/*}*/
-
-/*
-issue : JND-974
-fix : change min-height:65px to minheight:65px !important
-by ysyun 2015.2.25
-*/
-/*.msg-file-meta {*/
-  /*font-size: 12px;*/
-  /*line-height: 1.3rem;*/
-  /*padding-left: 75px;*/
-  /*min-height: 65px !important;*/
-/*}*/
-
-/*
-issue : JND-974
-fix : add comma(,) between .large-thumbnail-grand-parent and .msg-file-meta
-      add width: 100%;
-by ysyun 2015.2.25
-*/
-/*.large-thumbnail-grand-parent, .msg-file-meta {*/
-  /*padding-left: 0;*/
-  /*min-height: 0;*/
-  /*width: 100%;*/
-/*}*/
-/*.msg-file-meta-up {*/
-  /*margin-bottom: 3px;*/
-/*}*/
-/*.archived-msg-file-meta__title {*/
-  /*color: #b7b7b7;*/
-  /*padding-bottom: 2px;*/
-  /*font-weight: 700;*/
-  /*font-size: 14px;*/
-  /*line-height: 35px;*/
-/*}*/
-/*.archived-msg-file-meta__title:hover {*/
-  /*color: #b7b7b7;*/
-/*}*/
-
-/*.msg-file-meta .msg-file-meta__title,*/
-/*.msg-comment .msg-file-meta__title {*/
-  /*color: #333;*/
-  /*padding-bottom: 2px;*/
-  /*font-weight: 700;*/
-  /*font-size: 15px;*/
-/*}*/
-/*.msg-file-meta__title:hover {*/
-  /*color: #404040;*/
-/*}*/
-/*.msg-file-meta-info {*/
-  /*color: #666;*/
-  /*letter-spacing: 0.02em;*/
-/*}*/
-/*.msg-file-meta-down a {*/
-  /*/!*color:#999999 !important;*!/*/
-  /*/!*letter-spacing: 0.02em;*!/*/
-/*}*/
-/*.msg-file-meta-down a:hover {*/
-  /*text-decoration: none;*/
-/*}*/
-/*.msg-file-meta-down .file-item-meta__shared {*/
-  /*color: #00a5e9;*/
-  /*font-size: 12px;*/
-/*}*/
-/*.msg-file-meta__writer {  }*/
 
 .msg-comment-header {
   color: #999999;
@@ -373,12 +227,6 @@ by ysyun 2015.2.25
   letter-spacing: 0;
 }
 
-/*.msg-comment-header .file__name {*/
-  /*font-size: 15px;*/
-  /*line-height: 15px;*/
-  /*color: #333;*/
-  /*font-weight: 700;*/
-/*}*/
 .msg-comment-body {
   margin-top: 10px;
 }

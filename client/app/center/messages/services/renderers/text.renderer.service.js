@@ -138,7 +138,7 @@
       }
 
       return {
-        className: _getClassName(msg, isChild, isSticker),
+        conditions: _getConditions(msg, isChild, isSticker),
         template: template({
           html: {
             linkPreview: linkPreview,
@@ -163,27 +163,27 @@
     }
 
     /**
-     * 상위 element에서 사용할 className 전달함
+     * message의 상태들 전달함
      * @param {object} msg
      * @param {boolean} isChild
      * @param {boolean} isSticker
-     * @returns {string}
+     * @returns {array}
      * @private
      */
-    function _getClassName(msg, isChild, isSticker) {
-      var result = ['text'];
+    function _getConditions(msg, isChild, isSticker) {
+      var conditions = ['text'];
 
-      result.push(_getMsgItemClass(msg));
+      conditions.push(_getMsgItemClass(msg));
 
       if (isChild) {
-        result.push('text-child');
+        conditions.push('text-child');
       }
 
       if (isSticker) {
-        result.push('sticker');
+        conditions.push('sticker');
       }
 
-      return result.join(' ');
+      return conditions;
     }
 
     /**

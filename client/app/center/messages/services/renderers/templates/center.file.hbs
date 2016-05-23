@@ -52,8 +52,8 @@
           <div class="card-body cursor_pointer _compile _fileDetail">
             <!--    FILE TYPE THUMBNAIL -->
             <div class="card-info">
-              {{#if file.isIcon}}
-                <div class="card-image icon">
+              {{#if file.isIconPreview}}
+                <div class="card-image expand icon _previewExpand">
                   <div class="fileicon fileicon-{{ file.icon }}"></div>
                 </div>
               {{else if file.hasPreview}}

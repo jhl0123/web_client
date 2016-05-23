@@ -19,30 +19,6 @@
   background-color: #f2fbff;
 }
 
-/*.bot-text .msg-item-header {*/
-  /*padding: 0px;*/
-  /*line-height: 25px;*/
-  /*margin-bottom: 4px;*/
-/*}*/
-/*.bot-text .msg-item-header__name {*/
-  /*color: #333;*/
-/*}*/
-/*.bot-text .msg-item-header__name:after {*/
-  /*content: 'JANDI Connect';*/
-  /*position: relative;*/
-  /*display: inline;*/
-  /*padding: 2px 8px;*/
-  /*border-radius: 3px;*/
-  /*margin-left: 4px;*/
-  /*vertical-align: top;*/
-  /*font-size: 13px;*/
-  /*background-color: rgba(15,60,85,0.105);*/
-  /*color: rgba(14,60,85,0.3);*/
-  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
-/*}*/
-/*.bot-text .msg-item-float {*/
-  /*top:16px;*/
-/*}*/
 .bot-text .member-thumb {
   width: 34px;
   height: 34px;

@@ -9,8 +9,8 @@
     .service('FileRenderer', FileRenderer);
 
   /* @ngInject */
-  function FileRenderer($rootScope, $filter, $state, modalHelper, MessageCollection, RendererUtil, CoreUtil, JndPdfViewer,
-                        FileDetail, memberService, fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper,
+  function FileRenderer($rootScope, $filter, $state, modalHelper, MessageCollection, RendererUtil, JndPdfViewer,
+                        FileDetail, fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper,
                         publicService) {
     var messageHeightMap = {};
     var _template = '';
@@ -258,7 +258,6 @@
           size: $filter('bytes')(content.size),
           isIntegrateFile: RendererUtil.isIntegrateFile(msg),
           commentCount: RendererUtil.getCommentCount(msg),
-          isFileOwner: _isFileOwner(msg),
           writerName: $filter('getName')(msg.message.writerId),
           time: $filter('getyyyyMMddformat')(feedback.createTime)
         },
@@ -271,13 +270,12 @@
       }
 
       RendererUtil.convertToPreview(data, {
-        hasOriginalImage: hasOriginalImage,
-        isMustPreview: isMustPreview,
+        hasImagePreview: hasOriginalImage && !isMustPreview,
         hasPdfPreview: hasPdfPreview
       });
 
       return {
-        className: 'file',
+        conditions: ['file'],
         template: _template(data)
       };
     }
@@ -293,16 +291,6 @@
       file.width = extraInfo.width;
       file.height = extraInfo.height;
       file.orientation = extraInfo.orientation;
-    }
-
-    /**
-     * 현재 사용자가 file 작성자인지 여부를 반환한다.
-     * @param {object} msg
-     * @returns {boolean}
-     * @private
-     */
-    function _isFileOwner(msg) {
-      return msg.message.writerId === memberService.getMemberId();
     }
   }
 })();

@@ -138,45 +138,46 @@
       }
 
       RendererUtil.convertToPreview(data, {
-        hasOriginalImage: hasOriginalImage,
-        isMustPreview: isMustPreview,
+        hasImagePreview: hasOriginalImage && !isMustPreview,
         hasPdfPreview: hasPdfPreview
       });
 
       return {
-        className: _getClassName(isTitle, isChild, isFirst, isLast),
+        conditions: _getConditions(isTitle, isChild, isFirst, isLast),
         template: template(data)
       };
     }
 
     /**
-     * 상위 element에서 사용할 className 전달함
+     * message의 상태들 전달함
      * @param {boolean} isTitle
      * @param {boolean} isChild
-     * @returns {string}
+     * @param {boolean} isFirst
+     * @param {boolean} isLast
+     * @returns {array}
      * @private
      */
-    function _getClassName(isTitle, isChild, isFirst, isLast) {
-      var result = ['text'];
+    function _getConditions(isTitle, isChild, isFirst, isLast) {
+      var conditions = [];
 
       if (isTitle) {
-        result.push('message-group');
+        conditions.push('message-group');
       } else {
-        result.push('comment');
+        conditions.push('comment');
         if (isChild) {
-          result.push('comment-child');
+          conditions.push('comment-child');
         }
 
         if (isFirst) {
-          result.push('first');
+          conditions.push('first');
         }
 
         if (isLast) {
-          result.push('last');
+          conditions.push('last');
         }
       }
 
-      return result.join(' ');
+      return conditions;
     }
 
     /**

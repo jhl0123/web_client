@@ -188,22 +188,11 @@
      * @param {object} data
      */
     function convertToPreview(data, options) {
-      if (_isImagePreview(options.hasOriginalImage, options.isMustPreview)) {
+      if (options.hasImagePreview) {
         _convertImagePreview(data);
       } else if (options.hasPdfPreview) {
         _convertPdfPreview(data);
       }
-    }
-
-    /**
-     * image preview 여부
-     * @param {boolean} hasOriginalImage
-     * @param {boolean} isMustPreview
-     * @returns {*|boolean}
-     * @private
-     */
-    function _isImagePreview(hasOriginalImage, isMustPreview) {
-      return hasOriginalImage && !isMustPreview;
     }
 
     /**
@@ -217,7 +206,7 @@
       data.file.imageUrl = '../assets/images/preview_image.png';
       data.file.width = 740;
       data.file.height = 283;
-      data.file.isIcon = true;
+      data.file.isIconPreview = true;
     }
 
     /**
@@ -231,7 +220,7 @@
       data.file.imageUrl = '../assets/images/preview_pdf.png';
       data.file.width = 740;
       data.file.height = 283;
-      data.file.isIcon = true;
+      data.file.isIconPreview = true;
     }
   }
 })();

@@ -26,7 +26,7 @@
 
     function render(){
       return {
-        className: 'system-event unread-mark',
+        conditions: ['system-event', 'unread-mark'],
         template: _template()
       };
     }
