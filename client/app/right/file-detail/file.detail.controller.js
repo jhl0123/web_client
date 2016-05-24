@@ -73,9 +73,11 @@
      * @private
      */
     function _onFileChange(angularEvent, fileId) {
-      _fileId = fileId;
-      _resetVariables();
-      _setFileDetail();
+      if (_fileId !== fileId) {
+        _fileId = fileId;
+        _resetVariables();
+        _setFileDetail();
+      }
     }
 
     /**
@@ -343,7 +345,7 @@
      */
     function _isLastChild(nextComment, currentComment) {
       return !nextComment ||
-        nextComment.writerId === currentComment.writerId &&
+        nextComment.writerId !== currentComment.writerId ||
         centerService.isElapsed(currentComment.createTime, nextComment.createTime);
     }
 

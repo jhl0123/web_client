@@ -11,6 +11,7 @@
   /* @ngInject */
   function fileDetailCommentInput($rootScope, jndKeyCode, JndMessageStorage, jndPubSub, Mentionahead, memberService) {
     return {
+      require: '^fileDetailFloat',
       restrict: 'E',
       replace: true,
       scope: {
@@ -25,14 +26,29 @@
       link: link
     };
 
-    function link(scope, el) {
-      var _jqFileDetail = $('.file-detail');
+    function link(scope, el, attrs, ctrl) {
+      var _jqFileDetail = ctrl.getJqScrollContainer();
       var _jqCommentInput = $('#file-detail-comment-input');
+
+      var _jqCommentInputForm = el.find('._commentInputForm');
+      var _jqCommentInputMirror = el.find('._commentInputMirror');
+      var _jqFloatButton = el.find('._floatingButton');
+
 
       var _stickerType = 'file';
       var _sticker;
 
       var _timerScrollBottom;
+
+      scope.member = memberService.getMember();
+
+      scope.createComment = createComment;
+      scope.onCommentInputChange = onCommentInputChange;
+      scope.onMentionIconClick = onMentionIconClick;
+      scope.onFloatButtonClick = onFloatButtonClick;
+      scope.onMessageInputFocus = onMessageInputFocus;
+      scope.onMessageInputBlur = onMessageInputBlur;
+      scope.isMentionaheadOpen = isMentionaheadOpen;
 
       _init();
 
@@ -41,15 +57,6 @@
        * @private
        */
       function _init() {
-        scope.createComment = createComment;
-        scope.onCommentInputChange = onCommentInputChange;
-        scope.onMentionIconClick = onMentionIconClick;
-        scope.onMessageInputFocus = onMessageInputFocus;
-        scope.onMessageInputBlur = onMessageInputBlur;
-        scope.isMentionaheadOpen = isMentionaheadOpen;
-
-        scope.member = memberService.getMember();
-
         _initComment();
 
         _setProfileImage(scope.member);
@@ -140,6 +147,10 @@
         scope.mentionahead.status = Mentionahead.MENTION_WITH_CHAR;
       }
 
+      function onFloatButtonClick() {
+        ctrl.showFloatInput();
+      }
+
       /**
        * on message input focus
        */
@@ -160,6 +171,7 @@
        */
       function onCommentInputChange(event) {
         var message;
+
         if (event.type === 'keyup' && jndKeyCode.match('ESC', event.keyCode)) {
           _hideSticker();
         } else if (_.isString(event.target.value)) {
@@ -250,6 +262,14 @@
         }
 
         $('#file-detail-comment-input').val(JndMessageStorage.getCommentInput(scope.file.id));
+
+        ctrl.setJqInput({
+          container: el,
+          form: _jqCommentInputForm,
+          text: _jqCommentInput,
+          float: _jqFloatButton
+        });
+        _setMirrorHeight();
       }
 
       /**
@@ -302,6 +322,8 @@
             _fixScrollBottom();
           }, 100);
         }
+
+        _setMirrorHeight();
       }
 
       /**
@@ -320,7 +342,7 @@
        * @private
        */
       function _isScrollOver() {
-        return el.height() + el.offset().top <= _jqFileDetail.scrollTop() + _jqFileDetail[0].scrollHeight;
+        return !ctrl.hasFloatInput && el.height() + el.offset().top <= _jqFileDetail.scrollTop() + _jqFileDetail[0].scrollHeight;
       }
 
       /**
@@ -367,6 +389,14 @@
        */
       function isMentionaheadOpen() {
         return !scope.isDmOnly && Mentionahead.isOpen(scope.mentionahead.status);
+      }
+
+      /**
+       * 코멘트 입력 mirror의 높이값을 코멘트 입력 폼과 같게 설정함
+       * @private
+       */
+      function _setMirrorHeight() {
+        _jqCommentInputMirror.height(_jqCommentInputForm.outerHeight());
       }
     }
   }

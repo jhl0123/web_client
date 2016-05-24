@@ -10,6 +10,9 @@
   z-index: 500;
   overflow: visible;
   border-right: 1px solid #e1e1e1;
+
+  -webkit-transition: width;
+  transition: width;
 }
 
 

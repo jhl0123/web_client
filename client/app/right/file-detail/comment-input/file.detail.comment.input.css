@@ -1,7 +1,24 @@
-.file-detail .message-input-wrapper {
+.file-detail .message-input-container {
   position: relative;
-  margin: 0 12px 15px 49px;
+}
+
+.file-detail .message-input-wrapper {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: 6px 9px 9px 9px;
   background-color: white;
+  -webkit-transition: bottom ease-out 0.2s;
+  transition: bottom ease-out 0.2s;
+}
+
+.file-detail .message-input-wrapper.float {
+  bottom: -400px;
+}
+
+.file-detail .message-input-inner {
+  position: relative;
   border: 1px solid #e1e1e1;
   border-radius: 3px;
 }
@@ -10,47 +27,8 @@
   left: -38px;
 }
 
-.comment-textarea-wrap {
+.file-detail .comment-input-body {
   position: relative;
-}
-
-#comment-form {
-  position: relative;
-}
-
-.comment-input {
-  width:100%;
-  background:transparent;
-  font-size: 14px;
-  line-height:1.2rem;
-  border: 0;
-  -moz-background-clip:padding-box;
-  -webkit-background-clip:padding-box;
-  background-clip:padding-box;
-  color:#3d3c40;
-  -webkit-appearance:none;
-  -webkit-box-shadow:none;
-  -moz-box-shadow:none;
-  box-shadow:none;
-  outline:0;
-  min-height:80px;
-  padding:9px 0 9px 8px;
-  overflow-y: hidden;
-  resize: none !important;
-  margin-top:0px;
-  -webkit-transition: height .06s linear;
-  transition: height .06s linear;
-}
-
-.comment-input:focus { -webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none; }
-.comment-input.offline { background-color:#fdf1c1; }
-.comment-input__tip {
-  color: #babbbf;
-  font-size: .8rem;
-}
-
-.file-detail .message-input-footer .message-input-description {
-  color: #a5a5a5;
 }
 
 /* sticker panel */
@@ -65,4 +43,30 @@
 .file-detail .message-input-wrapper .input-container-over .sticker_layer {
   top: -140px;
   width: 100.5%;
+}
+.file-detail .floating-button {
+  position: fixed;
+  width: 40px;
+  height: 48px;
+  right: 24px;
+  bottom: -68px;
+  background-color: #fff;
+  border: 1px solid rgba(21, 74, 103, 0.25);
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.16);
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  -webkit-transition: bottom ease-out 0.2s;
+  transition: bottom ease-out 0.2s;
+}
+
+.file-detail .floating-button.show {
+  bottom: 0;
+}
+.file-detail .floating-button i {
+  font-size: 24px;
+  vertical-align: middle;
+  text-align: center;
+  display: block;
+  line-height: 48px;
+  color: #7393A6;
 }

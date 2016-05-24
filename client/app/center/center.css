@@ -21,6 +21,9 @@ article {
   right: 0;
   bottom: 0;
   min-width: 608px;
+
+  -webkit-transition: opacity 0.7s, left !important;
+  transition: opacity 0.7s, left !important;
 }
 .cpanel .panel-title-container {
   z-index: 28;
