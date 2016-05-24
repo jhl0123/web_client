@@ -1,0 +1,122 @@
+<div class="_selectbox private-effect custom-selectbox-topic-member">
+  <div class="panel-title-member__more"
+       ng-class="{
+        'active': isShown,
+        'disabled': isDisabled
+       }"
+       ng-click="toggleShow($event);"
+       tooltip="{{::'@topic-joined-member' | translate}}" tooltip-placement="bottom">
+    <i class="icon-user"></i>
+    <span class="panel-title-member__count">{{memberData.enabledList.length}}</span>
+    <i class="icon-angle-down"></i>
+  </div>
+  <div ng-if="isShown"
+       class="custom-select-box member-menu dropdown-menu active"
+       jnd-custom-focus="onChange"
+       jnd-callback-close="close"
+       jnd-data-key="id"
+       jnd-data-selected="selectedValue">
+
+    <div class="custom-select-box__search-container">
+      <span class="add-on-left"><i class="icon-search"></i></span>
+      <input type="text"
+             ng-model="searchKeyword"
+             ng-keyup="onKeyUp($event);"
+             class="form-control custombox-search__input search-input" placeholder="{{::'@topic-joined-member' | translate }}">
+    </div>
+    <!--검색-->
+    <div ng-if="searchKeyword" class="custom-select-box__search-result _container">
+      <!-- no-search-result container-->
+      <div ng-if="!searchList.length" class="no-result-container">
+        <!-- translate:  -->
+        <span translate>@alert-no-result</span>
+      </div>
+      <!-- saearc-result -->
+      <div ng-if="searchList.length" class="custom-select-box__search-result-items">
+        <span class="menulist-item-header">{{searchList.length}}<span translate>@selectbox-query-matches</span></span>
+
+        <ul class="menulist-item-members">
+
+          <li class="topic-title menu-item _selectable"
+              ng-repeat="item in searchList"
+              ng-class="{
+                  'has-kickout-icon': item.isKickedOutEnable,
+                  'admin': item.isTopicAdmin
+                }">
+            <img class="header-title-member__dropdown__thumb" ng-src="{{item | getSmallThumbnail}}">
+            <a>
+              <span ng-bind-html="item.extSearchName"></span>
+            </a>
+            <span class="kick-item-icon pull-right"
+                  ng-if="item.isKickedOutEnable"
+                  ng-click="onClickKickout($event, item.id)">
+              <i class="icon-sign-out"></i>
+              </span>
+            <span ng-if="item.isTopicAdmin" class="member-auth-label" translate>@common-topic-admin</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--일반 리스트-->
+    <div ng-if="!searchKeyword" class="custom-select-box__menulist _container">
+
+      <a class="select-all _selectable" ng-if="isAllowAllMember">
+        <i class="icon-users"></i>
+        <span translate>@option-all-members</span>
+      </a>
+
+      <div class="custom-select-box__menulist-category">
+
+        <!-- members -->
+        <div class="custom-select-box__menulist-items">
+          <span translate class="menulist-item-header">@selectbox-current-members</span>
+          <ul class="menulist-item-members">
+            <li class="menu-item _selectable"
+                ng-repeat="item in memberData.enabledList"
+                ng-class="{
+                  'has-kickout-icon': item.isKickedOutEnable,
+                  'admin': item.isTopicAdmin
+                }">
+              <div ng-class="::{'jandi-bot': item.extIsJandiBot}">
+                <img class="header-title-member__dropdown__thumb" ng-src="{{item | getSmallThumbnail}}">
+                <a>
+                  <span>{{item.name}}</span>
+                </a>
+                <span class="kick-item-icon pull-right"
+                      ng-if="item.isKickedOutEnable"
+                      ng-click="onClickKickout($event, item.id)">
+                  <i class="icon-sign-out"></i>
+                </span>
+                <span ng-if="item.isTopicAdmin" class="member-auth-label" translate>@common-topic-admin</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- blocked -->
+        <div ng-if="memberData.disabledList.length" class="custom-select-box__menulist-items toggle-menulist"
+             ng-class="{
+               'collapsed': !isShowDisabled
+             }">
+          <div ng-click="toggleDisabled();">
+            <i class="fa custom-selectbox-arrow icon-angle-down"></i>
+            <span translate class="menulist-item-header">@selectbox-disabled-members</span>
+          </div>
+
+          <ul ng-if="isShowDisabled" class="menulist-item-block">
+
+            <li class="menu-item _selectable" ng-repeat="item in memberData.disabledList">
+              <a>
+                <span><del>{{item.name}}</del></span>
+              </a>
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

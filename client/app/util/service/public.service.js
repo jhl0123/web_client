@@ -11,7 +11,7 @@
 
   /* @ngInject */
   function publicService($rootScope, accountService, storageAPIservice, jndWebSocket, jndPubSub, UserList,
-                         currentSessionHelper, $state, analyticsService, language, RoomTopicList,
+                         currentSessionHelper, $state, analyticsService, language, RoomTopicList, EntityHandler,
                          HybridAppHelper, $filter, memberService, configuration) {
     var _isInit = false;
     var service = {
@@ -226,7 +226,14 @@
     function hasFilePermission(msg, isComment) {
       var message = isComment? msg.feedback : msg.message;
       var member = memberService.getMember();
-      var hasCommonEntities = _.intersection(_.map(member.u_messageMarkers, 'entityId'), message.shareEntities).length;
+      var hasCommonEntities = false;
+
+      _.forEach(message.shareEntities, function(id) {
+        if (EntityHandler.isExist(id)) {
+          hasCommonEntities = true;
+          return false;
+        }
+      });
 
       // 파일이 전체 공개인 경우
       if (message.permission % 10 > 0) {

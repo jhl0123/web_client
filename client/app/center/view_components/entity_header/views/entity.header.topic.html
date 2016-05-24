@@ -79,34 +79,13 @@
   <span class="panel-title-right-menu pull-right cursor_pointer">
 
     <!--  JOINED MEMBER LIST  -->
-    <span class="panel-title-member panel-title-right-menu__item pull-left" dropdown>
-      <div class="dropdown-toggle panel-title-member__more" dropdown-toggle
-           tooltip="{{::'@topic-joined-member' | translate}}" tooltip-placement="bottom">
-        <i class="icon-user"></i>
-        <span class="panel-title-member__count">{{currentEntity.members.length}}</span>
-        <i class="icon-angle-down"></i>
-      </div>
-
-      <ul class="dropdown-menu grey_dropdown header-title-member__dropdown private-effect" role="menu">
-        <li role="presentation" tabindex="-1"
-            ng-class="{
-              'admin': ownerId === user.id,
-              'has-kickout-icon': hasAuth && user.id !== myId
-            }"
-            ng-repeat="user in users track by $index">
-          <a ng-click="openMemberModal(user.id);">
-            <img class="header-title-member__dropdown__thumb" ng-src="{{user.thumbnail}}"/>
-              <span class="overflow-ellipsis">{{user.name}}</span>
-          </a>
-          <span ng-if="hasKickoutAuth && user.id !== myId" class="kick-item-icon pull-right"
-              ng-click="kickOut(user.id);">
-          	<i class="icon-sign-out"></i>
-          </span>
-          <span ng-if="ownerId === user.id" class="member-auth-label" translate>@common-topic-admin</span>
-        </li>
-      </ul>
+    <span class="pull-left">
+      <jnd-selectbox-topic-member on-select="openMemberModal(memberId);"
+                                  on-kickout="kickOut(memberId);"
+                                  jnd-data-list="users"
+                                  is-show-profile-image="true"
+                                  is-allow-all-member="false"></jnd-selectbox-topic-member>
     </span>
-
     <span class="panel-title-right-menu__separator"></span>
 
     <!--  INVITE OPTION -->

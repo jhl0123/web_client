@@ -147,7 +147,12 @@
             else {
               $state.go('messages.detail', {entityType: lastState.entityType, entityId: lastState.entityId});
             }
-
+            break;
+          case 'messages.detail.files.item':
+          case 'messages.detail.messages.item':
+          case 'messages.detail.stars.item':
+          case 'messages.detail.mentions.item':
+            jndPubSub.pub('Router:fileChanged', toParams.itemId);
             break;
           case 'messages.detail.files':
           case 'messages.detail.messages':

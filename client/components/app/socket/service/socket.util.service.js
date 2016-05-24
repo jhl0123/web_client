@@ -75,7 +75,7 @@
     function increaseBadgeCount(roomId, count) {
       var entity = EntityHandler.get(roomId);
 
-      if (!isCurrentEntity(entity)) {
+      if (entity && !isCurrentEntity(entity)) {
         entityAPIservice.increaseBadgeCount(entity.id, count);
       }
     }

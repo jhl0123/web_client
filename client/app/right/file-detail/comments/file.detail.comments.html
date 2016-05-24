@@ -35,8 +35,9 @@
       </div>
     </div>
     <div class="comment-item-body">
-      <img class="sticker size_5" ng-if="::comment.extIsSticker" ng-src="{{ comment.content.url }}"/>
-      <span class="comment selectable keep" ng-if="::!comment.extIsSticker" ng-bind-html="comment.content.body"></span>
+      <div class="sticker size_5" ng-if="::comment.extIsSticker" ng-style="::{'background-image': 'url({{::comment.content.url}})'}"></div>
+      <file-detail-comment ng-if="::!comment.extIsSticker"
+                           content="comment.content.body"></file-detail-comment>
     </div>
   </div>
 
@@ -67,7 +68,7 @@
     </div>
     <div class="comment-item-body">
       <span ng-if="::comment.extIsSticker">
-        <img class="sticker size_5" ng-src="{{comment.content.url}}"/>
+        <div class="sticker size_5"  ng-style="::{'background-image': 'url({{::comment.content.url}})'}"></div>
         <span class="msg-item-header__retry cursor_pointer" ng-click="retry($index, comment)">
           <i class="icon-refresh"></i> Retry
         </span>

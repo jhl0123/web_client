@@ -9,7 +9,7 @@
     .module('jandiApp')
     .directive('centerMessagesDirective', centerMessagesDirective);
 
-  function centerMessagesDirective($compile, $filter, CenterRenderer, CenterRendererFactory, MessageCollection,
+  function centerMessagesDirective($filter, CenterRenderer, CenterRendererFactory, MessageCollection,
                                    StarAPIService, jndPubSub, FileDetail, memberService, Dialog, currentSessionHelper,
                                    EntityHandler, JndUtil, RendererUtil) {
     return {
@@ -635,11 +635,7 @@
         jqDummy.html(htmlStr);
 
         _.forEach(jqDummy.find('._compile'), function(targetEl) {
-          try {
-            $compile(targetEl)(_listScope);
-          } catch (e) {
-            console.error(e);
-          }
+          JndUtil.safeCompile(_listScope, targetEl);
         });
 
         return jqDummy.contents();

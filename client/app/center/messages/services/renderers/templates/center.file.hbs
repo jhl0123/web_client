@@ -168,17 +168,20 @@
                           </div>
                         </div>
                         {{/if}}
-                        <div class="action-group">
-                          {{#if file.hasOriginalImageView}}
+                        {{#if file.hasOriginalImageView}}
+                          <div class="action-group">
                             <div class="action-item"
                                  jnd-tooltip-trigger="{{translate '@btn-image-expand'}}"
                                  data-direction="top">
                               <!--  file expand  -->
                               <span class="action-comment _fileExpand">
                                 <i class="fa-search-plus"></i>
+                                <span translate>@btn-image-expand</span>
                               </span>
                             </div>
-                          {{/if}}
+                          </div>
+                        {{/if}}
+                        <div class="action-group">
                           <div class="action-item"
                                jnd-tooltip-trigger="{{translate '@btn-comment'}}"
                                data-direction="top">
@@ -223,7 +226,7 @@
                   </div>
                   <div class="card-info">
                     <div class="info-group">
-                      <span class="info-writer inline-overflow-ellipsis">{{ msg.extWriterName }}</span>
+                      <span class="info-writer inline-overflow-ellipsis">{{ file.writerName }}</span>
                       <span class="info-created-time">{{ file.time }}</span>
                     <span class="info-comment-count">
                       <i class="icon-comment"></i>

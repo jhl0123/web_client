@@ -34,7 +34,8 @@
       if (!storageAPIservice.shouldAutoSignIn() && !storageAPIservice.getAccessToken()) {
         requestAccessTokenWithRefreshToken();
       } else {
-        accountService.getAccountInfo().then(_onSuccessGetAccount, requestAccessTokenWithRefreshToken);
+        accountService.getAccountInfo()
+          .then(_.bind(_onSuccessGetAccount, this, false), requestAccessTokenWithRefreshToken);
       }
     }
 
@@ -55,8 +56,7 @@
      * @private
      */
     function _onSuccessRefreshToken() {
-      accountService.getAccountInfo().then(_onSuccessGetAccount, publicService.signOut);
-      jndPubSub.pub('Auth:refreshTokenSuccess');
+      accountService.getAccountInfo().then(_.bind(_onSuccessGetAccount, this, true), publicService.signOut);
     }
 
     /**
@@ -81,10 +81,11 @@
 
     /**
      * accout 정보 획득 성공 콜백
+     * @param {boolean} isRefreshTokenCallback - refresh token 갱신 콜백으로 수행되는 과업인지 여부. 이벤트 emit 을 위해 인자로 넘긴다.
      * @param {object} result
      * @private
      */
-    function _onSuccessGetAccount(result) {
+    function _onSuccessGetAccount(isRefreshTokenCallback, result) {
       var response = result.data;
       var account;
       var signInInfo;
@@ -103,16 +104,19 @@
       } else {
         storageAPIservice.setAccountInfoLocal(account.id, signInInfo.teamId, signInInfo.memberId, signInInfo.teamName);
         storageAPIservice.setShouldAutoSignIn(true);
-        memberService.getMemberInfo(signInInfo.memberId).then(_onSuccessGetMemberInfo, AuthApi.requestAccessTokenWithRefreshToken);
+        memberService.getMemberInfo(signInInfo.memberId)
+          .then(_.bind(_onSuccessGetMemberInfo, this, isRefreshTokenCallback), 
+            AuthApi.requestAccessTokenWithRefreshToken);
       }
     }
 
     /**
      * member 정보 조회 API 성공 콜백
+     * @param {boolean} isRefreshTokenCallback - refresh token 갱신 콜백으로 수행되는 과업인지 여부. 이벤트 emit 을 위해 인자로 넘긴다.
      * @param {object} result
      * @private
      */
-    function _onSuccessGetMemberInfo(result) {
+    function _onSuccessGetMemberInfo(isRefreshTokenCallback, result) {
       _isRefreshTokenLock = false;
       var response = result.data;
       memberService.setMember(response);
@@ -127,6 +131,10 @@
       }
 
       HybridAppHelper.onSignedIn();
+      
+      if (isRefreshTokenCallback) {
+        jndPubSub.pub('Auth:refreshTokenSuccess');
+      }
     }
 
     /**

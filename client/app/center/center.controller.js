@@ -11,7 +11,7 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
                                                  MessageCollection, MessageSendingCollection, AnalyticsHelper,
                                                  Announcement, TopicMessageCache, NotificationManager, Dialog, RendererUtil,
                                                  JndUtil, HybridAppHelper, TopicInvitedFlagMap, UserList, JndConnect,
-                                                 RoomTopicList, SocketEventApi, jndWebSocket) {
+                                                 RoomTopicList, SocketEventApi, jndWebSocket, ActiveNotifier) {
 
   //console.info('::[enter] centerpanelController', $state.params.entityId);
   var _scrollHeightBefore;
@@ -224,8 +224,10 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    */
   function _initializeListeners() {
     //viewContent load 시 이벤트 핸들러 바인딩
-    $scope.$on('connected', _onConnected);
-    $scope.$on('NetInterceptor:onGatewayTimeoutError', _onGatewayTimeoutError);
+    $scope.$on('NetInterceptor:connect', _onConnected);
+    $scope.$on('NetInterceptor:onGatewayTimeoutError', _refreshView);
+    $scope.$on('Auth:refreshTokenSuccess', _refreshView);
+    
     $scope.$on('refreshCurrentTopic',_refreshCurrentTopic);
     $scope.$on('newMessageArrived', _onNewMessageArrived);
     $scope.$on('newSystemMessageArrived', _onNewSystemMessageArrived);
@@ -926,14 +928,6 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
   }
 
   /**
-   * gateway timeout error event handler
-   * @private
-   */
-  function _onGatewayTimeoutError() {
-    _refreshView();
-  }
-
-  /**
    * 네트워크 연결 되었을때 콜백
    * @private
    */
@@ -1192,7 +1186,7 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    * @private
    */
   function _isChatPanelActive() {
-    return !centerService.isBrowserHidden() && !JndConnect.isOpen();
+    return !centerService.isBrowserHidden() && !JndConnect.isOpen() && ActiveNotifier.getStatus();
   }
 
   /**

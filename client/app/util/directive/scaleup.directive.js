@@ -28,7 +28,7 @@
     return {
       restrict: 'A',
       scope: {
-        src: '@src'
+        src: '=scaleUpSrc'
       },
       link: link
     };
@@ -42,8 +42,7 @@
 
       var _marginVertical;
       var _marginHorizontal;
-
-      scope.$watch('src', _beforeAnimate);
+      var _image;
 
       _init();
 
@@ -53,9 +52,17 @@
        */
       function _init() {
         _initVariables();
-        _attachEvents();
         el.parent().css('min-height', el.height());
-        scope.$on('$destroy', _onDestroy);
+
+        _attachScopeEvents();
+      }
+
+      /**
+       * attach scope events
+       * @private
+       */
+      function _attachScopeEvents() {
+        scope.$watch('src', _beforeAnimate);
       }
 
       /**
@@ -70,6 +77,7 @@
         _marginHorizontal = Math.floor(widthDiff / 2);
 
         //odd
+
         if (heightDiff % 2) {
           _startHeight++;
         }
@@ -79,40 +87,24 @@
       }
 
       /**
-       * 소멸자
-       * @private
-       */
-      function _onDestroy() {
-        _detachEvents();
-      }
-
-      /**
-       * 이벤트 바인딩
-       * @private
-       */
-      function _attachEvents() {
-        el.on('load', _animate);
-      }
-
-      /**
-       * 이벤트 바인딩 해제
-       * @private
-       */
-      function _detachEvents() {
-        el.off('load', _animate);
-      }
-
-      /**
        * animate 시작 전 scale 을 설정한다..
+       * @param {string} src
        * @private
        */
-      function _beforeAnimate() {
+      function _beforeAnimate(src) {
         el.css({
           width: _startHeight + 'px',
           height: _startWidth + 'px',
           marginLeft: _marginHorizontal + 'px',
-          marginTop: _marginVertical + 'px'
+          marginTop: _marginVertical + 'px',
+          backgroundImage: 'url(' + src + ')'
         });
+
+        _image = new Image();
+        _image.onload = function() {
+          _animate();
+        };
+        _image.src = src;
       }
 
       /**
