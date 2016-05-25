@@ -1,5 +1,5 @@
 /**
- * @fileoverview 메세지 콜렉션
+ * @fileoverview 메세지 콜렉션 클래스
  */
 (function() {
   'use strict';
@@ -9,25 +9,233 @@
     .factory('MessageCollection', MessageCollection);
 
   /* @ngInject */
-  function MessageCollection($filter, RoomTopicList, CoreUtil, markerService, jndPubSub, memberService,
-                             currentSessionHelper, centerService, MessageComment, MessageText, DateFormatter,
-                             EntityHandler) {
+  function MessageCollection($q, $filter, $injector, $rootScope, RoomTopicList, CoreUtil, markerService, jndPubSub, memberService,
+                             currentSessionHelper, centerService, MessageComment, MessageText, DateFormatter, EntityFilterMember,
+                             messageAPIservice, MessageQuery) {
+    /**
+     * 한번에 조회할 기본 메시지 개수
+     * @type {number}
+     */
+    var DEFAULT_MESSAGE_UPDATE_COUNT = 50;
 
+    /**
+     * 검색으로 질의할 경우, 한번에 조회할 메시지 개수
+     * @type {number}
+     */
+    var DEFAULT_MESSAGE_SEARCH_COUNT = 150;
+
+    /**
+     * 캐시에 저장할 MAX 메시지 값
+     * @type {number}
+     */
+    var MAX_CACHE_MESSAGE_COUNT = 100;
+    var EntityHandler;
+
+    /**
+     * 메시지 콜랙션 클래스
+     * @constructor
+     */
     var MessageCollectionClass = CoreUtil.defineClass({
-      _systemMessageCount: 0,
-      _linkId: {
-        first: -1,
-        last: -1
+      /**
+       * 생성자
+       * @param {object} options
+       *    @param {number|string} options.id - 식별할 id 값.
+       */
+      init: function(options) {
+        var id = CoreUtil.pick(options, 'id');
+
+        EntityHandler = EntityHandler || $injector.get('EntityHandler');
+        this.setOwnProperties({
+          id: id || 0,
+          list: [],
+          roomData: {
+            firstLinkId: 0,
+            lastLinkId: 0,
+            globalLastLinkId: 0
+          },
+          status: {
+            isInitialized: false,
+            isLoading: false
+          },         
+
+          _scope: $rootScope.$new(),
+          _systemMessageCount: 0,
+          _linkId: {
+            first: -1,
+            last: -1
+          },
+          _map: {
+            messageId: {},
+            id: {}
+          },
+          _deferred: null,
+          _requestPromise: null
+        });
+        this._attachScopeEvents();
+        this.initialRequest();
       },
-      _map: {
-        messageId: {},
-        id: {}
-      },
-      list: [],
-      init: function() {
+      
+      /**
+       * 데이터 초기화 후 현재 로그인 한 User 의 Marker 기준으로 데이터를 request 한다. 
+       * @returns {*}
+       */
+      initialRequest: function() {
+        var linkId = memberService.getLastReadMessageMarker(this.id);
         this.reset();
+        this._requestPromise = this.request({
+          linkId: linkId,
+          count: DEFAULT_MESSAGE_UPDATE_COUNT
+        });
+        return this._requestPromise;
+      },
+      
+      getRequestPromise: function() {
+        return this._requestPromise;
+      },
+      /**
+       * 해당 collection 이 보이지 않게 되었을 경우 Background 에서 로직을 수행할 수 있도록 설정한다
+       */
+      toBackground: function() {
+        if (!this.hasLastMessage()) {
+          this.initialRequest();
+        }
       },
 
+      /**
+       * 현재 객체에 종속적인 속성들을 할당한다.
+       * @param {object} properties
+       * @returns {MessageCollectionClass}
+       */
+      setOwnProperties: function(properties) {
+        _.forEach(properties, function(value, name) {
+          this[name] = value;
+        }, this);
+        return this;
+      },
+
+      /**
+       * 랜더링을 요청한다.
+       */
+      render: function() {
+        this._cutByMaxCacheCount();
+        this._pub('MessageCollection:render');
+      },
+      
+      /**
+       * scope 이벤트를 바인딩 한다.
+       * @private
+       */
+      _attachScopeEvents: function() {
+        this._scope.$on('jndWebSocketMessage:messageCreated', _.bind(this._onMessageCreated, this));
+        this._scope.$on('centerpanelController:getEventHistoryError', _.bind(this.initialRequest, this));
+      },
+
+      /**
+       * message created 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       *    @param {object} socketEvent.data
+       *    @param {object} socketEvent.data.linkMessage  - 메시지 데이터
+       * @private
+       */
+      _onMessageCreated: function(angularEvent, socketEvent) {
+        var message = CoreUtil.pick(socketEvent, 'data', 'linkMessage');
+        var toEntities = CoreUtil.pick(message, 'toEntity');
+        var isCurrentRoomMessage =_.contains(toEntities, this._getCurrentRoomId());
+
+        if (isCurrentRoomMessage) {
+          if (this.hasLastMessage()) {
+            this.append(message);
+          }
+          console.log('###_CREATED-CURRENT', message);
+          if (this._isSystemMessage(message)) {
+            this._pub('MessageCollection:newSystemMessageArrived', message);
+          } else {
+            this._pub('MessageCollection:newMessageArrived', message);
+          }
+        }
+      },
+
+      /**
+       * 서버로 질의를 요청한다.
+       * @param {object} [query] - 없을 경우 MessageQuery 에 저장된 값을 사용한다.
+       *    @param {number} query.count 
+       *    @param {number} query.linkId
+       *    @param {number} [query.type]
+       */
+      request: function(query) {
+        var id = this.id;
+        var room = EntityHandler.get(id);
+        var type = CoreUtil.pick(room, 'type');
+        if (type == 'bots') {
+          type = 'users';
+        }
+
+        this.status.isLoading = true;
+
+        query = query || MessageQuery.get();
+        query = _.cloneDeep(query);
+
+        if (this._deferred) {
+          this._deferred.resolve();
+        }
+
+        this._deferred = $q.defer();
+
+        return messageAPIservice.getMessages(type, id, query, this._deferred)
+          .then(
+            _.bind(this._onSuccessRequest, this, query),
+            _.bind(this._onErrorRequest, this, query))
+          .finally(_.bind(this._onDoneRequest, this));
+      },
+
+      /**
+       * request 가 끝났을 때의 이벤트 핸들러
+       * @private
+       */
+      _onDoneRequest: function() {
+        _.extend(this.status, {
+          isLoading: false,
+          isInitialized: true
+        });
+      },
+
+      /**
+       * request 성공 이벤트 핸들러
+       * @param {object} query  - 성공시 질의했던 request query
+       * @param {object} result - 응답
+       *    @param {object} result.data - 응답 데이터
+       * @private
+       */
+      _onSuccessRequest: function(query, result) {
+        var response = result.data;
+        var messageList = response.records;
+        
+        _.extend(this.roomData, {
+          firstLinkId: response.firstLinkId,
+          lastLinkId: response.lastLinkId,
+          globalLastLinkId: response.globalLastLinkId
+        });
+        
+        if (query.type === 'old') {
+          this.prepend(messageList);
+        } else {
+          this.append(messageList);
+        }
+
+        this._pub('MessageCollection:requestSuccess', response, query);
+      },
+
+      /**
+       * request 실패시 핸들러
+       * @param query
+       * @param result
+       * @private
+       */
+      _onErrorRequest: function(query, result) {
+        this._pub('MessageCollection:requestError', result, query);
+      },
+      
       /**
        * 번수를 초기화 한다.
        */
@@ -41,7 +249,8 @@
           first: -1,
           last: -1
         };
-        jndPubSub.pub('messages:reset');
+        this.status.isInitialized = false;
+        this._pub('MessageCollection:reset');
       },
 
       /**
@@ -54,25 +263,6 @@
       },
 
       /**
-       * status 가 sending 인 messages 를 제거한다.
-       */
-      removeAllSendingMessages: function() {
-        var list = this.list;
-        var length = list.length;
-        var i = length - 1;
-        var msg;
-        var count = 0;
-        for (; i >= 0; i--) {
-          msg = list[i];
-          if (msg.status !== 'sending') {
-            break;
-          }
-          count++;
-        }
-        list.splice(i + 1, count);
-      },
-
-      /**
        * messageList 를 append 한다.
        * @param {array|object} messageList
        */
@@ -81,7 +271,7 @@
         var length = list.length;
         var lastId = list[length - 1] && list[length - 1].id || -1;
         var appendList = [];
-        var markerId;
+
         messageList = this.beforeAddMessages(messageList);
         _.forEach(messageList, function(msg) {
           if (lastId < msg.id) {
@@ -90,17 +280,52 @@
             appendList.push(msg);
 
             //작성자의 marker 정보를 업데이트 한다
-            markerId = markerService.getLastLinkIdOfMemberId(msg.extWriter.id);
-            if (markerId && (markerId < msg.id)) {
-              markerService.updateMarker(msg.extWriter.id, msg.id);
-            }
+            this._updateMarker(msg);
           }
         }, this);
+
+        if (!this._isCurrentRoom()) {
+          this._cutByMaxCacheCount();
+        }
         this._setLinkId(appendList);
         this._addIndexMap(appendList);
-        jndPubSub.pub('messages:append', appendList);
+        this._pub('MessageCollection:append', appendList);
       },
 
+      /**
+       * max cache 세팅값에 따라 list 를 자른다.
+       * @param {boolean} [isPrepend=false] - prepend 이후 cut 할 지 여부
+       * @private
+       */
+      _cutByMaxCacheCount: function(isPrepend) {
+        var list = this.list;
+        var length = list.length;
+        var difference = length - MAX_CACHE_MESSAGE_COUNT;
+        if (difference > 0) {
+          if (isPrepend) {
+            list.splice(MAX_CACHE_MESSAGE_COUNT);
+          } else {
+            list.splice(0, difference);
+          }
+          this._setLinkId(list);
+        }
+      },
+
+      /**
+       * 작성자의 marker 정보를 업데이트 한다.
+       * @param {object} msg
+       * @private
+       */
+      _updateMarker: function(msg) {
+        var markerId;
+        if (this._isCurrentRoom()) {
+          markerId = markerService.getLastLinkIdOfMemberId(msg.extWriter.id);
+          if (!markerId || markerId < msg.id) {
+            markerService.updateMarker(msg.extWriter.id, msg.id);
+          }
+        }
+        
+      },
       /**
        * id 와 messageId 로 index 된 Map 에 데이터를 추가한다.
        * @param {Array} list
@@ -139,11 +364,15 @@
             msg = this.getFormattedMessage(msg);
             list.unshift(msg);
             prependList.unshift(msg);
+            this._updateMarker(msg);
           }
         }, this);
+        if (!this._isCurrentRoom()) {
+          this._cutByMaxCacheCount();
+        }
         this._setLinkId(prependList);
         this._addIndexMap(prependList);
-        jndPubSub.pub('messages:prepend', prependList);
+        this._pub('MessageCollection:prepend', prependList);
       },
 
       /**
@@ -156,10 +385,10 @@
         var targetIdx = this.at(messageId, isReversal);
         
         if (targetIdx !== -1) {
-          jndPubSub.pub('messages:beforeRemove', targetIdx);
+          this._pub('MessageCollection:beforeRemove', targetIdx);
           this._removeIndexMap(this.getByMessageId(messageId));
           this.list.splice(targetIdx, 1);
-          jndPubSub.pub('messages:remove', targetIdx);
+          this._pub('MessageCollection:remove', targetIdx);
         }
         return targetIdx !== -1;
       },
@@ -201,25 +430,6 @@
         });
 
         return targetIdx;
-      },
-
-      /**
-       * 서버로 부터 update 정보를 받아 해당 메세지들을 업데이트 한다.
-       * @param {array} messageList - 업데이트 할 메세지 리스트
-       * @param {boolean} isSkipAppend - append 를 skip 할 지 여부
-       */
-      update: function(messageList, isSkipAppend) {
-        var lastLinkId = this.getLastLinkId();
-        _.forEach(messageList, function(msg) {
-          if (lastLinkId < msg.id) {
-            if (this._isSystemMessage(msg)) {
-              this._updateSystemMessage(msg, isSkipAppend);
-            } else {
-              this._updateUserMessage(msg, isSkipAppend);
-            }
-          }
-        }, this);
-        this._setLinkId(messageList);
       },
 
       /**
@@ -356,71 +566,6 @@
        */
       getSystemMessageCount: function() {
         return this._systemMessageCount;
-      },
-
-      /**
-       * user message 를 업데이트 한다.
-       * @param {object} msg 업데이트할 메세지
-       * @param {boolean} isSkipAppend
-       * @private
-       */
-      _updateUserMessage: function(msg, isSkipAppend) {
-        var isArchived = false;
-        var messageId = msg.messageId;
-        var isAppend = false;
-        switch (msg.status) {
-          // text writed
-          case 'created':
-            isAppend = true;
-            break;
-          case 'edited':
-            if (this.remove(messageId)) {
-              isAppend = true;
-            }
-            break;
-          // text deleted
-          case 'archived':
-            if (msg.message.contentType !== 'file') {
-              this.remove(messageId);
-              isArchived = true;
-            }
-            break;
-          // file shared
-          case 'shared':
-            isAppend = true;
-            break;
-          // file unshared
-          case 'unshared':
-            if (this.remove(messageId)) {
-              isAppend = true;
-            }
-            break;
-          default:
-            console.error("!!! unfiltered message", msg);
-            break;
-        }
-
-        if (isAppend && !isSkipAppend) {
-          this.append(msg);
-        }
-
-        if (!isArchived) {
-          // When there is a message to update on current topic.
-          jndPubSub.pub('newMessageArrived', msg);
-        }
-      },
-      /**
-       * system message 를 업데이트한다.
-       * @param {object} msg 업데이트할 메세지
-       * @param {boolean} isSkipAppend
-       * @private
-       */
-      _updateSystemMessage: function(msg, isSkipAppend) {
-        msg = this._getFormattedSystemMsg(msg);
-        if (!isSkipAppend) {
-          this.append(msg);
-        }
-        jndPubSub.pub('newSystemMessageArrived', msg);
       },
 
       /**
@@ -609,7 +754,7 @@
           }
 
           if (currentUnread !== message.unreadCount) {
-            jndPubSub.pub('messages:updateUnread', {
+            this._pub('MessageCollection:updateUnread', {
               msg: message,
               index: index
             });
@@ -635,7 +780,7 @@
         this.list = list;
         this._setLinkId(list);
         this._addIndexMap(list);
-        jndPubSub.pub('messages:set', list);
+        this._pub('MessageCollection:set', list);
       },
 
       /**
@@ -644,6 +789,7 @@
        * @private
        */
       _setLinkId: function(list) {
+        var roomData = this.roomData;
         var messageList = this.list;
         var first = messageList.length ? messageList[0].id : -1;
         var last = messageList.length ? messageList[messageList.length - 1].id : -1;
@@ -656,6 +802,17 @@
           first: first,
           last: last
         };
+        if (roomData.firstLinkId === -1 || roomData.firstLinkId > first) {
+          roomData.firstLinkId = first;
+        } 
+        
+        if (roomData.lastLinkId < last) {
+          roomData.lastLinkId = last;
+        }
+
+        if (roomData.globalLastLinkId < last) {
+          roomData.globalLastLinkId = last;
+        }
       },
 
       /**
@@ -672,9 +829,54 @@
           }
         });
         return linkId;
+      },
+
+      /**
+       * 현재 collection 에 가장 최근 Message 가 존재하는지 여부를 반환한다.
+       * @returns {boolean}
+       */
+      hasLastMessage: function() {
+        return this.getLastLinkId() >= this.roomData.lastLinkId;
+      },
+
+      /**
+       * 현재 활성화 된 방인지 여부를 확인한다.
+       * @returns {boolean}
+       * @private
+       */
+      _isCurrentRoom: function() {
+        return currentSessionHelper.getCurrentEntityId() === this.id;
+      },
+
+      /**
+       * 현
+       * @returns {*}
+       * @private
+       */
+      _getCurrentRoomId: function() {
+        var id = this.id;
+        var member;
+        var roomId;
+        if (RoomTopicList.isExist(id)) {
+          roomId = id;
+        } else {
+          member = EntityFilterMember.get(id);
+          roomId = CoreUtil.pick(member, 'entityId');
+        }
+        return roomId;
+      },
+
+      /**
+       * 현재 보고 있는 방일 경우에만 이벤트를 publish 한다.
+       * @private
+       */
+      _pub: function() {
+        if (this._isCurrentRoom()) {
+          jndPubSub.pub.apply(this, arguments);
+        }
       }
     });
     
-    return new MessageCollectionClass();
+    return MessageCollectionClass;
   }
 })();
