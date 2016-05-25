@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: client/app/tpl/503/503.html
 msgid "@503-unavailable-msg"
@@ -18,8 +18,7 @@ msgstr "JANDIは現在定期メンテナンス中のためご利用できませ�
 #: client/app/tpl/503/503.html
 msgid "@503-will-be-back-msg"
 msgstr ""
-"定期メンテナンスは数時間で終了の予定です。ご不便をお掛けし申し訳ありませ"
-"ん。"
+"定期メンテナンスは数時間で終了の予定です。ご不便をお掛けし申し訳ありません。"
 
 #: client/app/modal/topics/topic_join/topic.join.html
 msgid "@alert-empty-ch-belong"
@@ -207,8 +206,8 @@ msgstr "トピックから退出"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@ch-menu-leave-private-confirm"
 msgstr ""
-"プライベートトピックから退出すると、そのプライベートトピックのメンバーに改"
-"めて招待されない限り再び参加することはできません。本当に退出しますか？"
+"プライベートトピックから退出すると、そのプライベートトピックのメンバーに改め"
+"て招待されない限り再び参加することはできません。本当に退出しますか？"
 
 #: client/app/center/view_components/entity_header/entity.header.html
 #: client/app/tutorial/popup/view_components/lecture/topic/leave/lecture.topic.leave.html
@@ -222,29 +221,29 @@ msgstr "お気に入りから削除"
 #: client/app/modal/change_log/changeLog.html
 msgid "@change-log-explanation-1"
 msgstr ""
-"「プライベートグループ」は「プライベートトピック」と名称が変わり、鍵のマー"
-"クのアイコンで「トピックス」タブ内に表示されます。プライベートトピックはこ"
-"れまで通り、招待されない限り参加することや、そのトピックが存在することすら"
-"わかりません。"
+"「プライベートグループ」は「プライベートトピック」と名称が変わり、鍵のマーク"
+"のアイコンで「トピックス」タブ内に表示されます。プライベートトピックはこれま"
+"で通り、招待されない限り参加することや、そのトピックが存在することすらわかり"
+"ません。"
 
 #: client/app/modal/change_log/changeLog.html
 msgid "@change-log-explanation-2"
 msgstr ""
-"ダイレクトメッセージの表示順が変更され、最新のメッセージから順ひ並ぶように"
-"なりました"
+"ダイレクトメッセージの表示順が変更され、最新のメッセージから順ひ並ぶようにな"
+"りました"
 
 #: client/app/modal/change_log/changeLog.html
 msgid "@change-log-explanation-3"
 msgstr ""
-"ダイレクトメッセージは会話のあったものだけが表示されるようになりました。会"
-"話履歴は閉じることによって非表示にすることができます。同じ相手と会話を再開"
-"すると、再び表示されます。過去の会話履歴も表示されます。"
+"ダイレクトメッセージは会話のあったものだけが表示されるようになりました。会話"
+"履歴は閉じることによって非表示にすることができます。同じ相手と会話を再開する"
+"と、再び表示されます。過去の会話履歴も表示されます。"
 
 #: client/app/modal/change_log/changeLog.html
 msgid "@change-log-title"
 msgstr ""
-"今回のアップデートでは、より良いユーザー体験のため、レイアウトの変更と、い"
-"くつかの便利な機能を実装しました。"
+"今回のアップデートでは、より良いユーザー体験のため、レイアウトの変更と、いく"
+"つかの便利な機能を実装しました。"
 
 #: client/app/left/left.html
 msgid "@channel"
@@ -300,6 +299,12 @@ msgstr "コメント"
 msgid "@common-connect-setting"
 msgstr "JANDIコネクトを設定する"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-connection-lost"
+msgstr ""
+"インターネット接続が切断されました。ネットワークが復元されると、自動的にジヤ"
+"ンでィーに接続されます"
+
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@common-connection-retry"
 msgstr "インターネット接続が切断されました。再接続中..."
@@ -312,8 +317,8 @@ msgstr "退出する"
 #: client/app/left/messages/messages.html
 msgid "@common-conversation-leave-confirm"
 msgstr ""
-"この会話から退出しますか？メッセージ履歴は非表示になりますが、再開した場合"
-"にはこれまでの会話履歴は表示されます"
+"この会話から退出しますか？メッセージ履歴は非表示になりますが、再開した場合に"
+"はこれまでの会話履歴は表示されます"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 #: client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.html
@@ -346,8 +351,8 @@ msgstr "削除されたファイル"
 #: client/app/modal/members/member_profile/member.profile.view.html
 msgid "@common-deleted-member-profile-msg"
 msgstr ""
-"このメンバーはチームから脱退しました。詳細はチーム管理者にお問い合わせくだ"
-"さい。"
+"このメンバーはチームから脱退しました。詳細はチーム管理者にお問い合わせくださ"
+"い。"
 
 #: client/app/modal/members/current_member_profile/current.member.profile.html
 #: client/app/modal/members/member_profile/member.profile.view.html
@@ -614,6 +619,10 @@ msgid "@common-new-message"
 msgstr "新メッセージ"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-no"
+msgstr "いいえ"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-off"
 msgstr "オフ"
 
@@ -640,8 +649,8 @@ msgstr "役職"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-privacy-lock-msg"
 msgstr ""
-"現在の画面はロックモードです。ESCまたはCtrl-Shift-Lを押してロックを解除し"
-"てください。"
+"現在の画面はロックモードです。ESCまたはCtrl-Shift-Lを押してロックを解除してく"
+"ださい。"
 
 #: client/app/header/header.html client/app/tpl/footer.tpl.html
 msgid "@common-privacy-policy"
@@ -719,8 +728,7 @@ msgstr "スター付き"
 #: client/app/left/messages/messages.html
 msgid "@common-start-new-message"
 msgstr ""
-"メッセージ送ったり、これまでの会話履歴を見るには以下のボタンを押してくださ"
-"い"
+"メッセージ送ったり、これまでの会話履歴を見るには以下のボタンを押してください"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-start-using-jandi"
@@ -796,6 +804,10 @@ msgid "@common-visit-homepage"
 msgstr "ホームページを見る"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-yes"
+msgstr "はい"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-zoom-in"
 msgstr "拡大"
 
@@ -818,8 +830,7 @@ msgstr "新規トピック作成"
 #: client/app/signin/signin.html
 msgid "@current-member-disabled-notice-msg-post"
 msgstr ""
-"へのアクセスは現在無効化されています。詳細はチーム管理者にお問い合わせ下さ"
-"い"
+"へのアクセスは現在無効化されています。詳細はチーム管理者にお問い合わせ下さい"
 
 #: client/app/signin/signin.html
 msgid "@current-member-disabled-notice-msg-pre"
@@ -848,14 +859,14 @@ msgstr "チームに招待中のメンバーです。"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@dummy-dm-tool-tip"
 msgstr ""
-"招待中のメンバーにダイレクトメッセージを送信する場合、メッセージの内容が毎"
-"時間メールで発送されます。"
+"招待中のメンバーにダイレクトメッセージを送信する場合、メッセージの内容が毎時"
+"間メールで発送されます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@dummy-dm-tooltip"
 msgstr ""
-"招待中のメンバーにダイレクトメッセージを送信する場合、メッセージの内容が毎"
-"時間メールで発送されます。"
+"招待中のメンバーにダイレクトメッセージを送信する場合、メッセージの内容が毎時"
+"間メールで発送されます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@dummy-invitation-cancel"
@@ -880,8 +891,8 @@ msgstr "招待メールを再発信"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@dummy-invitation-resent-description"
 msgstr ""
-"招待中のメンバーにダイレクトメッセージを送信する場合、メッセージの内容が毎"
-"時間メールで発送されます。"
+"招待中のメンバーにダイレクトメッセージを送信する場合、メッセージの内容が毎時"
+"間メールで発送されます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@dummy-invitation-resent-title"
@@ -939,8 +950,8 @@ msgstr "エラーが発生しました"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@external-share-copy"
 msgstr ""
-"ファイルを共有したいところにこのリンクを「{{shortcut}}」でコピー＆ペースト"
-"してください。"
+"ファイルを共有したいところにこのリンクを「{{shortcut}}」でコピー＆ペーストし"
+"てください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@external-share-create"
@@ -965,8 +976,8 @@ msgstr "共有用リンクを削除する"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@external-share-remove-desc"
 msgstr ""
-"削除すると、リンクはこれから使用できず、新しいリンクを作成する場合は既存と"
-"は違う新しいリンクが作成されます。本当に削除しますか？"
+"削除すると、リンクはこれから使用できず、新しいリンクを作成する場合は既存とは"
+"違う新しいリンクが作成されます。本当に削除しますか？"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@external-share-remove-msg"
@@ -1069,9 +1080,8 @@ msgstr "変更する"
 msgid "@folder-tutorial-content"
 msgstr ""
 "お仕事が増えるほど、増えていくトピックの数で困っていましたか？これからはト"
-"ピックをフォルダでまとめて管理することができます。今すぐ一つのトピックを他"
-"のトピックの上にドラッグ&ドロップをし、簡単にフォルダを作成してみてくださ"
-"い"
+"ピックをフォルダでまとめて管理することができます。今すぐ一つのトピックを他の"
+"トピックの上にドラッグ&ドロップをし、簡単にフォルダを作成してみてください"
 
 #: client/app/left/topics/tutorial/left.tutorial.folder.html
 msgid "@folder-tutorial-never-show"
@@ -1101,8 +1111,8 @@ msgstr "言語"
 #: client/app/modal/members/current_member_profile/current.member.profile.html
 msgid "@ie9-profile-image-support"
 msgstr ""
-"Internet Explorer 9では、プロフィール画像の変更機能はサポートされていませ"
-"ん。ご利用するには、最新バージョンにアップデートしてください。"
+"Internet Explorer 9では、プロフィール画像の変更機能はサポートされていません。"
+"ご利用するには、最新バージョンにアップデートしてください。"
 
 #: client/app/modal/topics/topic_create/topic.create.html
 #: client/app/tutorial/popup/view_components/modal/topic_create/tutorial.modal.topic.create.html
@@ -1140,14 +1150,13 @@ msgstr "キーワードを入力して検索してください"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@integration-access-denied"
 msgstr ""
-"認証プロセスで問題が発生しました。ブラウザでCookieを有効にしてしてくださ"
-"い。"
+"認証プロセスで問題が発生しました。ブラウザでCookieを有効にしてしてください。"
 
 #: client/app/modal/files/integration/integration.html
 msgid "@integration-desc-3"
 msgstr ""
-"アカウントを接続するために、<b>ブラウザのポップアップ表示を許可してくださ"
-"い</b>"
+"アカウントを接続するために、<b>ブラウザのポップアップ表示を許可してください</"
+"b>"
 
 #: client/app/modal/files/integration/integration.html
 msgid "@integration-desc-dropbox-1"
@@ -1156,8 +1165,7 @@ msgstr "Dropboxアカウントを追加してファイルを共有"
 #: client/app/modal/files/integration/integration.html
 msgid "@integration-desc-dropbox-2"
 msgstr ""
-"Dropboxをファイルの種類(PDF, PPT, Excel)で検索し、Dropboxのウィンドウで表"
-"示"
+"Dropboxをファイルの種類(PDF, PPT, Excel)で検索し、Dropboxのウィンドウで表示"
 
 #: client/app/modal/files/integration/integration.html
 msgid "@integration-desc-google-drive-1"
@@ -1185,8 +1193,8 @@ msgstr "Googleドライブからファイルをアップロード"
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@invitation_success_copy_link"
 msgstr ""
-"あなたのチームへの招待リンクがコピーされました。チームに招待したい人に送り"
-"ましょう"
+"あなたのチームへの招待リンクがコピーされました。チームに招待したい人に送りま"
+"しょう"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@invitation-already-member"
@@ -1195,14 +1203,14 @@ msgstr "このメールはすでに{{invitedTeamName}}のメンバーです"
 #: client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.html
 msgid "@invitation-contact-desc"
 msgstr ""
-"100人以上のメンバーを追加したいですか？ サポートにご連絡はこちらまで <a "
-"href=\"mailto:support@tosslab.com\">support@tosslab.com</a>"
+"100人以上のメンバーを追加したいですか？ サポートにご連絡はこちらまで <a href="
+"\"mailto:support@tosslab.com\">support@tosslab.com</a>"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@invitation-disabled"
 msgstr ""
-"管理者によって招待が取り消されました。詳細は管理者({{adminName}})にお問い"
-"合わせください"
+"管理者によって招待が取り消されました。詳細は管理者({{adminName}})にお問い合わ"
+"せください"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@invitation-disabled-amdin-postfix"
@@ -1220,8 +1228,8 @@ msgstr "またはリンクを送信"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jandi-bot-role"
 msgstr ""
-"僕はJANDIの利用中必ず必要なメッセージや、JANDIコネクトのメッセージをお送り"
-"します。"
+"僕はJANDIの利用中必ず必要なメッセージや、JANDIコネクトのメッセージをお送りし"
+"ます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jandi-bot-status"
@@ -1429,9 +1437,9 @@ msgstr "連動サービスを追加するにはアカウントの認証が必要
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-143"
 msgstr ""
-"GitHubのアカウントを連動すると、JANDIで直接受信メッセージの種類が設定でき"
-"ます。アカウントを連動せずにGitHubで直接設定したい場合は手動設定ページで連"
-"動してください。"
+"GitHubのアカウントを連動すると、JANDIで直接受信メッセージの種類が設定できま"
+"す。アカウントを連動せずにGitHubで直接設定したい場合は手動設定ページで連動し"
+"てください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-144"
@@ -1452,8 +1460,7 @@ msgstr "STEP 1"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-148"
 msgstr ""
-"JIRAに管理者アカウントでログイン後、<b>System</b>メニューに進入してくださ"
-"い。"
+"JIRAに管理者アカウントでログイン後、<b>System</b>メニューに進入してください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-149"
@@ -1466,8 +1473,8 @@ msgstr "GitHub"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-150"
 msgstr ""
-"左側のメニューの中で<b>「Advanced」</b>セクションで<b>Webhooks</b>メニュー"
-"を選んでください。"
+"左側のメニューの中で<b>「Advanced」</b>セクションで<b>Webhooks</b>メニューを"
+"選んでください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-151"
@@ -1476,8 +1483,8 @@ msgstr "STEP 3"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-152"
 msgstr ""
-"<b>「Create a Webhook」</b>ボタンをクリックし、下記のURLをコピーアンドペー"
-"ストしてください。"
+"<b>「Create a Webhook」</b>ボタンをクリックし、下記のURLをコピーアンドペース"
+"トしてください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-153"
@@ -1486,8 +1493,8 @@ msgstr "STEP 4"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-154"
 msgstr ""
-"購読してほしいイベントを選択し、<b>「Create」</b>ボタンをクリックして設定"
-"を保存してください。"
+"購読してほしいイベントを選択し、<b>「Create」</b>ボタンをクリックして設定を保"
+"存してください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-155"
@@ -1496,14 +1503,14 @@ msgstr "閉じる"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-156"
 msgstr ""
-"GitHubアカウントで購読したいアカウントを選択し、左側のメニューで"
-"「Settings」をクリックしてください。"
+"GitHubアカウントで購読したいアカウントを選択し、左側のメニューで「Settings」"
+"をクリックしてください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-157"
 msgstr ""
-"「Webhooks & Services」メニューをクリックして、<b>「Add webhook」</b> ボタ"
-"ンどクリックしてください。"
+"「Webhooks & Services」メニューをクリックして、<b>「Add webhook」</b> ボタン"
+"どクリックしてください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-158"
@@ -1512,8 +1519,8 @@ msgstr "「Payload URL」にJANDIで提供されるこのURLを貼り付けし�
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-159"
 msgstr ""
-"他の項目はデフォルトにして、最下段に「Active」チェックボックスがチェックさ"
-"れたことを確認後、「Add Webhook」ボタンをクリックしてください。"
+"他の項目はデフォルトにして、最下段に「Active」チェックボックスがチェックされ"
+"たことを確認後、「Add Webhook」ボタンをクリックしてください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-16"
@@ -1526,28 +1533,26 @@ msgstr "Webhookとは？"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-161"
 msgstr ""
-"ウェブフック(Webhook)とはJANDIにJANDIがきめたフォーマットに一致するデータ"
-"を送信し、指定された会話にメッセージの形で発信する機能であります。現在"
-"JANDIコネクトで支援してないサービスでもウェブフック発信（Outgoing "
-"Webhook）を支援する場合JANDIと連動し変更事項についてメッセージが受信できま"
-"す。"
+"ウェブフック(Webhook)とはJANDIにJANDIがきめたフォーマットに一致するデータを送"
+"信し、指定された会話にメッセージの形で発信する機能であります。現在JANDIコネク"
+"トで支援してないサービスでもウェブフック発信（Outgoing Webhook）を支援する場"
+"合JANDIと連動し変更事項についてメッセージが受信できます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-162"
-msgstr ""
-"この機能を使用するにはHTTP POST requestを下記のURLまで送ってください。"
+msgstr "この機能を使用するにはHTTP POST requestを下記のURLまで送ってください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-163"
 msgstr ""
-"Requestには必ず<b>Accept</b>と<b>Content-Type</b>を次のように指定してくだ"
-"さい。"
+"Requestには必ず<b>Accept</b>と<b>Content-Type</b>を次のように指定してくださ"
+"い。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-164"
 msgstr ""
-"また、JANDI WebhookはRESTful APIで動作するので、http methodをPOSTでしない"
-"と正常に登録されません。"
+"また、JANDI WebhookはRESTful APIで動作するので、http methodをPOSTでしないと正"
+"常に登録されません。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-165"
@@ -1565,9 +1570,9 @@ msgstr ""
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-168"
 msgstr ""
-"プロフィール画像と名前の変更が必要な場合修正できます。他のお気になる点は "
-"<a href=\"https://jandi.zendesk.com/hc/ja/requests/new\" target=\"_blank"
-"\">カスタマーサポート</a>でお問い合わせください。"
+"プロフィール画像と名前の変更が必要な場合修正できます。他のお気になる点は <a "
+"href=\"https://jandi.zendesk.com/hc/ja/requests/new\" target=\"_blank\">カス"
+"タマーサポート</a>でお問い合わせください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-169"
@@ -1588,8 +1593,8 @@ msgstr "全員"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-172"
 msgstr ""
-"メンバー全員が自由に連動サービスを追加することができますが、各メンバーは他"
-"のメンバーの連動内容が見られなき、管理者だけがすべて確認できます。"
+"メンバー全員が自由に連動サービスを追加することができますが、各メンバーは他の"
+"メンバーの連動内容が見られなき、管理者だけがすべて確認できます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-173"
@@ -1642,14 +1647,14 @@ msgstr "申し訳ありませんが、JANDIコネクト項目をこれ以上追�
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-184"
 msgstr ""
-"このJANDIコネクト項目を中止しますか？中止する場合、連動されたサービスの更"
-"新事項のメッセージをこれから受けられません。"
+"このJANDIコネクト項目を中止しますか？中止する場合、連動されたサービスの更新事"
+"項のメッセージをこれから受けられません。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-185"
 msgstr ""
-"このJANDIコネクト項目を削除しますか？連動項目を削除しても過去の受信メッ"
-"セージは保存されます。"
+"このJANDIコネクト項目を削除しますか？連動項目を削除しても過去の受信メッセージ"
+"は保存されます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-186"
@@ -1658,8 +1663,8 @@ msgstr "連動項目が正常に追加されました。"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-187"
 msgstr ""
-"このアカウントの連携を解除すると、このアカウントと連携している他の連携サー"
-"ビスも動作しない可能性があります。連携を解除しますか？"
+"このアカウントの連携を解除すると、このアカウントと連携している他の連携サービ"
+"スも動作しない可能性があります。連携を解除しますか？"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-188"
@@ -1788,8 +1793,8 @@ msgstr ""
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-215"
 msgstr ""
-"{{serviceName}}のアカウント連動が解除されました。既存の設定されていたJANDI"
-"コネクトの項目は削除されます。"
+"{{serviceName}}のアカウント連動が解除されました。既存の設定されていたJANDIコ"
+"ネクトの項目は削除されます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-216"
@@ -1830,22 +1835,22 @@ msgstr "タイム・ゾーン"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-224"
 msgstr ""
-"連動サービスまたはメッセージを受信するトピックや１：１メッセージが選択でき"
-"ます。連動設定の以後にも更新できます。"
+"連動サービスまたはメッセージを受信するトピックや１：１メッセージが選択できま"
+"す。連動設定の以後にも更新できます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-225"
 msgstr ""
-"Googleカレンダー、Trello、JIRA、そしてGitHubのような <br>他サービスをJANDI"
-"に登録し更新事項をメッセージで受けることができる <br>機能のJANDIコネクトが"
-"リリースされました。<br><br><b>これからはメールを使うことがさらになくなり"
-"ます。<b><br>"
+"Googleカレンダー、Trello、JIRA、そしてGitHubのような <br>他サービスをJANDIに"
+"登録し更新事項をメッセージで受けることができる <br>機能のJANDIコネクトがリ"
+"リースされました。<br><br><b>これからはメールを使うことがさらになくなります。"
+"<b><br>"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-226"
 msgstr ""
-"JANDIコネクト使用の権限がありません。詳細はチームの管理者({{adminName}})に"
-"お問い合わせください。"
+"JANDIコネクト使用の権限がありません。詳細はチームの管理者({{adminName}})にお"
+"問い合わせください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-227"
@@ -1854,42 +1859,42 @@ msgstr "本当に変更事項を保存せずにキャンセルしますか？"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-23"
 msgstr ""
-"<b><a href=https://github.com  target=_blank >GitHub</a></b>はGitバージョ"
-"ン管理システムに基づいたオープンソースプロジェクトのための共有ウェブサービ"
-"スです。<br/><br/>\n"
-"GitHubをJANDIと連動すると、GitHubブランチのCommit、Comments、Pull Request"
-"などの更新事項をJANDIチーム内でメッセージで送信することができます。"
+"<b><a href=https://github.com  target=_blank >GitHub</a></b>はGitバージョン管"
+"理システムに基づいたオープンソースプロジェクトのための共有ウェブサービスで"
+"す。<br/><br/>\n"
+"GitHubをJANDIと連動すると、GitHubブランチのCommit、Comments、Pull Requestなど"
+"の更新事項をJANDIチーム内でメッセージで送信することができます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-24"
 msgstr ""
-"<b><a href=https://github.com  target=_blank >GitHub</a></b>はGitバージョ"
-"ン管理システムに基づいたオープンソースプロジェクトのための共有ウェブサービ"
-"スです。<br/><br/>\n"
-"GitHubをJANDIと連動すると、GitHubブランチのCommit、Comments、Pull Request"
-"などの更新事項をJANDIチーム内でメッセージで送信することができます。"
+"<b><a href=https://github.com  target=_blank >GitHub</a></b>はGitバージョン管"
+"理システムに基づいたオープンソースプロジェクトのための共有ウェブサービスで"
+"す。<br/><br/>\n"
+"GitHubをJANDIと連動すると、GitHubブランチのCommit、Comments、Pull Requestなど"
+"の更新事項をJANDIチーム内でメッセージで送信することができます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-25"
 msgstr ""
-"<b><a href=https://atlassian.com/software/jira target=_blank>JIRA</a></b>"
-"はAtlassian社のプロジェクト管理ツールです。<br/><br/>\n"
-" JIRAをJANDIと連動すると、各JIRA課題の状態更新やアップデート状況をJANDI"
-"チーム内でメッセージで受信できます。"
+"<b><a href=https://atlassian.com/software/jira target=_blank>JIRA</a></b>は"
+"Atlassian社のプロジェクト管理ツールです。<br/><br/>\n"
+" JIRAをJANDIと連動すると、各JIRA課題の状態更新やアップデート状況をJANDIチーム"
+"内でメッセージで受信できます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-26"
 msgstr ""
-"<b><a href=https://trello.com target=_blank>Trello</a></b>は軽快にタスクが"
-"管理できるツールです。<br/><br/>\n"
-"TrelloをJANDIと連動すると、各カードやボードの更新事項をJANDIのチーム内で"
-"メッセージで受信できます。"
+"<b><a href=https://trello.com target=_blank>Trello</a></b>は軽快にタスクが管"
+"理できるツールです。<br/><br/>\n"
+"TrelloをJANDIと連動すると、各カードやボードの更新事項をJANDIのチーム内でメッ"
+"セージで受信できます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-27"
 msgstr ""
-"<b>Incoming Webhook</b>はWebhookを支援するサービスをJANDIとつなぎ、他の"
-"サービスの更新事項をJANDIのチーム内のメッセージで受信できる機能です。"
+"<b>Incoming Webhook</b>はWebhookを支援するサービスをJANDIとつなぎ、他のサービ"
+"スの更新事項をJANDIのチーム内のメッセージで受信できる機能です。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-28"
@@ -2208,8 +2213,8 @@ msgstr "プロフィールを設定"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-99"
 msgstr ""
-"チーム内でこの連動項目にメッセージを送信する時のプロフィール写真と名前が変"
-"種できます。"
+"チーム内でこの連動項目にメッセージを送信する時のプロフィール写真と名前が変種"
+"できます。"
 
 #: client/app/signin/signin.html
 msgid "@keep-me-logged-in"
@@ -2222,8 +2227,7 @@ msgstr "スマートフォンアプリ"
 #: client/app/mobile/mobile.catcher.html
 msgid "@landing-footer-app-download-desc"
 msgstr ""
-"PCからも、スマートフォンからでもJANDIが使えますPC・スマートフォンアプリ対"
-"応 "
+"PCからも、スマートフォンからでもJANDIが使えますPC・スマートフォンアプリ対応 "
 
 #: client/app/signin/signin.html
 msgid "@login-invalid"
@@ -2233,6 +2237,20 @@ msgstr "メールアドレスまたはパスワードが正しくありません
 #: client/app/signin/signin.html
 msgid "@login-reset-password"
 msgstr "パスワードを忘れた場合"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-button-download"
+msgstr "ダウンロード"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-desc"
+msgstr ""
+"今回のバージョンからは、Mac App Storeを使用していません。ダウンロードした後"
+"は、既存のアプリを上書きしてください。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-title"
+msgstr "新しいJANDIのMacアプリがリリースされました！"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@managemembers-dropdown-pending"
@@ -2267,15 +2285,15 @@ msgstr "@all（トピック内）"
 #: client/app/right/right.html
 msgid "@mention-all-toast"
 msgstr ""
-"「@all」機能で現在{{topicName}}に参加している{{topicParticipantsCount}}名"
-"のメンバーにスマートフォンやウェブ通知が届きます。"
+"「@all」機能で現在{{topicName}}に参加している{{topicParticipantsCount}}名のメ"
+"ンバーにスマートフォンやウェブ通知が届きます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/right/mentions/mentions.html
 msgid "@mention-empty"
 msgstr ""
-"チームメンバーからメンションされたけんがありません。メンションするには、"
-"メッセージやコメントを入力する時「@」を入力してください"
+"チームメンバーからメンションされたけんがありません。メンションするには、メッ"
+"セージやコメントを入力する時「@」を入力してください"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/center/view_components/center_chat_templates/dropdown/file/center.file.dropdown.layer.html
@@ -2310,20 +2328,20 @@ msgstr "トピックを作成した後に、公開・非公開を変更するこ
 #: client/app/modal/topics/topic_create/topic.create.html
 msgid "@modal-create-private-topic-help-msg-1"
 msgstr ""
-"-プライベートトピックはそのトピックに招待されていないメンバーから見ること"
-"はできません"
+"-プライベートトピックはそのトピックに招待されていないメンバーから見ることはで"
+"きません"
 
 #: client/app/modal/topics/topic_create/topic.create.html
 msgid "@modal-create-private-topic-help-msg-2"
 msgstr ""
-"-プライベートトピック内で共有されたファイルは、そのトピックを閲覧できるメ"
-"ンバーからしかアクセスできません"
+"-プライベートトピック内で共有されたファイルは、そのトピックを閲覧できるメン"
+"バーからしかアクセスできません"
 
 #: client/app/modal/topics/topic_create/topic.create.html
 msgid "@modal-create-private-topic-help-msg-3"
 msgstr ""
-"-トピック作成後はプライベートトピックへの変更はできません。その逆もできま"
-"せん。"
+"-トピック作成後はプライベートトピックへの変更はできません。その逆もできませ"
+"ん。"
 
 #: client/app/modal/topics/topic_invite_from_dm/topic.invite.direct.html
 msgid "@modal-dm-invite"
@@ -2450,8 +2468,7 @@ msgstr "メールが送信されました"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@pdfviewer-loadingfail-msg"
-msgstr ""
-"ファイルの読み込みに失敗しました。ダウンロード後に確認してください。"
+msgstr "ファイルの読み込みに失敗しました。ダウンロード後に確認してください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@pdfviewer-tooltip-fittoscreen"
@@ -2468,6 +2485,14 @@ msgstr "拡大 (+)"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@pdfviewer-tooltip-zoomout"
 msgstr "縮小 (-)"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@placeholder-input-comment"
+msgstr "ここにコメントを記入 (Shift + エンターキーでテキストボックス内で改行)"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@placeholder-input-message"
+msgstr "ここにメッセージを記入（Shift + エンターキーでテキストボックス内で改行"
 
 #: client/app/left/left.html
 msgid "@privateGroup"
@@ -2543,8 +2568,8 @@ msgstr "検索条件をクリア"
 #: client/app/right/stars/stars.html
 msgid "@search-in-progress"
 msgstr ""
-"<span class=\"searchQueryKeyword\">{{searchStatus.keyword}}</span>を検索し"
-"ています"
+"<span class=\"searchQueryKeyword\">{{searchStatus.keyword}}</span>を検索して"
+"います"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/right/rpanel_search/rpanel.search.html
@@ -2556,15 +2581,14 @@ msgstr "1文字以上を入力してください。"
 #: client/app/right/search.messages/search.messages.html
 msgid "@search-result-summary"
 msgstr ""
-"<span class=\"searchQueryKeyword\">{{searchStatus.keyword}}</span>の検索結"
-"果が<span class=\"searchQueryKeyword\">{{searchStatus.length}}</span>件あ"
-"ります"
+"<span class=\"searchQueryKeyword\">{{searchStatus.keyword}}</span>の検索結果"
+"が<span class=\"searchQueryKeyword\">{{searchStatus.length}}</span>件あります"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@search-result-summary-without-keyword"
 msgstr ""
-"<span class=\"searchQueryKeyword\">{{searchStatus.length}}</span>件の検索"
-"結果があります"
+"<span class=\"searchQueryKeyword\">{{searchStatus.length}}</span>件の検索結果"
+"があります"
 
 #: client/app/modal/topics/topic_invite/topic.invite.html
 msgid "@select-all-members"
@@ -2647,9 +2671,9 @@ msgstr "受信する"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@setting-notification-permission-denied"
 msgstr ""
-"デスクトップ通知をオフに設定しました。<a href=\"https://jandi.zendesk.com/"
-"hc/en-us/articles/207464763\" target=\"_blank\">ご案内ページ</a>から変更方"
-"法をご確認ください。"
+"デスクトップ通知をオフに設定しました。<a href=\"https://jandi.zendesk.com/hc/"
+"en-us/articles/207464763\" target=\"_blank\">ご案内ページ</a>から変更方法をご"
+"確認ください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@setting-notification-preview-all"
@@ -2670,8 +2694,8 @@ msgstr "公開トピックのみ"
 #: client/app/modal/settings/notification/setting.notification.html
 msgid "@setting-notification-recommendation-msg"
 msgstr ""
-"重要なメッセージを見落とさないためにも、デスクトップ通知を常時オンにするこ"
-"とを強く推奨します。"
+"重要なメッセージを見落とさないためにも、デスクトップ通知を常時オンにすること"
+"を強く推奨します。"
 
 #: client/app/modal/settings/notification/setting.notification.html
 msgid "@setting-notification-show-content-msg"
@@ -2826,6 +2850,10 @@ msgid "@socket-connection-lost"
 msgstr "JANDIサーバーとの接続が切断されました。しばらくお待ちください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@socket-connection-retry"
+msgstr "JANDIサーバーとの接続が切断されました。しばらくお待ちください。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@sounds-arise"
 msgstr "階段"
 
@@ -2936,8 +2964,8 @@ msgstr "日曜日"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@system-msg-announcement-created"
 msgstr ""
-"{{msg.message.content.actionOwner}} さんが {{msg.announceWriterName}} さん"
-"のメッセージを告知に登録しました"
+"{{msg.message.content.actionOwner}} さんが {{msg.announceWriterName}} さんの"
+"メッセージを告知に登録しました"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@system-msg-announcement-deleted"
@@ -2946,9 +2974,8 @@ msgstr "{{msg.message.content.actionOwner}} さんが告知を削除しました
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@team-create-info-help-msg"
 msgstr ""
-"JANDIではひとつのチームに必要なメンバーを招待してグループコミュニケーショ"
-"ンを行います。また、一つのアカウントで複数のチームを作成することができま"
-"す。"
+"JANDIではひとつのチームに必要なメンバーを招待してグループコミュニケーションを"
+"行います。また、一つのアカウントで複数のチームを作成することができます。"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 #: client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.html
@@ -2960,8 +2987,8 @@ msgstr "他のチームメンバーを招待する"
 #: client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.html
 msgid "@team-invite-description"
 msgstr ""
-"空白またはカンマで区切られた複数のメールアドレスを一度に追加することができ"
-"ます。エクセルで連絡先のある列を一度にコピー＆貼り付けしてください。"
+"空白またはカンマで区切られた複数のメールアドレスを一度に追加することができま"
+"す。エクセルで連絡先のある列を一度にコピー＆貼り付けしてください。"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-done"
@@ -2971,19 +2998,20 @@ msgstr "招待メール{{inviteeNumber}}通が正常に送信されました。"
 msgid "@team-invite-done-with-fail"
 msgstr ""
 "招待メール{{inviteeNumber}}通が正常に送信されましたが、"
-"{{failedInviteeNumber}}通は送信に失敗しました。すでにチームに参加している"
-"メンバーなのか確認してください。"
+"{{failedInviteeNumber}}通は送信に失敗しました。すでにチームに参加しているメン"
+"バーなのか確認してください。"
 
 #: client/app/modal/teams/team_invite/invite_emails/invite.emails.html
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-invalid-email"
 msgstr "正しいメールアドレスの形式を入力してください"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-link-copy-desc"
 msgstr ""
-"{{ctrlKey}}+Cを押したら、招待リンクがコピーされます。招待したいメンバにこ"
-"のリンクを送ってみてください。"
+"Ctrl+Cを押したら、招待リンクがコピーされます。招待したいメンバにこのリンクを"
+"送ってみてください。"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-more"
@@ -3016,8 +3044,8 @@ msgstr "ホームに戻る"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@topic-admin-transfer-adminleave-confirm"
 msgstr ""
-"あなたはこのトピックの管理者です。トピックから退出するには管理者権限を他の"
-"メンバーに譲ってください。"
+"あなたはこのトピックの管理者です。トピックから退出するには管理者権限を他のメ"
+"ンバーに譲ってください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@topic-admin-transfer-confirm"
@@ -3026,8 +3054,8 @@ msgstr "このメンバーにトピック管理者の権限を譲りますか？
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@topic-admin-transfer-kickout-confirm"
 msgstr ""
-"このメンバーはこのトピックの管理者です。次の管理者を指定してからこのメン"
-"バーをトピックから退出させられます。"
+"このメンバーはこのトピックの管理者です。次の管理者を指定してからこのメンバー"
+"をトピックから退出させられます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@topic-admin-transfer-toast"
@@ -3036,9 +3064,9 @@ msgstr "トピックの管理者が更新されました"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@topic-admin-transfer-tooltip"
 msgstr ""
-"トピックの管理者は次のような権限があります。- トピック名や説明の変更- ト"
-"ピックの削除- 参加中のメンバーを退出させること- JANDIコネクトの項目を中止"
-"または削除"
+"トピックの管理者は次のような権限があります。- トピック名や説明の変更- トピッ"
+"クの削除- 参加中のメンバーを退出させること- JANDIコネクトの項目を中止または削"
+"除"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/modal/topics/topic_create/topic.create.html
@@ -3093,8 +3121,7 @@ msgstr ""
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_congratulations_content"
-msgstr ""
-"これから{{teamName}}チームでメンバー達とジャンディーが使用できます。"
+msgstr "これから{{teamName}}チームでメンバー達とジャンディーが使用できます。"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_dm_click_list"
@@ -3153,14 +3180,13 @@ msgstr "成功！"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_help_remember"
-msgstr ""
-"そして気になる点やご質問あれば、いつでもこちらをクリックしてください。"
+msgstr "そして気になる点やご質問あれば、いつでもこちらをクリックしてください。"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_leave_click_title"
 msgstr ""
-"トピックに成功的に参加しました！メニューボタンをクリックすると、トピック関"
-"連メニューが表示されます。"
+"トピックに成功的に参加しました！メニューボタンをクリックすると、トピック関連"
+"メニューが表示されます。"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_leave_lets"
@@ -3197,21 +3223,21 @@ msgstr "「チーム」とは会社や部署で一緒に協業するグループ
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_team_desc"
 msgstr ""
-"チームメニューでは全体チームメンバー一覧が見られます。そして他のチームへの"
-"切り替えやホームに移動することができます。"
+"チームメニューでは全体チームメンバー一覧が見られます。そして他のチームへの切"
+"り替えやホームに移動することができます。"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_team_explain_invitation"
 msgstr ""
-"メンバーのメールアドレスを入力するか、チーム招待URLリンクを直接送って招待"
-"することもできます。"
+"メンバーのメールアドレスを入力するか、チーム招待URLリンクを直接送って招待する"
+"こともできます。"
 
 #: client/app/tutorial/popup/tutorial.main.html
 #: client/app/tutorial/welcome/tutorial.welcome.html
 msgid "@tutorial_team_intro"
 msgstr ""
-"ジャンディーでコミュニケーションスタイルを変革し、効率的なワークスタイルを"
-"経験してみてください。"
+"ジャンディーでコミュニケーションスタイルを変革し、効率的なワークスタイルを経"
+"験してみてください。"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_team_title"
@@ -3244,8 +3270,8 @@ msgstr "{{topicName}}が成功的に作成されました！"
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_topic_definition"
 msgstr ""
-"トピックとは現在進行中のプロジェクトからランチのメニューまで、色々な主題ご"
-"とに分けて目的によって使用するグループチャット単位です。"
+"トピックとは現在進行中のプロジェクトからランチのメニューまで、色々な主題ごと"
+"に分けて目的によって使用するグループチャット単位です。"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_topic_join"
@@ -3263,8 +3289,8 @@ msgstr ""
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_upload_sources"
 msgstr ""
-"ファイルをマイコンピューターから、またはGoogle DriveやDropboxから直接アッ"
-"プロードしてください。"
+"ファイルをマイコンピューターから、またはGoogle DriveやDropboxから直接アップ"
+"ロードしてください。"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_upload_title"
@@ -3304,25 +3330,25 @@ msgstr "チュートリアルを終了する"
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-file-msg1"
 msgstr ""
-"アップロードされたファイルは全て右カラムのファイル一覧（ファイルドロワー）"
-"からアクセスできます。「・・・」ボタンをクリックし、ダウンロードや共有範囲"
-"の変更、コメントの追加などができます"
+"アップロードされたファイルは全て右カラムのファイル一覧（ファイルドロワー）か"
+"らアクセスできます。「・・・」ボタンをクリックし、ダウンロードや共有範囲の変"
+"更、コメントの追加などができます"
 
 #: client/app/modal/change_log/changeLog.msg.search.html
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-file-msg2"
 msgstr ""
-"ファイルをキーワードで検索したり、共有範囲、共有したメンバー、ファイルの種"
-"類で絞り込むことができます。「メッセージ」タブをクリックすることでメッセー"
-"ジを検索することができます。検索結果をクリックすると、その会話の部分にジャ"
-"ンプすることができます"
+"ファイルをキーワードで検索したり、共有範囲、共有したメンバー、ファイルの種類"
+"で絞り込むことができます。「メッセージ」タブをクリックすることでメッセージを"
+"検索することができます。検索結果をクリックすると、その会話の部分にジャンプす"
+"ることができます"
 
 #: client/app/modal/change_log/changeLog.msg.search.html
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-file-msg3"
 msgstr ""
-"「検索」ボタンを押して右パネルを開いたり、「閉じる」ボタンを押して右パネル"
-"を閉じることができます"
+"「検索」ボタンを押して右パネルを開いたり、「閉じる」ボタンを押して右パネルを"
+"閉じることができます"
 
 #: client/app/modal/change_log/changeLog.msg.search.html
 #: client/app/tutorial/tutorial.html
@@ -3336,9 +3362,9 @@ msgstr "メッセージとファイルを送信中"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal1-content"
 msgstr ""
-"増えていくお仕事のほど増加するトピックの数で困っていますか？これからはト"
-"ピックをフォルダで分類して管理できます。今一つのトピックを他のトピックの上"
-"にドラッグ・アンド・ドロップで簡単にフォルダを作成してみてください。"
+"増えていくお仕事のほど増加するトピックの数で困っていますか？これからはトピッ"
+"クをフォルダで分類して管理できます。今一つのトピックを他のトピックの上にド"
+"ラッグ・アンド・ドロップで簡単にフォルダを作成してみてください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal1-title"
@@ -3347,8 +3373,8 @@ msgstr "フォルダで関連トピックを分類してください。"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal2-content"
 msgstr ""
-"重要なメッセージまたはファイルは星アイコンをクリックし、スター付きすること"
-"ができます。"
+"重要なメッセージまたはファイルは星アイコンをクリックし、スター付きすることが"
+"できます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal2-title"
@@ -3357,9 +3383,9 @@ msgstr "スター付き項目"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal3-content"
 msgstr ""
-"@'を入力してからメンバーを選択すると、トピックの通知がオフに設定された時に"
-"も通知が受けられます。自分がメンションされたメッセージは右側のパンネルに集"
-"まれます。"
+"@'を入力してからメンバーを選択すると、トピックの通知がオフに設定された時にも"
+"通知が受けられます。自分がメンションされたメッセージは右側のパンネルに集まれ"
+"ます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal3-title"
@@ -3368,8 +3394,8 @@ msgstr "メンション"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal4-content"
 msgstr ""
-"特定の言葉が含まれたメッセージをすべての会話を対象に検索でき、作成者および"
-"会話トピックに制限し 検索できます。"
+"特定の言葉が含まれたメッセージをすべての会話を対象に検索でき、作成者および会"
+"話トピックに制限し 検索できます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal4-title"
@@ -3378,8 +3404,8 @@ msgstr "全てのメッセージを検索してください。"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal5-content"
 msgstr ""
-"Jump機能(Cmd/Cmd+J)でメンバーの名前またはトピック名を検索して、便利に会話"
-"間に移動できます。"
+"Jump機能(Cmd/Cmd+J)でメンバーの名前またはトピック名を検索して、便利に会話間に"
+"移動できます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal5-title"
@@ -3388,9 +3414,9 @@ msgstr "Jump機能で速く会話間に 移動してください"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal6-content"
 msgstr ""
-"ファイルアップロード(Ctrl/Cmd+U)またはトピックにメンバー招待(Ctrl+I)のよう"
-"な繰り返し作業はショートカットを使用してみてください。Ctrl(Cmd)+/だけ入力"
-"すればショートカット一覧できます。"
+"ファイルアップロード(Ctrl/Cmd+U)またはトピックにメンバー招待(Ctrl+I)のような"
+"繰り返し作業はショートカットを使用してみてください。Ctrl(Cmd)+/だけ入力すれば"
+"ショートカット一覧できます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal6-title"
@@ -3399,8 +3425,8 @@ msgstr "ショートカット"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal7-content"
 msgstr ""
-"Googleカレンダー, Trello, GitHub, JIRAなどの他サービスにおける変動事項を"
-"JANDIで通知を受けることができます。"
+"Googleカレンダー, Trello, GitHub, JIRAなどの他サービスにおける変動事項をJANDI"
+"で通知を受けることができます。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal7-title"
@@ -3410,8 +3436,8 @@ msgstr "JANDIコネクト"
 msgid "@tutorial-msg-explanation"
 msgstr ""
 "メッセージを書いてエンターキーを押しましょう。ファイルを共有するには、メッ"
-"セージ入力欄の左にあるボタンをクリックするか、ファイルをドラッグ＆ドロップ"
-"してください。"
+"セージ入力欄の左にあるボタンをクリックするか、ファイルをドラッグ＆ドロップし"
+"てください。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-skip"
@@ -3454,28 +3480,27 @@ msgstr "ファイルリストなど各種機能を確認してください"
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-dm-explanation"
 msgstr ""
-"「ダイレクトメッセージ」は1対1のやりとり用で、他のメンバーは閲覧できませ"
-"ん。最新の会話から順に表示されます。会話を閉じると一覧から消えますが、会話"
-"を再開すると再び表示されます。過去の会話履歴も表示されます。"
+"「ダイレクトメッセージ」は1対1のやりとり用で、他のメンバーは閲覧できません。"
+"最新の会話から順に表示されます。会話を閉じると一覧から消えますが、会話を再開"
+"すると再び表示されます。過去の会話履歴も表示されます。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-group-explanation"
 msgstr ""
-"「プライベートトピック」は、招待されたメンバーのみ見ることができるトピック"
-"です。新しいプライベートトピックを作成するには「＋追加」をクリックしてくだ"
-"さい。"
+"「プライベートトピック」は、招待されたメンバーのみ見ることができるトピックで"
+"す。新しいプライベートトピックを作成するには「＋追加」をクリックしてくださ"
+"い。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-title"
-msgstr ""
-"トピックとプライベートトピックとダイレクトメッセージの違いは何ですか？"
+msgstr "トピックとプライベートトピックとダイレクトメッセージの違いは何ですか？"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-topic-explanation"
 msgstr ""
-"「トピック」は特定のテーマごとの部屋、またはスレッドのようなものです。会話"
-"の内容がイメージできる名前をつけるとよいでしょう。トピックは「＋追加」で"
-"作ったり、「☰ 表示」で既存のトピックを探して参加できます。"
+"「トピック」は特定のテーマごとの部屋、またはスレッドのようなものです。会話の"
+"内容がイメージできる名前をつけるとよいでしょう。トピックは「＋追加」で作った"
+"り、「☰ 表示」で既存のトピックを探して参加できます。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-tour"
@@ -3484,9 +3509,9 @@ msgstr "続きを見る »"
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-welcome-intro"
 msgstr ""
-"JANDIはあなたのチームが、もっとシームレスに、もっと近い距離感でコミュニ"
-"ケーションできることを願っています。ここでJANDIをより良く理解するために重"
-"要な３点をご紹介します。"
+"JANDIはあなたのチームが、もっとシームレスに、もっと近い距離感でコミュニケー"
+"ションできることを願っています。ここでJANDIをより良く理解するために重要な３点"
+"をご紹介します。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-welcome-title"
@@ -3592,8 +3617,8 @@ msgstr "水曜日"
 
 #~ msgid "@topic-admin-transfer-kickout-confirm-2"
 #~ msgstr ""
-#~ "このメンバーはこのトピックの管理者です。次の管理者を指定してからこのメ"
-#~ "ンバーをトピックから退出させられます。"
+#~ "このメンバーはこのトピックの管理者です。次の管理者を指定してからこのメン"
+#~ "バーをトピックから退出させられます。"
 
 #~ msgid "@file-upload-fail"
 #~ msgstr "正しいパスワードを入力してください"
@@ -3615,16 +3640,16 @@ msgstr "水曜日"
 
 #~ msgid "@ie9-please-do-not-use"
 #~ msgstr ""
-#~ "最新バージョンのInternet Explorerをお使いいただければ、JANDIの機能をフ"
-#~ "ルにご利用いただけます"
+#~ "最新バージョンのInternet Explorerをお使いいただければ、JANDIの機能をフルに"
+#~ "ご利用いただけます"
 
 #~ msgid "@alert-empty-ch-can-join"
 #~ msgstr "参加できるトピックがありません"
 
 #~ msgid "@common-disabled-member-profile-msg"
 #~ msgstr ""
-#~ "このメンバーは現在無効化されています。詳細はチーム管理者にお問い合わせ"
-#~ "下さい"
+#~ "このメンバーは現在無効化されています。詳細はチーム管理者にお問い合わせ下さ"
+#~ "い"
 
 #~ msgid "@input-rename"
 #~ msgstr "名前を入力"
@@ -3654,9 +3679,6 @@ msgstr "水曜日"
 #~ msgid "@common-more"
 #~ msgstr "表示"
 
-#~ msgid "@common-files"
-#~ msgstr "ファイル"
-
 #~ msgid "@ch-menu-rename"
 #~ msgstr "このトピックの名称を変更する"
 
@@ -3677,10 +3699,6 @@ msgstr "水曜日"
 #~ msgstr ""
 #~ "おめでとうございます{{username}}さん！チュートリアルを完了しました。"
 
-#~ msgid "@placeholder-input-message"
-#~ msgstr ""
-#~ "ここにメッセージを記入（Shift + エンターキーでテキストボックス内で改行"
-
 #, fuzzy
 #~ msgid "@announcement-creator"
 #~ msgstr "最小化"
@@ -3688,8 +3706,8 @@ msgstr "水曜日"
 #, fuzzy
 #~ msgid "@announcement-delete"
 #~ msgstr ""
-#~ "この告知を削除しますか？削除時トピック内の他のメンバーたちにもこれから"
-#~ "この告知が見えますが、元のメッセージは保存されます"
+#~ "この告知を削除しますか？削除時トピック内の他のメンバーたちにもこれからこの"
+#~ "告知が見えますが、元のメッセージは保存されます"
 
 #~ msgid "@input-search-file-title"
 #~ msgstr "キーワードで検索"
@@ -3775,15 +3793,14 @@ msgstr "水曜日"
 
 #~ msgid "@modal-create-ch-msg3"
 #~ msgstr ""
-#~ "-「公開」を選んだ場合でもチームメンバー以外の人が閲覧することはできませ"
-#~ "ん-プライベートトピック内で共有されたファイルは、そのトピックを閲覧でき"
-#~ "るメンバーからしかアクセスできません-トピック作成後はプライベートトピッ"
-#~ "クへの変更はできません。その逆もできません。"
+#~ "-「公開」を選んだ場合でもチームメンバー以外の人が閲覧することはできません-"
+#~ "プライベートトピック内で共有されたファイルは、そのトピックを閲覧できるメン"
+#~ "バーからしかアクセスできません-トピック作成後はプライベートトピックへの変"
+#~ "更はできません。その逆もできません。"
 
 #~ msgid "@modal-create-pg-msg1"
 #~ msgstr ""
-#~ "プライベートグループはそのグループのメンバーのみ参加、内容の検索ができ"
-#~ "ます"
+#~ "プライベートグループはそのグループのメンバーのみ参加、内容の検索ができます"
 
 #~ msgid "@modal-profile-picture"
 #~ msgstr "プロフィール画像"
@@ -3808,8 +3825,8 @@ msgstr "水曜日"
 
 #~ msgid "@modal-setting-team-msg"
 #~ msgstr ""
-#~ "チーム設定の変更ができます。ここで変更された内容は、チームメンバーにも"
-#~ "適用されますのでご注意下さい"
+#~ "チーム設定の変更ができます。ここで変更された内容は、チームメンバーにも適用"
+#~ "されますのでご注意下さい"
 
 #~ msgid "@option-noti-all"
 #~ msgstr "全てのメッセージ"
@@ -3821,8 +3838,7 @@ msgstr "水曜日"
 #~ msgstr "通知しない"
 
 #~ msgid "@password-reset-done"
-#~ msgstr ""
-#~ "パスワードが再設定されました。JANDIのアプリでログインしてください"
+#~ msgstr "パスワードが再設定されました。JANDIのアプリでログインしてください"
 
 #~ msgid "@password-reset-message"
 #~ msgstr "パスワードをお忘れですか？ 新しいパスワードを入力してください。"
@@ -3832,8 +3848,8 @@ msgstr "水曜日"
 
 #~ msgid "@setting-team-delete-confirm"
 #~ msgstr ""
-#~ "本当にチームを削除しますか？すべてのメッセージやファイルは削除され、元"
-#~ "に戻すことはできません"
+#~ "本当にチームを削除しますか？すべてのメッセージやファイルは削除され、元に戻"
+#~ "すことはできません"
 
 #~ msgid "@setting-team-domain-change"
 #~ msgstr "ドメイン名変更"

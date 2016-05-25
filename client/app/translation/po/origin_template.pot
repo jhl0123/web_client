@@ -278,6 +278,10 @@ msgstr ""
 msgid "@common-connect-setting"
 msgstr ""
 
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-connection-lost"
+msgstr ""
+
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@common-connection-retry"
 msgstr ""
@@ -589,6 +593,10 @@ msgid "@common-new-message"
 msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-no"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-off"
 msgstr ""
 
@@ -766,6 +774,10 @@ msgstr ""
 
 #: client/app/tpl/header.tpl.html
 msgid "@common-visit-homepage"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-yes"
 msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
@@ -2094,6 +2106,18 @@ msgid "@login-reset-password"
 msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-button-download"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-desc"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-title"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@managemembers-dropdown-pending"
 msgstr ""
 
@@ -2315,6 +2339,14 @@ msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@pdfviewer-tooltip-zoomout"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@placeholder-input-comment"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@placeholder-input-message"
 msgstr ""
 
 #: client/app/left/left.html
@@ -2661,6 +2693,10 @@ msgid "@socket-connection-lost"
 msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@socket-connection-retry"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@sounds-arise"
 msgstr ""
 
@@ -2804,6 +2840,7 @@ msgstr ""
 msgid "@team-invite-invalid-email"
 msgstr ""
 
+#: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-link-copy-desc"
 msgstr ""

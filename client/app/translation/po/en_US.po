@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: client/app/tpl/503/503.html
 msgid "@503-unavailable-msg"
@@ -301,6 +301,11 @@ msgstr "Comment"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-connect-setting"
 msgstr "JANDI Connect Settings"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-connection-lost"
+msgstr ""
+"Network offline. JANDI will automatically reconnect when it's available."
 
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@common-connection-retry"
@@ -619,6 +624,10 @@ msgid "@common-new-message"
 msgstr "New Message"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-no"
+msgstr "No"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-off"
 msgstr "Off"
 
@@ -795,6 +804,10 @@ msgstr "Upload File"
 #: client/app/tpl/header.tpl.html
 msgid "@common-visit-homepage"
 msgstr "Visit Homepage"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-yes"
+msgstr "Yes"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-zoom-in"
@@ -2224,6 +2237,22 @@ msgid "@login-reset-password"
 msgstr "Forgot Your Password?"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-button-download"
+msgstr "Download Now"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-desc"
+msgstr ""
+"After much consideration, we sadly decided to leave the Mac App Store in "
+"order to provide a more stable application with fuller functionality and "
+"automatic updates. To take advantage of the new app, please download and "
+"move it to the Applications folder to overwrite the old version. "
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-title"
+msgstr "New Update Available!"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@managemembers-dropdown-pending"
 msgstr "Pending Member(s)"
 
@@ -2405,7 +2434,9 @@ msgstr "No match found."
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@no-more-invite-members"
-msgstr "There are no more members to invite"
+msgstr ""
+"There are no more members matching your search criteria that are not in the "
+"topic."
 
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@no-topic-description"
@@ -2454,6 +2485,14 @@ msgstr "Zoom In (+)"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@pdfviewer-tooltip-zoomout"
 msgstr "Zoom Out (-)"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@placeholder-input-comment"
+msgstr "Enter your comment (press Shift+Enter for multiple lines)"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@placeholder-input-message"
+msgstr "Enter your message (press Shift+Enter for multiple lines)"
 
 #: client/app/left/left.html
 msgid "@privateGroup"
@@ -2809,6 +2848,10 @@ msgid "@socket-connection-lost"
 msgstr "Searching for JANDI server..."
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@socket-connection-retry"
+msgstr "Searching for JANDI server... Retrying..."
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@sounds-arise"
 msgstr "Arise"
 
@@ -2962,11 +3005,12 @@ msgstr ""
 msgid "@team-invite-invalid-email"
 msgstr "Proper email address formats required"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-link-copy-desc"
 msgstr ""
-"Press {{ctrlKey}}-C to copy the invitation link and share the link with your "
-"team members!"
+"Press Ctrl+C to copy the invitation link and share the link with your team "
+"members!"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-more"
@@ -3798,9 +3842,6 @@ msgstr "Wednesday"
 #~ msgid "@common-more"
 #~ msgstr "Browse"
 
-#~ msgid "@common-files"
-#~ msgstr "Files"
-
 #~ msgid "@ch-menu-rename"
 #~ msgstr "Rename topic"
 
@@ -3819,9 +3860,6 @@ msgstr "Wednesday"
 
 #~ msgid "@tutorial_congratulation"
 #~ msgstr "CONGRATULATIONS {{username}}!"
-
-#~ msgid "@placeholder-input-message"
-#~ msgstr "Enter your message (press Shift+Enter for multiple lines)"
 
 #, fuzzy
 #~ msgid "@announcement-delete"
