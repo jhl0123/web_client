@@ -62,7 +62,6 @@
         onClose: function(result) {
           if (result === 'okay') {
             if ($scope.msg.status === 'sending' || $scope.msg.status === 'failed') {
-              //MessageCollection.
               MessageSendingCollection.remove($scope.msg);
             } else {
               if ($scope.msg.message.contentType === 'sticker') {

@@ -9,7 +9,7 @@
     .service('FileCommentRenderer', FileCommentRenderer);
 
   /* @ngInject */
-  function FileCommentRenderer($filter, MessageCollection, RendererUtil, publicService, memberService, CoreUtil,
+  function FileCommentRenderer($filter, MessageCacheCollection, RendererUtil, publicService, memberService, CoreUtil,
                                FileDetail) {
     var _templateTitle = '';
     var _template = '';
@@ -61,7 +61,8 @@
      * @returns {*}
      */
     function render(index) {
-      var msg = MessageCollection.list[index];
+      var messageCollection = MessageCacheCollection.getCurrent();
+      var msg = messageCollection.list[index];
       var content = msg.feedback.content;
 
       var icon = $filter('fileIcon')(content);
@@ -73,8 +74,8 @@
       var isMustPreview = $filter('mustPreview')(content);
       var hasPreview = $filter('hasPreview')(content);
 
-      var isTitle = MessageCollection.isTitleComment(index);
-      var isChild = MessageCollection.isChildComment(index);
+      var isTitle = messageCollection.isTitleComment(index);
+      var isChild = messageCollection.isChildComment(index);
       var template = isTitle ? _templateTitle : _template;
 
       var commentCount = RendererUtil.getCommentCount(msg);

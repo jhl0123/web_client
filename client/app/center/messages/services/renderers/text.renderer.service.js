@@ -9,7 +9,7 @@
     .service('TextRenderer', TextRenderer);
 
   /* @ngInject */
-  function TextRenderer($filter, MessageCollection, currentSessionHelper, jndPubSub, RendererUtil, memberService) {
+  function TextRenderer($filter, MessageCacheCollection, currentSessionHelper, jndPubSub, RendererUtil, memberService) {
     var _encodeHTML = $filter('htmlEncode');
 
     var _template;
@@ -46,11 +46,12 @@
      * @private
      */
     function _onClick(clickEvent) {
+      var messageCollection = MessageCacheCollection.getCurrent();
       var jqTarget = $(clickEvent.target);
       var id = jqTarget.closest('.msgs-group').attr('id');
 
       if (jqTarget.hasClass('_textMore')) {
-        _showMoreDropdown(jqTarget, MessageCollection.get(id));
+        _showMoreDropdown(jqTarget, messageCollection.get(id));
       }
     }
 
@@ -101,8 +102,9 @@
      * @returns {*}
      */
     function render(index) {
-      var msg = MessageCollection.list[index];
-      var isChild = MessageCollection.isChildText(index);
+      var messageCollection = MessageCacheCollection.getCurrent();
+      var msg = messageCollection.list[index];
+      var isChild = messageCollection.isChildText(index);
       var template = isChild ? _templateChild : _template;
 
       var linkPreview = _getLinkPreview(msg, index);
@@ -164,10 +166,11 @@
      * @private
      */
     function _getLinkPreview(msg, index) {
+      var messageCollection = MessageCacheCollection.getCurrent();
       var html = '';
       var linkPreview;
 
-      if (MessageCollection.hasLinkPreview(index)) {
+      if (messageCollection.hasLinkPreview(index)) {
         if (msg.message.linkPreview.extThumbnail) {
          msg.message.linkPreview.extThumbnail.hasSuccess = RendererUtil.hasThumbnailCreated(msg.message.linkPreview);
         } else {
@@ -204,12 +207,12 @@
      * @private
      */
     function _getConnectPreview(msg, index) {
+      var messageCollection = MessageCacheCollection.getCurrent();
       var html = '';
       var content = msg.message.content;
       var connectPreview;
 
-      //if (memberService.isConnectBot(msg.message.writerId) && MessageCollection.hasIntegrationPreview(index)) {
-      if (MessageCollection.hasConnectPreview(index)) {
+      if (messageCollection.hasConnectPreview(index)) {
         connectPreview = '';
 
         _.each(content.connectInfo, function(info) {

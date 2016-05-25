@@ -63,6 +63,16 @@
       isConnectBot: function(id) {
         var bot = this.get(id);
         return CoreUtil.pick(bot, 'botType') === 'connect_bot';
+      },
+      
+      /**
+       * id 에 해당하는 chatRoom id 를 반환한다.
+       * @param {number|string} id
+       * @returns {*}
+       */
+      getChatRoomId: function(id) {
+        var bot = this.get(id);
+        return CoreUtil.pick(bot, 'entityId');
       }
     });
 

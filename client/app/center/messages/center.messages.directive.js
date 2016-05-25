@@ -9,7 +9,7 @@
     .module('jandiApp')
     .directive('centerMessagesDirective', centerMessagesDirective);
 
-  function centerMessagesDirective($filter, CenterRenderer, CenterRendererFactory, MessageCollection,
+  function centerMessagesDirective($filter, CenterRenderer, CenterRendererFactory, MessageCacheCollection,
                                    StarAPIService, jndPubSub, FileDetail, memberService, Dialog, currentSessionHelper,
                                    EntityHandler, JndUtil, RendererUtil) {
     return {
@@ -19,10 +19,11 @@
     };
 
     function link(scope, el, attrs) {
+      var messageCollection;
       var _teamId;
       var _listScope = scope.$new();
       var that = this;
-
+      
       _init();
 
       /**
@@ -30,6 +31,7 @@
        * @private
        */
       function _init() {
+        messageCollection = MessageCacheCollection.get(currentSessionHelper.getCurrentEntityId());
         _teamId = memberService.getTeamId();
         _attachEvents();
         _attachDomEvents();
@@ -41,14 +43,15 @@
        * @private
        */
       function _attachEvents() {
-        scope.$on('messages:reset', _renderAll);
-        scope.$on('messages:append', _onAppend);
-        scope.$on('messages:prepend', _onPrepend);
-        scope.$on('messages:beforeRemove', _onBeforeRemove);
-        scope.$on('messages:remove', _onRemove);
-        scope.$on('messages:set', _renderAll);
+        scope.$on('MessageCollection:render', _renderAll);
+        scope.$on('MessageCollection:reset', _renderAll);
+        scope.$on('MessageCollection:append', _onAppend);
+        scope.$on('MessageCollection:prepend', _onPrepend);
+        scope.$on('MessageCollection:beforeRemove', _onBeforeRemove);
+        scope.$on('MessageCollection:remove', _onRemove);
+        scope.$on('MessageCollection:set', _renderAll);
 
-        scope.$on('messages:updateUnread', _onUpdateUnread);
+        scope.$on('MessageCollection:updateUnread', _onUpdateUnread);
 
         scope.$on('message:starred', _onStarred);
         scope.$on('message:unStarred', _onUnStarred);
@@ -110,7 +113,7 @@
 
         _onFileUpdated(angularEvent, data.file)
           .error(function() {
-            _.forEach(MessageCollection.list, function(msg, index) {
+            _.forEach(messageCollection.list, function(msg, index) {
               if (msg.message.id === fileId) {
                 message = msg.message
               } else if ((msg.feedback && msg.feedback.id) === fileId) {
@@ -151,7 +154,7 @@
                 shareEntities = _toEntityIdList(item.shareEntities);
               }
             });
-            _.forEach(MessageCollection.list, function(msg, index) {
+            _.forEach(messageCollection.list, function(msg, index) {
               message = RendererUtil.getFeedbackMessage(msg);
               if (message.id === fileId) {
                 message.shareEntities = shareEntities;
@@ -185,7 +188,7 @@
        */
       function _onFileDeleted(angularEvent, param) {
         var deletedFileId = parseInt(param.file.id, 10);
-        _.forEach(MessageCollection.list, function(msg, index) {
+        _.forEach(messageCollection.list, function(msg, index) {
           if (msg.message.id === deletedFileId) {
             msg.message.status = 'archived';
             _refresh(msg.id, index);
@@ -233,11 +236,11 @@
       }
 
       function _refreshMsgByMemberId(id) {
-        var list = MessageCollection.list;
+        var list = messageCollection.list;
 
         _.forEach(list, function(msg, index) {
           if (msg.extFromEntityId === id) {
-            MessageCollection.manipulateMessage(msg);
+            messageCollection.manipulateMessage(msg);
             _refresh(msg.id, index);
           }
         });
@@ -307,7 +310,7 @@
       function _onClick(clickEvent) {
         var jqTarget = $(clickEvent.target);
         var id = jqTarget.closest('.msgs-group').attr('id');
-        var msg = MessageCollection.get(id);
+        var msg = messageCollection.get(id);
         var hasAction = false;
         var jqElement;
 
@@ -452,7 +455,7 @@
        * @private
        */
       function _setStarred(messageId, isStarred) {
-        MessageCollection.forEach(function(msg) {
+        messageCollection.forEach(function(msg) {
           var message;
 
           if (msg.feedbackId === messageId) {
@@ -536,7 +539,7 @@
       function _isDateRendered(id, index) {
         var jqTarget = $('#' + id);
         if (jqTarget.length) {
-          if (MessageCollection.isNewDate(index) && jqTarget.prev().attr('content-type') !== 'dateDivider') {
+          if (messageCollection.isNewDate(index) && jqTarget.prev().attr('content-type') !== 'dateDivider') {
             return false;
           }
         }
@@ -552,7 +555,7 @@
        */
       function _onPrepend(angularEvent, list) {
         var htmlList = [];
-        var headMsg = MessageCollection.list[list.length];
+        var headMsg = messageCollection.list[list.length];
         _.forEach(list, function(message, index) {
           _pushMarkup(htmlList, message, index);
         });
@@ -573,7 +576,7 @@
        * @private
        */
       function _pushMarkup(htmlList, message, index) {
-        if (MessageCollection.isNewDate(index)) {
+        if (messageCollection.isNewDate(index)) {
           htmlList.push(CenterRenderer.render(index, 'dateDivider'));
         }
         htmlList.push(CenterRenderer.render(index));
@@ -592,14 +595,13 @@
       function _onAppend(angularEvent, list) {
         var length = list.length;
         var htmlList = [];
-        var index = MessageCollection.list.length - length;
+        var index = Math.max(messageCollection.list.length - length, 0);
         _.forEach(list, function(message) {
           _pushMarkup(htmlList, message, index);
           index++;
         });
         el.append(_getCompiledEl(htmlList.join('')));
         scope.onRepeatDone();
-        //$compile(el.contents())(scope);
       }
 
       /**
@@ -656,8 +658,8 @@
        * @private
        */
       function _onBeforeRemove(angularEvent, index) {
-        var msg = MessageCollection.list[index];
-        var isLastMsg = (index === MessageCollection.list.length - 1);
+        var msg = messageCollection.list[index];
+        var isLastMsg = (index === messageCollection.list.length - 1);
         var jqTarget = $('#' + msg.id);
         var jqPrev = jqTarget.prev();
 
@@ -682,7 +684,7 @@
        * @private
        */
       function _onRemove(angularEvent, index) {
-        var msg = MessageCollection.list[index];
+        var msg = messageCollection.list[index];
         if (msg) {
           _refresh(msg.id, index);
         }
@@ -694,7 +696,7 @@
        */
       function _renderAll() {
         var htmlList = [];
-        var list = MessageCollection.list;
+        var list = messageCollection.list;
         _destroyCompiledScope();
         _.forEach(list, function(message, index) {
           _pushMarkup(htmlList, message, index);
@@ -712,7 +714,7 @@
        * @private
        */
       function _onAttachMessagePreview(angularEvent, messageId) {
-        MessageCollection.forEach(function(msg, index) {
+        messageCollection.forEach(function(msg, index) {
           if (messageId === (msg.message && msg.message.id)) {
             _refresh(msg.id, index);
           }
@@ -739,7 +741,7 @@
        */
       function _refreshFileMessage(socketEvent, callback) {
         var messageId = socketEvent.data.message.id;
-        MessageCollection.forEach(function(msg, index) {
+        messageCollection.forEach(function(msg, index) {
           if (messageId === (msg.message && msg.message.id) && !msg.message.content.extHasPreview) {
             // back-end에서 link
             msg.message.content.extHasPreview = true;
@@ -783,7 +785,7 @@
         var commentCount = data.file.commentCount;
         var message;
 
-        _.forEach(MessageCollection.list, function(msg) {
+        _.forEach(messageCollection.list, function(msg) {
           message = RendererUtil.getFeedbackMessage(msg);
           if (message.id === fileId) {
             message.commentCount = commentCount;

@@ -3,10 +3,10 @@
 var app = angular.module('jandiApp');
 
 app.controller('leftPanelController', function(
-  $scope, $state, $timeout, $q, leftpanelAPIservice, entityAPIservice, accountService,
+  $scope, $state, $timeout, $q, leftpanelAPIservice, entityAPIservice, accountService, Chats,
   publicService, memberService, storageAPIservice, analyticsService, currentSessionHelper, jndWebSocket, jndPubSub,
   modalHelper, UnreadBadge, AnalyticsHelper, HybridAppHelper, NotificationManager, TopicFolderModel, TopicUpdateLock,
-  JndUtil, EntityFilterMember, EntityHandler, Auth, initialPromise, JndPanelSizeStorage) {
+  JndUtil, EntityFilterMember, EntityHandler, Auth, initialPromise, JndPanelSizeStorage, MessageCacheCollection) {
 
   var _that = this;
   var _getLeftListDeferredObject;
@@ -57,17 +57,15 @@ app.controller('leftPanelController', function(
    * @private
    */
   function _init() {
-    var responseLeftSideMenu = initialPromise[0].data;
-
     $scope.leftPanelWidth = JndPanelSizeStorage.getLeftPanelWidth();
 
     if (initialPromise[0].data) {
       publicService.showDummyLayout();
       publicService.hideInitialLoading();
-
       _attachScopeEvents();
       _attachDomEvents();
-      _initLeftSideMenuData(responseLeftSideMenu);
+      _initResponses(initialPromise);
+
     } else {
       Auth.requestAccessTokenWithRefreshToken();
     }
@@ -75,11 +73,17 @@ app.controller('leftPanelController', function(
 
   /**
    * leftSideMenu 데이터 초기화 메서드
-   * @param {object} response
+   * @param {array} responses
    * @private
    */
-  function _initLeftSideMenuData(response) {
-    _onSuccessGetLeftSideMenu(false, response);
+  function _initResponses(responses) {
+    var responseLeftSideMenu = responses[0].data;
+    var responseChats = responses[2].data;
+    _onSuccessGetLeftSideMenu(false, responseLeftSideMenu);
+    Chats.parse(responseChats);
+    
+    publicService.setInitDone();
+
     if (!$state.params.entityId) {
       _goToDefaultTopic();
     }
@@ -221,6 +225,7 @@ app.controller('leftPanelController', function(
     EntityHandler.parseLeftSideMenuData(response);
     _parseAlarmInfoCount(response.alarmInfoCount, response.alarmInfos);
     entityAPIservice.setCurrentEntityWithId(entityId);
+    MessageCacheCollection.cacheAllTopics();
     TopicFolderModel.update();
   }
 
@@ -293,7 +298,8 @@ app.controller('leftPanelController', function(
       jndPubSub.pub('onBeforeEntityChange', entity);
     });
     $timeout.cancel(_entityEnterTimer);
-    _entityEnterTimer = $timeout(_.bind(_doEnter, _that, entity), 10);
+    _entityEnterTimer = $timeout(_.bind(_doEnter, _that, entity));
+    // _doEnter(entity);
   }
 
   /**

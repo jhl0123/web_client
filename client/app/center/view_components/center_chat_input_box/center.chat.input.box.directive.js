@@ -74,7 +74,7 @@
         scope.$on('RoomTopicList:changed', _onRoomTopicListChanged);
         scope.$on('jndWebSocketMember:memberUpdated', _setMentionList);
 
-        scope.$watch('msgLoadStatus.loading', _onChangeLoading);
+        scope.$watch('status.isLoading', _onChangeLoading);
       }
 
       /**

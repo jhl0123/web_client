@@ -57,12 +57,13 @@ app.config(function ($urlRouterProvider, $httpProvider, $tooltipProvider, $state
             templateUrl: 'app/left/left.html',
             controller: 'leftPanelController',
             resolve: {
-              initialPromise: function($q, $state, memberService, Auth, TopicFolderModel, leftpanelAPIservice) {
+              initialPromise: function($q, $state, memberService, Auth, TopicFolderModel, leftpanelAPIservice, ChatApi) {
                 var promises = [];
 
                 if (memberService.getMember()) {
                   promises.push(leftpanelAPIservice.getLists());
                   promises.push(TopicFolderModel.load('initialize'));
+                  promises.push(ChatApi.getRecentMessageList());
                   return $q.all(promises);
                 } else {
                   Auth.signIn();

@@ -579,11 +579,7 @@
         entityId = jandiBot.entityId;
       }
 
-      if (_.isUndefined(entityId)) {
-        return lastMessageReadMarkerMap;
-      } else {
-        return lastMessageReadMarkerMap[entityId];
-      }
+      return CoreUtil.pick(lastMessageReadMarkerMap, entityId);
     }
 
     /**

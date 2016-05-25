@@ -11,7 +11,6 @@
     this.getMessages = getMessages;
     this.getUpdatedMessages = getUpdatedMessages;
     this.postMessage = postMessage;
-    this.editMessage = editMessage;
     this.deleteMessage = deleteMessage;
     this.deleteSticker = deleteSticker;
     this.searchMessages = searchMessages;
@@ -46,8 +45,9 @@
     // get message lists
     function getMessages(entityType, entityId, params, canceller) {
       entityType = _getParamEntityType(entityType);
-
-      params.teamId  = memberService.getTeamId();
+      params = _.extend({
+        teamId: memberService.getTeamId()
+      }, params);
 
       return $http({
         method  : 'GET',
@@ -166,20 +166,6 @@
       return type;
     }
 
-    // edit message
-    function editMessage(entityType, entityId, messageId, message) {
-      entityType = _getParamEntityType(entityType);
-      return $http({
-        method  : 'PUT',
-        url     : server_address + entityType + '/' + entityId + '/messages/' + messageId,
-        data    : message,
-        params  : {
-          teamId  : memberService.getTeamId()
-        }
-
-      });
-    }
-
     /**
      * 메세지를 제거한다.
      * @param {string} entityType - entity 타입
@@ -214,7 +200,7 @@
     }
 
     //  Updates message marker to 'lastLinkId' for 'entitiyId'
-    function updateMessageMarker(entityId, entityType, lastLinkId, canceller) {
+    function updateMessageMarker(entityId, entityType, lastLinkId) {
       entityType = _getParamEntityType(entityType, true);
 
       var data = {
@@ -229,8 +215,7 @@
         data    : data,
         params  : {
           entityId    : entityId
-        },
-        timeout : canceller.promise
+        }
       });
     }
 

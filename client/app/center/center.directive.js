@@ -47,7 +47,7 @@
           }
         }
 
-        if (scope.isInitialLoadingCompleted) {
+        if (scope.status.isInitialized) {
           if (direction === 'new') {
             if (scrollDiff < 2000) {
               if (scope.loadNewMessages()) {

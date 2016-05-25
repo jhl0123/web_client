@@ -9,7 +9,7 @@
     .service('FileRenderer', FileRenderer);
 
   /* @ngInject */
-  function FileRenderer($rootScope, $filter, $state, modalHelper, MessageCollection, RendererUtil, CoreUtil, JndPdfViewer,
+  function FileRenderer($rootScope, $filter, $state, modalHelper, MessageCacheCollection, RendererUtil, CoreUtil, JndPdfViewer,
                         FileDetail, memberService, fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper,
                         publicService) {
     var _template = '';
@@ -40,9 +40,10 @@
      * @private
      */
     function _onClick(clickEvent) {
+      var messageCollection = MessageCacheCollection.getCurrent();
       var jqTarget = $(clickEvent.target);
       var id = jqTarget.closest('.msgs-group').attr('id');
-      var msg = MessageCollection.get(id);
+      var msg = messageCollection.get(id);
 
       if (jqTarget.closest('._fileDownload').length) {
         _onClickFileDownload(msg);
@@ -217,7 +218,8 @@
      * @returns {*}
      */
     function render(index) {
-      var msg = MessageCollection.list[index];
+      var messageCollection = MessageCacheCollection.getCurrent();
+      var msg = messageCollection.list[index];
       var content = msg.message.content;
 
       var icon = $filter('fileIcon')(content);

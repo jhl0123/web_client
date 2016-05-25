@@ -10,7 +10,7 @@
     .module('jandiApp')
     .directive('centerMessagesSendingDirective', centerMessagesSendingDirective);
 
-  function centerMessagesSendingDirective(MessageSendingCollection, MessageCollection, MessageText, jndPubSub) {
+  function centerMessagesSendingDirective(MessageSendingCollection, MessageCacheCollection, MessageText, jndPubSub) {
     return {
       restrict: 'E',
       replace: true,
@@ -194,7 +194,8 @@
         var list = MessageSendingCollection.list;
         var msg = list[index];
         var hasProfile = false;
-        var lastMsg = MessageCollection.list[MessageCollection.list.length - 1];
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var lastMsg = messageCollection.list[messageCollection.list.length - 1];
         if (!index) {
           hasProfile = !MessageText.isChild(1, [lastMsg, msg]);
         }

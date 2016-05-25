@@ -13,6 +13,7 @@
 
     var MESSAGE_STARRED = 'message_starred';
     var MESSAGE_UNSTARRED = 'message_unstarred';
+    var MESSAGE_CREATED = 'message_created';
 
     var events = [
       {
@@ -29,6 +30,11 @@
         name: MESSAGE_UNSTARRED,
         version: 1,
         handler: _onMessageUnStarred
+      },
+      {
+        name: MESSAGE_CREATED,
+        version: 1,
+        handler: _onMessageCreated
       }
     ];
 
@@ -95,6 +101,15 @@
           _onNewMessage(data);
           break;
       }
+    }
+
+    /**
+     * Message Create 이벤트 핸들러
+     * @param {object} socketEvent
+     * @private
+     */
+    function _onMessageCreated(socketEvent) {
+      jndPubSub.pub('jndWebSocketMessage:messageCreated', socketEvent);
     }
 
     /**

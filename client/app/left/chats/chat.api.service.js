@@ -3,10 +3,10 @@
 
   angular
     .module('jandiApp')
-    .service('messageList', messageList);
+    .service('ChatApi', ChatApi);
 
   /* @ngInject */
-  function messageList($http, memberService, configuration) {
+  function ChatApi($http, memberService, configuration) {
     var server_address = configuration.api_address + 'inner-api/';
     this.getRecentMessageList = getRecentMessageList;
     this.leaveCurrentMessage = leaveCurrentMessage;

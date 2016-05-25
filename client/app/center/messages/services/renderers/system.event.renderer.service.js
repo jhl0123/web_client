@@ -9,7 +9,7 @@
     .service('SystemEventRenderer', SystemEventRenderer);
 
   /* @ngInject */
-  function SystemEventRenderer($templateRequest, $filter, MessageCollection, language) {
+  function SystemEventRenderer($filter, MessageCacheCollection, language) {
 
     var _template = '';
 
@@ -64,8 +64,8 @@
      * @returns {*}
      */
     function render(index) {
-
-      var msg = MessageCollection.list[index];
+      var messageCollection = MessageCacheCollection.getCurrent();
+      var msg = messageCollection.list[index];
       var filter = $filter('getName');
       var length = (msg && msg.message && msg.message.invites && msg.message.invites.length) || 0;
       var invitees = [];

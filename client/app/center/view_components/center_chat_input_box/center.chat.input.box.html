@@ -1,7 +1,7 @@
 <div class="footer center-chat-input-container">
   <!-- scroll to bottom container & new msg banner positioned directly under footer container -->
   <div class="scroll-to-bottom-container cursor_pointer"
-       ng-if="hasMoreNewMessageToLoad() || (hasScrollToBottom && !hasNewMsg)"
+       ng-if="status.isInitialized && (hasMoreNewMessageToLoad() || (hasScrollToBottom && !hasNewMsg))"
        ng-click="onScrollToBottomIconClicked();"
        tooltip="{{::'@go-to-latest-message-msg' | translate}}"
        tooltip-placement="left">
@@ -106,7 +106,7 @@
                   message-submit="postMessage()"
                   ng-focus="onMessageInputFocus()"
                   ng-blur="onMessageInputBlur()"
-                  ng-disabled="msgLoadStatus.loading || isDisabledMember(currentEntity)"
+                  ng-disabled="status.isLoading || isDisabledMember(currentEntity)"
                   placeholder="{{::'@placeholder-input-message' | translate }}"
                   jnd-elastic="message"
                   jnd-elastic-on-change="onMessageInputChange($event)"
