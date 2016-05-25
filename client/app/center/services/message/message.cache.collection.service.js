@@ -37,6 +37,21 @@
         }, this);
         this._removeUnjoinedTopics();
       },
+
+      /**
+       * 대화방을 초기화 한다.
+       */
+      initializeChats: function() {
+        var chats = RoomChatDmList.toJSON(true);
+        _.forEach(chats, function(chat, index) {
+          setTimeout(_.bind(this.add, this, chat.extMember.id), UNIT * index);
+        }, this);
+      },
+
+      /**
+       * 현재 가입하지 않은 topic 들을 제거한다.
+       * @private
+       */
       _removeUnjoinedTopics: function() {
         var cachedIds = _.pluck(this.toJSON(true), 'id');
         var joinedTopicIds = _.pluck(RoomTopicList.toJSON(true), 'id');
@@ -51,15 +66,10 @@
         }, this);
       },
       
-      initializeChats: function() {
-        var chats = RoomChatDmList.toJSON(true);
-        _.forEach(chats, function(chat, index) {
-          setTimeout(_.bind(this.add, this, chat.extMember.id), UNIT * index);
-        }, this);
-      },
+
       /**
-       * 
-       * @param roomId
+       * roomId 에 해당하는 collection 을 생성한다.
+       * @param {number} roomId
        */
       add: function(roomId) {
         var collection = this.get(roomId);
@@ -75,13 +85,21 @@
           }
         }
       },
-      
+
+      /**
+       * 현재 user 가 보고있는 방 정보를 반환한다.
+       * @returns {*}
+       */
       getCurrent: function() {
         var roomId = currentSessionHelper.getCurrentEntityId();
         this._initCurrent();
         return this.get(roomId);
       },
 
+      /**
+       * 현재 방이 없다면 생성 한다.
+       * @private
+       */
       _initCurrent: function() {
         var roomId = currentSessionHelper.getCurrentEntityId();
         if (roomId) {
