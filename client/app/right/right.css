@@ -147,15 +147,16 @@
 .rpanel-header i {
   display: block;
   position: absolute;
-  top: 11px;
   color: #154a67;
   cursor: pointer;
 }
 .rpanel-header .icon-long-arrow-left {
+  top: 8px;
   left: 15px;
   font-size: 18px;
 }
 .rpanel-header .icon-delete {
+  top: 11px;
   right: 15px;
   font-size: 14px;
 }

@@ -9,7 +9,7 @@
     .service('FileRenderer', FileRenderer);
 
   /* @ngInject */
-  function FileRenderer($rootScope, $filter, $state, modalHelper, MessageCollection, RendererUtil, JndPdfViewer,
+  function FileRenderer($filter, modalHelper, MessageCollection, RendererUtil, JndPdfViewer,
                         FileDetail, fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper,
                         publicService) {
     var messageHeightMap = {};
@@ -54,8 +54,6 @@
         _onClickPreviewToggle(msg, jqMessage);
       } else if (jqTarget.closest('._previewExpand').length) {
         _onClickPreviewExpand(msg);
-      } else if (jqTarget.closest('._fileDetail').length) {
-        _onClickFileDetail(msg);
       }
     }
 
@@ -98,57 +96,6 @@
         _openImagePreview(msg, message);
       }
     }
-
-    /**
-     * file detail
-     * @param {object} msg
-     * @param {boolean} [isFocusCommentInput=false]
-     * @private
-     */
-    function _onClickFileDetail(msg, isFocusCommentInput) {
-      var contentType = msg.message.contentType;
-      var userName = $filter('getName')(msg.message.writerId);
-      var itemId = contentType === 'comment' ? msg.feedbackId : msg.message.id;
-
-      if ($state.params.itemId != itemId) {
-        if (msg.feedback && contentType !== 'file') {
-          userName = $filter('getName')(msg.feedback.writerId);
-          itemId = msg.feedback.id;
-        }
-
-        if (isFocusCommentInput) {
-          $rootScope.setFileDetailCommentFocus = true;
-        }
-
-        $state.go('files', {
-          userName: userName,
-          itemId: itemId
-        });
-      } else if (isFocusCommentInput) {
-        fileAPIservice.broadcastCommentFocus();
-      }
-    }
-
-    ///**
-    // * file show/hide event handler
-    // * @param {object} msg
-    // * @param {object} jqTarget
-    // * @private
-    // */
-    //function _onClickFileToggle(msg, jqTarget) {
-    //  var jqMsg = $('#' + msg.id);
-    //  var jqToggleTarget = jqMsg.find('._fileToggleTarget');
-    //  var jqToogle = jqMsg.find('._fileToggle');
-    //  var isHide = jqToggleTarget.css('display') === 'none';
-    //
-    //  if (isHide) {
-    //    jqToggleTarget.show();
-    //    jqToogle.addClass('icon-arrow-up-fill').removeClass('icon-arrow-down-fill');
-    //  } else {
-    //    jqToggleTarget.hide();
-    //    jqToogle.addClass('icon-arrow-down-fill').removeClass('icon-arrow-up-fill');
-    //  }
-    //}
 
     /**
      * pdf preview 보기 열림

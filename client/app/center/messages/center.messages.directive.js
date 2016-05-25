@@ -324,6 +324,11 @@
         } else if (jqTarget.closest('._fileShare').length) {
           _onClickFileShare(msg);
           hasAction = true;
+        } else if (jqTarget.closest('._commentDelete').length) {
+          _onClickCommentDelete(msg);
+          hasAction = true;
+        } else if (jqTarget.closest('._fileDetail').length) {
+          _onClickFileDetail(msg);
         }
 
         if (hasAction) {
@@ -338,6 +343,67 @@
        */
       function _onClickFileShare(msg) {
         scope.onShareClick(msg.message);
+      }
+
+      /**
+       * comment delete
+       * @param {object} msg
+       * @private
+       */
+      function _onClickCommentDelete(msg) {
+        var file = RendererUtil.getFeedbackMessage(msg);
+        var comment = msg.message;
+
+        // message collection에서 바로 삭제한다.
+        MessageCollection.remove(comment.id, true);
+
+        if (msg.message.contentType === 'comment_sticker') {
+          FileDetail.deleteSticker(comment.id)
+            .success(_onSuccessCommentDelete);
+        } else {
+          FileDetail.deleteComment(file.id, comment.id)
+            .success(_onSuccessCommentDelete);
+        }
+      }
+
+      /**
+       * success comment delete
+       * @private
+       */
+      function _onSuccessCommentDelete() {
+        Dialog.success({
+          title: $filter('translate')('@message-deleted')
+        });
+      }
+
+      /**
+       * file detail
+       * @param {object} msg
+       * @param {boolean} [isFocusCommentInput=false]
+       * @private
+       */
+      function _onClickFileDetail(msg, isFocusCommentInput) {
+        var contentType = msg.message.contentType;
+        var userName = $filter('getName')(msg.message.writerId);
+        var itemId = contentType === 'comment' ? msg.feedbackId : msg.message.id;
+
+        if ($state.params.itemId != itemId) {
+          if (msg.feedback && contentType !== 'file') {
+            userName = $filter('getName')(msg.feedback.writerId);
+            itemId = msg.feedback.id;
+          }
+
+          if (isFocusCommentInput) {
+            $rootScope.setFileDetailCommentFocus = true;
+          }
+
+          $state.go('files', {
+            userName: userName,
+            itemId: itemId
+          });
+        } else if (isFocusCommentInput) {
+          fileAPIservice.broadcastCommentFocus();
+        }
       }
 
       /**
@@ -603,6 +669,7 @@
           index++;
         });
 
+        // append 되는 메시지가 자식 text 또는 comment이면 부모의 뷰가 바뀌어야 한다(부모는 메시지 작성 시간을 출력하지 않음).
         if (MessageCollection.isChildText(MessageCollection.list.length - 1) ||
           MessageCollection.isChildComment(MessageCollection.list.length - 1)) {
           prevIndex = MessageCollection.list.length - 2;
@@ -696,12 +763,13 @@
        */
       function _onRemove(angularEvent, index) {
         var msg = MessageCollection.list[index];
-        var prevIndex;
+        var prevIndex = index - 1;
         var prevMessage;
 
-        if (!MessageCollection.hasChildText(index) ||
-          !MessageCollection.hasChildComment(index)) {
-          prevIndex = index - 1;
+        // 삭제된 메시지가 text 이면서 child text 또는 comment 이면서 child comment 일때
+        // 부모의 뷰가 바뀌어야 한다(부모는 메시지 작성 시간을 출력하지 않음).
+        if ((!MessageCollection.hasChildText(index) && MessageCollection.isText(prevIndex)) ||
+          (!MessageCollection.hasChildComment(index) && MessageCollection.isComment(prevIndex))) {
           prevMessage = MessageCollection.list[prevIndex];
           _refresh(prevMessage.id, prevIndex);
         }

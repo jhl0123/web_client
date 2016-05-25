@@ -7,12 +7,23 @@
 }
 
 .file-detail-shared .shared-room {
+  display: inline-block;
+  max-width: 100%;
+  line-height: 19px;
+}
+
+.file-detail-shared .shared-room-name {
+  max-width: 90%;
   margin-right: 5px;
   line-height: 18px;
   font-size: 12px;
   color: #00abe6;
-  cursor: pointer;
+  vertical-align: bottom;
 }
-.file-detail-shared .shared-room:hover {
+.file-detail-shared .shared-room-name:hover {
   text-decoration: underline;
+}
+
+.file-detail-shared .link-unshare {
+  vertical-align: bottom;
 }

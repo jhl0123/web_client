@@ -28,6 +28,13 @@
     function link(scope, el) {
       var _commentMap = {};
 
+      scope.hasOwnComment = hasOwnComment;
+      scope.starComment = starComment;
+      scope.deleteComment = deleteComment;
+
+      scope.retry = retry;
+      scope.deleteSendingComment = deleteSendingComment;
+
       _init();
 
       /**
@@ -41,13 +48,6 @@
 
           _commentMap[comment.id] = comment;
         });
-
-        scope.hasOwnComment = hasOwnComment;
-        scope.starComment = starComment;
-        scope.deleteComment = deleteComment;
-
-        scope.retry = retry;
-        scope.deleteSendingComment = deleteSendingComment;
 
         _attachScopeEvents();
         _attachDomEvents();

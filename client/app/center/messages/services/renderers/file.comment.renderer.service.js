@@ -9,12 +9,19 @@
     .service('FileCommentRenderer', FileCommentRenderer);
 
   /* @ngInject */
-  function FileCommentRenderer($filter, MessageCollection, RendererUtil, publicService, memberService, CoreUtil,
-                               FileDetail) {
+  function FileCommentRenderer($filter, MessageCollection, RendererUtil, publicService, memberService, FileDetail) {
     var _templateTitle = '';
     var _template = '';
 
     this.render = render;
+
+    /**
+     * center 에서 delegate 하여 처리할 핸들러를 정의한다.
+     * @type {{click: _onClick}}
+     */
+    this.delegateHandler = {
+      'click': _onClick
+    };
 
     _init();
 
@@ -28,31 +35,16 @@
     }
 
     /**
-     * msg 로 부터 file data 를 조회한다.
-     * @param {object} msg
-     * @returns {object}
+     * click 이벤트 핸들러
+     * @param {Object} clickEvent
      * @private
      */
-    function _getFileData(msg) {
-      var contentType = CoreUtil.pick(msg, 'message', 'contentType');
-      var file;
-      if (contentType === 'comment') {
-        file = CoreUtil.pick(msg, 'feedback');
-      } else {
-        file = CoreUtil.pick(msg, 'message');
-      }
-      return file;
-    }
+    function _onClick(clickEvent) {
+      var jqTarget = $(clickEvent.target);
+      var jqMessage = jqTarget.closest('.message');
+      var id = jqMessage.attr('id');
+      var msg = MessageCollection.get(id);
 
-    /**
-     * pdf preview 가 있는 메시지인지 확인한다.
-     * @param {object} msg
-     * @returns {boolean}
-     * @private
-     */
-    function _hasPdfPreview(msg) {
-      var file = _getFileData(msg);
-      return FileDetail.hasPdfPreview(file);
     }
     
     /**
@@ -127,6 +119,7 @@
         isFirst: isFirst,
         isLast: isLast,
         isArchived: isArchived,
+        isAllowDelete: _isAllowDelete(msg),
         translate: {
           commentAllDesc: _getCommentAllDesc(msg.feedbackId, commentCount)
         },
@@ -202,6 +195,17 @@
       return text.replace('{{commentCount}}', function() {
         return '<span class="comment-count-' + fileId + '">' + commentCount + '</span>';
       });
+    }
+
+    /**
+     * 삭제 가능여부
+     * @param {object} msg
+     * @returns {boolean|*}
+     * @private
+     */
+    function _isAllowDelete(msg) {
+      return msg.message.writerId === memberService.getMemberId() ||
+          memberService.isAdmin();
     }
   }
 })();

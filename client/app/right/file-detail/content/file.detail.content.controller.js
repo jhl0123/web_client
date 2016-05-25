@@ -6,15 +6,17 @@
 
   angular
     .module('jandiApp')
-    .controller('FileDetailFloatCtrl', FileDetailFloatCtrl);
+    .controller('FileDetailContentCtrl', FileDetailContentCtrl);
 
   /* @ngInject */
-  function FileDetailFloatCtrl() {
+  function FileDetailContentCtrl() {
     var _that = this;
-
+    var _jqHeader;
     var _jqScrollContainer;
     var _jqInputElement;
 
+    _that.getJqHeader = getJqHeader;
+    _that.setJqHeader = setJqHeader;
     _that.getJqScrollContainer = getJqScrollContainer;
     _that.setJqScrollContainer = setJqScrollContainer
     _that.getJqInput = getJqInput;
@@ -30,7 +32,23 @@
     }
 
     /**
-     * get scroll container element
+     * get header
+     * @returns {*}
+     */
+    function getJqHeader() {
+      return _jqHeader;
+    }
+
+    /**
+     * set header
+     * @param {object} jqHeader
+     */
+    function setJqHeader(jqHeader) {
+      _jqHeader = jqHeader;
+    }
+
+    /**
+     * scroll을 제공하는 container 전달
      * @returns {*}
      */
     function getJqScrollContainer() {
@@ -38,7 +56,7 @@
     }
 
     /**
-     * set scoll container element
+     * scroll을 제공하는 container 설정
      * @param {object} jqScrollContainer
      */
     function setJqScrollContainer(jqScrollContainer) {

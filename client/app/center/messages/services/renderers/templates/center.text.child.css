@@ -2,6 +2,10 @@
   margin-top: -22px;
 }
 
+.message.system-event + .message.text-child {
+  margin-top: 20px;
+}
+
 .message.bot-text.text-child {
   margin-top:-5px;
 }

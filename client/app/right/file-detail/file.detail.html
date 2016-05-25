@@ -1,13 +1,12 @@
-<file-detail-title file="file"
-                   has-initial-loaded="hasInitialLoaded"
-                   is-archived-file="isArchivedFile"
-                   back-to-prev-state="backToPrevState"
-                   close-right-panel="closeRightPanel"></file-detail-title>
-<div class="rpanel-body">
-
-  <!-- FILE -->
-  <div class="file-detail private-effect" ng-if="hasInitialLoaded" ng-class="{'archived-file-detail': isArchivedFile || isInvalidRequest}">
-    <div class="file-detail-body-container">
+<div class="file-detail" file-detail>
+  <file-detail-title file="file"
+                     has-initial-loaded="hasInitialLoaded"
+                     is-archived-file="isArchivedFile"
+                     back-to-prev-state="backToPrevState"
+                     close-right-panel="closeRightPanel"></file-detail-title>
+    <!-- FILE -->
+  <div class="private-effect" ng-if="hasInitialLoaded" ng-class="{'archived-file-detail': isArchivedFile || isInvalidRequest}">
+    <div class="file-detail-content" file-detail-content>
       <page-tracker page="files/detail" title="File Detail"></page-tracker>
       <file-detail-header file="file"
                           download-url="downloadUrl"
@@ -18,7 +17,7 @@
                           is-integrate-file="isIntegrateFile"
                           on-member-click="onMemberClick"
                           back-to-prev-state="backToPrevState"></file-detail-header>
-      <div class="file-detail-body" file-detail-float>
+      <div class="file-detail-body opac-zero _fileDetailBody">
         <file-detail-preview ng-if="!isArchivedFile && !isInvalidRequest"
                              file="file"
                              original-url="originalUrl"

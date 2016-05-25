@@ -6,9 +6,9 @@
   <div class="msg-file {{css.unshared}} {{css.archived}}">
     {{#if isArchived}}
       <!--  ARCHIVED FILE PREVIEW IMAGE  -->
-      <div class="card-content cursor_pointer _compile _fileDetail">
+      <div class="card-content cursor_pointer _compile">
         <!--  ARCHIVED FILE -->
-        <div class="card-info card-archived">
+        <div class="card-info card-archived _fileDetail">
           <div class="card-image icon">
             <div class="fileicon fileicon-archived"></div>
           </div>
@@ -21,9 +21,9 @@
           <!--  FILE PREVIEW IMAGE  -->
           <div class="card-content open has-preview">
             <!-- MEDIUM SIZE IMAGE THUMBNAIL -->
-            <div class="card-preview _compile">
+            <div class="card-preview _compile _previewExpand">
               {{#if file.hasPreview}}
-                <div class="preview-image _previewExpand"
+                <div class="preview-image"
                      image-view="{{file.imageUrl}}"
                      image-width="{{file.width}}"
                      image-height="{{file.height}}"
@@ -36,7 +36,7 @@
                   </div>
                 </div>
               {{else}}
-                <div class="preview-image _previewExpand"
+                <div class="preview-image"
                      image-view
                      image-width="{{file.width}}"
                      image-height="{{file.height}}"
@@ -47,47 +47,47 @@
                 </div>
               {{/if}}
             </div>
-          <div class="card-body cursor_pointer _compile _fileDetail">
+          <div class="card-body cursor_pointer _compile">
             <!--    FILE TYPE THUMBNAIL -->
-          <div class="card-info">
-            {{#if file.isIconPreview}}
-              <div class="card-image expand icon _previewExpand">
-                <div class="fileicon fileicon-{{ file.icon }}"></div>
-              </div>
-            {{else if file.hasPreview}}
-              <div class="card-image expand _previewExpand">
-                <img src="{{file.smallImageUrl}}">
-              </div>
-            {{else}}
-              <div class="card-image icon">
-                <div class="fileicon fileicon-{{ file.icon }}"></div>
-              </div>
-            {{/if}}
-              <div class="info-group">
-                <div class="info-group-up">
-                  <span class="info-writer inline-overflow-ellipsis">{{ msg.extWriterName }}</span>
-                  <span class="info-created-time">{{ file.time }}</span>
-                  <span class="info-comment-count">
-                    <i class="icon-comment"></i>
-                    <span class="comment-count-{{file.id}}">{{file.commentCount}}</span>
-                  </span>
+            <div class="card-info _fileDetail">
+              {{#if file.isIconPreview}}
+                <div class="card-image expand icon _previewExpand">
+                  <div class="fileicon fileicon-{{ file.icon }}"></div>
                 </div>
-                <div class="info-group-bottom">
-                  <span class="info-title break-word">{{ file.title }}</span>
-                  {{#unless file.isUnshared}}
-                    {{#unless file.isIntegrateFile}}
-                      {{#if file.size}}
-                        <!--    SIZE AND FILE TYPE  -->
-                        <span class="info-size">{{ file.size }}</span>
-                      {{/if}}
+              {{else if file.hasPreview}}
+                <div class="card-image expand _previewExpand">
+                  <img src="{{file.smallImageUrl}}">
+                </div>
+              {{else}}
+                <div class="card-image icon">
+                  <div class="fileicon fileicon-{{ file.icon }}"></div>
+                </div>
+              {{/if}}
+                <div class="info-group">
+                  <div class="info-group-up">
+                    <span class="info-writer inline-overflow-ellipsis">{{ msg.extWriterName }}</span>
+                    <span class="info-created-time">{{ file.time }}</span>
+                    <span class="info-comment-count">
+                      <i class="icon-comment"></i>
+                      <span class="comment-count-{{file.id}}">{{file.commentCount}}</span>
+                    </span>
+                  </div>
+                  <div class="info-group-bottom">
+                    <span class="info-title break-word">{{ file.title }}</span>
+                    {{#unless file.isUnshared}}
+                      {{#unless file.isIntegrateFile}}
+                        {{#if file.size}}
+                          <!--    SIZE AND FILE TYPE  -->
+                          <span class="info-size">{{ file.size }}</span>
+                        {{/if}}
+                      {{/unless}}
+                      <span class="info-type">{{ file.type }}</span>
+                    {{else}}
+                      <span class="unshared-label">{{translate '@filecard-unshared-file'}}</span>
                     {{/unless}}
-                    <span class="info-type">{{ file.type }}</span>
-                  {{else}}
-                    <span class="unshared-label">{{translate '@filecard-unshared-file'}}</span>
-                  {{/unless}}
+                  </div>
                 </div>
               </div>
-            </div>
               <div class="msg-file-actions non-selectable">
                 {{#unless file.isIntegrateFile}}
                   <div class="action-group">
@@ -95,9 +95,9 @@
                          jnd-tooltip-trigger="{{translate '@common-download'}}"
                          data-direction="top">
                       <!--  DOWNLOAD  -->
-                    <span class="msg-item-icon _fileDownload" {{{attrs.download}}}>
+                    <a class="msg-item-icon file-download _fileDownload" {{{attrs.download}}}>
                       <i class="icon-download"></i>
-                    </span>
+                    </a>
                     </div>
                   </div>
                 {{/unless}}
@@ -106,15 +106,15 @@
                        jnd-tooltip-trigger="{{translate '@file-action-more'}}"
                        data-direction="top">
                     <!--  MORE  -->
-                  <span class="msg-item-icon msg-item-circle msg-item-more">
-                    <i class="action-file-more icon-cog _fileMore"></i>
-                  </span>
+                    <span class="msg-item-icon msg-item-circle msg-item-more">
+                      <i class="action-file-more icon-cog _fileMore"></i>
+                    </span>
                   </div>
                   <!-- Star -->
                   <div class="action-item">
-                  <span class="msg-item-icon msg-item-star msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
-                    <i class="{{css.starIcon}}"></i>
-                  </span>
+                    <span class="msg-item-icon msg-item-star msg-item-circle  _fileStar _feedbackStar _star-{{msg.message.id}} {{css.star}}">
+                      <i class="{{css.starIcon}}"></i>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -122,9 +122,9 @@
           </div>
         {{else}}
           <!--  FILE PREVIEW IMAGE  -->
-          <div class="card-content cursor_pointer _compile _fileDetail">
+          <div class="card-content cursor_pointer _compile">
             <!--    FILE TYPE THUMBNAIL -->
-            <div class="card-info">
+            <div class="card-info _fileDetail">
               <div class="card-image icon">
                 <div class="fileicon fileicon-{{ file.icon }}"></div>
               </div>
@@ -162,9 +162,9 @@
                        jnd-tooltip-trigger="{{translate '@common-download'}}"
                        data-direction="top">
                     <!--  DOWNLOAD  -->
-                  <span class="msg-item-icon _fileDownload" {{{attrs.download}}}>
+                  <a class="msg-item-icon file-download _fileDownload" {{{attrs.download}}}>
                     <i class="icon-download"></i>
-                  </span>
+                  </a>
                   </div>
                 </div>
               {{/unless}}
@@ -173,15 +173,15 @@
                      jnd-tooltip-trigger="{{translate '@file-action-more'}}"
                      data-direction="top">
                   <!--  MORE  -->
-                <span class="msg-item-icon msg-item-circle msg-item-more">
-                  <i class="action-file-more icon-cog _fileMore"></i>
-                </span>
+                  <span class="msg-item-icon msg-item-circle msg-item-more">
+                    <i class="action-file-more icon-cog _fileMore"></i>
+                  </span>
                 </div>
                 <!-- Star -->
                 <div class="action-item">
-                <span class="msg-item-icon msg-item-star msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
-                  <i class="{{css.starIcon}}"></i>
-                </span>
+                  <span class="msg-item-icon msg-item-star msg-item-circle _fileStar _feedbackStar _star-{{msg.message.id}} {{css.star}}">
+                    <i class="{{css.starIcon}}"></i>
+                  </span>
                 </div>
               </div>
             </div>
@@ -189,9 +189,9 @@
         {{/if}}
       {{else}}
         <!--  UNSHARED FILE  -->
-        <div class="card-content cursor_pointer _compile _fileDetail">
+        <div class="card-content cursor_pointer _compile">
           <!--    FILE TYPE THUMBNAIL -->
-          <div class="card-info card-unshared">
+          <div class="card-info card-unshared _fileDetail">
             <div class="card-image icon">
               <div class="fileicon fileicon-unshared"></div>
             </div>
@@ -235,10 +235,15 @@
           {{/unless}}
         </div>
         <div class="msg-comment-actions">
+          {{#if isAllowDelete}}
+            <span class="cursor_pointer msg-item-icon msg-item-circle msg-item-delete _commentDelete">
+              <i class="icon-trash"></i>
+            </span>
+          {{/if}}
           {{#if hasStar}}
-            <span class="cursor_pointer msg-item-star msg-item-icon msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
-          <i class="{{css.starIcon}}"></i>
-        </span>
+            <span class="cursor_pointer msg-item-icon msg-item-circle msg-item-star _star _star-{{msg.message.id}} {{css.star}}">
+              <i class="{{css.starIcon}}"></i>
+            </span>
           {{/if}}
         </div>
       </div>

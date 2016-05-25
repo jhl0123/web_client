@@ -40,6 +40,11 @@
   opacity: 1 ;
 }
 
+.msg-item-delete {
+  font-size: 14px;
+  margin-top: 3px;
+}
+
 .msg-item-star.on {
   color: #FFB32A !important;
   opacity: 1 !important;

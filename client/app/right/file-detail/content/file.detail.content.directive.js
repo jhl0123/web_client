@@ -6,23 +6,27 @@
 
   angular
     .module('jandiApp')
-    .directive('fileDetailFloat', fileDetailFloat);
+    .directive('fileDetailContent', fileDetailContent);
 
   /* @ngInject */
-  function fileDetailFloat($window) {
+  function fileDetailContent($window) {
     return {
       restrict: 'A',
-      controller: 'FileDetailFloatCtrl',
+      controller: 'FileDetailContentCtrl',
       link: link
     };
 
     function link(scope, el, attrs, ctrl) {
+      var _jqFileDetailBody = el.find('._fileDetailBody');
+
       var _prevFocus;
       var _prevIsHiddenInput;
 
       // float input인지 여부
       ctrl.hasFloatInput = false;
       ctrl.showFloatInput = showFloatInput;
+      ctrl.resizeFileDetailBody = resizeFileDetailBody;
+      ctrl.setCommentInputLayout = setCommentInputLayout;
 
       _init();
 
@@ -31,9 +35,26 @@
        * @private
        */
       function _init() {
-        ctrl.setJqScrollContainer(el);
+        ctrl.setJqScrollContainer(_jqFileDetailBody);
 
+        _attachScopeEvents();
         _attachDomEvents();
+      }
+
+      /**
+       * attach scope events
+       * @private
+       */
+      function _attachScopeEvents() {
+        scope.$on('$destroy', _onDestroy);
+      }
+
+      /**
+       * scope destroy event handler
+       * @private
+       */
+      function _onDestroy() {
+        _detachDomEvents();
       }
 
       /**
@@ -41,7 +62,32 @@
        * @private
        */
       function _attachDomEvents() {
-        el.scroll(_onScroll);
+        _jqFileDetailBody.scroll(_onScroll);
+        $($window).on('resize', _onResize);
+      }
+
+      /**
+       * detach dom events
+       * @private
+       */
+      function _detachDomEvents() {
+        $($window).off('resize', _onResize);
+      }
+
+      /**
+       * scroll event handler
+       * @private
+       */
+      function _onScroll() {
+        setCommentInputLayout();
+      }
+
+      /**
+       * window resize event handler
+       * @private
+       */
+      function _onResize() {
+        resizeFileDetailBody();
       }
 
       /**
@@ -51,8 +97,19 @@
         var jqInput = ctrl.getJqInput();
 
         jqInput.float.removeClass('show');
-        _showFloatInput(jqInput.form);
+        _showFloatInput(jqInput.form, true);
         jqInput.text.focus();
+      }
+
+      /**
+       * file detail body의 size를 재설정함
+       */
+      function resizeFileDetailBody() {
+        var jqFileDetailHeader = ctrl.getJqHeader();
+
+        _jqFileDetailBody
+          .addClass('opac-in')
+          .height($window.innerHeight - el.offset().top - jqFileDetailHeader.outerHeight());
       }
 
       /**
@@ -61,37 +118,26 @@
        * @param {object} jqForm
        * @private
        */
-      function _showFloatInput(jqForm) {
+      function _showFloatInput(jqForm, hasAnimation) {
         if (!ctrl.hasFloatInput) {
-          jqForm.addClass('float').appendTo(el.parent());
-          // float을 넣었다가 setTimeout을 사용하여 float을 제거하여 text input에 에니메이션 효과를 부여한다.
-          setTimeout(function() {
-            jqForm.removeClass('float');
-          });
+          jqForm.appendTo(el);
+
+          if (hasAnimation) {
+            jqForm.addClass('float');
+            // float을 넣었다가 setTimeout을 사용하여 float을 제거하여 text input에 에니메이션 효과를 부여한다.
+            setTimeout(function() {
+              jqForm.removeClass('float');
+            });
+          }
 
           ctrl.hasFloatInput = true;
         }
       }
 
       /**
-       * show static input
-       * text input란이 file detail의 오른쪽 하단 마지막에 출력되도록 함
-       * @param {object} jqContainer
-       * @param {object} jqForm
-       * @private
+       * comment input의 layout을 설정함
        */
-      function _showStaticInput(jqContainer, jqForm) {
-        if (ctrl.hasFloatInput) {
-          jqContainer.prepend(jqForm);
-          ctrl.hasFloatInput = false;
-        }
-      }
-
-      /**
-       * scroll event handler
-       * @private
-       */
-      function _onScroll() {
+      function setCommentInputLayout() {
         var jqInput = ctrl.getJqInput();
         var jqContainer = jqInput.container;
         var jqForm =  jqInput.form;
@@ -101,7 +147,7 @@
         var isFocus = jqText.is(':focus');
         var isHiddenInput = _isHiddenInput(jqContainer);
 
-        if (isChanged(isFocus, isHiddenInput)) {
+        if (_isChanged(isFocus, isHiddenInput)) {
           if (isFocus) {
             // text input에 focus가 있는 상태에서는 float input으로 출력하도록 하는 button을 숨겨 사용자가 텍스트 입력이
             // 용이하도록 하며, text input이 scrolling을 통하여 보이지 않게되면 float input으로 출력하도록 한다.
@@ -137,9 +183,24 @@
        * @param {boolean} isFocus
        * @param {boolean} isHiddenInput
        * @returns {boolean}
+       * @private
        */
-      function isChanged(isFocus, isHiddenInput) {
+      function _isChanged(isFocus, isHiddenInput) {
         return _prevFocus !== isFocus || _prevIsHiddenInput !== isHiddenInput;
+      }
+
+      /**
+       * show static input
+       * text input란이 file detail의 오른쪽 하단 마지막에 출력되도록 함
+       * @param {object} jqContainer
+       * @param {object} jqForm
+       * @private
+       */
+      function _showStaticInput(jqContainer, jqForm) {
+        if (ctrl.hasFloatInput) {
+          jqContainer.prepend(jqForm);
+          ctrl.hasFloatInput = false;
+        }
       }
 
       /**

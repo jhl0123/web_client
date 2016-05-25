@@ -12,6 +12,7 @@
   function fileDetailHeader($state, $filter, AnalyticsHelper, analyticsService, Dialog, fileAPIservice, jndPubSub,
                             modalHelper, RightPanel) {
     return {
+      require: '^fileDetailContent',
       restrict: 'E',
       replace: true,
       scope: {
@@ -29,7 +30,7 @@
       link: link
     };
 
-    function link(scope) {
+    function link(scope, el, attrs, ctrl) {
       scope.isStarred = undefined;
       scope.isFileOwner = undefined;
 
@@ -47,6 +48,8 @@
        * @private
        */
       function _init() {
+        ctrl.setJqHeader(el);
+
         if (!scope.isInvalidRequest) {
           scope.isStarred = scope.file.isStarred;
           scope.isFileOwner = $filter('isFileWriter')(scope.file);

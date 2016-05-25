@@ -11,7 +11,7 @@
   /* @ngInject */
   function fileDetailCommentInput($rootScope, jndKeyCode, JndMessageStorage, jndPubSub, Mentionahead, memberService) {
     return {
-      require: '^fileDetailFloat',
+      require: '^fileDetailContent',
       restrict: 'E',
       replace: true,
       scope: {
@@ -27,13 +27,12 @@
     };
 
     function link(scope, el, attrs, ctrl) {
-      var _jqFileDetail = ctrl.getJqScrollContainer();
+      var _jqScrollContainer = ctrl.getJqScrollContainer();
       var _jqCommentInput = $('#file-detail-comment-input');
 
       var _jqCommentInputForm = el.find('._commentInputForm');
       var _jqCommentInputMirror = el.find('._commentInputMirror');
       var _jqFloatButton = el.find('._floatingButton');
-
 
       var _stickerType = 'file';
       var _sticker;
@@ -342,7 +341,8 @@
        * @private
        */
       function _isScrollOver() {
-        return !ctrl.hasFloatInput && el.height() + el.offset().top <= _jqFileDetail.scrollTop() + _jqFileDetail[0].scrollHeight;
+        return !ctrl.hasFloatInput &&
+          el.height() + el.offset().top <= _jqScrollContainer.scrollTop() + _jqScrollContainer[0].scrollHeight;
       }
 
       /**
@@ -351,7 +351,7 @@
        * @private
        */
       function _fixScrollBottom() {
-        return _jqFileDetail.scrollTop(_jqFileDetail[0].scrollHeight);
+        return _jqScrollContainer.scrollTop(_jqScrollContainer[0].scrollHeight);
       }
 
       /**

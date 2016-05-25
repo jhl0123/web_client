@@ -2,8 +2,8 @@
   margin-left: -24px;
 }
 .message.sticker .msg-item {
-  background-color: transparent;
-  border: 0;
+  background-color: transparent !important;
+  border: 0 !important;
 }
 
 .msg-item.text {

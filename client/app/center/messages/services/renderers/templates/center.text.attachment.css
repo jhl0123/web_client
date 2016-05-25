@@ -2,6 +2,7 @@
   display: block;
   position: relative;
   margin-top: 3px;
+  margin-left: -1px;
   background-color: transparent !important;
   border-color: transparent !important;
   overflow: hidden;

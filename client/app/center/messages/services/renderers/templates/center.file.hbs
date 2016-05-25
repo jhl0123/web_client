@@ -8,9 +8,9 @@
 <div class="msg-file {{css.unshared}} {{css.archived}}">
   {{#if isArchived}}
     <!--  ARCHIVED FILE PREVIEW IMAGE  -->
-    <div class="card-content cursor_pointer _compile _fileDetail">
+    <div class="card-content cursor_pointer _compile">
       <!--  ARCHIVED FILE -->
-      <div class="card-info card-archived">
+      <div class="card-info card-archived _fileDetail">
         <div class="card-image icon">
           <div class="fileicon fileicon-archived"></div>
         </div>
@@ -23,9 +23,9 @@
         <!--  FILE PREVIEW IMAGE  -->
         <div class="card-content open has-preview">
           <!-- MEDIUM SIZE IMAGE THUMBNAIL -->
-          <div class="card-preview _compile">
+          <div class="card-preview _compile _previewExpand">
             {{#if file.hasPreview}}
-              <div class="preview-image _previewExpand"
+              <div class="preview-image"
                    image-view="{{file.imageUrl}}"
                    image-width="{{file.width}}"
                    image-height="{{file.height}}"
@@ -38,7 +38,7 @@
                 </div>
               </div>
             {{else}}
-              <div class="preview-image _previewExpand"
+              <div class="preview-image"
                    image-view
                    image-width="{{file.width}}"
                    image-height="{{file.height}}"
@@ -49,9 +49,9 @@
               </div>
             {{/if}}
           </div>
-          <div class="card-body cursor_pointer _compile _fileDetail">
+          <div class="card-body cursor_pointer _compile">
             <!--    FILE TYPE THUMBNAIL -->
-            <div class="card-info">
+            <div class="card-info _fileDetail">
               {{#if file.isIconPreview}}
                 <div class="card-image expand icon _previewExpand">
                   <div class="fileicon fileicon-{{ file.icon }}"></div>
@@ -97,9 +97,9 @@
                        jnd-tooltip-trigger="{{translate '@common-download'}}"
                        data-direction="top">
                     <!--  DOWNLOAD  -->
-                    <span class="msg-item-icon _fileDownload" {{{attrs.download}}}>
+                    <a class="msg-item-icon file-download _fileDownload" {{{attrs.download}}}>
                       <i class="icon-download"></i>
-                    </span>
+                    </a>
                   </div>
                 </div>
               {{/unless}}
@@ -124,9 +124,9 @@
         </div>
       {{else}}
         <!--  FILE PREVIEW IMAGE  -->
-        <div class="card-content cursor_pointer _compile _fileDetail">
+        <div class="card-content cursor_pointer _compile">
           <!--    FILE TYPE THUMBNAIL -->
-          <div class="card-info">
+          <div class="card-info _fileDetail">
             <div class="card-image icon">
               <div class="fileicon fileicon-{{ file.icon }}"></div>
             </div>
@@ -164,9 +164,9 @@
                      jnd-tooltip-trigger="{{translate '@common-download'}}"
                      data-direction="top">
                   <!--  DOWNLOAD  -->
-                  <span class="msg-item-icon _fileDownload" {{{attrs.download}}}>
+                  <a class="msg-item-icon file-download _fileDownload" {{{attrs.download}}}>
                     <i class="icon-download"></i>
-                  </span>
+                  </a>
                 </div>
               </div>
             {{/unless}}
@@ -191,9 +191,9 @@
       {{/if}}
     {{else}}
       <!--  UNSHARED FILE  -->
-      <div class="card-content cursor_pointer _compile _fileDetail">
+      <div class="card-content cursor_pointer _compile">
         <!--    FILE TYPE THUMBNAIL -->
-        <div class="card-info card-unshared">
+        <div class="card-info card-unshared _fileDetail">
           <div class="card-image icon">
             <div class="fileicon fileicon-unshared"></div>
           </div>

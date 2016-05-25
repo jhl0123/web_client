@@ -58,13 +58,28 @@
      * @private
      */
     function _attachEvents() {
-      $scope.$on('fileDetail:updateFile', _requestFileDetail);
-      $scope.$on('fileDetail:updateComments', _requestFileDetail);
+      $scope.$on('fileDetail:updateFile', _onUpdateFile);
+      $scope.$on('fileDetail:updateComments', _onUpdateComments);
       $scope.$on('Router:fileChanged', _onFileChange);
       $scope.$on('rightFileDetailOnFileDeleted', _onRightFileDetailOnFileDeleted);
       $scope.$on('jndWebSocketMember:memberUpdated', _onUpdateMemberProfile);
     }
 
+    /**
+     * file 갱신 event handler
+     * @private
+     */
+    function _onUpdateFile() {
+      _requestFileDetail('file');
+    }
+
+    /**
+     * comments 갱신 event handler
+     * @private
+     */
+    function _onUpdateComments() {
+      _requestFileDetail('comment');
+    }
 
     /**
      * file 정보가 변경되었을 때 이벤트 핸들러
@@ -97,15 +112,18 @@
 
     /**
      * request file detail
+     * @param {string} updateType
      * @private
      */
-    function _requestFileDetail() {
+    function _requestFileDetail(updateType) {
       if (_isFileDetailActive()) {
         $timeout.cancel(_timerFileDetail);
         _timerFileDetail = $timeout(function() {
           _requestFile && _requestFile.abort();
           _requestFile = FileDetail.get(_fileId)
-            .success(_onSuccessFileDetail)
+            .success(function(response) {
+              _onSuccessFileDetail(response, updateType);
+            })
             .error(_onErrorFileDetail)
         });
       }
@@ -114,17 +132,26 @@
     /**
      * success file detail
      * @param {object} response
+     * @param {string} updateType
      * @private
      */
-    function _onSuccessFileDetail(response) {
+    function _onSuccessFileDetail(response, updateType) {
       var messageDetails;
       var fileDetail;
       
       if (response) {
         messageDetails = response.messageDetails;
         fileDetail = _getFileDetailData(messageDetails);
-        _setFile(fileDetail.file);
-        _setComments(fileDetail.comments);
+
+        // 하위 directive에서 file, comment를 watch 하고 있으므로 file, comment 변경을 분리하여 쓸데없는 연산을 방지한다.
+        if (updateType === 'file') {
+          _setFile(fileDetail.file);
+        } else if (updateType === 'comment') {
+          _setComments(fileDetail.comments);
+        } else {
+          _setFile(fileDetail.file);
+          _setComments(fileDetail.comments);
+        }
       }
 
       $scope.hasInitialLoaded = true;

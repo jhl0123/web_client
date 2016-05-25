@@ -9,16 +9,17 @@
     .directive('fileDetailShared', fileDetailMeta);
 
   /* @ngInject */
-  function fileDetailMeta($state, $filter, AnalyticsHelper, analyticsService, Dialog, EntityHandler,
+  function fileDetailMeta($filter, $state, $timeout, AnalyticsHelper, analyticsService, Dialog, EntityHandler,
                           entityheaderAPIservice, fileAPIservice, jndPubSub, RoomTopicList) {
     return {
+      require: '^fileDetailContent',
       restrict: 'E',
       replace: true,
       templateUrl : 'app/right/file-detail/shared/file.detail.shared.html',
       link: link
     };
 
-    function link(scope) {
+    function link(scope, el, attrs, ctrl) {
       var _unsharedForMe;
 
       // 공유 토픽을 가지고 있는지 여부
@@ -162,6 +163,12 @@
 
         file.extShared = fileAPIservice.updateShared(file);
         scope.hasTopic = !!file.extShared.length;
+
+        // extShared에 값이 설정되고 rendering이 완료된 다음 file detail body element의 높이값을 재설정 해야한다.
+        $timeout(function() {
+          ctrl.resizeFileDetailBody();
+          ctrl.setCommentInputLayout();
+        });
       }
 
       /**

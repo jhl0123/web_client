@@ -1,9 +1,8 @@
 <div class="file-detail-shared">
   <span ng-if="hasTopic">
     <span>{{::'@common-shared-in'|translate}}</span>
-    <span ng-repeat="sharedEntity in file.extShared">
-      <span ng-hide="($index === 0)">, </span>
-      <span class="shared-room cursor_pointer" ng-click="onClickSharedEntity(sharedEntity)">
+    <span class="shared-room" ng-repeat="sharedEntity in file.extShared">
+      <span class="shared-room-name inline-overflow-ellipsis cursor_pointer" ng-click="onClickSharedEntity(sharedEntity)">
         {{::sharedEntity.prefix}}{{::sharedEntity.name}}
       </span>
       <a class="link-remove link-unshare cursor_pointer" ng-click="onClickUnshare(sharedEntity)">
@@ -11,6 +10,7 @@
            tooltip="{{::'@file-action-unshare'|translate}}"
            tooltip-placement="right"></i>
       </a>
+      <span ng-hide="($index === file.extShared.length - 1)">, </span>
     </span>
   </span>
   <span ng-if="!hasTopic">

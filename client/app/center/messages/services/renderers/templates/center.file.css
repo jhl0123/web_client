@@ -114,6 +114,11 @@
   padding-right: 4px;
 }
 
+.msg-file-actions .file-download:hover,
+.msg-file-actions .file-download:focus {
+  text-decoration: none;
+}
+
 .file-uploaded-extra {
   margin-right: -10px;
   width: 30px;

@@ -20,10 +20,15 @@
         {{/unless}}
       </div>
       <div class="msg-comment-actions">
+        {{#if isAllowDelete}}
+          <span class="cursor_pointer msg-item-icon msg-item-circle msg-item-delete _commentDelete">
+            <i class="icon-trash"></i>
+          </span>
+        {{/if}}
         {{#if hasStar}}
-          <span class="cursor_pointer msg-item-star msg-item-icon msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
-          <i class="{{css.starIcon}}"></i>
-        </span>
+          <span class="cursor_pointer msg-item-icon msg-item-circle msg-item-star _star _star-{{msg.message.id}} {{css.star}}">
+            <i class="{{css.starIcon}}"></i>
+          </span>
         {{/if}}
       </div>
     </div>

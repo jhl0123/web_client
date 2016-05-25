@@ -38,6 +38,8 @@
     this.hasLinkPreview = hasLinkPreview;
     this.hasConnectPreview = hasConnectPreview;
 
+    this.isText = isText;
+    this.isComment = isComment;
     this.isChildText = isChildText;
     this.hasChildText = hasChildText;
     this.isChildComment = isChildComment;
@@ -281,6 +283,26 @@
         }
       });
       _setLinkId(messageList);
+    }
+
+    /**
+     * text 인지 여부를 반환한다.
+     * @param {number} index
+     * @returns {*|boolean}
+     */
+    function isText(index) {
+      var contentType = getContentType(index);
+      return centerService.isTextType(contentType);
+    }
+
+    /**
+     * comment 인지 여부를 반환한다.
+     * @param {number} index
+     * @returns {*|boolean}
+     */
+    function isComment(index) {
+      var contentType = getContentType(index);
+      return centerService.isCommentType(contentType);
     }
 
     /**
