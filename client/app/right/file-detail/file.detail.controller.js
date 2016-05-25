@@ -119,13 +119,14 @@
       if (_isFileDetailActive()) {
         $timeout.cancel(_timerFileDetail);
         _timerFileDetail = $timeout(function() {
+          _timerFileDetail = null;
           _requestFile && _requestFile.abort();
           _requestFile = FileDetail.get(_fileId)
             .success(function(response) {
               _onSuccessFileDetail(response, updateType);
             })
             .error(_onErrorFileDetail)
-        });
+        }, _timerFileDetail ? 0 : 500);
       }
     }
 
@@ -289,14 +290,16 @@
      * @private
      */
     function _onErrorFileDetail(data, status) {
-      if (status === 403) {
-        // permission error(비공개 file에 접근했다가 까임)
+      if (data) {
+        if (status === 403) {
+          // permission error(비공개 file에 접근했다가 까임)
 
-        $scope.hasInitialLoaded = $scope.isInvalidRequest = true;
-        $state.go('messages.detail.files.item', $state.params);
-      } else {
-        // 에러 발생시 이전 상태로 이동하여 아무것도 출력되지 않는걸 방지한다.
-        backToPrevState();
+          $scope.hasInitialLoaded = $scope.isInvalidRequest = true;
+          $state.go('messages.detail.files.item', $state.params);
+        } else {
+          // 에러 발생시 이전 상태로 이동하여 아무것도 출력되지 않는걸 방지한다.
+          backToPrevState();
+        }
       }
     }
 

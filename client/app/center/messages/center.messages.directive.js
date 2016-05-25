@@ -669,7 +669,8 @@
           index++;
         });
 
-        // append 되는 메시지가 자식 text 또는 comment이면 부모의 뷰가 바뀌어야 한다(부모는 메시지 작성 시간을 출력하지 않음).
+        // append 되는 메시지가 child text 또는 child comment이면
+        // 이전 메시지의 뷰가 바뀌어야 한다(조건에 부합하는 이전 메시지는 메시지 작성 시간을 출력하지 않음).
         if (MessageCollection.isChildText(MessageCollection.list.length - 1) ||
           MessageCollection.isChildComment(MessageCollection.list.length - 1)) {
           prevIndex = MessageCollection.list.length - 2;
@@ -766,10 +767,10 @@
         var prevIndex = index - 1;
         var prevMessage;
 
-        // 삭제된 메시지가 text 이면서 child text 또는 comment 이면서 child comment 일때
-        // 부모의 뷰가 바뀌어야 한다(부모는 메시지 작성 시간을 출력하지 않음).
-        if ((!MessageCollection.hasChildText(index) && MessageCollection.isText(prevIndex)) ||
-          (!MessageCollection.hasChildComment(index) && MessageCollection.isComment(prevIndex))) {
+        // 삭제된 메시지의 이전 메시지가 child text 또는 child comment가 아니라면
+        // 이전 메시지의 뷰가 바뀌어야 한다(조건에 부합하는 이전 메시지는  메시지 작성 시간을 출력하지 않음).
+        if (!MessageCollection.hasChildText(prevIndex) ||
+          !MessageCollection.hasChildComment(prevIndex)) {
           prevMessage = MessageCollection.list[prevIndex];
           _refresh(prevMessage.id, prevIndex);
         }
