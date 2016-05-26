@@ -1,7 +1,7 @@
 <!--  User Thumbnail -->
 <div class="msg-header {{css.disabledMember}}">
   <img class="member-profile member-thumb {{css.profileCursor}} _user" src="{{ msg.exProfileImg }}"/>
-  <span class="member-name {{css.profileCursor}} _user">{{ msg.extWriterName }}</span>
+  <span class="member-name selectable {{css.profileCursor}} _user">{{ msg.extWriterName }}</span>
 </div>
 {{#if isSticker}}
   <div class="msg-item">
@@ -9,7 +9,7 @@
   </div>
 {{else}}
   <div class="msg-item text">
-    <span class="keep msg-text-body _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
+    <span class="keep msg-text-body selectable _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
   </div>
 {{/if}}
 <div class="msg-text-extra">

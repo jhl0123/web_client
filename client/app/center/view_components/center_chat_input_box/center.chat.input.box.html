@@ -104,12 +104,14 @@
       <form id="message-form">
         <textarea id="message-input"
                   class="message-input"
+                  maxlength="5000"
                   message-submit="postMessage()"
                   ng-focus="onMessageInputFocus()"
                   ng-blur="onMessageInputBlur()"
                   ng-disabled="msgLoadStatus.loading || isDisabledMember(currentEntity)"
                   placeholder="{{::'@placeholder-input-message' | translate }}"
                   jnd-elastic="message"
+                  jnd-elastic-max-length="5000"
                   jnd-elastic-on-change="onMessageInputChange($event)"
                   mentionahead
                   mentionahead-type="message"

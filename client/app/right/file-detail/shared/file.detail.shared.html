@@ -2,7 +2,8 @@
   <span ng-if="hasTopic">
     <span>{{::'@common-shared-in'|translate}}</span>
     <span class="shared-room" ng-repeat="sharedEntity in file.extShared">
-      <span class="shared-room-name inline-overflow-ellipsis cursor_pointer" ng-click="onClickSharedEntity(sharedEntity)">
+      <span class="shared-room-name inline-overflow-ellipsis cursor_pointer selectable"
+            ng-click="onClickSharedEntity(sharedEntity)">
         {{::sharedEntity.prefix}}{{::sharedEntity.name}}
       </span>
       <a class="link-remove link-unshare cursor_pointer" ng-click="onClickUnshare(sharedEntity)">

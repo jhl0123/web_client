@@ -91,7 +91,7 @@
       if (_fileId !== fileId) {
         _fileId = fileId;
         _resetVariables();
-        _setFileDetail();
+        _requestFileDetail('all', true);
       }
     }
 
@@ -115,8 +115,8 @@
      * @param {string} updateType
      * @private
      */
-    function _requestFileDetail(updateType) {
-      if (_isFileDetailActive()) {
+    function _requestFileDetail(updateType, isForce) {
+      if (isForce || _isFileDetailActive()) {
         $timeout.cancel(_timerFileDetail);
         _timerFileDetail = $timeout(function() {
           _timerFileDetail = null;

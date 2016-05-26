@@ -3,14 +3,14 @@
     <div class="msg-header">
       <!--  User Thumbnail -->
       <img class="member-profile member-thumb cursor_pointer _user" src="{{ msg.exProfileImg }}"/>
-      <span class="member-name inline-overflow-ellipsis cursor_pointer _user {{css.disabledMember}}">{{ msg.extWriterName }}</span>
+      <span class="member-name inline-overflow-ellipsis cursor_pointer selectable _user {{css.disabledMember}}">{{ msg.extWriterName }}</span>
     </div>
   {{/unless}}
   <div class="comment-content">
     {{#if isSticker}}
       <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
     {{else}}
-      <span class="keep _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
+      <span class="keep selectable _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
     {{/if}}
     <div class="msg-extra">
       <div class="msg-item-info no-select">

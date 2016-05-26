@@ -4,7 +4,7 @@
     <!--  User Thumbnail -->
     <div class="msg-header {{css.disabledMember}}">
       <img class="member-profile member-thumb {{css.profileCursor}} _user" src="{{ msg.exProfileImg }}"/>
-      <span class="member-name {{css.profileCursor}} _user">{{ msg.extWriterName }}</span>
+      <span class="member-name selectable {{css.profileCursor}} _user">{{ msg.extWriterName }}</span>
     </div>
   {{/if}}
   {{#if isSticker}}
@@ -13,7 +13,7 @@
     </div>
   {{else}}
     <div class="msg-item text">
-      <span class="keep msg-text-body msg-text-sending">{{{ msg.message.content.body }}}</span>
+      <span class="keep msg-text-body msg-text-sending selectable">{{{ msg.message.content.body }}}</span>
     </div>
   {{/if}}
   <div class="msg-text-extra">

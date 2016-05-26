@@ -67,7 +67,7 @@
               {{/if}}
               <div class="info-group">
                 <div class="info-group-up">
-                  <span class="info-writer inline-overflow-ellipsis">{{ msg.extWriterName }}</span>
+                  <span class="info-writer inline-overflow-ellipsis selectable">{{ msg.extWriterName }}</span>
                   <span class="info-created-time">{{ file.time }}</span>
                   <span class="info-comment-count">
                     <i class="icon-comment"></i>
@@ -75,7 +75,7 @@
                   </span>
                 </div>
                 <div class="info-group-bottom">
-                  <span class="info-title break-word">{{ file.title }}</span>
+                  <span class="info-title break-word selectable">{{ file.title }}</span>
                   {{#unless file.isUnshared}}
                     {{#unless file.isIntegrateFile}}
                       {{#if file.size}}
@@ -90,7 +90,7 @@
                 </div>
               </div>
             </div>
-            <div class="msg-file-actions non-selectable">
+            <div class="msg-file-actions">
               {{#unless file.isIntegrateFile}}
                 <div class="action-group">
                   <div class="action-item"
@@ -157,7 +157,7 @@
               </div>
             </div>
           </div>
-          <div class="msg-file-actions non-selectable">
+          <div class="msg-file-actions">
             {{#unless file.isIntegrateFile}}
               <div class="action-group">
                 <div class="action-item"

@@ -4,13 +4,13 @@
       <div class="file-creator-profile">
         <img class="user-profile user-thumb-sm cursor_pointer" ng-src="{{file.extProfileImg}}" ng-click="onMemberClick(file.extWriter)"/>
       </div>
-      <div class="file-creator-name inline-overflow-ellipsis">
+      <div class="file-creator-name inline-overflow-ellipsis selectable">
         <span ng-click="onMemberClick(file.extWriter)">{{file.extWriterName}}</span>
       </div>
       <div class="file-creator-time">{{::file.createTime|getyyyyMMddformat}}</div>
     </div>
-    <div class="file-meta">
-      <a class="file-title" href="{{::originalUrl}}" target="_blank">{{file.content | fileTitle}}</a>
+    <div class="file-meta break-word">
+      <a class="file-title selectable" href="{{::originalUrl}}" target="_blank">{{file.content | fileTitle}}</a>
       <div class="file-meta-extra">
         <span ng-if="::file.content.size > 0">{{::file.content.size | bytes}}</span>
         <span ng-if="::file.content.type">{{::file.content | fileType}}</span>

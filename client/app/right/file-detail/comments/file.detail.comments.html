@@ -10,7 +10,7 @@
              ng-src="{{ comment.extProfileImg }}"
              ng-click="onMemberClick(comment.extWriter);"/>
       </div>
-      <span class="comment-writer-name inline-overflow-ellipsis" ng-click="onMemberClick(comment.extWriter)">
+      <span class="comment-writer-name inline-overflow-ellipsis selectable" ng-click="onMemberClick(comment.extWriter)">
         {{comment.extWriterName}}
       </span>
       <span class="comment-writer-date">{{comment.extCreateDate}}</span>

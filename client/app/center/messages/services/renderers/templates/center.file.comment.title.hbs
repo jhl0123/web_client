@@ -65,7 +65,7 @@
               {{/if}}
                 <div class="info-group">
                   <div class="info-group-up">
-                    <span class="info-writer inline-overflow-ellipsis">{{ msg.extWriterName }}</span>
+                    <span class="info-writer inline-overflow-ellipsis selectable">{{ msg.extWriterName }}</span>
                     <span class="info-created-time">{{ file.time }}</span>
                     <span class="info-comment-count">
                       <i class="icon-comment"></i>
@@ -73,7 +73,7 @@
                     </span>
                   </div>
                   <div class="info-group-bottom">
-                    <span class="info-title break-word">{{ file.title }}</span>
+                    <span class="info-title break-word selectable">{{ file.title }}</span>
                     {{#unless file.isUnshared}}
                       {{#unless file.isIntegrateFile}}
                         {{#if file.size}}
@@ -88,7 +88,7 @@
                   </div>
                 </div>
               </div>
-              <div class="msg-file-actions non-selectable">
+              <div class="msg-file-actions">
                 {{#unless file.isIntegrateFile}}
                   <div class="action-group">
                     <div class="action-item"
@@ -155,7 +155,7 @@
                 </div>
               </div>
             </div>
-            <div class="msg-file-actions non-selectable">
+            <div class="msg-file-actions">
               {{#unless file.isIntegrateFile}}
                 <div class="action-group">
                   <div class="action-item"
@@ -218,14 +218,14 @@
       <div class="msg-header">
         <!--  User Thumbnail -->
         <img class="member-profile member-thumb cursor_pointer _user" src="{{ msg.exProfileImg }}"/>
-        <span class="member-name inline-overflow-ellipsis cursor_pointer _user {{css.disabledMember}}">{{ msg.extWriterName }}</span>
+        <span class="member-name inline-overflow-ellipsis cursor_pointer selectable _user {{css.disabledMember}}">{{ msg.extWriterName }}</span>
       </div>
     {{/unless}}
     <div class="comment-content">
       {{#if isSticker}}
         <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
       {{else}}
-        <span class="keep _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
+        <span class="keep selectable _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
       {{/if}}
       <div class="msg-extra">
         <div class="msg-item-info no-select">

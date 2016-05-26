@@ -9,11 +9,13 @@
         <form id="comment-form">
           <textarea class="comment-input"
                     id="file-detail-comment-input"
+                    maxlength="5000"
                     placeholder="{{::'@placeholder-input-comment' | translate }}"
                     ng-focus="onMessageInputFocus()"
                     ng-blur="onMessageInputBlur()"
                     message-submit="createComment()"
                     jnd-elastic="comment"
+                    jnd-elastic-max-length="5000"
                     jnd-elastic-on-change="onCommentInputChange($event)"
                     mentionahead
                     mentionahead-type="comment"
