@@ -94,7 +94,7 @@
 }
 
 .message.comment .msg-item {
-  padding-right: 30px;
+  padding-right: 52px;
 }
 .message.comment-child .msg-item:before {
   content: '';

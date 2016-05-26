@@ -55,7 +55,7 @@
       if (message) {
         writerId = message.message.writerId;
         if (!isTitle(index, list) &&
-          prevMessage.message.contentType === 'comment' &&
+          prevMessage.message.contentType === 'comment' || prevMessage.message.contentType === 'comment_sticker' &&
           prevMessage.message.writerId === writerId &&
           !centerService.isElapsed(prevMessage.time, message.time)) {
           isChild = true;
@@ -97,7 +97,9 @@
       var isLast = false;
       var nextMessage = list[index + 1];
 
-      if (!nextMessage || nextMessage.message.contentType !== 'comment') {
+      if (!nextMessage ||
+        nextMessage.message.contentType !== 'comment' ||
+        nextMessage.message.contentType === 'comment_sticker') {
         isLast = true;
       }
 
