@@ -54,8 +54,8 @@
 
       if (message) {
         writerId = message.message.writerId;
-        if (!isTitle(index, list) &&
-          prevMessage.message.contentType === 'comment' || prevMessage.message.contentType === 'comment_sticker' &&
+        if (!isTitle(index, list) && prevMessage &&
+          (prevMessage.message.contentType === 'comment' || prevMessage.message.contentType === 'comment_sticker') &&
           prevMessage.message.writerId === writerId &&
           !centerService.isElapsed(prevMessage.time, message.time)) {
           isChild = true;

@@ -122,7 +122,7 @@
         if (_jqMsgsContainer.offset().left > left - el.width()) {
           // container에 가려서 dropdown menu가 안보임
 
-          left += 30;
+          el.addClass('left-over');
         }
 
         _jqTarget.css({
