@@ -225,7 +225,7 @@ app.controller('leftPanelController', function(
     EntityHandler.parseLeftSideMenuData(response);
     _parseAlarmInfoCount(response.alarmInfoCount, response.alarmInfos);
     entityAPIservice.setCurrentEntityWithId(entityId);
-    MessageCacheCollection.cacheAllTopics();
+    MessageCacheCollection.initializeTopics();
     TopicFolderModel.update();
   }
 

@@ -11,7 +11,7 @@
   /* @ngInject */
   function MessageCacheCollection($rootScope, CoreUtil, CoreCollection, MessageCollection, RoomTopicList, currentSessionHelper,
                                   RoomChatDmList, EntityFilterMember) {
-    var UNIT = 300;
+    var UNIT = 100;
     var MessageCacheCollectionClass = CoreUtil.defineClass(CoreCollection, /**@lends Collection.prototype */{
       /**
        * 인자로 받은 option 값에 대해 초기 세팅을 한다.
