@@ -161,7 +161,7 @@
 }
 
 .sticker_panel_tab .new-sticker {
-  display:none;
+  display:block;
   background-color:#FF5B49;
   position:absolute;
   top:-8px;
@@ -169,12 +169,21 @@
   font-size:11px;
   border-radius:10px;
   color:#fff;
-  padding:2px 7px 1px;
-  line-height:1.2;
+  padding:1px 7px 1px;
+  line-height:1.35em;
   z-index:5;
+  font-weight: 700;
+  
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  -webkit-transition: transform ease-out 250ms;
+  transition: transform ease-out 250ms;
 }
-.sticker_panel_tab .new-sticker.on{
-  display:block;
+.sticker_panel.open.vivid .new-sticker.on {
+  -webkit-transition: transform cubic-bezier(0.25,1.075,.48,1.235) 350ms 250ms;
+  transition: transform cubic-bezier(0.25,1.075,.48,1.235) 350ms 250ms;
+  -webkit-transform: scale(1);
+  transform: scale(1);
 }
 
 .sticker_panel_tab_item {
