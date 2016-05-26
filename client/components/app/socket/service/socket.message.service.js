@@ -6,7 +6,7 @@
     .service('jndWebSocketMessage', jndWebSocketMessage);
 
   /* @ngInject */
-  function jndWebSocketMessage(jndWebSocketCommon, jndPubSub, memberService, currentSessionHelper, markerService, RoomTopicList,
+  function jndWebSocketMessage(jndWebSocketCommon, jndPubSub, memberService, currentSessionHelper, ActiveNotifier, RoomTopicList,
                                MessageNotification, MentionNotification, FileShareNotification, TopicInviteNotification) {
 
     var MESSAGE = 'message';

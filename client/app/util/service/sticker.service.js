@@ -20,19 +20,23 @@
     var stickerGroups = [
       {
         className: 'recent',
-        id: 'recent'
-      },
-      {
-        className: 'kiyomi',
-        id: /tw/i.test(accountLanguage) ? 102 : 101
-      },
-      {
-        className: 'pangya',
-        id: 100
+        id: 'recent',
+        isNew: false
       },
       {
         className: 'dingo',
-        id: 103
+        id: 103,
+        isNew: true
+      },
+      {
+        className: 'kiyomi',
+        id: /tw/i.test(accountLanguage) ? 102 : 101,
+        isNew: false
+      },
+      {
+        className: 'pangya',
+        id: 100,
+        isNew: false
       }
     ];
 
