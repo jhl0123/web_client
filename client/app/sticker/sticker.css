@@ -186,6 +186,13 @@
   transform: scale(1);
 }
 
+.sticker_panel.open.vivid .new-sticker.off {
+  -webkit-transition: transform cubic-bezier(0.25,1.075,.48,1.235) 350ms 250ms;
+  transition: transform cubic-bezier(0.25,1.075,.48,1.235) 350ms 250ms;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
 .sticker_panel_tab_item {
   min-height: 20px;
   background-repeat: no-repeat;
