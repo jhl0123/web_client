@@ -50,7 +50,7 @@
      */
     function _convertData(data) {
       return {
-        name: data.name,
+        name: data.extEncodedName,
         createTime: $filter('getyyyyMMddformat')(data.ch_createTime),
         topicDescription: data.description,
         creatorName: $filter('getName')(data.ch_creatorId),

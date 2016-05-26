@@ -2,7 +2,7 @@
   <li ng-repeat="match in matches" ng-class="{active: isActive($index)}" ng-mouseenter="selectActive($index, $event)" ng-mousedown="selectMatch($index)" role="option" id="{{match.id}}">
     <a class="mention-item" ng-class="::{'jandi-bot': match.model.extIsJandiBot}" tabindex="-1">
       <img class="profile-img" ng-src="{{::match.model.extProfileImage}}" />
-      <span class="profile-text" ng-bind-html="match.label | typeaheadHighlight:query"></span>
+      <span class="profile-text" ng-bind-html="match.label|htmlEncode|typeaheadHighlight:query"></span>
     </a>
   </li>
 </ul>
