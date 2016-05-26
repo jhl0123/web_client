@@ -2308,6 +2308,10 @@ msgid "@message-deleted"
 msgstr "このメッセージは削除されました"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@message-exceeded-max-length"
+msgstr "５０００文字まで入力できます"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@message-mention"
 msgstr "ここにメッセージㅡを記入（他のメンバーをメンションするには@を記入）"
 

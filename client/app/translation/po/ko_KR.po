@@ -2308,6 +2308,10 @@ msgid "@message-deleted"
 msgstr "메시지가 삭제되었습니다."
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@message-exceeded-max-length"
+msgstr "5000자 까지 입력할 수 있습니다."
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@message-mention"
 msgstr "메시지 입력 또는 @멘션"
 

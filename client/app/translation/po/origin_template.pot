@@ -2169,6 +2169,10 @@ msgid "@message-deleted"
 msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@message-exceeded-max-length"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@message-mention"
 msgstr ""
 

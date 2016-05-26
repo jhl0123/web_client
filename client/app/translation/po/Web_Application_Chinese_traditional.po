@@ -2226,6 +2226,10 @@ msgid "@message-deleted"
 msgstr "訊息已刪除"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@message-exceeded-max-length"
+msgstr "可填入最多5000字"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@message-mention"
 msgstr "在此輸入訊息 (輸入@可提及成員)"
 

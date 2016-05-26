@@ -2308,6 +2308,10 @@ msgid "@message-deleted"
 msgstr "The message has been deleted."
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@message-exceeded-max-length"
+msgstr "You can enter up to 5,000 characters"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@message-mention"
 msgstr "Enter your message (type @ to mention a member directly)"
 
