@@ -14,15 +14,12 @@
 
 .msg-item-icon {
   float: right;
-  margin: 2px;
-  padding-top: 1px;
+  padding: 2px 4px;
   color: #575757;
   opacity: 0.45;
   font-size: 15px;
   cursor: pointer;
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
   text-align: center;
   vertical-align: middle;
   line-height: 19px;
@@ -31,6 +28,9 @@
 .msg-item-icon:hover {
   color: #58829b !important;
   opacity: 1 !important;
+}
+.msg-item-icon > i {
+  line-height: inherit;
 }
 .msg-item-circle:hover {
   background-color: rgba(143, 174, 186, 0.2);
@@ -42,7 +42,9 @@
 
 .msg-item-delete {
   font-size: 14px;
-  margin-top: 3px;
+  margin-top: 1px;
+  margin-right: 2px;
+  float: left;
 }
 
 .msg-item-star.on {
