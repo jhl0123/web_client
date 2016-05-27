@@ -1,0 +1,20 @@
+.message.system-event.date-divider {
+  display: block;
+  margin-left: 36px;
+  padding: 5px 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #879AA3;
+}
+
+.message.system-event.date-divider:before {
+  background-color: #C0CCD2;
+  right: 16px;
+  width: auto;
+  left: -20px;
+}
+
+.message.system-event.date-divider span {
+  padding: 0 10px;
+  background-color: #EFF3FA;
+}

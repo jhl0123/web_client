@@ -1,15 +1,3 @@
-.unread-badge {
-  background-color: transparent;
-  border-radius: 16px;
-  font-family: "Helvetica Neue";
-  font-size: 10px;
-  color: #00abe6;
-  padding: 2px 5px 3px 5px;
-  font-weight: 600;
-  margin-left: -3px;
-  display: inline;
-}
-
 .alert-badge {
   background-color: #ef6700;
   border-radius: 16px;
@@ -32,7 +20,10 @@ article {
   left: 240px;
   right: 0;
   bottom: 0;
-  min-width: 520px;
+  min-width: 608px;
+
+  -webkit-transition: opacity 0.7s, left !important;
+  transition: opacity 0.7s, left !important;
 }
 .cpanel .panel-title-container {
   z-index: 28;
@@ -48,17 +39,17 @@ article {
 }
 
 .msgs {
-  background: #fff;
   position: absolute;
-  margin-right: 0;
   top: 35px;
   left: 0;
   right: 0;
   bottom: 103px;
+  min-width: 260px;
+  margin-right: 0;
+  padding-bottom: 0;
+  background-color:#eff3fa;
   overflow-x: hidden;
   overflow-y: auto;
-  min-width: 260px;
-  padding-bottom: 0;
   z-index: 9;
 }
 
@@ -74,12 +65,11 @@ article {
   bottom: 2px;
   z-index: 12;
   text-align: center;
-  background: linear-gradient(rgba(255,255,255, 1), rgba(255,255,255, 0));
+  background: linear-gradient(rgba(239,243,250,1), rgba(239,243,250,0));
 }
 .msgs__loading.initial {
   height: 100%;
-  /*background-size: 100px 100px;*/
-  background:#FFFFFF;
+  background:#EFF3FA;
 }
 .msgs__loading.load-more-top {
   position: absolute;
@@ -100,62 +90,21 @@ article {
 .msgs-holder {
   padding-bottom: 14px
 }
-.msgs-group {
 
-}
-.msgs-group__divider {
-  font-size: 15px;
-  font-weight: 700;
-  color: #9DADB5;
-  display: table;
-  padding: 5px 12px;
-  margin: 14px 0 14px 55px;
-  background-color: #FFF;
-}
-.msgs-group__divider:before {
-  content: '';
-  position: absolute;
-  background-color:#D8DFE3;
-  height: 1px;
-  left: 22px;
-  right: 16px;
-  margin-top: 9px;
-  z-index: -1;
-}
-
-.msgs-group__divider-label {
-  display: inline-block;
-  padding-top: 4px;
-  border-top: 3px solid #31c08a;
-}
-.msg-item {
-  height: 100%;
+.msg-header {
   position: relative;
-  margin-top: 8px;
-  padding: 5px 15px 0 67px;
-  display: block;
-}
-#unread-bookmark.msg-item {
-  margin-bottom: 10px;
-  margin-top: 8px;
-  padding-top: 0;
-}
-#unread-bookmark.msg-item .msg-unread-bookmark {
-  margin: 0;
-  line-height: 28px;
-}
-#unread-bookmark.msg-item .system-event-msg .msg-item-float {
-  top: -1px;
 }
 
-.msg-item.text {
-  margin-top: 7px;
-  margin-bottom: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-.msg-item.text-child {
-  margin-top: -6px;
+.msg-item {
+  display: inline-block;
+  position: relative;
+  margin: 6px 0 0 0;
+  max-width: calc(100% - 74px);
+  border-radius: 3px 3px 4px 4px;
+  border: 1px solid #E4E8EB;
+  border-bottom: 1px solid rgba(5,35,60,0.2);
+  background-color: #fff;
+  color: #333;
 }
 
 .msg-item.file-upload {
@@ -165,47 +114,16 @@ article {
 .msg-item.comment_continue {
   margin-bottom: 8px;
 }
-.msg-item-float {
-  position: absolute;
-  top: 7px;
-  left: 23px;
-}
-.msg-item-header {
-  padding: 1px 0 6px;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.3rem;
-}
-.msg-item-header .tooltip {
-  width: 64px;
+
+.msg-item.system {
+  margin: 0 5px 0 0;
+  border: 0;
+  background-color: transparent;
+  box-shadow: 0 0 0 1px transparent;
+  color: #929498;
 }
 
-.msg-item.comment-continue .msg-item-header {
-  padding: 0 45px 0 0;
-}
-
-/* continued comment writer name */
-
-.msg-comment .msg-comment-body .msg-item-header__name,
-.msg-item.comment-continue .msg-item-header .msg-item-header__name {
-  font-size: 14px;
-  display: inline-block;
-  vertical-align: top;
-}
-
-.msg-item-header__name {
-  color: #333;
-  font-weight: 700;
-  font-size: 15px;
-}
-.msg-item-header__created {
-  font-size: 10px;
-  line-height: 10px;
-  color: #666666;
-  font-weight: 400;
-  margin-left: 3px;
-}
-.msg-item-header__retry {
+.post-retry {
   font-size: 12px;
   line-height: 12px;
   font-weight: 500;
@@ -213,13 +131,10 @@ article {
   color: #1C6C88;
   text-decoration: none;
 }
-.msg-item-header__retry:hover {
+.post-retry:hover {
   color: #154a67;
 }
-/* continued comment created time   */
-.msg-item.comment-continue .msg-item-header .msg-item-header__created {
-  padding-left: 5px;
-}
+
 .msg-item-body {
   position: relative;
 }
@@ -238,20 +153,7 @@ article {
   word-wrap: break-word;
   margin-right: 55px;
 }
-.msg-extra {
-  position: absolute;
-  bottom: 3px;
-  right: 0;
-  width: 50px;
-  vertical-align: text-bottom;
-}
-.msg-text-extra {
-  position: absolute;
-  bottom: 3px;
-  right: 0;
-  width: 50px;
-  vertical-align: text-bottom;
-}
+
 .msg-text-body {
   margin: 0;
   font-size: 16px;
@@ -317,99 +219,9 @@ by ysyun 2015.2.25
   overflow: hidden;
 }
 
-.preview-container:hover .large-thumbnail-full-screen {
-  display: block;
-  -webkit-animation: opacIn-from-0 1s; /* Chrome, Safari, Opera */
-  animation: opacIn-from-0 1s;
-}
-
 .large-thumbnail-parent .fa-comment {
   display: none;
 }
-
-.large-thumbnail-full-screen {
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  display: none;
-  padding: 7px;
-  background-color: rgba(0,0,0,0.3);
-  border-radius: 3px;
-  color: #ECECEC;
-  font-size: 22px;
-}
-.large-thumbnail-full-screen:hover {
-  color: white;
-}
-.large-thumbnail-full-screen:active {
-  margin-top: 1px;
-  margin-right: -1px;
-}
-
-/*
-issue : JND-974
-fix : change min-height:65px to minheight:65px !important
-by ysyun 2015.2.25
-*/
-.msg-file-meta {
-  font-size: 12px;
-  line-height: 1.3rem;
-  padding-left: 75px;
-  min-height: 65px !important;
-}
-
-/*
-issue : JND-974
-fix : add comma(,) between .large-thumbnail-grand-parent and .msg-file-meta
-      add width: 100%;
-by ysyun 2015.2.25
-*/
-.large-thumbnail-grand-parent, .msg-file-meta {
-  padding-left: 0;
-  min-height: 0;
-  width: 100%;
-}
-.msg-file-meta-up {
-  margin-bottom: 3px;
-}
-.archived-msg-file-meta__title {
-  color: #b7b7b7;
-  padding-bottom: 2px;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 35px;
-}
-.archived-msg-file-meta__title:hover {
-  color: #b7b7b7;
-}
-
-.msg-file-meta .msg-file-meta__title,
-.msg-comment .msg-file-meta__title {
-  color: #333;
-  padding-bottom: 2px;
-  font-weight: 700;
-  font-size: 15px;
-}
-.msg-file-meta__title:hover {
-  color: #404040;
-}
-.msg-file-meta-info {
-  color: #666;
-  letter-spacing: 0.02em;
-}
-.msg-file-meta-down a {
-  /*color:#999999 !important;*/
-  /*letter-spacing: 0.02em;*/
-}
-.msg-file-meta-down a:hover {
-  text-decoration: none;
-}
-.msg-file-meta-down .file-item-meta__shared {
-  color: #00a5e9;
-  font-size: 12px;
-}
-.msg-file-meta__writer {  }
 
 .msg-comment-header {
   color: #999999;
@@ -418,12 +230,6 @@ by ysyun 2015.2.25
   letter-spacing: 0;
 }
 
-.msg-comment-header .file__name {
-  font-size: 15px;
-  line-height: 15px;
-  color: #333;
-  font-weight: 700;
-}
 .msg-comment-body {
   margin-top: 10px;
 }
@@ -465,11 +271,11 @@ by ysyun 2015.2.25
 /*
   animation을 사용해봤으나 효과가 매끄럽지 못해 부득이하게 클래스 2개를 사용해서 효과를 줬음. -jihoon
 */
-.last {
+.message-highlight {
   background-color: #f2fbff;
   /*animation: backgroundcolor-to-white  1510ms linear;*/
 }
-.last-out {
+.message-highlight-out {
   background-color: white;
   transition: background-color 517ms linear;
 }
@@ -499,109 +305,8 @@ by ysyun 2015.2.25
   left: 70px;
 }
 
-/********************************************
-
-            System Event Message
-
-********************************************/
-.system-event-msg {
-  min-height: 15px;
-  margin-bottom: 0px;
-  padding-top: 1px;
-  padding-bottom:1px;
-  line-height: 24px;
-}
-.system-event-msg .msg-item-float {
-  height: inherit;
-  top:6px;
-}
-.system-event-msg .msg-item-float img {
-  background-image: none !important;
-  height: 1px;
-  background-color: #ededed;
-  vertical-align: middle;
-  border: 0;
-  border-radius: 0;
-}
-
-.system-event-msg .msg-item-header {
-  display: none;
-}
-.system-event-msg .msg-item-body {
-  font-size: 15px;
-  color: #999999;
-}
-
 .js-fileapi-wrapper > div {
   height: 0 !important;
-}
-
-/*.msgs {*/
-/*border: 5px solid transparent;*/
-/*border-bottom: 0 !important;*/
-/*}*/
-/*.footer {*/
-/*border: 5px solid transparent;*/
-/*border-top: 0 !important;*/
-/*}*/
-
-/********************************************
-
-                Drag & Drop
-
-********************************************/
-.dnd-not-support {
-  display: block;
-}
-
-.dnd-over .dnd-over-content {
-  display: block;
-}
-
-.dnd-over-content {
-  display: none;
-  z-index: 10;
-}
-.dnd-over-content .dnd-over-border,
-.dnd-over-content .dnd-over-area,
-.dnd-over-content .dnd-over-msg {
-  position: absolute;
-  top: 35px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1010;
-}
-
-.dnd-over-content .dnd-over-border {
-  border: 5px solid rgba(0, 166, 233, 0.5);
-}
-
-.dnd-over-content .dnd-over-msg {
-  margin: auto;
-  width: 100%;
-  height: 0;
-  text-align: center;
-}
-.dnd-over-content .dnd-over-msg>span {
-  padding: 3px 5px;
-  color: white;
-  border: 2px solid white;
-  border-radius: 5px;
-  height: 35px;
-  font-size: 16px;
-  background-color: rgba(21, 74, 103, 0.8);
-}
-
-
-.icon-sending-indicator {
-  background-image: url('../../../assets/images/icon_loading.gif');
-  background-size: 11px 11px;
-  width: 11px;
-  height: 11px;
-  vertical-align: text-bottom;
-  margin-left: 3px;
-  display: inline-block;
 }
 
 .member-profile,
@@ -618,6 +323,7 @@ by ysyun 2015.2.25
   border-radius: 50%;
   border: 1px solid #e1e1e1;
 }
+
 .jandi-bot .member-thumb {
   height: auto;
   border-radius: 0;

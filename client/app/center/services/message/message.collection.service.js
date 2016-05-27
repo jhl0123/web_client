@@ -434,6 +434,26 @@
       },
 
       /**
+       * text 인지 여부를 반환한다.
+       * @param {number} index
+       * @returns {*|boolean}
+       */
+      isText: function(index) {
+        var contentType = this.getContentType(index);
+        return centerService.isTextType(contentType);
+      },
+      
+      /**
+       * comment 인지 여부를 반환한다.
+       * @param {number} index
+       * @returns {*|boolean}
+       */
+      isComment: function(index) {
+        var contentType = this.getContentType(index);
+        return centerService.isCommentType(contentType);
+      },
+      
+      /**
        * child text 인지 여부를 반환한다.
        * @param {number} index
        * @returns {boolean}
@@ -444,6 +464,16 @@
       },
 
       /**
+       * child text 가지고 있는지 여부를 반환한다.
+       * @param {number} index
+       * @returns {boolean}
+       */
+      hasChildText: function(index) {
+        var contentType = this.getContentType(index);
+        return !!(centerService.isTextType(contentType) && MessageText.isChild(index + 1, that.list));
+      },
+      
+      /**
        * child comment 인지 여부를 반환한다.
        * @param {number} index
        * @returns {boolean}
@@ -453,6 +483,36 @@
         return !!(centerService.isCommentType(contentType) && MessageComment.isChild(index, this.list));
       },
 
+      /**
+       * child comment 가지고 있는지 여부를 반환한다.
+       * @param {number} index
+       * @returns {boolean}
+       */
+      hasChildComment: function(index) {
+        var contentType = this.getContentType(index);
+        return !!(centerService.isCommentType(contentType) && MessageComment.isChild(index + 1, that.list));
+      },
+      
+      /**
+       * 파일에 달린 comment 목록에서 첫번째 인지 여부를 반환한다.
+       * @param {number} index
+       * @returns {boolean}
+       */
+      isFirstComment: function(index) {
+        var contentType = this.getContentType(index);
+        return !!(centerService.isCommentType(contentType) && MessageComment.isFirst(index, that.list));
+      },
+      
+      /**
+       * 파일에 달린 comment 목록에서 마지막 인지 여부를 반환한다.
+       * @param {number} index
+       * @returns {boolean}
+       */
+      isLastComment: function(index) {
+        var contentType = this.getContentType(index);
+        return !!(centerService.isCommentType(contentType) && MessageComment.isLast(index, that.list));
+      },
+      
       /**
        * title comment 인지 여부를 반환한다.
        * @param {number} index

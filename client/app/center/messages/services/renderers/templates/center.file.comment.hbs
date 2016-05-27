@@ -1,52 +1,36 @@
-<div class="msg-item {{ css.wrapper }}">
-  <!--    HEADER PART -->
-  <!--    DISPLAYS WRITER WHEN IT IS NOT TITLE COMMENT    -->
-  <!--    WHEN IT IS TITLE COMMENT, APPLIES DIFFERENT CSS FORMAT  -->
-  <div class="msg-item-header">
-    <!--    CONTINUED COMMENT ON SAME FILE  -->
-    <div class="continue-comment-body">
-      <!-- COMMENT GUIDE LINE -->
-      <div class="comment-guide">
-        <div class="guide-line"></div>
-        {{#unless isChild}}
-          <div class="guide-line-bg"></div>
-          <!--  User Thumbnail -->
-          <img class="comment-writer cursor_pointer user-profile user-thumb _user" src="{{ msg.exProfileImg }}"/>
+<div class="msg-item _fileDetail">
+  {{#unless isChild}}
+    <div class="msg-header">
+      <!--  User Thumbnail -->
+      <img class="member-profile member-thumb cursor_pointer _user" src="{{ msg.exProfileImg }}"/>
+      <span class="member-name inline-overflow-ellipsis cursor_pointer selectable _user {{css.disabledMember}}">{{ msg.extWriterName }}</span>
+    </div>
+  {{/unless}}
+  <div class="comment-content">
+    {{#if isSticker}}
+      <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
+    {{else}}
+      <span class="keep selectable _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
+    {{/if}}
+    <div class="msg-extra">
+      <div class="msg-item-info no-select">
+        <span class="msg-badge unread-badge">{{ msg.unreadCount }}</span>
+        {{#unless hasChild}}
+          <span class="msg-time">{{ msg.extTime }}</span>
         {{/unless}}
       </div>
-      <!--    COMMENT CONTENT -->
-      <div class="comment-content">
-        {{#unless isChild}}
-        <!--    WRITER  -->
-        <span class="msg-item-header__name cursor_pointer {{css.disabledMember}} _user">
-          <span> {{ msg.extWriterName }} </span>
-        </span>
-        {{/unless}}
-        {{#if isSticker}}
-        <div>
-          <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
-          <!--    CREATED TIME    -->
-          <span class="msg-item-header__created">{{ msg.extTime }}</span>
-          <span class="badge unread-badge">{{ msg.unreadCount }}</span>
-        </div>
-        {{else}}
-        <!--    CONTENT TEXT    -->
-        <span class="comment-text">
-          <span class="keep _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
-          <!--    CREATED TIME    -->
-          <span class="msg-item-header__created">{{ msg.extTime }}</span>
-          <span class="badge unread-badge">{{ msg.unreadCount }}</span>
-        </span>
+      <div class="msg-comment-actions">
+        {{#if isAllowDelete}}
+          <span class="cursor_pointer msg-item-icon msg-item-circle msg-item-delete _commentDelete">
+            <i class="icon-trash"></i>
+          </span>
+        {{/if}}
+        {{#if hasStar}}
+          <span class="cursor_pointer msg-item-icon msg-item-circle msg-item-star _star _star-{{msg.message.id}} {{css.star}}">
+            <i class="{{css.starIcon}}"></i>
+          </span>
         {{/if}}
       </div>
-    </div>
-    <!-- Star -->
-    <div class="msg-extra msg-extra-comment-continue">
-      {{#if hasStar}}
-        <span class="cursor_pointer msg-item-star msg-item-icon msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
-          <i class="icon-star-on"></i>
-        </span>
-      {{/if}}
     </div>
   </div>
 </div>

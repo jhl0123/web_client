@@ -9,8 +9,9 @@
     .controller('FileDetailCtrl', FileDetailCtrl);
 
   /* @ngInject */
-  function FileDetailCtrl($scope, $filter, $q, $state, $timeout, FileDetail, jndPubSub, JndMessageStorage, CoreUtil,
-                          memberService, publicService,RightPanel, Sticker, Tutorial, UserList, JndUtil) {
+  function FileDetailCtrl($scope, $filter, $q, $state, $timeout, centerService, DateFormatter, FileDetail, jndPubSub,
+                          JndMessageStorage, CoreUtil, memberService, publicService,RightPanel, Sticker, Tutorial,
+                          UserList) {
     var _fileId;
     var _requestFile;
     var _timerFileDetail;
@@ -19,6 +20,7 @@
     $scope.postComment = postComment;
     $scope.setMentionsGetter = setMentionsGetter;
     $scope.backToPrevState = backToPrevState;
+    $scope.closeRightPanel = closeRightPanel;
 
     _init();
 
@@ -56,13 +58,28 @@
      * @private
      */
     function _attachEvents() {
-      $scope.$on('fileDetail:updateFile', _requestFileDetail);
-      $scope.$on('fileDetail:updateComments', _requestFileDetail);
+      $scope.$on('fileDetail:updateFile', _onUpdateFile);
+      $scope.$on('fileDetail:updateComments', _onUpdateComments);
       $scope.$on('Router:fileChanged', _onFileChange);
       $scope.$on('rightFileDetailOnFileDeleted', _onRightFileDetailOnFileDeleted);
       $scope.$on('jndWebSocketMember:memberUpdated', _onUpdateMemberProfile);
     }
 
+    /**
+     * file 갱신 event handler
+     * @private
+     */
+    function _onUpdateFile() {
+      _requestFileDetail('file');
+    }
+
+    /**
+     * comments 갱신 event handler
+     * @private
+     */
+    function _onUpdateComments() {
+      _requestFileDetail('comment');
+    }
 
     /**
      * file 정보가 변경되었을 때 이벤트 핸들러
@@ -71,9 +88,11 @@
      * @private
      */
     function _onFileChange(angularEvent, fileId) {
-      _fileId = fileId;
-      _resetVariables();
-      _setFileDetail();
+      if (_fileId !== fileId) {
+        _fileId = fileId;
+        _resetVariables();
+        _requestFileDetail('all', true);
+      }
     }
 
     /**
@@ -93,34 +112,47 @@
 
     /**
      * request file detail
+     * @param {string} updateType
      * @private
      */
-    function _requestFileDetail() {
-      if (_isFileDetailActive()) {
+    function _requestFileDetail(updateType, isForce) {
+      if (isForce || _isFileDetailActive()) {
         $timeout.cancel(_timerFileDetail);
         _timerFileDetail = $timeout(function() {
+          _timerFileDetail = null;
           _requestFile && _requestFile.abort();
           _requestFile = FileDetail.get(_fileId)
-            .success(_onSuccessFileDetail)
+            .success(function(response) {
+              _onSuccessFileDetail(response, updateType);
+            })
             .error(_onErrorFileDetail)
-        });
+        }, _timerFileDetail ? 0 : 500);
       }
     }
 
     /**
      * success file detail
      * @param {object} response
+     * @param {string} updateType
      * @private
      */
-    function _onSuccessFileDetail(response) {
+    function _onSuccessFileDetail(response, updateType) {
       var messageDetails;
       var fileDetail;
       
       if (response) {
         messageDetails = response.messageDetails;
         fileDetail = _getFileDetailData(messageDetails);
-        _setFile(fileDetail.file);
-        _setComments(fileDetail.comments);
+
+        // 하위 directive에서 file, comment를 watch 하고 있으므로 file, comment 변경을 분리하여 쓸데없는 연산을 방지한다.
+        if (updateType === 'file') {
+          _setFile(fileDetail.file);
+        } else if (updateType === 'comment') {
+          _setComments(fileDetail.comments);
+        } else {
+          _setFile(fileDetail.file);
+          _setComments(fileDetail.comments);
+        }
       }
 
       $scope.hasInitialLoaded = true;
@@ -258,14 +290,16 @@
      * @private
      */
     function _onErrorFileDetail(data, status) {
-      if (status === 403) {
-        // permission error(비공개 file에 접근했다가 까임)
+      if (data) {
+        if (status === 403) {
+          // permission error(비공개 file에 접근했다가 까임)
 
-        $scope.hasInitialLoaded = $scope.isInvalidRequest = true;
-        $state.go('messages.detail.files.item', $state.params);
-      } else {
-        // 에러 발생시 이전 상태로 이동하여 아무것도 출력되지 않는걸 방지한다.
-        backToPrevState();
+          $scope.hasInitialLoaded = $scope.isInvalidRequest = true;
+          $state.go('messages.detail.files.item', $state.params);
+        } else {
+          // 에러 발생시 이전 상태로 이동하여 아무것도 출력되지 않는걸 방지한다.
+          backToPrevState();
+        }
       }
     }
 
@@ -314,25 +348,48 @@
      * @returns {string} comment 작성 날짜
      */
     function _setCreateTime(comments) {
-      var prevComment;
-
       _.each(comments, function(comment, index) {
-        var createTime;
+        //var createTime;
 
-        comment.extCreateTime = new Date(comment.createTime);
-        prevComment = comments[index -1];
+        comment.extCreateDate = DateFormatter.getFormattedDate(comment.createTime);
 
-        if (!prevComment ||
-          prevComment.extCreateTime.getYear() !== comment.extCreateTime.getYear() ||
-          prevComment.extCreateTime.getMonth() !== comment.extCreateTime.getMonth() ||
-          prevComment.extCreateTime.getDate() !== comment.extCreateTime.getDate()) {
-          createTime = $filter('getyyyyMMddformat')(comment.createTime);
-        } else {
-          createTime = $filter('date')(comment.createTime, 'h:mm a');
+        if (_isLastChild(comments[index + 1], comment)) {
+          comment.extIsLastChild = true;
+          comment.extCreateTime = $filter('date')(comment.createTime, 'h:mm a');
         }
 
-        comment.extCreateTimeView = createTime;
+        if (_isChild(comments[index - 1], comment)) {
+          comment.extIsChild = true;
+        }
+
+        comment.extHasCreateTime = !comment.isSendingComment && comment.extIsLastChild;
       });
+    }
+
+    /**
+     * 마지막 자식 코멘트 인지 여부
+     * @param {object} nextComment
+     * @param {object} currentComment
+     * @returns {boolean|*}
+     * @private
+     */
+    function _isLastChild(nextComment, currentComment) {
+      return !nextComment ||
+        nextComment.writerId !== currentComment.writerId ||
+        centerService.isElapsed(currentComment.createTime, nextComment.createTime);
+    }
+
+    /**
+     * 자식 코멘트 인지 여부
+     * @param {object} prevComment
+     * @param {object} currentComment
+     * @returns {*|boolean}
+     * @private
+     */
+    function _isChild(prevComment, currentComment) {
+      return prevComment &&
+        prevComment.writerId === currentComment.writerId &&
+        !centerService.isElapsed(prevComment.createTime, currentComment.createTime);
     }
 
     /**
@@ -509,6 +566,13 @@
      */
     function backToPrevState() {
       $state.go('messages.detail.' + (RightPanel.getTail() || 'files'));
+    }
+
+    /**
+     * close right panel publish
+     */
+    function closeRightPanel() {
+      jndPubSub.pub('closeRightPanel');
     }
 
     /**

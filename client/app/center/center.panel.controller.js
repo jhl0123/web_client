@@ -628,13 +628,13 @@ app.controller('CenterPanelCtrl', function($scope, $rootScope, $state, $filter, 
 
   function _animateBackgroundColor(element) {
     //console.log('::_animateBackgroundColor');
-    element.addClass('last');
+    element.addClass('message-highlight');
 
     $timeout(function() {
-      element.addClass('last-out');
+      element.addClass('message-highlight-out');
       $timeout(function() {
-        element.removeClass('last');
-        element.removeClass('last-out');
+        element.removeClass('message-highlight');
+        element.removeClass('message-highlight-out');
       }, 517)
     }, 500);
   }
@@ -1376,17 +1376,19 @@ app.controller('CenterPanelCtrl', function($scope, $rootScope, $state, $filter, 
         messageId = response.id;
         linkPreview = response.linkPreview;
 
-        // thumbnail을 기다린다는 flag를 설정한다.
-        linkPreview.extThumbnail = {
-          isWaiting: true
-        };
+        if (linkPreview.imageUrl) {
+          // thumbnail을 기다린다는 flag를 설정한다.
+          linkPreview.extThumbnail = {
+            isWaiting: true
+          };
 
-        timeoutCaller = setTimeout(function() {
-          // 4초 후에도 thumbnail이 생성이 안되었을 경우, loading wheel을 제거한다.
-          _updateMessageLinkPreviewStatus(messageId);
-        }, 4000);
+          timeoutCaller = setTimeout(function() {
+            // 4초 후에도 thumbnail이 생성이 안되었을 경우, loading wheel을 제거한다.
+            _updateMessageLinkPreviewStatus(messageId);
+          }, 4000);
 
-        RendererUtil.addToThumbnailTracker(messageId, timeoutCaller);
+          RendererUtil.addToThumbnailTracker(messageId, timeoutCaller);
+        }
 
         _updateMessageLinkPreview(messageId, linkPreview);
       })

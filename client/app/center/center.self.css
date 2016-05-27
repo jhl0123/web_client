@@ -1,0 +1,6 @@
+.message.self .msg-item {
+  background-color: rgba(208, 231, 249, 0.8);
+}
+.message.self.text .msg-item {
+  border: 1px solid rgba(15,65,105,0.1);
+}

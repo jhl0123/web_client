@@ -48,10 +48,12 @@
     function _onClick(clickEvent) {
       var messageCollection = MessageCacheCollection.getCurrent();
       var jqTarget = $(clickEvent.target);
-      var id = jqTarget.closest('.msgs-group').attr('id');
+      var id = jqTarget.closest('.message').attr('id');
 
       if (jqTarget.hasClass('_textMore')) {
         _showMoreDropdown(jqTarget, messageCollection.get(id));
+      } else if (jqTarget.closest('_link-preview')) {
+        _openLinkPreviewUrl(jqTarget);
       }
     }
 
@@ -71,6 +73,24 @@
         isMyMessage: RendererUtil.isMyMessage(msg),
         showAnnouncement: showAnnouncement
       });
+    }
+
+    /**
+     * open link preview url
+     * @param {object} jqTarget
+     * @private
+     */
+    function _openLinkPreviewUrl(jqTarget) {
+      var jqLinkPreview = jqTarget.parents('._link-preview');
+      var href;
+      var target;
+
+      if (jqLinkPreview.length > 0) {
+        href = jqLinkPreview.data('href');
+        target = jqLinkPreview.data('target');
+
+        window.open(href, target);
+      }
     }
 
     /**
@@ -105,6 +125,7 @@
       var messageCollection = MessageCacheCollection.getCurrent();
       var msg = messageCollection.list[index];
       var isChild = messageCollection.isChildText(index);
+      var isSticker = RendererUtil.isSticker(msg);
       var template = isChild ? _templateChild : _template;
 
       var linkPreview = _getLinkPreview(msg, index);
@@ -118,25 +139,53 @@
         profileCursor = 'cursor_pointer';
       }
 
-      return template({
-        html: {
-          linkPreview: linkPreview,
-          connectPreview: connectPreview
-        },
-        css: {
-          star: RendererUtil.getStarCssClass(msg.message),
-          disabledMember: RendererUtil.getDisabledMemberCssClass(msg),
-          profileCursor: profileCursor,
-          botText: _getMsgItemClass(msg)
-        },
-        hasMore: RendererUtil.hasMore(msg),
-        hasStar: RendererUtil.hasStar(msg),
-        hasLinkPreview: !!linkPreview,
-        hasConnectPreview: !!connectPreview,
-        isSticker: RendererUtil.isSticker(msg),
-        isChild: isChild,
-        msg: msg
-      });
+      return {
+        conditions: _getConditions(msg, isChild, isSticker),
+        template: template({
+          html: {
+            linkPreview: linkPreview,
+            connectPreview: connectPreview
+          },
+          css: {
+            star: RendererUtil.getStarCssClass(msg.message),
+            starIcon: msg.message.isStarred ? 'icon-star-on' : 'icon-star-off',
+            disabledMember: RendererUtil.getDisabledMemberCssClass(msg),
+            profileCursor: profileCursor
+          },
+          hasMore: RendererUtil.hasMore(msg),
+          hasStar: RendererUtil.hasStar(msg),
+          hasLinkPreview: !!linkPreview,
+          hasConnectPreview: !!connectPreview,
+          isSticker: isSticker,
+          isChild: isChild,
+          hasChild: messageCollection.hasChildText(index),
+          msg: msg
+        })
+      };
+    }
+
+    /**
+     * message의 상태들 전달함
+     * @param {object} msg
+     * @param {boolean} isChild
+     * @param {boolean} isSticker
+     * @returns {array}
+     * @private
+     */
+    function _getConditions(msg, isChild, isSticker) {
+      var conditions = ['text'];
+
+      conditions.push(_getMsgItemClass(msg));
+
+      if (isChild) {
+        conditions.push('text-child');
+      }
+
+      if (isSticker) {
+        conditions.push('sticker');
+      }
+
+      return conditions;
     }
 
     /**
@@ -180,6 +229,11 @@
         }
 
         linkPreview = _templateLinkPreview({
+          css: {
+            loading: msg.message.linkPreview.extThumbnail.isWaiting ? 'is-loading': '',
+            image: msg.message.linkPreview.extThumbnail.hasSuccess ? 'has-image' : '',
+            domain: msg.message.linkPreview.domain ? 'has-domain' : ''
+          },
           html: {
             title: msg.message.linkPreview.title,
             description: msg.message.linkPreview.description,

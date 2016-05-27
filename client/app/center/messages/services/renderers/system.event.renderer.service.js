@@ -80,22 +80,25 @@
         });
       });
 
-      return _template({
-        text: {
-          announcement:  {
-            deleted: _getPreTranslation('@system-msg-announcement-deleted', {
-              msg: msg
-            }),
-            created: _getPreTranslation('@system-msg-announcement-created', {
-              msg: msg
-            })
-          }
-        },
-        status: status,
-        hasPostfix: hasPostfix,
-        msg: msg,
-        invitees: invitees
-      });
+      return {
+        conditions: ['system-event', 'noti'],
+        template: _template({
+          text: {
+            announcement:  {
+              deleted: _getPreTranslation('@system-msg-announcement-deleted', {
+                msg: msg
+              }),
+              created: _getPreTranslation('@system-msg-announcement-created', {
+                msg: msg
+              })
+            }
+          },
+          status: status,
+          hasPostfix: hasPostfix,
+          msg: msg,
+          invitees: invitees
+        })
+      };
     }
   }
 })();

@@ -1,0 +1,14 @@
+.file-detail-body {
+  width: 100%;
+  border-bottom: 1px solid #f2f2f2;
+  background-color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.file-detail-body .no-image-preview {
+  width: 370px;
+  height: 141px;
+  background-size: 370px 141px;
+  cursor: default !important;
+}

@@ -32,11 +32,14 @@
     function render(index) {
       var messageCollection = MessageCacheCollection.getCurrent();
       var msg = messageCollection.list[index];
-      
-      return _template({
-        msg: msg,
-        date: msg.date
-      });
+
+      return {
+        conditions: ['system-event', 'date-divider'],
+        template: _template({
+          msg: msg,
+          date: msg.date
+        })
+      };
     }
   }
 })();

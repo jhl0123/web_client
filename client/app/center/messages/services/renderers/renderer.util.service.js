@@ -31,6 +31,9 @@
     this.getFeedbackMessage = getFeedbackMessage;
     this.getFeedbackContent = getFeedbackContent;
     this.getCommentCount = getCommentCount;
+
+    this.convertToPreview = convertToPreview;
+
     _init();
 
     /**
@@ -46,7 +49,7 @@
      * @returns {string}
      */
     function getStarCssClass(message) {
-      return message.isStarred ? '' : 'off msg-item__action';
+      return message.isStarred ? 'on' : 'off';
     }
 
     /**
@@ -177,6 +180,47 @@
     function getCommentCount(msg) {
       var message = getFeedbackMessage(msg);
       return message.commentCount || 0;
+    }
+
+    /**
+     * file render data를 preview 가능한 data로 변환함
+     * @param {object} options
+     * @param {object} data
+     */
+    function convertToPreview(data, options) {
+      if (options.hasImagePreview) {
+        _convertImagePreview(data);
+      } else if (options.hasPdfPreview) {
+        _convertPdfPreview(data);
+      }
+    }
+
+    /**
+     * convert image preview
+     * @param {object} data
+     * @private
+     */
+    function _convertImagePreview(data) {
+      data.file.mustPreview = true;
+      data.file.hasPreview = true;
+      data.file.imageUrl = '../assets/images/preview_image.png';
+      data.file.width = 740;
+      data.file.height = 283;
+      data.file.isIconPreview = true;
+    }
+
+    /**
+     * convert pdf preview
+     * @param {object} data
+     * @private
+     */
+    function _convertPdfPreview(data) {
+      data.file.mustPreview = true;
+      data.file.hasPreview = true;
+      data.file.imageUrl = '../assets/images/preview_pdf.png';
+      data.file.width = 740;
+      data.file.height = 283;
+      data.file.isIconPreview = true;
     }
   }
 })();

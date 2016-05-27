@@ -8,10 +8,10 @@
   angular
     .module('jandiApp')
     .directive('centerMessagesDirective', centerMessagesDirective);
-
-  function centerMessagesDirective($filter, CenterRenderer, CenterRendererFactory, MessageCacheCollection,
+  
+  function centerMessagesDirective($filter, $state, CenterRenderer, CenterRendererFactory, MessageCacheCollection,
                                    StarAPIService, jndPubSub, FileDetail, memberService, Dialog, currentSessionHelper,
-                                   EntityHandler, JndUtil, RendererUtil) {
+                                   EntityHandler, JndUtil, RendererUtil, fileAPIservice) {
     return {
       restrict: 'E',
       replace: true,
@@ -310,9 +310,9 @@
        * @private
        */
       function _onClick(clickEvent) {
-        var jqTarget = $(clickEvent.target);
-        var id = jqTarget.closest('.msgs-group').attr('id');
         var messageCollection = MessageCacheCollection.getCurrent();
+        var jqTarget = $(clickEvent.target);
+        var id = jqTarget.closest('.message').attr('id');
         var msg = messageCollection.get(id);
         var hasAction = false;
         var jqElement;
@@ -330,6 +330,11 @@
         } else if (jqTarget.closest('._fileShare').length) {
           _onClickFileShare(msg);
           hasAction = true;
+        } else if (jqTarget.closest('._commentDelete').length) {
+          _onClickCommentDelete(msg);
+          hasAction = true;
+        } else if (jqTarget.closest('._fileDetail').length) {
+          _onClickFileDetail(msg);
         }
 
         if (hasAction) {
@@ -344,6 +349,67 @@
        */
       function _onClickFileShare(msg) {
         scope.onShareClick(msg.message);
+      }
+
+      /**
+       * comment delete
+       * @param {object} msg
+       * @private
+       */
+      function _onClickCommentDelete(msg) {
+        var file = RendererUtil.getFeedbackMessage(msg);
+        var comment = msg.message;
+
+        // message collection에서 바로 삭제한다.
+        MessageCollection.remove(comment.id, true);
+
+        if (msg.message.contentType === 'comment_sticker') {
+          FileDetail.deleteSticker(comment.id)
+            .success(_onSuccessCommentDelete);
+        } else {
+          FileDetail.deleteComment(file.id, comment.id)
+            .success(_onSuccessCommentDelete);
+        }
+      }
+
+      /**
+       * success comment delete
+       * @private
+       */
+      function _onSuccessCommentDelete() {
+        Dialog.success({
+          title: $filter('translate')('@message-deleted')
+        });
+      }
+
+      /**
+       * file detail
+       * @param {object} msg
+       * @param {boolean} [isFocusCommentInput=false]
+       * @private
+       */
+      function _onClickFileDetail(msg, isFocusCommentInput) {
+        var contentType = msg.message.contentType;
+        var userName = $filter('getName')(msg.message.writerId);
+        var itemId = contentType === 'comment' ? msg.feedbackId : msg.message.id;
+
+        if ($state.params.itemId != itemId) {
+          if (msg.feedback && contentType !== 'file') {
+            userName = $filter('getName')(msg.feedback.writerId);
+            itemId = msg.feedback.id;
+          }
+
+          if (isFocusCommentInput) {
+            $rootScope.setFileDetailCommentFocus = true;
+          }
+
+          $state.go('files', {
+            userName: userName,
+            itemId: itemId
+          });
+        } else if (isFocusCommentInput) {
+          fileAPIservice.broadcastCommentFocus();
+        }
       }
 
       /**
@@ -486,9 +552,11 @@
         jqTarget = $('#' + msg.id).find(jqTarget || '._star');
         if (jqTarget.length) {
           if (message.isStarred) {
-            jqTarget.removeClass('off').removeClass('msg-item__action');
+            jqTarget.removeClass('off').addClass('on');
+            jqTarget.find('i').removeClass('icon-star-off').addClass('icon-star-on');
           } else {
-            jqTarget.addClass('off msg-item__action');
+            jqTarget.removeClass('on').addClass('off');
+            jqTarget.find('i').removeClass('icon-star-on').addClass('icon-star-off');
           }
         }
       }
@@ -603,11 +671,24 @@
         var length = list.length;
         var htmlList = [];
         var messageCollection = MessageCacheCollection.getCurrent();
-        var index = Math.max(messageCollection.list.length - length, 0);
+        var index = messageCollection.list.length - length;
+        var prevIndex;
+        var prevMessage;
+
         _.forEach(list, function(message) {
           _pushMarkup(htmlList, message, index);
           index++;
         });
+
+        // append 되는 메시지가 child text 또는 child comment이면
+        // 이전 메시지의 뷰가 바뀌어야 한다(조건에 부합하는 이전 메시지는 메시지 작성 시간을 출력하지 않음).
+        if (messageCollection.isChildText(messageCollection.list.length - 1) ||
+          messageCollection.isChildComment(messageCollection.list.length - 1)) {
+          prevIndex = messageCollection.list.length - 2;
+          prevMessage = messageCollection.list[prevIndex];
+          _refresh(prevMessage.id, prevIndex);
+        }
+
         el.append(_getCompiledEl(htmlList.join('')));
         scope.onRepeatDone();
       }
@@ -695,6 +776,17 @@
       function _onRemove(angularEvent, index) {
         var messageCollection = MessageCacheCollection.getCurrent();
         var msg = messageCollection.list[index];
+        var prevIndex = index - 1;
+        var prevMessage;
+
+        // 삭제된 메시지의 이전 메시지가 child text 또는 child comment가 아니라면
+        // 이전 메시지의 뷰가 바뀌어야 한다(조건에 부합하는 이전 메시지는  메시지 작성 시간을 출력하지 않음).
+        if (!messageCollection.hasChildText(prevIndex) ||
+          !messageCollection.hasChildComment(prevIndex)) {
+          prevMessage = messageCollection.list[prevIndex];
+          _refresh(prevMessage.id, prevIndex);
+        }
+
         if (msg) {
           _refresh(msg.id, index);
         }

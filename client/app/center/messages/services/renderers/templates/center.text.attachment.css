@@ -1,16 +1,29 @@
-.attachment-content-wrapper {
+.message .attachment-content-wrapper {
+  display: block;
   position: relative;
-  padding-top: 10px;
-  padding-bottom: 8px;
+  margin-top: 3px;
+  margin-left: -1px;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  overflow: hidden;
 }
 .attachment-content-wrapper .attachment-content-bar {
   display: table-cell;
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
   min-width: 4px;
-  background-color: #d7e0e8;
-  border-radius: 2px;
+  background-color: #9da7ad;
 }
 .attachment-content-wrapper .attachment-content {
   display: table-cell;
   width: 100%;
-  padding-left: 12px;
+  min-height: 110px;
+  min-width: 360px;
+  max-width: calc(100% - 120px);
+  border: 1px solid #E4E8EB;
+  border-bottom: 1px solid rgba(5,35,60,0.2);
+  border-radius: 4px;
+  background-color: #FFF;
 }

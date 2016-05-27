@@ -1,22 +1,13 @@
-.msg-unread-bookmark {
-  color: #00abe6;
-  margin: 3px 0;
+.message.system-event.unread-mark {
+  margin: 28px 0;
 }
-.msg-unread-bookmark .msg-item-float img {
+.message.system-event.unread-mark:before {
   background-color: #00abe6;
 }
 
-.msg-unread-bookmark .fa-check {
-  font-weight: 400;
-}
-
-
-.msg-unread-bookmark.system-event-msg .msg-item-body {
-  font-size: 14px;
+.message.system-event.unread-mark .msg-item {
+  border: 0;
   color: #00abe6;
-}
-
-.msg-unread-bookmark.system-event-msg .msg-item-body span {
-
-  font-weight: 600;
+  font-weight: 700;
+  background-color: transparent;
 }

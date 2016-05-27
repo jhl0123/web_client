@@ -9,7 +9,7 @@
     .service('CenterRenderer', CenterRenderer);
 
   /* @ngInject */
-  function CenterRenderer($filter, MessageCacheCollection, CenterRendererFactory) {
+  function CenterRenderer($filter, MessageCacheCollection, CenterRendererFactory, memberService) {
     var _template = '';
     this.render = render;
 
@@ -70,15 +70,42 @@
       var content = renderer ? renderer.render(index) : '';
 
       var context = {
-        content: content,
-        contentType: contentType
+        css: {
+          conditions: []
+        }
       };
+
+      if (_.isObject(content)) {
+        context.css.conditions = content.conditions || [];
+        context.content = content.template;
+        context.contentType = contentType;
+      } else {
+        context.content = content;
+        context.contentType = contentType;
+      }
+
+      if (_isSelf(msg)) {
+        context.css.conditions.push('self');
+      }
 
       if (hasId) {
         context.id = msg.id;
       }
 
+      // message의 상태를 나타내는 className을 설정한다.
+      context.css.conditions = context.css.conditions.join(' ');
+
       return _template(context);
+    }
+
+    /**
+     * 현재 사용자가 message 작성자인지 여부를 반환한다.
+     * @param {object} msg
+     * @returns {boolean}
+     * @private
+     */
+    function _isSelf(msg) {
+      return msg.message.writerId === memberService.getMemberId();
     }
   }
 })();

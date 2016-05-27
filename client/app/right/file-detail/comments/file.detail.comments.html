@@ -1,17 +1,21 @@
 <div class="rpanel-detail-body-comment">
   <div class="comment-item"
        ng-class="{'sending-comment-item': comment.isSendingComment,
-                  'file-detail-disabled-member': comment.extIsDisabledMember}"
+                  'file-detail-disabled-member': comment.extIsDisabledMember,
+                  'comment-child': comment.extIsChild}"
        ng-repeat="comment in comments" id="{{comment.id}}">
-    <div class="comment-item__thumbnail">
-      <img class="user-profile user-thumb-sm cursor_pointer"
-           ng-src="{{ comment.extProfileImg }}"
-           ng-click="onMemberClick(comment.extWriter);"/>
-    </div>
     <div class="comment-item-header">
-      <span class="comment-item-header__name" ng-click="onMemberClick(comment.extWriter)">{{comment.extWriterName}}</span>
-      <span class="comment-item-header__created">{{comment.extCreateTimeView}}</span>
-      <div class="comment-item-header__action pull-right" ng-if="!comment.isSendingComment">
+      <div class="comment-writer-profile" ng-if="::!comment.extIsChild">
+        <img class="user-profile user-thumb-sm cursor_pointer"
+             ng-src="{{ comment.extProfileImg }}"
+             ng-click="onMemberClick(comment.extWriter);"/>
+      </div>
+      <span class="comment-writer-name inline-overflow-ellipsis selectable" ng-click="onMemberClick(comment.extWriter)">
+        {{comment.extWriterName}}
+      </span>
+      <span class="comment-writer-date">{{comment.extCreateDate}}</span>
+
+      <div class="comment-item-header__action pull-right" ng-if="::!comment.isSendingComment">
         <div class="comment-item-action comment-item-action-more"
              ng-if="hasOwnComment(comment)"
              dropdown
@@ -34,22 +38,27 @@
         </div>
       </div>
     </div>
+    <!--<file-detail-comment comment="comment"></file-detail-comment>-->
+
     <div class="comment-item-body">
       <div class="sticker size_5" ng-if="::comment.extIsSticker" ng-style="::{'background-image': 'url({{::comment.content.url}})'}"></div>
       <file-detail-comment ng-if="::!comment.extIsSticker"
+                           comment="comment"
                            content="comment.content.body"></file-detail-comment>
+      <span class="create-time msg-time" ng-if="::comment.extHasCreateTime">{{comment.extCreateTime}}</span>
     </div>
   </div>
 
   <div class="error-comment-item comment-item" ng-repeat="comment in errorComments"
        ng-class="{'file-detail-disabled-member': comment.extIsDisabledMember}">
-    <div class="comment-item__thumbnail">
+    <div class="comment-writer-profile">
       <img class="user-profile user-thumb-sm cursor_pointer"
            ng-src="{{ comment.extProfileImg }}" />
     </div>
     <div class="comment-item-header">
-      <span class="comment-item-header__name" ng-click="onMemberClick(comment.extWriter)">{{comment.extWriterName}}</span>
-      <span class="comment-item-header__created">{{comment.extCreateTimeView}}</span>
+      <span class="comment-writer-name" ng-click="onMemberClick(comment.extWriter)">{{comment.extWriterName}}</span>
+      <span class="comment-writer-date">{{comment.extCreateDate}}</span>
+
       <div class="comment-item-header__action pull-right">
         <div class="comment-item-action comment-item-action-more" dropdown ng-if="hasOwnComment(comment)">
           <a href="#" class="link-dark" dropdown-toggle>
@@ -69,13 +78,13 @@
     <div class="comment-item-body">
       <span ng-if="::comment.extIsSticker">
         <div class="sticker size_5"  ng-style="::{'background-image': 'url({{::comment.content.url}})'}"></div>
-        <span class="msg-item-header__retry cursor_pointer" ng-click="retry($index, comment)">
+        <span class="post-retry cursor_pointer" ng-click="retry($index, comment)">
           <i class="icon-refresh"></i> Retry
         </span>
       </span>
       <span ng-if="::!comment.extIsSticker">
         <span class="comment selectable keep" ng-bind-html="::comment.content.body"></span>
-        <span class="msg-item-header__retry cursor_pointer" ng-click="retry($index, comment)">
+        <span class="post-retry cursor_pointer" ng-click="retry($index, comment)">
           <i class="icon-refresh"></i> Retry
         </span>
       </span>

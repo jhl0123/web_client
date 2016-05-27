@@ -1,6 +1,5 @@
 .rpanel-detail-body-comment {
   background-color: white;
-  padding: 12px;
 }
 
 .archived-file-detail .rpanel-detail-body-comment {
@@ -9,10 +8,22 @@
 
 .comment-item {
   position: relative;
+  padding: 15px 12px 12px 50px;
   font-size: 14px;
   color: #333;
-  padding: 5px 10px 5px 38px;
-  margin: 0 0 8px;
+  border-bottom: 1px solid #e4e8eb;
+}
+.comment-item:last-child {
+  border-bottom: 0;
+}
+.comment-item.comment-child:after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0px;
+  width: 48px;
+  height: 1px;
+  background-color: #FFF;
 }
 
 .error-comment-item .comment-item-body,
@@ -20,29 +31,31 @@
   color: #c1c1c1;
 }
 
-.comment-item__thumbnail {
+.comment-writer-profile {
   position: absolute;
-  left: 0;
   top: 0;
+  left: -38px;
 }
 
 .comment-item-header {
-  line-height: 14px;
-  margin-bottom: 5px;
+  position: relative;
+  margin-top: -5px;
 }
 
 .comment-item-header > span {
   margin-right: 3px;
 }
 
-.comment-item-header__name {
+.comment-writer-name {
+  max-width: 45%;
   font-weight: 700;
   cursor: pointer;
 }
 
-.comment-item-header__created {
+.comment-writer-date {
   color: #999;
-  font-size: 12px;
+  font-size: 11px;
+  vertical-align: bottom;
 }
 
 .comment-item .comment-item-action {
@@ -55,6 +68,10 @@
 
 .comment-item-action.comment-item-action-more {
   padding-right: 3px;
+}
+
+.comment-item-header__action {
+  margin-top: 2px;
 }
 
 .comment-item-header__action .comment-item-action > a {
@@ -77,6 +94,11 @@
 }
 
 .comment-item-body .comment {
+  display: inline;
   margin: 0;
   line-height: 20px;
+}
+
+.comment-item-body .create-time {
+  display: inline;
 }

@@ -9,7 +9,7 @@
     .directive('fileDetailComments', fileDetailComments);
 
   /* @ngInject */
-  function fileDetailComments($filter, $state, Dialog, FileDetail, jndPubSub, JndUtil, memberService) {
+  function fileDetailComments($filter, $state, DateFormatter, Dialog, FileDetail, jndPubSub, JndUtil, memberService) {
     return {
       restrict: 'E',
       replace: true,
@@ -28,6 +28,13 @@
     function link(scope, el) {
       var _commentMap = {};
 
+      scope.hasOwnComment = hasOwnComment;
+      scope.starComment = starComment;
+      scope.deleteComment = deleteComment;
+
+      scope.retry = retry;
+      scope.deleteSendingComment = deleteSendingComment;
+
       _init();
 
       /**
@@ -41,13 +48,6 @@
 
           _commentMap[comment.id] = comment;
         });
-
-        scope.hasOwnComment = hasOwnComment;
-        scope.starComment = starComment;
-        scope.deleteComment = deleteComment;
-
-        scope.retry = retry;
-        scope.deleteSendingComment = deleteSendingComment;
 
         _attachScopeEvents();
         _attachDomEvents();
@@ -125,9 +125,7 @@
        * @param {object} $event
        */
       function starComment($event) {
-        setTimeout(function() {
-          $($event.target).parents('.comment-item-header__action').find('.comment-star i').trigger('click');
-        });
+        $($event.target).parents('.comment-item-header__action').find('.comment-star i').trigger('click');
       }
 
       /**
