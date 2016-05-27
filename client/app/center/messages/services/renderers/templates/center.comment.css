@@ -59,7 +59,7 @@
 }
 
 .message.comment .member-profile {
-  top: 6px;
+  top: 4px;
   left: -45px;
 }
 
@@ -118,7 +118,7 @@
   height: 1px;
   left: 0;
   right: 0;
-  background-color: rgba(5, 35, 60, 0.1);
+  background-color: rgba(5, 35, 60, 0.13);
   z-index: 1;
 }
 

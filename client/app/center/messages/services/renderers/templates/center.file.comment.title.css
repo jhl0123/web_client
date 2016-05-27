@@ -4,8 +4,7 @@
   left: 19px;
   top: 12px;
   font-size: 19px;
-  color: rgba(11, 31, 61, 0.75);
-  opacity: 0.5;
+  color: rgba(5, 35, 60, 0.3);
 }
 
 .message.comment.first .comment-all + .msg-item {
