@@ -99,7 +99,7 @@ article {
   display: inline-block;
   position: relative;
   margin: 6px 0 0 0;
-  max-width: calc(100% - 74px);
+  max-width: calc(100% - 84px);
   border-radius: 3px 3px 4px 4px;
   border: 1px solid #E4E8EB;
   border-bottom: 1px solid rgba(5,35,60,0.2);
