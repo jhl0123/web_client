@@ -19,7 +19,6 @@
     };
 
     function link(scope, el, attrs) {
-      var messageCollection;
       var _teamId;
       var _listScope = scope.$new();
       var that = this;
@@ -31,7 +30,6 @@
        * @private
        */
       function _init() {
-        messageCollection = MessageCacheCollection.get(currentSessionHelper.getCurrentEntityId());
         _teamId = memberService.getTeamId();
         _attachEvents();
         _attachDomEvents();
@@ -105,6 +103,7 @@
        * @private
        */
       function _onFileShareStatusChange(angularEvent, data) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var entityIndex;
         var currentEntityId = currentSessionHelper.getCurrentEntityId(true);
         var eventType = data.event;
@@ -143,6 +142,7 @@
        * @private
        */
       function _onFileUpdated(angularEvent, file) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var fileId = file.id;
         return FileDetail.get(fileId)
           .success(function(response) {
@@ -187,6 +187,7 @@
        * @private
        */
       function _onFileDeleted(angularEvent, param) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var deletedFileId = parseInt(param.file.id, 10);
         _.forEach(messageCollection.list, function(msg, index) {
           if (msg.message.id === deletedFileId) {
@@ -236,6 +237,7 @@
       }
 
       function _refreshMsgByMemberId(id) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var list = messageCollection.list;
 
         _.forEach(list, function(msg, index) {
@@ -310,6 +312,7 @@
       function _onClick(clickEvent) {
         var jqTarget = $(clickEvent.target);
         var id = jqTarget.closest('.msgs-group').attr('id');
+        var messageCollection = MessageCacheCollection.getCurrent();
         var msg = messageCollection.get(id);
         var hasAction = false;
         var jqElement;
@@ -455,6 +458,7 @@
        * @private
        */
       function _setStarred(messageId, isStarred) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         messageCollection.forEach(function(msg) {
           var message;
 
@@ -537,6 +541,7 @@
        * @private
        */
       function _isDateRendered(id, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var jqTarget = $('#' + id);
         if (jqTarget.length) {
           if (messageCollection.isNewDate(index) && jqTarget.prev().attr('content-type') !== 'dateDivider') {
@@ -555,6 +560,7 @@
        */
       function _onPrepend(angularEvent, list) {
         var htmlList = [];
+        var messageCollection = MessageCacheCollection.getCurrent();
         var headMsg = messageCollection.list[list.length];
         _.forEach(list, function(message, index) {
           _pushMarkup(htmlList, message, index);
@@ -576,6 +582,7 @@
        * @private
        */
       function _pushMarkup(htmlList, message, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         if (messageCollection.isNewDate(index)) {
           htmlList.push(CenterRenderer.render(index, 'dateDivider'));
         }
@@ -595,6 +602,7 @@
       function _onAppend(angularEvent, list) {
         var length = list.length;
         var htmlList = [];
+        var messageCollection = MessageCacheCollection.getCurrent();
         var index = Math.max(messageCollection.list.length - length, 0);
         _.forEach(list, function(message) {
           _pushMarkup(htmlList, message, index);
@@ -658,6 +666,7 @@
        * @private
        */
       function _onBeforeRemove(angularEvent, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var msg = messageCollection.list[index];
         var isLastMsg = (index === messageCollection.list.length - 1);
         var jqTarget = $('#' + msg.id);
@@ -684,6 +693,7 @@
        * @private
        */
       function _onRemove(angularEvent, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var msg = messageCollection.list[index];
         if (msg) {
           _refresh(msg.id, index);
@@ -696,6 +706,7 @@
        */
       function _renderAll() {
         var htmlList = [];
+        var messageCollection = MessageCacheCollection.getCurrent();
         var list = messageCollection.list;
         _destroyCompiledScope();
         _.forEach(list, function(message, index) {
@@ -714,6 +725,7 @@
        * @private
        */
       function _onAttachMessagePreview(angularEvent, messageId) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         messageCollection.forEach(function(msg, index) {
           if (messageId === (msg.message && msg.message.id)) {
             _refresh(msg.id, index);
@@ -741,6 +753,7 @@
        */
       function _refreshFileMessage(socketEvent, callback) {
         var messageId = socketEvent.data.message.id;
+        var messageCollection = MessageCacheCollection.getCurrent();
         messageCollection.forEach(function(msg, index) {
           if (messageId === (msg.message && msg.message.id) && !msg.message.content.extHasPreview) {
             // back-end에서 link
@@ -784,7 +797,8 @@
         var fileId = data.file.id;
         var commentCount = data.file.commentCount;
         var message;
-
+        var messageCollection = MessageCacheCollection.getCurrent();
+        
         _.forEach(messageCollection.list, function(msg) {
           message = RendererUtil.getFeedbackMessage(msg);
           if (message.id === fileId) {

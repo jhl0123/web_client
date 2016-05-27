@@ -147,7 +147,6 @@
           if (this.hasLastMessage()) {
             this.append(message);
           }
-          console.log('###_CREATED-CURRENT', message);
           if (this._isSystemMessage(message)) {
             this._pub('MessageCollection:newSystemMessageArrived', message);
           } else {
@@ -240,17 +239,19 @@
        * 번수를 초기화 한다.
        */
       reset: function() {
-        this.list = [];
-        this._map = {
-          messageId: {},
-          id: {}
-        };
-        this._linkId = {
-          first: -1,
-          last: -1
-        };
-        this.status.isInitialized = false;
-        this._pub('MessageCollection:reset');
+        if (this.status.isInitialized) {
+          this.list = [];
+          this._map = {
+            messageId: {},
+            id: {}
+          };
+          this._linkId = {
+            first: -1,
+            last: -1
+          };
+          this.status.isInitialized = false;
+          this._pub('MessageCollection:reset');
+        }
       },
 
       /**

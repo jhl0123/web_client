@@ -2,7 +2,7 @@
 
 var app = angular.module('jandiApp');
 
-app.controller('centerpanelController', function($scope, $rootScope, $state, $filter, $timeout, $q, $sce, $modal,
+app.controller('CenterPanelCtrl', function($scope, $rootScope, $state, $filter, $timeout, $q, $sce, $modal,
                                                  entityheaderAPIservice, messageAPIservice, fileAPIservice, entityAPIservice,
                                                  userAPIservice, analyticsService, leftpanelAPIservice, memberService,
                                                  publicService, MessageQuery, currentSessionHelper, logger,
@@ -19,10 +19,11 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
 
   var _scrollHeightBefore;
   var _hasLastReadMarker;
+
   var _isDestroyed = false;
   var _isViewContentLoaded = false;
 
-  var _messageCollection = MessageCacheCollection.getCurrent();
+  var _messageCollection;
 
   var _entityType = $state.params.entityType;
   var _entityId = $state.params.entityId;
@@ -41,36 +42,33 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    */
   var _hasRetryGetRoomInfo = false;
 
-  var deferredObject = {
+  var _deferredObject = {
     getMessage: null,
     postMessage: null,
     updateMessage: null,
     getRoomInformation: null
   };
 
-  var messages = {};
-  var _jqContainer;
   var _stickerType = 'chat';
   var _sticker = null;
 
+  /**
+   *
+   * @type {{entityType: *}}
+   */
+  $scope.analytics = {
+    entityType: _entityType
+  };
 
   $scope.hasScrollToBottom = false;
+  $scope.hasOldMessageToLoad = true;
   $scope.hasNewMsg = false;
   $scope.isInitializeRender = false;
   $scope.hasLastMessageRendered = false;
-
-  // To be used in directive('centerHelpMessageContainer')
   $scope.emptyMessageStateHelper = '';
 
-
-
   //todo: $scope property 수가 너무 많아질 경우, object 형태로 관리하는 방안을 고려해 보아야 함.
-  $scope.status = _messageCollection.status;
-  $scope.isNewDate = _messageCollection.isNewDate;
-  $scope.hasLinkPreview = _messageCollection.hasLinkPreview;
-  $scope.isChildText = _messageCollection.isChildText;
-  $scope.isChildComment = _messageCollection.isChildComment;
-  $scope.isTitleComment = _messageCollection.isTitleComment;
+
 
   $scope.onClickUnshare = onClickUnshare;
   $scope.onFileListClick = onFileListClick;
@@ -103,7 +101,8 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
   $scope.onSendingRepeatDone = onSendingRepeatDone;
 
   $scope.isLastReadMarker = isLastReadMarker;
-  $scope.hasOldMessageToLoad = true;
+
+
   _init();
 
   /**
@@ -111,15 +110,27 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    * @private
    */
   function _init() {
-    centerService.preventChatWithMyself(_entityId);
-    TopicInvitedFlagMap.remove(_entityId);
-
-    $scope.$on('$destroy', _onDestroy);
+    $scope.$on('$stateChangeSuccess', _onStateChangeSuccess);
     $scope.$on('$viewContentLoaded', _onViewContentLoaded);
 
     //entity 리스트 load 가 완료되지 않았다면 dataInitDone 이벤트를 기다린다
-    if (publicService.isInitDone()) {
+    if (publicService.isInitDone() && _entityId &&  _entityType) {
       _initializeListeners();
+      _initialRender();
+    } else {
+      $scope.$on('publicService:dataInitDone', _init);
+    }
+  }
+
+  /**
+   *
+   * @private
+   */
+  function _initialRender() {
+    if (publicService.isInitDone()) {
+      centerService.preventChatWithMyself(_entityId);
+      TopicInvitedFlagMap.remove(_entityId);
+      _initMessageCollection();
       _reset();
       _initializeView();
       _initializeFocusStatus();
@@ -129,10 +140,8 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
       } else {
         _getCurrentRoomMarker();
       }
-
+      _checkEntityMessageStatus();
       centerService.setHistory(_entityType, _entityId);
-    } else {
-      $scope.$on('publicService:dataInitDone', _init);
     }
   }
 
@@ -167,15 +176,14 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
   function _reset() {
     $scope.isInitializeRender = false;
     $scope.currentEntity = currentSessionHelper.getCurrentEntity();
-
+    $scope.analytics.entityType = _entityType;
     MessageQuery.reset();
     MessageSendingCollection.reset();
 
     centerService.setEntityId(centerService.isChat() ? currentSessionHelper.getCurrentEntity().entityId : _entityId);
-    _lastReadMessageMarker = _getEntityId() ? memberService.getLastReadMessageMarker(_getEntityId()) : null;
 
     modalHelper.closeModal('cancel');
-
+    _cancelHttpRequest();
     _initLocalVariables();
     _hideContents();
   }
@@ -185,7 +193,6 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    * @private
    */
   function _initializeListeners() {
-    //viewContent load 시 이벤트 핸들러 바인딩
     $scope.$on('NetInterceptor:connect', _onConnected);
     $scope.$on('NetInterceptor:onGatewayTimeoutError', _refreshView);
     $scope.$on('Auth:refreshTokenSuccess', _refreshView);
@@ -230,6 +237,50 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
     $scope.$on('jndWebSocketMessage:messageDeleted', _onMessageDeleted);
   }
 
+  function _initMessageCollection() {
+    _messageCollection = MessageCacheCollection.getCurrent();
+
+    $scope.status = _messageCollection.status;
+    $scope.isNewDate = _messageCollection.isNewDate;
+    $scope.hasLinkPreview = _messageCollection.hasLinkPreview;
+    $scope.isChildText = _messageCollection.isChildText;
+    $scope.isChildComment = _messageCollection.isChildComment;
+    $scope.isTitleComment = _messageCollection.isTitleComment;
+  }
+
+  /**
+   * state change 이벤트 핸들러
+   * @param {Object} event
+   * @param {Object} toState
+   * @param {Object} toParams
+   * @param {Object} fromState
+   * @param {Object} fromParams
+   * @private
+   */
+  function _onStateChangeSuccess(event, toState, toParams, fromState, fromParams) {
+    var entityId = +toParams.entityId;
+    var entityType = toParams.entityType;
+    if (entityId && entityType && _isRoomChanged(entityId)) {
+      if (_entityId && _messageCollection) {
+        _saveTextBuffer();
+        _messageCollection.toBackground();
+      }
+      _entityType = entityType;
+      _entityId = entityId;
+      _initialRender();
+    }
+  }
+
+  /**
+   * 방 정보가 변경 되었는지 여부를 반환한다.
+   * @param {number} entityId
+   * @returns {boolean}
+   * @private
+   */
+  function _isRoomChanged(entityId) {
+    return entityId !== _entityId;
+  }
+
   /**
    * 새 메세지를 조회하고 있는지를 반환한다.
    * @returns {boolean}
@@ -253,9 +304,28 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    * @private
    */
   function _initLocalVariables() {
+    _isFromSearch = false;
+    _hasRetryGetRoomInfo = false;
+    _lastReadMessageMarker = _getEntityId() ? memberService.getLastReadMessageMarker(_getEntityId()) : null;
+
+    _deferredObject = {
+      getMessage: null,
+      postMessage: null,
+      updateMessage: null,
+      getRoomInformation: null
+    };
+
+    _stickerType = 'chat';
+    _sticker = null;
+
+    $scope.hasScrollToBottom = false;
+    $scope.hasNewMsg = false;
+    $scope.isInitializeRender = false;
+    $scope.hasLastMessageRendered = false;
+    $scope.emptyMessageStateHelper = '';
+
     _resetUnreadCounters();
     _resetNewMsgHelpers();
-    _cancelHttpRequest();
   }
 
   /**
@@ -276,22 +346,9 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    */
   function _onViewContentLoaded() {
     _isViewContentLoaded = true;
-    _jqContainer = $('.msgs');
     $timeout(function() {
-      $('#message-input').val(TextBuffer.get(_entityId)).trigger('change');
+      _loadTextBuffer();
     });
-  }
-
-  /**
-   * scope 의 $destroy 이벤트 발생 시 이벤트 핸들러
-   * @private
-   */
-  function _onDestroy() {
-    _isDestroyed = true;
-    modalHelper.closeModal('cancel');
-    _cancelHttpRequest();
-    TextBuffer.set(_entityId, $('#message-input').val());
-    _messageCollection.toBackground();
   }
 
   /**
@@ -299,7 +356,7 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    * @private
    */
   function _cancelHttpRequest() {
-    _.each(deferredObject, function(deferred) {
+    _.each(_deferredObject, function(deferred) {
       if (deferred && _.isFunction(deferred.resolve)) {
         deferred.resolve();
       }
@@ -347,7 +404,7 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    */
   function _onWindowUnload() {
     if (_isViewContentLoaded) {
-      TextBuffer.set(_entityId, $('#message-input').val());
+      _saveTextBuffer();
     }
   }
 
@@ -499,6 +556,8 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
       _findMessageDomElementById('unread-bookmark', true);
     } else {
       _scrollToBottom();
+      //fixme: help message 가 존재할 경우 랜더링이 이후에 완료되므로, $timeout 으로 한번 더 scrollToBottom 을 호출한다.
+      $timeout(_scrollToBottom);
     }
   }
 
@@ -699,9 +758,9 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
       if (queue.length) {
         $scope.isPosting = true;
         payload = queue.shift();
-        deferredObject.postMessage = $q.defer();
+        _deferredObject.postMessage = $q.defer();
         messageAPIservice.postMessage(_entityType, _entityId,
-          payload.content, payload.sticker, payload.mentions, deferredObject.postMessage)
+          payload.content, payload.sticker, payload.mentions, _deferredObject.postMessage)
           .success(function (response) {
             //markerService.updateMarker(memberId, response.linkId);
             MessageSendingCollection.sent(payload, true);
@@ -1167,8 +1226,8 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
    */
   function _getCurrentRoomMarker() {
     var currentRoomId = _getEntityId();
-    deferredObject.getRoomInformation = $q.defer();
-    messageAPIservice.getRoomInformation(currentRoomId, deferredObject.getRoomInformation)
+    _deferredObject.getRoomInformation = $q.defer();
+    messageAPIservice.getRoomInformation(currentRoomId, _deferredObject.getRoomInformation)
       .success(function(response) {
         _initMarkers(response.markers);
         _hasRetryGetRoomInfo = false;
@@ -1200,7 +1259,18 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
     _adjustScroll();
     _checkEntityMessageStatus();
     publicService.hideDummyLayout();
-    $scope.isInitializeRender = true;
+    if (!$scope.isInitializeRender) {
+      _onInitialRenderDone();
+      $scope.isInitializeRender = true;
+    }
+  }
+
+  /**
+   * room 의 초기 랜더링 완료 이후 수행할 함수
+   * @private
+   */
+  function _onInitialRenderDone() {
+    _loadTextBuffer();
   }
 
   /**
@@ -1299,9 +1369,9 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
     var messageId;
     var linkPreview;
     var timeoutCaller;
-    deferredObject.getMessage = $q.defer();
+    _deferredObject.getMessage = $q.defer();
     messageAPIservice
-      .getMessage(memberService.getTeamId(), data.message.id, {}, deferredObject.getMessage)
+      .getMessage(memberService.getTeamId(), data.message.id, {}, _deferredObject.getMessage)
       .success(function(response) {
         messageId = response.id;
         linkPreview = response.linkPreview;
@@ -1435,17 +1505,35 @@ app.controller('centerpanelController', function($scope, $rootScope, $state, $fi
   }
 
   /**
+   * text-buffer 에 현재 input 정보를 저장한다.
+   * @private
+   */
+  function _saveTextBuffer() {
+    TextBuffer.set(_entityId, $('#message-input').val());
+  }
+
+  /**
+   * text-buffer 에 저장된 값을 현재 input 에 반영한다.
+   * @private
+   */
+  function _loadTextBuffer() {
+    $('#message-input').val(TextBuffer.get(_entityId)).trigger('change').focus();
+  }
+
+  /**
    * message input change event handler
    * @param {object} event
    */
   function onMessageInputChange(event) {
     var message;
+    var value = event.target.value;
     if (event.type === 'keyup' && jndKeyCode.match('ESC', event.keyCode)) {
       _hideSticker();
-    } else if (_.isString(event.target.value)) {
-      message = _.trim(event.target.value).length;
+    } else if (_.isString(value)) {
+      message = _.trim(value).length;
       $scope.hasMessage = message > 0 || !!_sticker;
       $scope.showMarkdownGuide = message > 1;
+      TextBuffer.set(_entityId, value);
     }
   }
 

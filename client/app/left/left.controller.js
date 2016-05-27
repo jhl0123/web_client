@@ -14,7 +14,6 @@ app.controller('leftPanelController', function(
   //unread 갱신시 $timeout 에 사용될 타이머
   var _unreadTimer;
   var _isBadgeMoveLocked = false;
-  var _entityEnterTimer;
   var _hasToUpdate = false;
   // center chat timer
   var _timerUpdateCenterChat;
@@ -297,9 +296,7 @@ app.controller('leftPanelController', function(
       $scope.entityId = entity.id;
       jndPubSub.pub('onBeforeEntityChange', entity);
     });
-    $timeout.cancel(_entityEnterTimer);
-    _entityEnterTimer = $timeout(_.bind(_doEnter, _that, entity));
-    // _doEnter(entity);
+    _doEnter(entity);
   }
 
   /**

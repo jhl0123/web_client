@@ -3,11 +3,9 @@
 
   angular
     .module('jandiApp')
-    .directive('whenScrolled', whenScrolled)
-    .directive('unreadCounter', unreadCounter)
-    .directive('disabledMemberDetector', disabledMemberDetector);
+    .directive('centerScroll', centerScroll);
 
-  function whenScrolled(jndPubSub) {
+  function centerScroll(jndPubSub) {
     return {
       restrict: 'A',
       link: link
@@ -70,44 +68,5 @@
     }
   }
 
-  function unreadCounter() {
-
-    var unreadCounter = -1;
-
-    return {
-      restrict: 'A',
-      link: link
-    };
-
-    function link(scope, element, attrs, ctrl) {
-
-      if (unreadCounter > 0) {
-        unreadCounter = scope.roomMemberLength;
-      }
-
-      console.log(unreadCounter);
-      console.log(attrs.unreadCounter);
-      console.log(scope.roomMemberLength)
-    }
-  }
-
-  /* @ngInject */
-  function disabledMemberDetector(publicService) {
-    return {
-      restrict: 'A',
-      link: link,
-      scope: false
-    };
-
-    function link(scope, el, attrs) {
-      var _currentEntity = (scope.msg && scope.msg.fromEntity) || scope.currentEntity;
-      if (publicService.isDisabledMember(_currentEntity)) {
-        el.addClass(attrs.disabledMemberDetector);
-      } else {
-        el.removeClass(attrs.disabledMemberDetector);
-      }
-
-    }
-  }
 
 })();
