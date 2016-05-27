@@ -264,10 +264,11 @@
 
 .msg-file.unshared .info-title,
 .info-group-bottom .info-title {
-  max-width: 250px;
   color: #333;
   font-weight: 700;
   font-size: 15px;
+  display: inline-block;
+  margin-right: 0.25em;
 }
 
 .info-group-bottom .info-size,
@@ -281,7 +282,10 @@
 .msg-file.unshared .card-info.card-unshared,
 .msg-file.archived .card-info.card-archived {
   padding-left: 12px;
-  line-height: 64px;
+  line-height: 20px;
+  min-height: 64px;
+  vertical-align: middle;
+  padding: 20px 15px 20px 20px;
 }
 
 .msg-file .info-extra {
@@ -289,7 +293,12 @@
   margin-left: 8px;
   line-height: 18px;
 }
-
+.msg-file.unshared .info-extra,
+.msg-file.unshared .info-extra .unshared-label {
+  display: inline-block;
+  margin-left: 0;
+  line-height: 18px;
+}
 .msg-file.archived .info-title {
   color: #b7b7b7;
 }
