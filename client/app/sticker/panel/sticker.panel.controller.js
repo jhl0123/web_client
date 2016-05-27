@@ -9,7 +9,7 @@
     .module('jandiApp')
     .controller('StickerPanelCtrl', StickerPanelCtrl);
 
-  function StickerPanelCtrl($scope, $attrs, jndPubSub, Sticker, JndUtil) {
+  function StickerPanelCtrl($scope, $attrs, jndPubSub, Sticker, JndUtil, AccountHasSeen) {
     var _groups;
 
     var MAX_COLUMN = parseInt($attrs.maxColumns, 10);
@@ -163,6 +163,12 @@
      */
     function _setStickers(group, stickers, isForward) {
       JndUtil.safeApply($scope, function() {
+        //dingo 스티커에 대해 isNew 제거 처리
+        //TODO: Dingo 스티커에 대한 new 아이콘 제거시 아래 로직 제거해야 함.
+        if (group.id === 103) {
+          AccountHasSeen.set('STICKER_DINGO', true);
+          group.isNew =false;
+        }
         $scope.list = stickers;
       });
 
