@@ -9,9 +9,8 @@
     .service('FileRenderer', FileRenderer);
 
   /* @ngInject */
-  function FileRenderer($rootScope, $filter, $state, modalHelper, MessageCacheCollection, RendererUtil, CoreUtil, JndPdfViewer,
-                        FileDetail, memberService, fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper,
-                        publicService) {
+  function FileRenderer($filter, modalHelper, MessageCacheCollection, RendererUtil, JndPdfViewer, FileDetail, 
+                        fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper, publicService) {
     var messageHeightMap = {};
     var _template = '';
 

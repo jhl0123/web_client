@@ -470,7 +470,7 @@
        */
       hasChildText: function(index) {
         var contentType = this.getContentType(index);
-        return !!(centerService.isTextType(contentType) && MessageText.isChild(index + 1, that.list));
+        return !!(centerService.isTextType(contentType) && MessageText.isChild(index + 1, this.list));
       },
       
       /**
@@ -490,7 +490,7 @@
        */
       hasChildComment: function(index) {
         var contentType = this.getContentType(index);
-        return !!(centerService.isCommentType(contentType) && MessageComment.isChild(index + 1, that.list));
+        return !!(centerService.isCommentType(contentType) && MessageComment.isChild(index + 1, this.list));
       },
       
       /**
@@ -500,7 +500,7 @@
        */
       isFirstComment: function(index) {
         var contentType = this.getContentType(index);
-        return !!(centerService.isCommentType(contentType) && MessageComment.isFirst(index, that.list));
+        return !!(centerService.isCommentType(contentType) && MessageComment.isFirst(index, this.list));
       },
       
       /**
@@ -510,7 +510,7 @@
        */
       isLastComment: function(index) {
         var contentType = this.getContentType(index);
-        return !!(centerService.isCommentType(contentType) && MessageComment.isLast(index, that.list));
+        return !!(centerService.isCommentType(contentType) && MessageComment.isLast(index, this.list));
       },
       
       /**
