@@ -9,7 +9,7 @@
     .service('ListRenderer', ListRenderer);
 
   /* @ngInject */
-  function ListRenderer(ItemRenderFactory) {
+  function ListRenderer(ItemRenderFactory, $filter) {
     this.render = render;
 
     /**
@@ -26,6 +26,7 @@
       var itemRenderer = ItemRenderFactory.get(data.type);
       var i;
       var len;
+      var item;
 
       var position;
 
@@ -36,7 +37,14 @@
       position = data.viewport.getPosition();
 
       for (i = position.beginIndex, len = position.endIndex; i <= len; ++i) {
-        elements.push(itemRenderer.render(data.list[i], data.filterText, data.filterType));
+        item = data.list[i];
+
+        if (item.name) {
+          // data.name에 xss 방지
+          item.extEncodedName = $filter('htmlEncode')(item.name);
+        }
+
+        elements.push(itemRenderer.render(item, data.filterText, data.filterType));
       }
 
       data.viewport.render(position, elements);
