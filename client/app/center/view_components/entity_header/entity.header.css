@@ -13,8 +13,8 @@
   margin: 0;
   padding-left: 20px;
   padding-right: 10px;
-  background-color: #f1f4f8;
-  border-bottom: 1px solid #e1e1e1;
+  background-color: #FFF;
+  border-bottom: 1px solid #D5DADB;
   -webkit-transitionDISABLED: .15s .2s ease-out;
   -moz-transitionDISABLED: .15s .2s ease-out;
   -o-transitionDISABLED: .15s .2s ease-out;
@@ -181,7 +181,7 @@
 }
 
 .panel-title-right-menu {
-  background-color: white;
+  background-color: #EAF1F5;
   border-radius: 5px;
   margin: 5px 0;
   height: 25px;
@@ -220,7 +220,7 @@
 .panel-title-right-menu__separator {
   height: 100%;
   width: 1px;
-  background-color: #d7e0e8;
+  background-color: #FFF;
   display: inline-block;
 }
 .panel-title-member {
@@ -391,7 +391,7 @@
   height: 25px;
   line-height: 25px;
   padding: 0 5px;
-  background-color: #fff;
+  background-color: #EAF1F5;
 }
 .panel-title-right-menu .panel-title-right-item:hover {
   background-color: #d7e0e8;

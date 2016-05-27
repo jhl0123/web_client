@@ -240,13 +240,13 @@ by ysyun 2015.2.25
 }
 
 .footer {
-  background: #f9f9f9;
+  background: #FFF;
   position: absolute;
   margin-right: 0px;
   left: 0;
   right: 0;
   bottom: 0;
-  border-top: 1px solid #e1e1e1;
+  border-top: 1px solid #D5DADB;
   z-index: 12;
 }
 .footer:after {
