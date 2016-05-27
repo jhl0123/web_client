@@ -78,9 +78,16 @@
   text-decoration: none;
 }
 
+.comment-profile {
+  display: inline-block;
+}
+
 .comment-item-body {
   position: relative;
   line-height: 14px;
+}
+.comment-item.comment-child .comment-item-body {
+  margin-right: 40px;
 }
 
 .comment-item__profile {
