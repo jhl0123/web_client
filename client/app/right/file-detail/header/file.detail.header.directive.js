@@ -9,7 +9,7 @@
     .directive('fileDetailHeader', fileDetailHeader);
 
   /* @ngInject */
-  function fileDetailHeader($state, $filter, AnalyticsHelper, analyticsService, Dialog, fileAPIservice, jndPubSub,
+  function fileDetailHeader($state, $filter, $timeout, AnalyticsHelper, analyticsService, Dialog, fileAPIservice, jndPubSub,
                             modalHelper, RightPanel) {
     return {
       require: '^fileDetailContent',
@@ -56,6 +56,9 @@
 
           _attachScopeEvents();
         }
+
+        // render 후 pub
+        $timeout(RightPanel.pubRendered);
       }
 
       /**
