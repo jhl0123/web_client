@@ -1,6 +1,10 @@
 .message.self .msg-item {
-  background-color: rgba(208, 231, 249, 0.8);
+  background-color: #E8F2FB;
+  border-bottom-color: #CBDCEA;
+}
+.message.self.comment .msg-item:hover {
+  background-color: #F7FBFE;
 }
 .message.self.text .msg-item {
-  border: 1px solid rgba(15,65,105,0.1);
+  border: 1px solid #CBDCEA;
 }

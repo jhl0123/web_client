@@ -47,7 +47,7 @@ article {
   min-width: 260px;
   margin-right: 0;
   padding-bottom: 0;
-  background-color:#eff3fa;
+  background-color:#F1F7FC;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 9;
@@ -101,7 +101,7 @@ article {
   margin: 6px 0 0 0;
   max-width: calc(100% - 84px);
   border-radius: 3px 3px 4px 4px;
-  border: 1px solid #E4E8EB;
+  border: 1px solid rgba(5, 35, 60, 0.1);
   border-bottom: 1px solid rgba(5,35,60,0.2);
   background-color: #fff;
   color: #333;
