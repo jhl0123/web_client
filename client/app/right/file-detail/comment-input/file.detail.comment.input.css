@@ -32,10 +32,18 @@
 }
 
 /* sticker panel */
-.file-detail .message-input-wrapper .input-container-over .sticker_panel {
-  top: -254px;
-  width: 265px;
+.file-detail .sticker_panel {
+  width: 333px;
 }
+
+.file-detail .sticker_panel.dropdown-menu-up {
+  top: -254px;
+}
+
+.file-detail .sticker_panel.dropdown-menu-down {
+  top: 89px;
+}
+
 .file-detail .message-input-wrapper .input-container-over .sticker_panel_contents {
   width: 100%;
   height: 211px;

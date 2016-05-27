@@ -107,8 +107,16 @@
           scope.select({isOpen: true});
           _jqStickerPanelBtn.attr('tabIndex', -1);
 
-          if (isOpen && scope.name === 'chat') {
+          if (scope.name === 'chat') {
             Tutorial.hideTooltip('sticker');
+          } else if (scope.name === 'file') {
+            // file에서 sticker open시 댓글이 작성되지 않아 '_fileDetailBody' 영역이 sticker를 표현할 만큼 충분히 높지 않아
+            // '_fileDetailBody'를 넘어서서 표현되어 viewport내에 보이지 않는 이슈 처리
+            if ($('._fileDetailBody').offset().top > _jqStickerPanel.offset().top) {
+              _jqStickerPanel.addClass('dropdown-menu-down');
+            } else {
+              _jqStickerPanel.addClass('dropdown-menu-up');
+            }
           }
         } else {
           _jqStickerPanel.removeClass('vivid');
