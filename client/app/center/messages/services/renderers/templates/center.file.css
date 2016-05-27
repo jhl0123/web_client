@@ -120,10 +120,14 @@
   padding-left: 4px;
   padding-right: 4px;
 }
-
+.msg-file-actions .file-download {
+  padding: 2px 5px;
+  font-size: 14px;
+}
 .msg-file-actions .file-download:hover,
 .msg-file-actions .file-download:focus {
   text-decoration: none;
+  background-color: rgba(143, 174, 186, 0.2);
 }
 
 .file-uploaded-extra {
