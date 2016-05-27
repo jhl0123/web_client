@@ -26,17 +26,19 @@
       var messages = list;
       var message = messages[index];
       var prevMessage;
-      var feedbackId;
+
+      var isTitle = true;
 
       if (index > 0) {
         prevMessage = messages[index - 1];
-        feedbackId = message.feedbackId;
-        if (prevMessage &&
-          (prevMessage.messageId == feedbackId || prevMessage.feedbackId === feedbackId)) {
-          return false;
+        if (!message ||
+            (prevMessage &&
+            (prevMessage.messageId == message.feedbackId || prevMessage.feedbackId === message.feedbackId))) {
+          isTitle = false;
         }
       }
-      return true;
+
+      return isTitle;
     }
 
     /**
@@ -97,9 +99,9 @@
       var isLast = false;
       var nextMessage = list[index + 1];
 
-      if (!nextMessage ||
-        nextMessage.message.contentType !== 'comment' ||
-        nextMessage.message.contentType === 'comment_sticker') {
+      if (isTitle(index + 1, list) ||
+        (!nextMessage ||
+        !(nextMessage.message.contentType === 'comment' || nextMessage.message.contentType === 'comment_sticker'))) {
         isLast = true;
       }
 
