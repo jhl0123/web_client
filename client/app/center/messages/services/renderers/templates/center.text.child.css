@@ -7,9 +7,12 @@
 }
 
 .message.bot-text.text-child {
-  margin-top:-5px;
+  margin-top:-14px;
 }
-
+.message.bot-text .attachment-content-wrapper .attachment-content {
+  min-width: auto;
+}
+/*
 .message.bot-text.text-child:before {
   content: '';
   position: absolute;
@@ -19,3 +22,4 @@
   height: 0;
   border-top: 1px dashed #E1E5E8;
 }
+*/
