@@ -72,76 +72,26 @@
     }
 
     /**
-     * 메세지를 전송한다.
-     * @param {string} entityType - entity 타입
-     * @param {string} entityId   - entity ID
-     * @param {string} message    - 메세지
-     * @param {object} sticker    - 스티커 객체
-     * @param {array} mentions    - mentions
+     * 
+     * @param {number} roomId - 토픽일 경우 토픽 id, DM 일 경우 DM 방의 id
+     * @param {object} data - request 파라미터. stickerId, groupId, text 중 하나는 필수값이다.
+     *    @param {number|string} [data.stickerId]
+     *    @param {number|string} [data.groupId]
+     *    @param {string} [data.text]
+     *    @param {Array} [data.mentions]
+     * @param {object} canceller
      * @returns {*}
      */
-    function postMessage(entityType, entityId, message, sticker, mentions, canceller) {
-      if (sticker && sticker.id && sticker.groupId) {
-        return _postSticker(entityType, entityId, message, sticker, mentions, canceller);
-      } else {
-        return _postMessage(entityType, entityId, message, mentions, canceller);
-      }
-    }
-
-    /**
-     * 메세지를 입력한다.
-     * @param {string} entityType - entity 타입
-     * @param {string} entityId   - entity ID
-     * @param {string} message    - 메세지
-     * @param {array} mentions    - mentions
-     * @returns {*}
-     * @private
-     */
-    function _postMessage(entityType, entityId, message, mentions, canceller) {
-      entityType = _getParamEntityType(entityType);
+    function postMessage(roomId, data, canceller) {
+      var teamId = memberService.getTeamId();
       return $http({
         method  : 'POST',
-        url     : server_address + entityType + '/' + entityId + '/message',
-        data    : {
-          content: message,
-          mentions: mentions
-        },
-        params  : {
-          teamId  : memberService.getTeamId()
-        },
-        timeout : canceller && canceller.promise,
-        version: 3
-      });
-    }
-
-    /**
-     * 스티커를 입력한다.
-     * @param {string} entityType - entity 타입
-     * @param {string} entityId   - entity ID
-     * @param {string} message    - 메세지
-     * @param {object} sticker    - 스티커 객체
-     * @param {array} mentions    - mentions
-     * @returns {*}
-     * @private
-     */
-    function _postSticker(entityType, entityId, message, sticker, mentions, canceller) {
-      var data = {
-        stickerId: sticker.id,
-        groupId: sticker.groupId,
-        teamId: memberService.getTeamId(),
-        share: entityId,
-        type: message ? _getParamEntityType(entityType): '',
-        content: message,
-        mentions: mentions
-      };
-
-      return $http({
-        method  : 'POST',
-        url     : server_address + 'stickers',
+        url     : server_address + 'teams/' + teamId + '/rooms/' +  roomId + '/messages',
         data    : data,
-        timeout : canceller.promise
+        timeout : canceller && canceller.promise
       });
     }
+    
     /**
      * server 로 전달할 entityType 문자열을 반환한다.
      * @param {string} entityType 전달받은 entityType

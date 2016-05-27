@@ -145,7 +145,7 @@
 
         if (isCurrentRoomMessage) {
           if (this.hasLastMessage()) {
-            this.append(message);
+            this.append(message, true);
           }
           if (this._isSystemMessage(message)) {
             this._pub('MessageCollection:newSystemMessageArrived', message);
@@ -266,31 +266,61 @@
       /**
        * messageList 를 append 한다.
        * @param {array|object} messageList
+       * @param {boolean} [isAllowEmbed=false] - messageList 값을 현재 메시지 중간에 끼워넣는 것을 허용할지 여부 
        */
-      append: function(messageList) {
+      append: function(messageList, isAllowEmbed) {
         var list = this.list;
         var length = list.length;
         var lastId = list[length - 1] && list[length - 1].id || -1;
         var appendList = [];
-
+        var index;
         messageList = this.beforeAddMessages(messageList);
         _.forEach(messageList, function(msg) {
           if (lastId < msg.id) {
             msg = this.getFormattedMessage(msg);
             list.push(msg);
             appendList.push(msg);
-
             //작성자의 marker 정보를 업데이트 한다
             this._updateMarker(msg);
+            
+            //linkId 가 중간에 끼워야 하는 값이라면
+          } else if (isAllowEmbed && !this._map.id[msg.id]) {
+            msg = this.getFormattedMessage(msg);
+            index = this._getEmbedPosition(msg);
+            if (index > 0) {
+              list.splice(index, 0, msg);
+              this._pub('MessageCollection:embed', msg, index + 1);
+              this._updateMarker(msg);
+            }
           }
         }, this);
 
         if (!this._isCurrentRoom()) {
           this._cutByMaxCacheCount();
         }
-        this._setLinkId(appendList);
-        this._addIndexMap(appendList);
-        this._pub('MessageCollection:append', appendList);
+        if (appendList.length) {
+          this._setLinkId(appendList);
+          this._addIndexMap(appendList);
+          this._pub('MessageCollection:append', appendList);
+        }
+      },
+
+      /**
+       * 인자로 받은 메시지가 중간에 들아갈 index 값을 반환한다.
+       * @param {object} msg
+       * @returns {number}
+       * @private
+       */
+      _getEmbedPosition: function(msg) {
+        var list = this.list;
+        var index = -1;
+        _.forEachRight(list, function(message, i) {
+          if (message.id < msg.id) {
+            index = i;
+            return false;
+          }
+        });
+        return index;
       },
 
       /**
@@ -415,7 +445,7 @@
       /**
        * messageId 에 해당하는 message 가 몇번째 index 인지 반환한다.
        * @param {number|string} messageId messageId 메세지 id
-       * @param {boolean} isReversal 역순으로 순회할지 여부
+       * @param {boolean} [isReversal=false] 역순으로 순회할지 여부
        * @returns {number}
        */
       at: function(messageId, isReversal) {

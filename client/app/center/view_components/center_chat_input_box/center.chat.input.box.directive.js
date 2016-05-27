@@ -99,7 +99,8 @@
        * current entity changed event handler
        * @private
        */
-      function _onCurrentEntityChanged() {
+      function _onCurrentEntityChanged(angularEvent, currentEntity) {
+        _entityId = currentEntity.id;
         _setMentionList();
       }
 

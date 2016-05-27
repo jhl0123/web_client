@@ -48,7 +48,8 @@
         scope.$on('MessageCollection:beforeRemove', _onBeforeRemove);
         scope.$on('MessageCollection:remove', _onRemove);
         scope.$on('MessageCollection:set', _renderAll);
-
+        scope.$on('MessageCollection:embed', _onEmbed);
+        
         scope.$on('MessageCollection:updateUnread', _onUpdateUnread);
 
         scope.$on('message:starred', _onStarred);
@@ -691,6 +692,31 @@
 
         el.append(_getCompiledEl(htmlList.join('')));
         scope.onRepeatDone();
+      }
+
+      /**
+       *
+       * @param angularEvent
+       * @param {number} index - embed 한 item 의 index
+       * @private
+       */
+      function _onEmbed(angularEvent, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var message;
+        var prevMessage;
+        var prevIndex = index - 1;
+        var htmlList = [];
+        var jqPrev;
+        
+        if (index > 0) {
+          message = messageCollection.list[index];
+          prevMessage = messageCollection.list[prevIndex];
+          jqPrev = $('#' + prevMessage.id);
+          _pushMarkup(htmlList, message, index);
+          _refresh(prevMessage.id, prevIndex);
+          jqPrev.after(_getCompiledEl(htmlList.join('')));
+          scope.onRepeatDone();
+        }
       }
 
       /**

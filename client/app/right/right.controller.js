@@ -20,7 +20,6 @@
     function _init() {
       $scope.closeRightPanel = closeRightPanel;
       _initTab();
-
       _attachScopeEvents();
     }
 

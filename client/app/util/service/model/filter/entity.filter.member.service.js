@@ -15,7 +15,8 @@
     this.toJSON = toJSON;
     this.get = get;
     this.isExist = isExist;
-
+    this.getChatRoomId = getChatRoomId;
+    
     _init();
 
     /**
@@ -35,20 +36,29 @@
 
     /**
      * member 정보를 조회한다.
-     * @param {number|string} entityId
+     * @param {number|string} memberId
      * @returns {object}
      */
-    function get(entityId) {
-      return UserList.get(entityId) || BotList.get(entityId)
+    function get(memberId) {
+      return UserList.get(memberId) || BotList.get(memberId)
     }
 
     /**
      * 해당 member 가 존재하는지 반환한다.
-     * @param {number|string} entityId
+     * @param {number|string} memberId
      * @returns {boolean}
      */
-    function isExist(entityId) {
-      return !!get(entityId);
+    function isExist(memberId) {
+      return !!get(memberId);
+    }
+
+    /**
+     * memberId 에 해당하는 chatRoom 의 id 를 반환한다.
+     * @param {number|string} memberId
+     * @returns {*}
+     */
+    function getChatRoomId(memberId) {
+      return UserList.getChatRoomId(memberId) || BotList.getChatRoomId(memberId)
     }
   }
 })();
