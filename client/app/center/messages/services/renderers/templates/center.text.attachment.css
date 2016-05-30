@@ -20,8 +20,10 @@
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   
-  border-top: 1px solid #72CBE6;
+  border-top: 1px solid rgba(5, 35, 60, 0.15);
   border-bottom: 1px solid rgba(5, 35, 60, 0.18);
+  border-left: 1px solid rgba(5, 35, 60, 0.05);
+  border-right: 1px solid rgba(5, 35, 60, 0.05);
 }
 .attachment-content-wrapper .attachment-content {
   display: table-cell;
