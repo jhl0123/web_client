@@ -50,14 +50,14 @@
         target = args[0],
         length = args.length,
         i;
-      
-      for (i = 1; i < length; i++) {
-        target = target && target[args[i]];
-        if (_.isUndefined(target)) {
-          break;
+      try {
+        for (i = 1; i < length; i++) {
+          target = target[args[i]];
         }
+        return target;
+      } catch(e) {
+        return;
       }
-      return target;      
     }
 
     /**
