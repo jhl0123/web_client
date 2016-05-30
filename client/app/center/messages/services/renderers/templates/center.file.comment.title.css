@@ -4,15 +4,23 @@
   left: 19px;
   top: 12px;
   font-size: 19px;
-  color: rgba(11, 31, 61, 0.75);
-  opacity: 0.5;
+  color: rgba(5, 35, 60, 0.3);
 }
 
 .message.comment.first .comment-all + .msg-item {
   margin-top: -1px;
-  border-radius: 0;
-  border-top: 1px solid #E8EDF0;
+  margin-bottom: 20px;
 }
+
+.message.comment .comment-all + .msg-item {
+  border-radius: 0;
+}
+
+/*.message.comment-child .msg-item:hover:before {
+  height: 100%;
+  background-color: inherit;
+}*/
+
 .message.comment.first .comment-all + .msg-item:after {
   display: none;
 }

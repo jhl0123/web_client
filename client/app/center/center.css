@@ -47,7 +47,7 @@ article {
   min-width: 260px;
   margin-right: 0;
   padding-bottom: 0;
-  background-color:#eff3fa;
+  background-color:#F1F7FC;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 9;
@@ -99,9 +99,9 @@ article {
   display: inline-block;
   position: relative;
   margin: 6px 0 0 0;
-  max-width: calc(100% - 74px);
+  max-width: calc(100% - 84px);
   border-radius: 3px 3px 4px 4px;
-  border: 1px solid #E4E8EB;
+  border: 1px solid rgba(5, 35, 60, 0.1);
   border-bottom: 1px solid rgba(5,35,60,0.2);
   background-color: #fff;
   color: #333;
@@ -121,6 +121,20 @@ article {
   background-color: transparent;
   box-shadow: 0 0 0 1px transparent;
   color: #929498;
+}
+.msg-item.text a,
+.message.comment a,
+.message.bot-text .attachment-content a {
+  color: #00ACE9;
+}
+.msg-item.text a:hover,
+.message.comment a:hover,
+.message.bot-text .attachment-content a:hover {  
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 172, 233, 0.7);
+}
+.msg-item.text a.mention.all:hover {
+  border-bottom: 1px solid rgba(0, 172, 233, 0);
 }
 
 .post-retry {
@@ -240,13 +254,13 @@ by ysyun 2015.2.25
 }
 
 .footer {
-  background: #f9f9f9;
+  background: #FFF;
   position: absolute;
   margin-right: 0px;
   left: 0;
   right: 0;
   bottom: 0;
-  border-top: 1px solid #e1e1e1;
+  border-top: 1px solid #D5DADB;
   z-index: 12;
 }
 .footer:after {

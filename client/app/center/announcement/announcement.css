@@ -69,7 +69,7 @@
 }
 
 .announcement-horn:hover {
-  background-color: rgb(246, 248, 249);
+  background-color: #FFF;
   border-color: rgba(21, 74, 103, 0.5);
   color: #285E7B;
 }
@@ -116,6 +116,11 @@
   overflow: hidden;
   margin-left: 4px;
   background-color: #F1F4F8;
+}
+.announcement-owner__name {
+  color: #333;
+  font-weight: 700;
+  font-size: 15px;
 }
 .announcement-owner__time {
   font-size: 12px;

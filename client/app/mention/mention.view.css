@@ -17,12 +17,10 @@
 
 .mention.all {
   padding: 2px;
-  color: #1C6C88;
   background-color: #CEF8FF;
 }
 .mention.all:hover {
   text-decoration: none;
-  color: #1C6C88;
 }
 
 .mention.inactive:hover {
