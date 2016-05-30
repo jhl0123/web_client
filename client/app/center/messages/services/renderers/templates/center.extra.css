@@ -26,14 +26,14 @@
   visibility: hidden;
 }
 .msg-item-icon:hover {
-  color: #58829b !important;
+  color: #38678A !important;
   opacity: 1 !important;
 }
 .msg-item-icon > i {
   line-height: inherit;
 }
 .msg-item-circle:hover {
-  background-color: rgba(143, 174, 186, 0.2);
+  background-color: #DBEBF8;
 }
 
 .msg-item-icon.msg-item-circle:hover {
@@ -48,7 +48,7 @@
 }
 
 .msg-item-star.on {
-  color: #FFB32A !important;
+  color: #FBBA06 !important;
   opacity: 1 !important;
   visibility: visible;
 }
@@ -81,7 +81,7 @@
   border-radius: 16px;
   font-family: "Helvetica Neue";
   font-size: 10px;
-  color: #00abe6;
+  color: #00ACE9;
   padding: 2px 5px 3px 5px;
   font-weight: 600;
   margin-left: -3px;

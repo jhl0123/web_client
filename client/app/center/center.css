@@ -122,7 +122,15 @@ article {
   box-shadow: 0 0 0 1px transparent;
   color: #929498;
 }
-
+.msg-item.text a,
+.message.comment a {
+  color: #00ACE9;
+}
+.msg-item.text a:hover,
+.message.comment a:hover {  
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 172, 233, 0.7);
+}
 .post-retry {
   font-size: 12px;
   line-height: 12px;
