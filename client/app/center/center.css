@@ -133,6 +133,10 @@ article {
   text-decoration: none;
   border-bottom: 1px solid rgba(0, 172, 233, 0.7);
 }
+.msg-item.text a.mention.all:hover {
+  border-bottom: 1px solid rgba(0, 172, 233, 0);
+}
+
 .post-retry {
   font-size: 12px;
   line-height: 12px;
