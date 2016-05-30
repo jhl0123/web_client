@@ -271,7 +271,8 @@
 }
 
 .msg-file.unshared .info-title,
-.info-group-bottom .info-title {
+.info-group-bottom .info-title,
+.msg-file.archived .info-title {
   color: #333;
   font-weight: 700;
   font-size: 15px;
@@ -315,7 +316,6 @@
 .msg-file.unshared .unshared-label {
   padding: 2px 7px;
   line-height: 18px;
-  margin-left: 0.25em;
   background-color: rgba(15,60,85,0.105);
   color: rgba(14,60,85,0.4);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
