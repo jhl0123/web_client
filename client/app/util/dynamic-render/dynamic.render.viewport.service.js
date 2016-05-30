@@ -6,10 +6,10 @@
 
   angular
     .module('jandiApp')
-    .factory('Viewport', Viewport);
+    .factory('DynamicRenderViewport', DynamicRenderViewport);
 
   /* @ngInject */
-  function Viewport() {
+  function DynamicRenderViewport() {
     var Viewport = {
       init: init,
       updateList: updateList,
@@ -54,7 +54,11 @@
       that.renderedMap = {};
 
       that.jqViewport = jqViewport;
-      that.jqViewport.css({position: 'relative'});
+
+      if (!_isRelativePosition(jqViewport)) {
+        that.jqViewport.css({position: 'relative'});
+      }
+
       that.jqList = jqList;
 
       that.options = {
@@ -74,6 +78,23 @@
       that._isDynamicHeight = (_.isNumber(that.options.viewportHeight) && that.options.viewportHeight > 0) ? false : true;
 
       return that;
+    }
+
+    /**
+     * 자식 dom들의 상대 포지션으로 사용가능한 포지션 값(relative, absolute)인지 여부
+     * @param {object} jqViewport
+     * @returns {boolean}
+     * @private
+     */
+    function _isRelativePosition(jqViewport) {
+      var position = jqViewport.css('position');
+      var isRelativePosition = false;
+
+      if (position === 'relative' || position === 'absolute') {
+        isRelativePosition = true;
+      }
+
+      return isRelativePosition;
     }
 
     /**
@@ -205,7 +226,10 @@
           // index마다 각자의 item Height
           map[index] = $(element)
             .appendTo(that.jqList)
-            .css({top: _getTotalItemHeight(that.options.list, that.options.itemHeight, index)})
+            .css({
+              position: 'absolute',
+              top: _getTotalItemHeight(that.options.list, that.options.itemHeight, index)
+            })
             .data('viewport-index', index);
           that.options.onCreateItem && that.options.onCreateItem(map[index], that.options.list[index]);
         }
