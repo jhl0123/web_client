@@ -1,4 +1,4 @@
-.message.self .msg-item {
+.message.self .msg-item:not(.comment-all) {
   background-color: #E8F2FB;
   border-bottom-color: #CBDCEA;
 }
