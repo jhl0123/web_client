@@ -215,7 +215,7 @@
 }
 
 .card-info .info-group-up {
-  padding: 12px 15px 4px;
+  padding: 12px 15px 0;
   font-size: 14px;
 }
 
@@ -276,6 +276,7 @@
   color: #333;
   font-weight: 700;
   font-size: 15px;
+  line-height: 22px;
   display: inline;
   margin-right: 0.25em;
 }
