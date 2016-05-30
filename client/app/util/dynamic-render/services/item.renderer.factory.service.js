@@ -9,7 +9,7 @@
     .service('ItemRenderFactory', ItemRenderFactory);
 
   /* @ngInject */
-  function ItemRenderFactory(MemberItemRenderer, TopicItemRenderer, RoomItemRenderer) {
+  function ItemRenderFactory(MemberItemRenderer, TopicItemRenderer, RoomItemRenderer, MentionItemRenderer) {
     var that = this;
 
     _init();
@@ -29,6 +29,7 @@
      */
     function get(type) {
       var renderer;
+
       switch (type) {
         case 'member':
           renderer = MemberItemRenderer;
@@ -40,7 +41,11 @@
         case 'room':
           renderer = RoomItemRenderer;
           break;
+        case 'mention':
+          renderer = MentionItemRenderer;
+          break;
       }
+
       return renderer;
     }
   }

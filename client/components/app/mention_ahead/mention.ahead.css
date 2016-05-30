@@ -1,72 +1,27 @@
-/* message mention ahead */
-.message-input-wrap .mentionahead {
-  max-height: 232px;
+.mentionahead {
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  border:1px solid rgba(0, 0, 0, .2);
+  border-radius: 3px;
+}
+
+.mentionahead .mention-members {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* comment mention ahead */
 .upload-comment-textarea {
   position: relative;
 }
-.upload-comment-textarea .mentionahead,
-.comment-input-body .mentionahead {
+
+/* message mention ahead */
+.message-input-wrapper .mention-members {
+  max-height: 240px;
+}
+
+.upload-comment-textarea .mention-members,
+.comment-textarea-wrap .mention-members {
   max-height: 130px
-}
-
-.mentionahead {
-  position: absolute;
-  right: 0;
-  max-height: 232px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background-color: #fff;
-  border:1px solid rgba(0, 0, 0, .2);
-  border-radius: 3px;
-  /*border-bottom: 0;*/
-  /*border-top-right-radius: 3px;*/
-  /*border-top-left-radius: 4px;*/
-  /*border-bottom-right-radius: 0;*/
-  /*border-bottom-left-radius: 0;*/
-  /*margin-top:-2px !important;*/
-  /*margin-left: -1px !important;*/
-}
-
-.mentionahead a.mention-item {
-  background-color: #fff;
-  height: 32px;
-  padding: 5px 10px 5px 10px;
-  cursor: pointer;
-}
-
-.mentionahead .active a.mention-item {
-  color: #262626;
-  background-color: #E8F3F9;
-}
-
-.mentionahead li:last-child > a {
-  border-radius: 0;
-}
-
-.mentionahead .profile-img {
-  -webkit-border-radius: 18px;
-  -moz-border-radius: 18px;
-  border-radius: 18px;
-  min-width: 18px;
-  width: 18px;
-  min-height: 18px;
-  height: 18px;
-  margin-right: 4px;
-}
-
-.mentionahead .jandi-bot .profile-img {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-  height: auto;
-}
-
-.mentionahead .profile-text {
-  font-size: 14px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 }

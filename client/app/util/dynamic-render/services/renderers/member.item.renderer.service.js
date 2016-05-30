@@ -68,10 +68,10 @@
       
       if (SearchTypeUser.isName(filterType)) {
         userName = $filter('typeaheadHighlight')(data.name, filterText);
-        extraText = data.position || '';
+        extraText = $filter('htmlEncode')(data.position) || '';
       } else {
         userName = data.name;
-        extraText = $filter('typeaheadHighlight')(data[filterType], filterText) || '';
+        extraText = $filter('typeaheadHighlight')($filter('htmlEncode')(data[filterType]), filterText) || '';
       }
 
       return {
@@ -89,7 +89,7 @@
     function _convertData(data) {
       var value = {
         id: data.id,
-        name: data.name,
+        name: data.extEncodedName,
         email: data.u_email,
         status: data.u_statusMessage,
         isStarred: data.isStarred,

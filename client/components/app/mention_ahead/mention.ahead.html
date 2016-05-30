@@ -1,8 +1,16 @@
-<ul class="mentionahead dropdown-menu" ng-show="isOpen()" ng-style="{top: position.top+'px', left: position.left+'px'}" style="display: block;" role="listbox" aria-hidden="{{!isOpen()}}">
-  <li ng-repeat="match in matches" ng-class="{active: isActive($index)}" ng-mouseenter="selectActive($index, $event)" ng-mousedown="selectMatch($index)" role="option" id="{{match.id}}">
-    <a class="mention-item" ng-class="::{'jandi-bot': match.model.extIsJandiBot}" tabindex="-1">
-      <img class="profile-img" ng-src="{{::match.model.extProfileImage}}" />
-      <span class="profile-text" ng-bind-html="match.label | typeaheadHighlight:query"></span>
-    </a>
-  </li>
-</ul>
+<div class="mentionahead dropdown-menu"
+     style="display: block;"
+     ng-show="isOpen()"
+     ng-style="{top: position.top+'px', left: position.left+'px'}">
+  <div class="mention-members" dynamic-render-viewport>
+    <dynamic-render-list
+      type="mentionMebers"
+      list="matches"
+      item-type="mention"
+      item-class="mention-item"
+      model="query"
+      activeted="true"
+      item-height="32"
+      buffer-length="5"></dynamic-render-list>
+  </div>
+</div>

@@ -1,3 +1,45 @@
+<a name="1.28.2"></a>
+## [1.28.2](https://github.com/tosslab/web_client/compare/v1.28.1...v1.28.2) (2016-05-26)
+
+
+
+
+<a name="1.28.1"></a>
+## [1.28.1](https://github.com/tosslab/web_client/compare/v1.28.0...v1.28.1) (2016-05-26)
+
+
+
+
+<a name="1.28.0"></a>
+# [1.28.0](https://github.com/tosslab/web_client/compare/v1.27.2...v1.28.0) (2016-05-18)
+
+
+### Bug Fixes
+
+* **center:** 최초로 파일 공유 받을 때, 파일 공유해제된 것 처럼 보여짐 + layout 깨짐 현상 해결 ([ad3ea6d](https://github.com/tosslab/web_client/commit/ad3ea6d))
+* **leftwidth:** localstorage에 왼쪽 패널의 너비값이 존재하지 않을때 기본값 사용하도록 수정 ([44538ed](https://github.com/tosslab/web_client/commit/44538ed))
+* **markdown:** 마크다운 정책 수정 ([626bf81](https://github.com/tosslab/web_client/commit/626bf81))
+* **mixpanel:** remove mixpanel related file ([2eb6570](https://github.com/tosslab/web_client/commit/2eb6570))
+* **room:** 토픽 참여시, 좌측 패널에 즉시 표시되지 않는 현상 해결 ([e28e983](https://github.com/tosslab/web_client/commit/e28e983))
+
+### Features
+
+* **left:** left panel 리사이즈 가능하도록 추가 ([b8f7a99](https://github.com/tosslab/web_client/commit/b8f7a99))
+
+
+
+<a name="1.27.2"></a>
+## [1.27.2](https://github.com/tosslab/web_client/compare/v1.27.1...v1.27.2) (2016-05-11)
+
+
+
+
+<a name="1.27.1"></a>
+## [1.27.1](https://github.com/tosslab/web_client/compare/v1.27.0...v1.27.1) (2016-05-11)
+
+
+
+
 <a name="1.27.0"></a>
 # [1.27.0](https://github.com/tosslab/web_client/compare/v1.26.1...v1.27.0) (2016-05-11)
 
