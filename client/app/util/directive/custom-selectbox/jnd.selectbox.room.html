@@ -90,7 +90,7 @@
 
           <ul class="menulist-item-dm">
 
-            <li class="topic-title menu-item _selectable" ng-repeat="item in memberData.enabledList">
+            <li class="topic-title menu-item _selectable" ng-repeat="item in memberData.enabledList | orderBy:'name'">
               <a>
                 <span>{{item.name}}</span>
               </a>
@@ -112,7 +112,7 @@
 
           <ul ng-if="isShowDisabled" class="menulist-item-block">
 
-            <li class="topic-title menu-item _selectable" ng-repeat="item in memberData.disabledList">
+            <li class="topic-title menu-item _selectable" ng-repeat="item in memberData.disabledList | orderBy:'name'">
               <a>
                 <span><del>{{item.name}}</del></span>
               </a>

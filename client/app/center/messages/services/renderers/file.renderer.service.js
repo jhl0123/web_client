@@ -257,7 +257,7 @@
           isIntegrateFile: RendererUtil.isIntegrateFile(msg),
           commentCount: RendererUtil.getCommentCount(msg),
           isFileOwner: _isFileOwner(msg),
-          ownerName: $filter('getName')(msg.message.writerId),
+          writerName: $filter('getName')(msg.message.writerId),
           time: $filter('getyyyyMMddformat')(feedback.createTime)
         },
         isArchived: isArchived,

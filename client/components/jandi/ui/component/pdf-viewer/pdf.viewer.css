@@ -1,0 +1,66 @@
+.pdf-viewer-wrap {
+  position: absolute;
+  z-index: 9999;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.pdf-viewer-wrap .pdf-viewer-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.pdf-viewer-wrap .pdf-viewer-container .dummy-focus {
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
+  width: 1px;
+  height: 1px;
+}
+
+.pdf-viewer-wrap .dim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #000000;
+  opacity: 0.8;
+}
+
+
+/******************************
+  override pdf_viewer css style
+******************************/
+
+.pdfViewer .page {
+  direction: ltr;
+  width: 816px;
+  height: 1056px;
+  box-sizing: content-box;
+  margin: 1px auto 8px auto;
+  position: relative;
+  overflow: visible;
+  border: 9px solid transparent;
+  background-clip: content-box;
+  border-image: url(/assets/images/pdfjs/shadow.png) 9 9 repeat;
+  background-color: #FFFFFF;
+}
+
+.pdfViewer .page .canvasWrapper {
+  background-color: #FFFFFF;
+}
+
+.pdfViewer .page .loadingIcon {
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/assets/images/pdfjs/loading-icon.gif') center no-repeat;
+  background-color: #FFFFFF;
+}

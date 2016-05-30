@@ -10,7 +10,7 @@
     .service('Sticker', Sticker);
 
   /* @ngInject */
-  function Sticker($http, $q, configuration, memberService, Preloader, accountService) {
+  function Sticker($http, $q, configuration, memberService, Preloader, accountService, AccountHasSeen) {
     var that = this;
     var server_address = configuration.server_address;
     var accountLanguage = accountService.getAccountLanguage();
@@ -20,15 +20,23 @@
     var stickerGroups = [
       {
         className: 'recent',
-        id: 'recent'
+        id: 'recent',
+        isNew: false
+      },
+      {
+        className: 'dingo',
+        id: 103,
+        isNew: !AccountHasSeen.get('STICKER_DINGO')
       },
       {
         className: 'kiyomi',
-        id: /tw/i.test(accountLanguage) ? 102 : 101
+        id: /tw/i.test(accountLanguage) ? 102 : 101,
+        isNew: false
       },
       {
         className: 'pangya',
-        id: 100
+        id: 100,
+        isNew: false
       }
     ];
 

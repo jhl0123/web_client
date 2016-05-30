@@ -25,7 +25,7 @@
             ng-class="{'active': isActiveSticer($index)}"
             ng-mouseenter="selectActiveSticker($index)"
             ng-mousedown="selectSticker()">
-          <img class="sticker size_1" ng-src="{{::item.url}}"/>
+          <div class="sticker size_1" ng-style="::{'background-image': 'url({{::item.url}})'}"></div>
         </li>
       </ul>
     </div>
@@ -38,6 +38,13 @@
           <div class="sticker_panel_tab_item {{::group.className}}">
             <i ng-if="isRecentGroup($index)" class="icon-clock"></i>
           </div>
+          <span class="new-sticker"
+                ng-class="{
+                   'on': status.isOpen,
+                   'off': !group.isNew
+                  }">
+            N
+          </span>
         </li>
       </ul>
     </div>

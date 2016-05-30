@@ -3,7 +3,7 @@
     .module('jandiApp')
     .controller('mobileCatcherController', mobileCatcherController);
 
-  function mobileCatcherController($scope, $state, $rootScope, urlScheme, publicService) {
+  function mobileCatcherController($scope, $state, $rootScope, Browser, urlScheme, publicService) {
     /**
      * debug alert 을 노출하기 위해 필요한 touch count 수
      * @type {number}
@@ -23,6 +23,8 @@
      */
     var _touchQueue = [];
 
+    $scope.isSafari = Browser.safari;
+    
     $scope.toMobileApplication = function() {
       urlScheme.urlScheme();
     };
@@ -44,7 +46,7 @@
       } 
         
       $('.body').removeClass('full-screen');
-      $('.mobile-view').height($(window).height())
+      $('.mobile-view').height($(window).height());
 
       $('.signin-mobile-background-img').bind('load', function() {
         $('.mobile-view').css('opacity', 1);

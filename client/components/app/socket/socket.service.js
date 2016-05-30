@@ -10,17 +10,15 @@
     .service('jndWebSocket', jndWebSocket);
 
   /* @ngInject */
-  function jndWebSocket($rootScope, socketFactory, config, currentSessionHelper, memberService,
-                        storageAPIservice, jndWebSocketHelper, $injector, NetInterceptor, jndWebSocketCommon,
+  function jndWebSocket($rootScope, socketFactory, config, currentSessionHelper, memberService, jndPubSub,
+                        storageAPIservice, jndWebSocketHelper, $injector, jndWebSocketCommon,
                         jndWebSocketServiceHelper, logger, jndWebSocketEmitter, jndWebSocketOtherTeamManager) {
 
     //emit 소켓 버전
     var VERSION = 1;
-
-    var $scope = $rootScope.$new();
     var socket;
     var ioSocket;
-    var isConnected;
+    var isConnectedFlag = true;
 
     var CHECK_CONNECT_TEAM = 'check_connect_team';
     var CONNECT_TEAM = 'connect_team';
@@ -34,12 +32,17 @@
     var _lastTimestamp = 0;
 
     this.init = init;
+
     this.disconnect = disconnect;
+    this.connect = connect;
+
     this.checkSocketConnection = checkSocketConnection;
     this.disconnectTeam = disconnectTeam;
 
     this.processSocketEvents = processSocketEvents;
     this.getLastTimestamp = getLastTimestamp;
+
+    this.isConnected = isConnected;
 
     /**
      * Initialize variables.
@@ -49,14 +52,21 @@
     }
 
     /**
+     * socket connect 상태를 반환한다.
+     * @returns {boolean}
+     */
+    function isConnected() {
+      return isConnectedFlag;
+    }
+
+    /**
      * socket connection 을 끊는다.
      */
     function disconnect() {
       if (socket && ioSocket) {
-        socket.removeAllListeners();
         ioSocket.io.disconnect();
+        socket.removeAllListeners();
       }
-      isConnected = false;
     }
 
     /**
@@ -65,7 +75,7 @@
      * If socket connection is found, WHAT SHOULD I DO? HOW DO I VERIFY CURRENT SOCKET CONNECTION?
      */
     function checkSocketConnection() {
-      if (!isConnected || _.isUndefined(socket)) {
+      if (!isConnectedFlag || _.isUndefined(socket)) {
         // Socket is not established yet.
         connect();
       }
@@ -89,23 +99,8 @@
         prefix: '_jnd_socket:',
         ioSocket: ioSocket
       });
-      $scope.$on('disconnected', _onDisconnected);
       jndWebSocketEmitter.setSocket(socket);
       _setSocketEventListener();
-    }
-
-    /**
-     * disconnected 이벤트 핸들러
-     * @private
-     */
-    function _onDisconnected() {
-      if (isConnected) {
-        socket.removeAllListeners();
-        ioSocket.io.disconnect();
-        ioSocket.io.connect();
-        _setSocketEventListener();
-      }
-      isConnected = false;
     }
 
     /**
@@ -113,9 +108,10 @@
      * @private
      */
     function _onSocketConnect() {
-      isConnected = true;
-      NetInterceptor.setStatus(true);
-      _setSocketEventListener();
+      if (!isConnectedFlag) {
+        isConnectedFlag = true;
+        jndPubSub.pub('jndWebSocket:connect');
+      }
     }
 
     /**
@@ -123,8 +119,10 @@
      * @private
      */
     function _onSocketDisconnect() {
-      isConnected = false;
-      NetInterceptor.setStatus(false);
+      if (isConnectedFlag) {
+        isConnectedFlag = false;
+        jndPubSub.pub('jndWebSocket:disconnect');
+      }
     }
 
     /**
@@ -285,7 +283,7 @@
      */
     function _onConnectTeam(data) {
       jndWebSocketHelper.socketEventLogger(CONNECT_TEAM, data, false);
-      isConnected = true;
+      isConnectedFlag = true;
     }
 
     /**
@@ -296,7 +294,7 @@
      */
     function _onErrorConnectTeam(data) {
       var INVALID_SOCKET_TOKEN = 'Invalid token';
-      isConnected = false;
+      isConnectedFlag = false;
 
       jndWebSocketHelper.socketEventLogger(ERROR_CONNECT_TEAM, data, false);
 
@@ -326,7 +324,7 @@
         _emit(DISCONNECT_TEAM, param);
 
         // Update socket status variable.
-        isConnected = false;
+        isConnectedFlag = false;
       }
     }
 

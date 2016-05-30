@@ -7,11 +7,8 @@
 
   angular
     .module('jandi.ui', [
-      'jandi.ui.intercom',
-      'jandi.ui.dialog',
-      'jandi.ui.profileImage',
-      'jandi.ui.pdfViewer',
-      'jandi.ui.splitter'
+      'jandi.ui.component',
+      'jandi.ui.util'
     ])
     .run(run)
     .config(config);

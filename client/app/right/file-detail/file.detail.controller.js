@@ -9,11 +9,16 @@
     .controller('FileDetailCtrl', FileDetailCtrl);
 
   /* @ngInject */
-  function FileDetailCtrl($scope, $filter, $q, $state, $timeout, FileDetail, jndPubSub, JndMessageStorage,
-                          memberService, publicService,RightPanel, Sticker, Tutorial, UserList) {
+  function FileDetailCtrl($scope, $filter, $q, $state, $timeout, FileDetail, jndPubSub, JndMessageStorage, CoreUtil,
+                          memberService, publicService,RightPanel, Sticker, Tutorial, UserList, JndUtil) {
     var _fileId;
     var _requestFile;
     var _timerFileDetail;
+
+    $scope.onMemberClick = onMemberClick;
+    $scope.postComment = postComment;
+    $scope.setMentionsGetter = setMentionsGetter;
+    $scope.backToPrevState = backToPrevState;
 
     _init();
 
@@ -24,28 +29,26 @@
     function _init() {
       if (_isRedirectFileDetail()) {
         _setRightPanelTail(true);
-
         $state.go('messages.detail.' + (RightPanel.getTail() || 'files') + '.item', $state.params);
       } else {
         _setRightPanelTail(false);
-
         if (_fileId = $state.params.itemId) {
-          $scope.hasInitialLoaded = false;
-
-          // comment 작성 되지 않은 모음
-          $scope.errorComments = [];
-
-          $scope.onMemberClick = onMemberClick;
-          $scope.postComment = postComment;
-          $scope.setMentionsGetter = setMentionsGetter;
-          $scope.backToPrevState = backToPrevState;
-
+          _resetVariables();
           _setFileDetail();
-
           _attachEvents();
         }
       }
       Tutorial.hideTooltip('filetab');
+    }
+
+    /**
+     * 내부에서 사용하는 변수를 초기화 한다.
+     * @private
+     */
+    function _resetVariables() {
+      $scope.hasInitialLoaded = false;
+      // comment 작성 되지 않은 모음
+      $scope.errorComments = [];
     }
 
     /**
@@ -55,9 +58,22 @@
     function _attachEvents() {
       $scope.$on('fileDetail:updateFile', _requestFileDetail);
       $scope.$on('fileDetail:updateComments', _requestFileDetail);
-
+      $scope.$on('Router:fileChanged', _onFileChange);
       $scope.$on('rightFileDetailOnFileDeleted', _onRightFileDetailOnFileDeleted);
       $scope.$on('jndWebSocketMember:memberUpdated', _onUpdateMemberProfile);
+    }
+
+
+    /**
+     * file 정보가 변경되었을 때 이벤트 핸들러
+     * @param {object} angularEvent
+     * @param {number} fileId
+     * @private
+     */
+    function _onFileChange(angularEvent, fileId) {
+      _fileId = fileId;
+      _resetVariables();
+      _setFileDetail();
     }
 
     /**
@@ -67,7 +83,7 @@
     function _setFileDetail() {
       var fileDetail = FileDetail.getFileDetail();
 
-      if (fileDetail) {
+      if (CoreUtil.pick(fileDetail, 'file', 'id') === _fileId) {
         // request하지 않아도 출력할 file object가 이미 존재함
         _onSuccessFileDetail(fileDetail);
       } else {
@@ -99,7 +115,7 @@
     function _onSuccessFileDetail(response) {
       var messageDetails;
       var fileDetail;
-
+      
       if (response) {
         messageDetails = response.messageDetails;
         fileDetail = _getFileDetailData(messageDetails);

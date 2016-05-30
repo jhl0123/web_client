@@ -29,7 +29,7 @@
      * @private
      */
     function _attachScopeEvents() {
-      $scope.$on('connected', _onConnected);
+      $scope.$on('NetInterceptor:connect', _onConnected);
     }
 
     /**

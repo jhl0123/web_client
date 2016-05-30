@@ -11,7 +11,7 @@
     .directive('activeNotifier', activeNotifier);
 
   /* @ngInject */
-  function activeNotifier($http, CoreUtil, configuration, storageAPIservice, currentSessionHelper) {
+  function activeNotifier($http, CoreUtil, configuration, storageAPIservice, currentSessionHelper, ActiveNotifier) {
     return {
       restrict: 'A',
       link: link
@@ -58,13 +58,6 @@
        * {Date}
        */
       var _lastActiveTime;
-
-      /**
-       * 현재 active status 상태
-       * @type {boolean}
-       * @private
-       */
-      var _currentActiveStatus = true;
 
       /**
        * update(refresh) 를 해야하는지 여부. true 일 경우 inactive 상태일 때 update(refresh) 를 수행한다
@@ -185,12 +178,13 @@
        * @private
        */
       function _checkStatus() {
+        var currentStatus = ActiveNotifier.getStatus();
         if (_isActiveStatusChange()) {
           _onActiveStatusChange();
           // 현재 상태가 active 상태이고 변경 없을 시
           // CHECK_ACTIVE_INTERVAL_TIME 시간 마다 active 상태라는 request 를 서버에 전송한다.
-        } else if (_currentActiveStatus) {
-          _notify(_currentActiveStatus);
+        } else if (currentStatus) {
+          _notify(currentStatus);
         }
       }
 
@@ -200,7 +194,7 @@
        * @private
        */
       function _isActiveStatusChange() {
-        return _currentActiveStatus !== _isActive();
+        return ActiveNotifier.getStatus() !== _isActive();
       }
 
       /**
@@ -218,9 +212,9 @@
        */
       function _notify(isActive) {
         var accessToken = storageAPIservice.getAccessToken();
-
-        _currentActiveStatus = isActive;
-
+        
+        ActiveNotifier.setStatus(isActive);
+        
         if (isActive) {
           _stopForceUpdateTimer();
           _startCheckStatusTimer();
@@ -235,7 +229,7 @@
             dataType: 'jsonp',
             data: {
               access_token: accessToken,
-              active: _currentActiveStatus,
+              active: isActive,
               version: configuration.version
             }
           });

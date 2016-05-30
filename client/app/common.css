@@ -1186,22 +1186,6 @@ input[type="radio"] {
   margin-left: -16px;
 }
 
-/**
- * 임시: cdn 에 스티커 그룹 아이콘 이미지 올라가면 제거할 예정임
- */
-.sticker_panel_tab .sticker_panel_tab_item.pangya {
-    background-image: url('../assets/images/sticker/pangya_pangya_off.svg');
-}
-.sticker_panel_tab li.on .sticker_panel_tab_item.pangya {
-    background-image: url('../assets/images/sticker/pangya_pangya_on.svg');
-}
-.sticker_panel_tab .sticker_panel_tab_item.kiyomi {
-  background-image: url('../assets/images/sticker/kiyomi_off.svg');
-}
-.sticker_panel_tab li.on .sticker_panel_tab_item.kiyomi {
-  background-image: url('../assets/images/sticker/kiyomi_on.svg');
-}
-
 /********************************************
 
                  첫 로딩 아이콘.
@@ -1511,6 +1495,10 @@ input[type="radio"] {
   margin-left: 10px;
   font-size: 13px;
   font-weight: 600;
+}
+
+.member-auth-label span {
+  color: rgba(14,60,85,0.3) !important;
 }
 
 /********************************************

@@ -154,17 +154,20 @@
                             </div>
                           </div>
                         {{/if}}
-                        <div class="action-group">
-                          {{#if file.hasOriginalImageView}}
+                        {{#if file.hasOriginalImageView}}
+                          <div class="action-group">
                             <div class="action-item"
                                  jnd-tooltip-trigger="{{translate '@btn-image-expand'}}"
                                  data-direction="top">
                               <!--  file expand  -->
-                          <span class="action-comment _fileExpand">
-                            <i class="fa-search-plus"></i>
-                          </span>
+                              <span class="action-comment _fileExpand">
+                                <i class="fa-search-plus"></i>
+                                <span translate>@btn-image-expand</span>
+                              </span>
                             </div>
-                          {{/if}}
+                          </div>
+                        {{/if}}
+                        <div class="action-group">
                           <div class="action-item"
                                jnd-tooltip-trigger="{{translate '@btn-comment'}}"
                                data-direction="top">
@@ -308,7 +311,7 @@
             </span>
             {{#if isSticker}}
             <div>
-              <img class="sticker size_5" src="{{ msg.message.content.url }}"/>
+              <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
               <span class="msg-item-header__created">{{ msg.extTime }}</span>
               <span class="badge unread-badge">{{ msg.unreadCount }}</span>
             </div>

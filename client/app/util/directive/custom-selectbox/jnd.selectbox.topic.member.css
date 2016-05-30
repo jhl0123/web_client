@@ -1,0 +1,91 @@
+.custom-selectbox-topic-member .custom-select-box {
+  line-height: 1rem;
+  cursor: default;
+  width: 248px;
+  
+}
+
+.custom-selectbox-topic-member .menu-item.selected {
+  background-color: #FFFFFF;
+}
+
+.custom-selectbox-topic-member .menu-item.active {
+  background-color: #e8f3f9 !important;
+}
+
+.custom-selectbox-topic-member .custom-select-box.member-menu.active {
+  left: auto;
+  top: 32px;
+  right: 80px;
+  padding-bottom: 0 !important;
+}
+.custom-selectbox-topic-member .custom-select-box.member-menu.active .custom-select-box__search-result ul {
+  margin-bottom: 1px;
+}
+.custom-selectbox-topic-member .custom-select-box.member-menu.active .custom-select-box__menulist {
+  padding-bottom: 1px;
+}
+.custom-selectbox-topic-member .menulist-item-members > li {
+  padding-top:2px;
+  padding-bottom: 2px;
+  min-height: 38px;
+}
+
+.custom-selectbox-topic-member .menulist-item-members > li a {
+  height: 34px;
+  padding:0 4px 0 1px;
+  margin-right: 24px;
+}
+.custom-selectbox-topic-member .menulist-item-members > li.admin a {
+  margin-right: 80px;
+}
+.custom-selectbox-topic-member .menulist-item-members > li a > span:not(.member-auth-label) {
+  line-height: 32px;
+}
+
+.custom-selectbox-topic-member .menulist-item-members > li.admin a:lang(en) {
+  margin-right: 90px;
+}
+
+.custom-selectbox-topic-member .menulist-item-members > li.admin a:lang(ja) {
+  margin-right: 120px;
+}
+
+.custom-selectbox-topic-member .menulist-item-members > li.has-kickout-icon:hover .member-auth-label {
+  display:none;
+}
+
+.custom-selectbox-topic-member .menulist-item-members > li.has-kickout-icon .kick-item-icon {
+  display:none;
+}
+
+.custom-selectbox-topic-member .menulist-item-members > li.has-kickout-icon:hover .kick-item-icon {
+  display:block;
+}
+
+.custom-selectbox-topic-member .member-auth-label {
+  top: 8px;
+}
+
+.custom-selectbox-topic-member .menulist-item-members .kick-item-icon {
+  position:absolute;
+  right:7px;
+  top:5px;
+  width:28px;
+  height: 28px;
+  line-height: 28px;
+  background-color: transparent;
+  color:#BECAD6;
+  font-size:16px;
+  padding:0 0 0 6px;
+  border-radius: 14px;
+}
+
+.custom-selectbox-topic-member .menulist-item-members > li:hover .kick-item-icon {
+  color: #366480;
+}
+
+.custom-selectbox-topic-member .menulist-item-members > li:hover .kick-item-icon:hover {
+  background-color: #366480;
+  color:#FFF;
+}

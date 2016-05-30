@@ -8,11 +8,11 @@
   angular
     .module('jandiApp')
     .controller('entityHeaderCtrl', entityHeaderCtrl);
-
+  
   /* @ngInject */
   function entityHeaderCtrl($scope, $filter, entityHeader, entityAPIservice, memberService, currentSessionHelper,
                             publicService, jndPubSub, analyticsService, modalHelper, AnalyticsHelper, $state, TopicMessageCache,
-                            Dialog, JndUtil, JndConnect, EntityHandler, RoomTopicList) {
+                            Dialog, JndUtil, JndConnect, EntityHandler, RoomTopicList, NetInterceptor, jndWebSocket) {
 
     //console.info('[enter] entityHeaderCtrl', currentSessionHelper.getCurrentEntity());
     var _translate = $filter('translate');
@@ -75,8 +75,12 @@
      * @private
      */
     function _attachEventListeners() {
-      $scope.$on('connected', _onConnected);
-      $scope.$on('disconnected', _onDisconnected);
+      $scope.$on('NetInterceptor:connect', _onConnectionStatusChange);
+      $scope.$on('NetInterceptor:disconnect', _onConnectionStatusChange);
+      
+      $scope.$on('jndWebSocket:connect', _onConnectionStatusChange);
+      $scope.$on('jndWebSocket:disconnect', _onConnectionStatusChange);
+      
       $scope.$on('onTopicDeleted', _onTopicDeleted);
       $scope.$on('onTopicLeft', _onTopicLeft);
       $scope.$on('onBeforeEntityChange', changeEntityHeaderTitle);
@@ -155,6 +159,7 @@
      * @private
      */
     function _setUserList() {
+      _checkOwnership();
       $scope.users = _getUsers(_currentEntity);
     }
 
@@ -521,25 +526,24 @@
     };
 
     /**
-     * network connect 가 publish 되었을 때
+     * connection 상태가 변경되었을 때 콜백
      * @private
      */
-    function _onConnected() {
+    function _onConnectionStatusChange() {
       JndUtil.safeApply($scope, function() {
-        $scope.isConnected = true;
+        $scope.isShowConnectionWarning = _isShowConnectionWarning();
       });
     }
 
     /**
-     * network disconnect 가 publish 되었을 때
+     * connection warning 을 보여줄지 여부를 반환한다.
+     * @returns {boolean}
      * @private
      */
-    function _onDisconnected() {
-      JndUtil.safeApply($scope, function() {
-        $scope.isConnected = false;
-      });
+    function _isShowConnectionWarning() {
+      return !NetInterceptor.isConnected() || !jndWebSocket.isConnected();
     }
-
+    
     /**
      * left에서 토픽이 클릭되었을 때 우선적으로 header의 title을 바꾸세요! 라고 말해준다.
      * 그 이벤트를 듣고있다가 바꾼다.
@@ -654,21 +658,42 @@
      * @private
      */
     function _getUsers(entity) {
+      var currentUser;
+      var user;
       var users = [];
       var userIdList = RoomTopicList.getUserIdList(entity.id);
-
+      var currentUserId = memberService.getMemberId();
+      var isKickedOutEnable;
+      var isTopicAdmin;
+      
       if (userIdList.length) {
         _.each(userIdList, function(userId) {
-          users.push({
+          isKickedOutEnable = !!($scope.hasKickoutAuth && userId !== currentUserId);
+          isTopicAdmin = userId === entityAPIservice.getOwnerId(_currentEntity);
+          user = {
             id: userId,
-            thumbnail: memberService.getProfileImage(userId),
-            name: memberService.getNameById(userId)
-          });
+            name: memberService.getNameById(userId),
+            isKickedOutEnable: isKickedOutEnable,
+            isTopicAdmin: isTopicAdmin
+          };
+
+          //현재 로그인 한 user 는 목록의 최상단에 위치시키기 위함
+          if (userId === currentUserId) {
+            currentUser = user;
+          } else {
+            users.push({
+              id: userId,
+              name: memberService.getNameById(userId),
+              isKickedOutEnable: isKickedOutEnable,
+              isTopicAdmin: isTopicAdmin
+            });
+          }
         });
 
         users = _.sortBy(users, function (user) {
           return user.name.toLowerCase();
         });
+        users.unshift(currentUser);
       }
 
       return users;

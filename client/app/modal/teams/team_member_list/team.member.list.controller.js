@@ -146,7 +146,7 @@
         }
 
         _.forEach(memberList, function(member) {
-          if (memberService.isDeactivatedMember(member)) {
+          if (memberService.isDisabled(member)) {
             disabledMemberList.push(member);
           } else if (memberService.isActiveMember(member)){
             if (memberService.getMemberId() !== member.id) {
