@@ -47,23 +47,23 @@
                 </div>
               {{/if}}
             </div>
-          <div class="card-body cursor_pointer _compile">
-            <!--    FILE TYPE THUMBNAIL -->
-            <div class="card-info _fileDetail">
-              {{#if file.isIconPreview}}
-                <div class="card-image expand icon _previewExpand">
-                  <div class="fileicon fileicon-{{ file.icon }}"></div>
-                </div>
-              {{else if file.hasPreview}}
-                <div class="card-image expand _previewExpand">
-                  <img src="{{file.smallImageUrl}}">
-                </div>
-              {{else}}
-                <div class="card-image icon">
-                  <div class="fileicon fileicon-{{ file.icon }}"></div>
-                </div>
-              {{/if}}
-                <div class="info-group">
+            <div class="card-body cursor_pointer _compile">
+              <!--    FILE TYPE THUMBNAIL -->
+              <div class="card-info">
+                {{#if file.isIconPreview}}
+                  <div class="card-image expand icon _previewExpand">
+                    <div class="fileicon fileicon-{{ file.icon }}"></div>
+                  </div>
+                {{else if file.hasPreview}}
+                  <div class="card-image expand _previewExpand">
+                    <img src="{{file.smallImageUrl}}">
+                  </div>
+                {{else}}
+                  <div class="card-image icon">
+                    <div class="fileicon fileicon-{{ file.icon }}"></div>
+                  </div>
+                {{/if}}
+                <div class="info-group _fileDetail">
                   <div class="info-group-up">
                     <span class="info-writer inline-overflow-ellipsis selectable">{{ file.writerName }}</span>
                     <span class="info-created-time">{{ file.time }}</span>

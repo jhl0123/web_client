@@ -51,7 +51,7 @@
           </div>
           <div class="card-body cursor_pointer _compile">
             <!--    FILE TYPE THUMBNAIL -->
-            <div class="card-info _fileDetail">
+            <div class="card-info">
               {{#if file.isIconPreview}}
                 <div class="card-image expand icon _previewExpand">
                   <div class="fileicon fileicon-{{ file.icon }}"></div>
@@ -65,7 +65,7 @@
                   <div class="fileicon fileicon-{{ file.icon }}"></div>
                 </div>
               {{/if}}
-              <div class="info-group">
+              <div class="info-group _fileDetail">
                 <div class="info-group-up">
                   <span class="info-writer inline-overflow-ellipsis selectable">{{ msg.extWriterName }}</span>
                   <span class="info-created-time">{{ file.time }}</span>
