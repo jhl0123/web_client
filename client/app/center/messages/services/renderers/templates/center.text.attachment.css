@@ -6,15 +6,22 @@
   background-color: transparent !important;
   border-color: transparent !important;
   overflow: hidden;
+  border-radius: 5px 3px 4px 5px;
 }
 .attachment-content-wrapper .attachment-content-bar {
   display: table-cell;
   position: absolute;
-  height: 100%;
   left: 0;
   top: 0;
+  bottom: 1px;
   min-width: 4px;
-  background-color: #9da7ad;
+  /*background-color: #9da7ad;*/
+  background-color: #00ACE9;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  
+  border-top: 1px solid #72CBE6;
+  border-bottom: 1px solid rgba(5, 35, 60, 0.18);
 }
 .attachment-content-wrapper .attachment-content {
   display: table-cell;
