@@ -18,7 +18,6 @@
     <div class="custom-select-box__search-container">
       <span class="add-on-left"><i class="icon-search"></i></span>
       <input type="text"
-             ng-model="searchKeyword"
              ng-keyup="onKeyUp($event);"
              class="form-control custombox-search__input search-input" placeholder="{{::'@input-to-search' | translate }}">
     </div>
@@ -35,12 +34,7 @@
         <span class="menulist-item-header">{{searchList.length}}<span translate>@selectbox-query-matches</span></span>
 
         <ul class="menulist-item-result">
-
-          <li class="topic-title menu-item _selectable" ng-repeat="item in searchList">
-            <a>
-              <span ng-bind-html="item.extSearchName"></span>
-            </a>
-          </li>
+          <jnd-selectbox-repeat list="searchList" template="selectbox.item.search"></jnd-selectbox-repeat>
         </ul>
       </div>
     </div>
@@ -71,13 +65,7 @@
                 <span>{{folder.name}}</span>
               </a>
             </li>
-
-            <li class="topic-title menu-item _selectable"
-                ng-repeat="item in folder.entityList | orderBy: ['isStarred', '-name']: true">
-              <a>
-                <span>{{item.name}}</span>
-              </a>
-            </li>
+            <jnd-selectbox-repeat list="folder.entityList" template="selectbox.item"></jnd-selectbox-repeat>
           </ul>
         </div>
 
@@ -89,12 +77,7 @@
           </span>
 
           <ul class="menulist-item-dm">
-
-            <li class="topic-title menu-item _selectable" ng-repeat="item in memberData.enabledList | orderBy:'name'">
-              <a>
-                <span>{{item.name}}</span>
-              </a>
-            </li>
+            <jnd-selectbox-repeat list="memberData.enabledList" template="selectbox.item"></jnd-selectbox-repeat>
           </ul>
 
         </div>
@@ -111,12 +94,8 @@
           </div>
 
           <ul ng-if="isShowDisabled" class="menulist-item-block">
-
-            <li class="topic-title menu-item _selectable" ng-repeat="item in memberData.disabledList | orderBy:'name'">
-              <a>
-                <span><del>{{item.name}}</del></span>
-              </a>
-            </li>
+            <jnd-selectbox-repeat list="memberData.disabledList" template="selectbox.disabled.member">
+            </jnd-selectbox-repeat>
           </ul>
 
         </div>
