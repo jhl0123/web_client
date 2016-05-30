@@ -166,7 +166,7 @@
   width: 60px;
   height: calc(100% + 2px);
   background-color: #f1f4f8;
-  border: 1px solid rgba(5, 35, 60, 0.2);
+  border: 1px solid rgba(5, 35, 60, 0.13);
   overflow: hidden;
   -webkit-transition: left ease-in-out .3s .4s;
   transition: left ease-in-out .3s .4s;

@@ -1,5 +1,5 @@
 .message.comment {
-  margin-top: -21px;
+  margin-top: -22px;
 }
 .message.comment.first {
   margin-top: -18px;
@@ -116,8 +116,8 @@
   position: absolute;
   top: -1px;
   height: 1px;
-  left: 0;
-  right: 0;
+  left: -1px;
+  right: -1px;
   background-color: rgba(5, 35, 60, 0.13);
   z-index: 1;
 }
@@ -128,6 +128,7 @@
 .message.comment-child .msg-item:before {
   left: 54px;
   top: -2px;
+  right: 0;
 }
 .message.comment-child .msg-item:hover:after {
   content: '';
