@@ -35,6 +35,6 @@
   border-radius: 4px;
   background-color: #FFF;
 }
-.attachment-content-wrapper .attachment-content:hover {
+.message:not(.bot-text) .attachment-content-wrapper .attachment-content:hover {
   border-color: rgba(5,35,60,0.25);
 }
