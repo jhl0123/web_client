@@ -170,7 +170,7 @@ app.filter('getSmallThumbnail', ['$filter', 'memberService', 'config', 'CoreUtil
       var memberId;
       if (_.isObject(member)) {
         memberId = member.id;
-        url = CoreUtil.pick(member, 'u_photoThumbnailUrl', 'smallThumbnailUrl') || '';
+        url = member && member.u_photoThumbnailUrl && member.smallThumbnailUrl || '';
       } else {
         memberId = member;
         url = memberService.getSmallThumbnailUrl(member);

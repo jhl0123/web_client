@@ -170,7 +170,7 @@
       _setCurrentTeamAdmin(response.entities);
       currentSessionHelper.setCurrentTeam(response.team);
       memberService.setMember(response.user);
-      _refreshStarredEntitiesMap(CoreUtil.pick(response, 'user', 'u_starredEntities'));
+      _refreshStarredEntitiesMap(response && response.user && response.user.u_starredEntities);
 
       RoomTopicList.reset();
       UserList.reset();
