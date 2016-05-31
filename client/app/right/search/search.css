@@ -2,7 +2,10 @@
   padding-left: 11px;
   padding-top: 9px;
   height: 44px;
-  background-color: #F9F9F9;
+  background-color: #FFF;
+}
+.rpanel-body .advanced-search-option__category .custom-select-box-btn:hover {
+  background-color: #F1F4F8;
 }
 
 .modal-dialog .add-on-left,
@@ -23,7 +26,7 @@
   height: 26px;
   font-size: 13px;
   padding: 2px 12px 2px 25px;
-  border: 1px solid #e1e1e1;
+  border: 1px solid #D5DADB;
   border-radius: 22px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
@@ -49,14 +52,14 @@
   border-bottom-right-radius: 22px;
   border: 1px solid #e1e1e1;
   box-sizing: border-box;
-  background-color:#F5F6F7;
+  background-color:#FFF;
 
   -webkit-transition: all 200ms;
   transition: all 200ms;
 }
 
 .rpanel-search-init:hover {
-  background-color:#EFEFEF;
+  background-color:#F1F4F8;
   border-color:#D0D5D9;
   cursor: pointer;
   z-index: 5;
