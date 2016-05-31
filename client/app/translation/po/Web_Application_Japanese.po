@@ -253,6 +253,12 @@ msgstr "トピック一覧"
 msgid "@comment-all-desc"
 msgstr "コメント{{commentCount}}件を全て表示"
 
+#: client/app/tutorial/popup/tutorial.main.html
+#: client/app/tutorial/popup/view_components/tutor/tutorial.tutor.html
+#: client/app/tutorial/welcome/tutorial.welcome.html
+msgid "@common_skip_all"
+msgstr "チュートリアルをスキップ"
+
 #: client/app/modal/teams/team_member_list/team.member.list.html
 msgid "@common-active-member"
 msgstr "有効なメンバー"
@@ -292,6 +298,12 @@ msgstr "コメント"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-connect-setting"
 msgstr "JANDIコネクトを設定する"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-connection-lost"
+msgstr ""
+"インターネット接続が切断されました。ネットワークが復元されると、自動的にジヤ"
+"ンでィーに接続されます"
 
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@common-connection-retry"
@@ -607,6 +619,10 @@ msgid "@common-new-message"
 msgstr "新メッセージ"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-no"
+msgstr "いいえ"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-off"
 msgstr "オフ"
 
@@ -788,6 +804,10 @@ msgid "@common-visit-homepage"
 msgstr "ホームページを見る"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-yes"
+msgstr "はい"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-zoom-in"
 msgstr "拡大"
 
@@ -798,12 +818,6 @@ msgstr "縮小"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-zoom-reset"
 msgstr "デフォルト"
-
-#: client/app/tutorial/popup/tutorial.main.html
-#: client/app/tutorial/popup/view_components/tutor/tutorial.tutor.html
-#: client/app/tutorial/welcome/tutorial.welcome.html
-msgid "@common_skip_all"
-msgstr "チュートリアルをスキップ"
 
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@confirm-kickout"
@@ -1031,6 +1045,10 @@ msgstr "ファイルプレビュー"
 msgid "@filecard-button-preview-tooltip"
 msgstr "フルスクリーンでファイルプレビュー"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@filecard-unshared-file"
+msgstr "共有解除されたファイル"
+
 #: client/app/left/topics/topics.html
 msgid "@folder-enter-name"
 msgstr "フォルダ名を入力ください"
@@ -1173,6 +1191,12 @@ msgid "@integration-title-google-drive"
 msgstr "Googleドライブからファイルをアップロード"
 
 #: client/app/modal/teams/team_invite/team.invite.html
+msgid "@invitation_success_copy_link"
+msgstr ""
+"あなたのチームへの招待リンクがコピーされました。チームに招待したい人に送りま"
+"しょう"
+
+#: client/app/modal/teams/team_invite/team.invite.html
 msgid "@invitation-already-member"
 msgstr "このメールはすでに{{invitedTeamName}}のメンバーです"
 
@@ -1200,12 +1224,6 @@ msgstr "管理者によって招待が取り消されました。"
 #: client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.html
 msgid "@invitation-link-desc"
 msgstr "またはリンクを送信"
-
-#: client/app/modal/teams/team_invite/team.invite.html
-msgid "@invitation_success_copy_link"
-msgstr ""
-"あなたのチームへの招待リンクがコピーされました。チームに招待したい人に送りま"
-"しょう"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jandi-bot-role"
@@ -2221,6 +2239,20 @@ msgid "@login-reset-password"
 msgstr "パスワードを忘れた場合"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-button-download"
+msgstr "ダウンロード"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-desc"
+msgstr ""
+"今回のバージョンからは、Mac App Storeを使用していません。ダウンロードした後"
+"は、既存のアプリを上書きしてください。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-title"
+msgstr "新しいJANDIのMacアプリがリリースされました！"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@managemembers-dropdown-pending"
 msgstr "招待中のメンバー"
 
@@ -2274,6 +2306,10 @@ msgstr "削除する"
 #: client/app/center/center.html
 msgid "@message-deleted"
 msgstr "このメッセージは削除されました"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@message-exceeded-max-length"
+msgstr "５０００文字まで入力できます"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@message-mention"
@@ -2453,6 +2489,14 @@ msgstr "拡大 (+)"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@pdfviewer-tooltip-zoomout"
 msgstr "縮小 (-)"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@placeholder-input-comment"
+msgstr "ここにコメントを記入 (Shift + エンターキーでテキストボックス内で改行)"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@placeholder-input-message"
+msgstr "ここにメッセージを記入（Shift + エンターキーでテキストボックス内で改行"
 
 #: client/app/left/left.html
 msgid "@privateGroup"
@@ -2810,6 +2854,10 @@ msgid "@socket-connection-lost"
 msgstr "JANDIサーバーとの接続が切断されました。しばらくお待ちください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@socket-connection-retry"
+msgstr "JANDIサーバーとの接続が切断されました。しばらくお待ちください。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@sounds-arise"
 msgstr "階段"
 
@@ -2962,11 +3010,12 @@ msgstr ""
 msgid "@team-invite-invalid-email"
 msgstr "正しいメールアドレスの形式を入力してください"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-link-copy-desc"
 msgstr ""
-"{{ctrlKey}}+Cを押したら、招待リンクがコピーされます。招待したいメンバにこのリ"
-"ンクを送ってみてください。"
+"Ctrl+Cを押したら、招待リンクがコピーされます。招待したいメンバにこのリンクを"
+"送ってみてください。"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-more"
@@ -3064,207 +3113,6 @@ msgstr "デスクトップ通知をオンにする"
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@turn-on-topic-alarm"
 msgstr "通知をオンにする"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-click-blink"
-msgstr "クリックして今すぐ見てみましょう!"
-
-#: client/app/modal/change_log/changeLog.html
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-done"
-msgstr "チュートリアルを終了する"
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-msg1"
-msgstr ""
-"アップロードされたファイルは全て右カラムのファイル一覧（ファイルドロワー）か"
-"らアクセスできます。「・・・」ボタンをクリックし、ダウンロードや共有範囲の変"
-"更、コメントの追加などができます"
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-msg2"
-msgstr ""
-"ファイルをキーワードで検索したり、共有範囲、共有したメンバー、ファイルの種類"
-"で絞り込むことができます。「メッセージ」タブをクリックすることでメッセージを"
-"検索することができます。検索結果をクリックすると、その会話の部分にジャンプす"
-"ることができます"
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-msg3"
-msgstr ""
-"「検索」ボタンを押して右パネルを開いたり、「閉じる」ボタンを押して右パネルを"
-"閉じることができます"
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-title"
-msgstr "ファイルドロワーと検索パネル"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-message-file-title"
-msgstr "メッセージとファイルを送信中"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal1-content"
-msgstr ""
-"増えていくお仕事のほど増加するトピックの数で困っていますか？これからはトピッ"
-"クをフォルダで分類して管理できます。今一つのトピックを他のトピックの上にド"
-"ラッグ・アンド・ドロップで簡単にフォルダを作成してみてください。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal1-title"
-msgstr "フォルダで関連トピックを分類してください。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal2-content"
-msgstr ""
-"重要なメッセージまたはファイルは星アイコンをクリックし、スター付きすることが"
-"できます。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal2-title"
-msgstr "スター付き項目"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal3-content"
-msgstr ""
-"@'を入力してからメンバーを選択すると、トピックの通知がオフに設定された時にも"
-"通知が受けられます。自分がメンションされたメッセージは右側のパンネルに集まれ"
-"ます。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal3-title"
-msgstr "メンション"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal4-content"
-msgstr ""
-"特定の言葉が含まれたメッセージをすべての会話を対象に検索でき、作成者および会"
-"話トピックに制限し 検索できます。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal4-title"
-msgstr "全てのメッセージを検索してください。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal5-content"
-msgstr ""
-"Jump機能(Cmd/Cmd+J)でメンバーの名前またはトピック名を検索して、便利に会話間に"
-"移動できます。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal5-title"
-msgstr "Jump機能で速く会話間に 移動してください"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal6-content"
-msgstr ""
-"ファイルアップロード(Ctrl/Cmd+U)またはトピックにメンバー招待(Ctrl+I)のような"
-"繰り返し作業はショートカットを使用してみてください。Ctrl(Cmd)+/だけ入力すれば"
-"ショートカット一覧できます。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal6-title"
-msgstr "ショートカット"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal7-content"
-msgstr ""
-"Googleカレンダー, Trello, GitHub, JIRAなどの他サービスにおける変動事項をJANDI"
-"で通知を受けることができます。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal7-title"
-msgstr "JANDIコネクト"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-msg-explanation"
-msgstr ""
-"メッセージを書いてエンターキーを押しましょう。ファイルを共有するには、メッ"
-"セージ入力欄の左にあるボタンをクリックするか、ファイルをドラッグ＆ドロップし"
-"てください。"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-skip"
-msgstr "チュートリアルをスキップする"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-slide-1"
-msgstr "コラボレーションすること、<br>難しいでしょう？"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-slide-2"
-msgstr ""
-"<strong>JANDI</strong>ではみんなが楽しく<br>お仕事できると思っています。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-slide-3"
-msgstr ""
-"<strong>JANDI</strong> - コミュニケーションをシンプルに。今すぐはじめる"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-tips"
-msgstr "TIPS"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-1"
-msgstr "グループメッセージの単位の「トピック」を作成してみてくださいTIPS"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-2"
-msgstr "チャットにファイルをアップロードしてみてくださいTIPS"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-3"
-msgstr "かわいいスタンプを送ってみよう"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-4"
-msgstr "ファイルリストなど各種機能を確認してください"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-dm-explanation"
-msgstr ""
-"「ダイレクトメッセージ」は1対1のやりとり用で、他のメンバーは閲覧できません。"
-"最新の会話から順に表示されます。会話を閉じると一覧から消えますが、会話を再開"
-"すると再び表示されます。過去の会話履歴も表示されます。"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-group-explanation"
-msgstr ""
-"「プライベートトピック」は、招待されたメンバーのみ見ることができるトピックで"
-"す。新しいプライベートトピックを作成するには「＋追加」をクリックしてくださ"
-"い。"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-title"
-msgstr "トピックとプライベートトピックとダイレクトメッセージの違いは何ですか？"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-topic-explanation"
-msgstr ""
-"「トピック」は特定のテーマごとの部屋、またはスレッドのようなものです。会話の"
-"内容がイメージできる名前をつけるとよいでしょう。トピックは「＋追加」で作った"
-"り、「☰ 表示」で既存のトピックを探して参加できます。"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-tour"
-msgstr "続きを見る »"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-welcome-intro"
-msgstr ""
-"JANDIはあなたのチームが、もっとシームレスに、もっと近い距離感でコミュニケー"
-"ションできることを願っています。ここでJANDIをより良く理解するために重要な３点"
-"をご紹介します。"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-welcome-title"
-msgstr "JANDIへようこそ!!"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_awesome"
@@ -3472,6 +3320,207 @@ msgstr "まだジャンディーのチュートリアルをやり通していま
 msgid "@tutorial_welcome_title"
 msgstr "ようこそ{{username}}さん！"
 
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-click-blink"
+msgstr "クリックして今すぐ見てみましょう!"
+
+#: client/app/modal/change_log/changeLog.html
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-done"
+msgstr "チュートリアルを終了する"
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-msg1"
+msgstr ""
+"アップロードされたファイルは全て右カラムのファイル一覧（ファイルドロワー）か"
+"らアクセスできます。「・・・」ボタンをクリックし、ダウンロードや共有範囲の変"
+"更、コメントの追加などができます"
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-msg2"
+msgstr ""
+"ファイルをキーワードで検索したり、共有範囲、共有したメンバー、ファイルの種類"
+"で絞り込むことができます。「メッセージ」タブをクリックすることでメッセージを"
+"検索することができます。検索結果をクリックすると、その会話の部分にジャンプす"
+"ることができます"
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-msg3"
+msgstr ""
+"「検索」ボタンを押して右パネルを開いたり、「閉じる」ボタンを押して右パネルを"
+"閉じることができます"
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-title"
+msgstr "ファイルドロワーと検索パネル"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-message-file-title"
+msgstr "メッセージとファイルを送信中"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal1-content"
+msgstr ""
+"増えていくお仕事のほど増加するトピックの数で困っていますか？これからはトピッ"
+"クをフォルダで分類して管理できます。今一つのトピックを他のトピックの上にド"
+"ラッグ・アンド・ドロップで簡単にフォルダを作成してみてください。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal1-title"
+msgstr "フォルダで関連トピックを分類してください。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal2-content"
+msgstr ""
+"重要なメッセージまたはファイルは星アイコンをクリックし、スター付きすることが"
+"できます。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal2-title"
+msgstr "スター付き項目"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal3-content"
+msgstr ""
+"@'を入力してからメンバーを選択すると、トピックの通知がオフに設定された時にも"
+"通知が受けられます。自分がメンションされたメッセージは右側のパンネルに集まれ"
+"ます。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal3-title"
+msgstr "メンション"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal4-content"
+msgstr ""
+"特定の言葉が含まれたメッセージをすべての会話を対象に検索でき、作成者および会"
+"話トピックに制限し 検索できます。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal4-title"
+msgstr "全てのメッセージを検索してください。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal5-content"
+msgstr ""
+"Jump機能(Cmd/Cmd+J)でメンバーの名前またはトピック名を検索して、便利に会話間に"
+"移動できます。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal5-title"
+msgstr "Jump機能で速く会話間に 移動してください"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal6-content"
+msgstr ""
+"ファイルアップロード(Ctrl/Cmd+U)またはトピックにメンバー招待(Ctrl+I)のような"
+"繰り返し作業はショートカットを使用してみてください。Ctrl(Cmd)+/だけ入力すれば"
+"ショートカット一覧できます。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal6-title"
+msgstr "ショートカット"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal7-content"
+msgstr ""
+"Googleカレンダー, Trello, GitHub, JIRAなどの他サービスにおける変動事項をJANDI"
+"で通知を受けることができます。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal7-title"
+msgstr "JANDIコネクト"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-msg-explanation"
+msgstr ""
+"メッセージを書いてエンターキーを押しましょう。ファイルを共有するには、メッ"
+"セージ入力欄の左にあるボタンをクリックするか、ファイルをドラッグ＆ドロップし"
+"てください。"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-skip"
+msgstr "チュートリアルをスキップする"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-slide-1"
+msgstr "コラボレーションすること、<br>難しいでしょう？"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-slide-2"
+msgstr ""
+"<strong>JANDI</strong>ではみんなが楽しく<br>お仕事できると思っています。"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-slide-3"
+msgstr ""
+"<strong>JANDI</strong> - コミュニケーションをシンプルに。今すぐはじめる"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-tips"
+msgstr "TIPS"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-1"
+msgstr "グループメッセージの単位の「トピック」を作成してみてくださいTIPS"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-2"
+msgstr "チャットにファイルをアップロードしてみてくださいTIPS"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-3"
+msgstr "かわいいスタンプを送ってみよう"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-4"
+msgstr "ファイルリストなど各種機能を確認してください"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-dm-explanation"
+msgstr ""
+"「ダイレクトメッセージ」は1対1のやりとり用で、他のメンバーは閲覧できません。"
+"最新の会話から順に表示されます。会話を閉じると一覧から消えますが、会話を再開"
+"すると再び表示されます。過去の会話履歴も表示されます。"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-group-explanation"
+msgstr ""
+"「プライベートトピック」は、招待されたメンバーのみ見ることができるトピックで"
+"す。新しいプライベートトピックを作成するには「＋追加」をクリックしてくださ"
+"い。"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-title"
+msgstr "トピックとプライベートトピックとダイレクトメッセージの違いは何ですか？"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-topic-explanation"
+msgstr ""
+"「トピック」は特定のテーマごとの部屋、またはスレッドのようなものです。会話の"
+"内容がイメージできる名前をつけるとよいでしょう。トピックは「＋追加」で作った"
+"り、「☰ 表示」で既存のトピックを探して参加できます。"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-tour"
+msgstr "続きを見る »"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-welcome-intro"
+msgstr ""
+"JANDIはあなたのチームが、もっとシームレスに、もっと近い距離感でコミュニケー"
+"ションできることを願っています。ここでJANDIをより良く理解するために重要な３点"
+"をご紹介します。"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-welcome-title"
+msgstr "JANDIへようこそ!!"
+
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@unread-bookmark-message"
 msgstr "ここから未読メッセージ"
@@ -3527,12 +3576,8 @@ msgid "@web-notification-body-messages-pre"
 msgstr " "
 
 #: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@web-notification-body-other-team-post"
-msgstr "{{teamName}}に新規メッセージが届きました。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@web-notification-body-other-team-pre"
-msgstr ""
+msgid "@web-notification-body-other-team"
+msgstr "に新規メッセージが届きました。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@web-notification-body-private-topic-invited"
@@ -3634,9 +3679,6 @@ msgstr "水曜日"
 #~ msgid "@common-more"
 #~ msgstr "表示"
 
-#~ msgid "@common-files"
-#~ msgstr "ファイル"
-
 #~ msgid "@ch-menu-rename"
 #~ msgstr "このトピックの名称を変更する"
 
@@ -3656,10 +3698,6 @@ msgstr "水曜日"
 #~ msgid "@tutorial_congratulation"
 #~ msgstr ""
 #~ "おめでとうございます{{username}}さん！チュートリアルを完了しました。"
-
-#~ msgid "@placeholder-input-message"
-#~ msgstr ""
-#~ "ここにメッセージを記入（Shift + エンターキーでテキストボックス内で改行"
 
 #, fuzzy
 #~ msgid "@announcement-creator"
