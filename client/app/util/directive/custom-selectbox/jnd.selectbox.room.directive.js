@@ -8,7 +8,7 @@
     .module('jandiApp')
     .directive('jndSelectboxRoom', jndSelectboxRoom);
 
-  function jndSelectboxRoom($filter, TopicFolderModel, publicService, JndUtil, jndPubSub, memberService, RoomTopicList,
+  function jndSelectboxRoom($filter, $timeout, TopicFolderModel, publicService, JndUtil, jndPubSub, memberService, RoomTopicList,
                             UserList, BotList) {
     return {
       restrict: 'AE',
@@ -27,8 +27,10 @@
     };
 
     function link(scope, el, attrs) {
+      var SEARCH_DELAY = 100;
       var _lastKeyword = '';
       var _filterMap;
+      var _timerSearch;
       var TOGGLE_DISABLE_SCROLL_DURATION = 500;
       scope.close = close;
       scope.onKeyUp = onKeyUp;
@@ -43,7 +45,6 @@
        */
       function _init() {
         scope.isShown = false;
-        scope.searchKeyword = '';
         _initializeFilter();
         _initializeData();
         _attachEvents();
@@ -169,6 +170,8 @@
        * @private
        */
       function _initializeData() {
+        _lastKeyword = '';
+        scope.searchKeyword = '';        
         scope.folderData = _getFolderData();
         scope.memberData = _getMemberData();
         scope.searchList = [];
@@ -210,7 +213,7 @@
             if (entityList.length) {
               folderList.push({
                 name: folder.name,
-                entityList: entityList
+                entityList: $filter('orderBy')(entityList, ['isStarred', '-name'], true)
               });
             }
           });
@@ -223,12 +226,13 @@
 
       /**
        * change 이벤트 핸들러
-       * @param targetScope
+       * @param jqTarget
        */
-      function onChange(targetScope) {
-        if (targetScope.item) {
-          scope.selectedName = targetScope.item.name;
-          scope.selectedValue = targetScope.item.id;
+      function onChange(jqTarget) {
+        var item = jqTarget.data('item');
+        if (item) {
+          scope.selectedName = item.name;
+          scope.selectedValue = item.id;
         } else {
           scope.selectedName = $filter('translate')('@option-all-rooms');
           scope.selectedValue = null;
@@ -318,8 +322,8 @@
           }
         });
         return {
-          enabledList: enabledList,
-          disabledList: disabledList
+          enabledList: _.sortBy(enabledList, 'name'),
+          disabledList: _.sortBy(disabledList, 'name')
         };
       }
 
@@ -336,7 +340,8 @@
        * keyup 이벤트 핸들러
        */
       function onKeyUp(keyEvent) {
-        _search($(keyEvent.target).val());
+        $timeout.cancel(_timerSearch);
+        _timerSearch = $timeout(_.bind(_search, this, $(keyEvent.target).val()), SEARCH_DELAY);
       }
 
       /**
@@ -345,6 +350,7 @@
        * @private
        */
       function _search(keyword) {
+        scope.searchKeyword = keyword;
         var start;
         var result = [];
         keyword = _.trim(keyword);

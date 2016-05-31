@@ -6,15 +6,17 @@
 
   angular
     .module('jandiApp')
-    .directive('listOnModal', listOnModal);
+    .directive('dynamicRenderList', dynamicRenderList);
 
-  function listOnModal($timeout, CoreUtil, Viewport, ListRenderer, jndKeyCode, EntityHandler, teamAPIservice, UserList) {
+  function dynamicRenderList($timeout, CoreUtil, DynamicRenderViewport, ListRenderer, jndKeyCode, EntityHandler,
+                         teamAPIservice, UserList) {
     return {
+      require: '^dynamicRenderViewport',
       restrict: 'E',
       link: link
     };
 
-    function link(scope, el, attrs) {
+    function link(scope, el, attrs, ctrl) {
       var originScope = scope.$parent;
 
       // model
@@ -27,7 +29,7 @@
       var type = attrs.type;
 
       // list property name
-      var list = attrs.list;
+      var _list = attrs.list;
 
       // item의 type(member, topic)
       var itemType = attrs.itemType;
@@ -45,7 +47,7 @@
       var height = parseInt(attrs.viewportHeight, 10);
 
       // viewport의 최대 height
-      var maxHeight = parseInt(attrs.viewportMaxHeight || $(window).height() / 2, 10);
+      var maxHeight = parseInt(ctrl.maxHeight || $(window).height() / 2, 10);
 
       // item의 height
       var itemHeight = _.isString(attrs.itemHeight) ? scope.$eval(attrs.itemHeight) : parseInt(attrs.itemHeight, 10);
@@ -62,7 +64,7 @@
       // list element
       var jqList = $('<div class="list"></div>').appendTo(jqViewport);
       
-      var viewport = Viewport.create(jqViewport, jqList, {
+      var viewport = DynamicRenderViewport.create(jqViewport, jqList, {
         viewportHeight: height,
         viewportMaxHeight: maxHeight,
         itemHeight: itemHeight,
@@ -73,7 +75,7 @@
         },
         // rendered callback
         onRendered: function() {
-          _setActiveClass();
+          setActiveClass();
         }
       });
       
@@ -91,6 +93,14 @@
 
       var _modelType = scope.$eval(attrs.modelType);
 
+      var _modelValue = '';
+
+      scope.viewport = viewport;
+
+      originScope.getActiveIndex = getActiveIndex;
+      originScope.setActiveIndex = setActiveIndex;
+      originScope.setActiveClass = setActiveClass;
+
       _init();
 
       /**
@@ -101,7 +111,7 @@
         activeIndex = 0;
 
         // 최초 list 갱신
-        _updateList('');
+        _updateList();
 
         // list가 생성된 후 focus item을 설정
         _focusItem(activeIndex);
@@ -112,9 +122,6 @@
 
         _attachScopeEvents();
         _attachDomEvents();
-
-        originScope.getActiveIndex = getActiveIndex;
-        originScope.setActiveIndex = setActiveIndex;
       }
 
       /**
@@ -171,7 +178,9 @@
        * @private
        */
       function _onUpdateList() {
-        _updateList(jqFilter.val());
+        _modelValue = jqFilter.val();
+
+        _updateList();
       }
 
       /**
@@ -202,15 +211,24 @@
        * @private
        */
       function _onFilterValueChanged(newValue, oldValue) {
-        newValue = newValue || '';
-        oldValue = oldValue || '';
-
-        if (newValue !== oldValue) {
+        if (_isValueChanged(newValue, oldValue)) {
           // model value changed
+          _modelValue = newValue;
 
           setActiveIndex(0);
-          _updateList(newValue);
+          _updateList();
         }
+      }
+
+      /**
+       * filter value 변경 여부
+       * @param {string} newValue
+       * @param {string} oldValue
+       * @returns {boolean}
+       * @private
+       */
+      function _isValueChanged(newValue, oldValue) {
+        return newValue === '' && oldValue == null || (newValue || '') !== (oldValue || '');
       }
 
       /**
@@ -220,7 +238,7 @@
        */
       function _onFilterTypeChanged(newValue) {
         _modelType = newValue;
-        _updateList(jqFilter.val());
+        _updateList();
       }
 
       /**
@@ -311,7 +329,7 @@
           type: itemType,
           list: matches,
           viewport: viewport,
-          filterText: jqFilter.val(),
+          filterText: _modelValue,
           filterType: _modelType
         });
       }
@@ -334,7 +352,7 @@
             // 현재 jandi에서 출력되는 list들은 해당 기능을 사용하지 제공하지 않으므로 주석 처리함.
             // _focusItem(activeIndex);
 
-            _setActiveClass();
+            setActiveClass();
           }
         }
 
@@ -361,7 +379,7 @@
        * 현재 focus된 item에 active class를 설정하고, 이전에 focus 되었던 imte에 active class를 제거한다.
        * @private
        */
-      function _setActiveClass() {
+      function setActiveClass() {
         var element;
 
         prevActiveElement && prevActiveElement.removeClass('active');
@@ -372,16 +390,16 @@
 
       /**
        * topic list를 갱신한다.
-       * @param {string} filterText
        * @private
        */
-      function _updateList(filterText) {
-        matches = getMatches(scope.$eval(list), filterText, _modelType);
+      function _updateList() {
+        var list = scope.$eval(_list);
+        matches = getMatches ? getMatches(list, _modelValue, _modelType) : list;
         ListRenderer.render({
           type: itemType,
           list: matches,
           viewport: viewport,
-          filterText: filterText,
+          filterText: _modelValue,
           filterType: _modelType
         }, true);
       }
@@ -397,7 +415,7 @@
           type: itemType,
           list: matches,
           viewport: viewport,
-          filterText: jqFilter.val(),
+          filterText: _modelValue,
           filterType: _modelType
         });
       }

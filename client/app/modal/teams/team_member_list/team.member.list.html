@@ -38,18 +38,20 @@
           <tab-heading>
             <div translate>@common-active-member</div>
           </tab-heading>
-          <list-on-modal type="enabledMember"
-                         list="enabledMemberList"
-                         item-type="member"
-                         item-class="member-item"
-                         model="keyword.value"
-                         model-type="keyword.type"
-                         filter="#team-member-filter"
-                         on-select="onMemberClick"
-                         get-matches="getMatches"
-                         activeted="memberListSetting.enabledMemberList.active"
-                         item-height="68"
-                         buffer-length="10"></list-on-modal>
+          <div class="list-viewport" dynamic-render-viewport>
+            <dynamic-render-list type="enabledMember"
+                            list="enabledMemberList"
+                            item-type="member"
+                            item-class="member-item"
+                            model="keyword.value"
+                            model-type="keyword.type"
+                            filter="#team-member-filter"
+                            on-select="onMemberClick"
+                            get-matches="getMatches"
+                            activeted="memberListSetting.enabledMemberList.active"
+                            item-height="68"
+                            buffer-length="10"></dynamic-render-list>
+          </div>
           <div class="no-result-container" ng-show="enableMembersLength === 0">
             <span translate>@no-match-members</span>
           </div>
@@ -64,18 +66,20 @@
           <tab-heading>
             <span translate>@common-inactive-member</span>
           </tab-heading>
-          <list-on-modal type="disabledMember"
-                         list="disabledMemberList"
-                         item-type="member"
-                         item-class="member-item"
-                         model="keyword.value"
-                         model-type="keyword.type"
-                         filter="#team-member-filter"
-                         on-select="onMemberClick"
-                         get-matches="getMatches"
-                         activeted="memberListSetting.disabledMemberList.active"
-                         item-height="68"
-                         buffer-length="10"></list-on-modal>
+          <div class="list-viewport" dynamic-render-viewport>
+            <dynamic-render-list type="disabledMember"
+                            list="disabledMemberList"
+                            item-type="member"
+                            item-class="member-item"
+                            model="keyword.value"
+                            model-type="keyword.type"
+                            filter="#team-member-filter"
+                            on-select="onMemberClick"
+                            get-matches="getMatches"
+                            activeted="memberListSetting.disabledMemberList.active"
+                            item-height="68"
+                            buffer-length="10"></dynamic-render-list>
+          </div>
           <div class="no-result-container" ng-show="disableMembersLength === 0">
             <span translate>@no-match-members</span>
           </div>
