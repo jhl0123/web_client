@@ -9,11 +9,12 @@
     .service('DmApi', DmApi);
 
   /* @ngInject */
-  function DmApi($http, memberService, configuration) {
+  function DmApi($http, memberService, configuration, currentSessionHelper, RoomChatDmList, JndUtil) {
     var server_address = configuration.api_address + 'inner-api/';
+    
     this.getRecentMessageList = getRecentMessageList;
     this.leaveCurrentMessage = leaveCurrentMessage;
-
+    this.createRoom = createRoom;
 
     /**
      * 최근 채팅 리스트를 조회한다.
@@ -40,14 +41,32 @@
         url: server_address + 'members/' + memberService.getMemberId() + '/chats/' + roomId
       });
     }
-    
-    function create(memberId) {
+
+    /**
+     * chat room 을 생성한다.
+     * @param {number} memberId
+     * @returns {*}
+     */
+    function createRoom(memberId) {
+      var teamId = currentSessionHelper.getCurrentTeam().id;
       return $http({
         method: 'POST',
-        url: server_address + 'teams/' + memberService.getTeamId() + '/chats/' + roomId
-      });
+        url: server_address + 'teams/' + teamId + '/chats',
+        data: {
+          memberId: memberId
+        }
+      }).success(_onCreateRoomSuccess)
+        .error(JndUtil.alertUnknownError);
     }
 
+    /**
+     * room create success 콜백
+     * @param  {object} response - 응답 값. 생성된 room 정보.
+     * @private
+     */
+    function _onCreateRoomSuccess(response) {
+      RoomChatDmList.add(response);
+    }
   }
 
 })();

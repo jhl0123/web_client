@@ -161,6 +161,7 @@
        *    @param {number} query.count 
        *    @param {number} query.linkId
        *    @param {number} [query.type]
+       * @returns {*}
        */
       request: function(query) {
         var id = this.id;
@@ -170,22 +171,28 @@
           type = 'users';
         }
 
-        this.status.isLoading = true;
-
-        query = query || MessageQuery.get();
-        query = _.cloneDeep(query);
-
         if (this._deferred) {
           this._deferred.resolve();
         }
-
         this._deferred = $q.defer();
+        //DM 일 경우, chatRoomId 가 없으면 request 하지 않는다.
+        if (type !== 'users' || EntityFilterMember.getChatRoomId(id)) {
+          this.status.isLoading = true;
 
-        return messageAPIservice.getMessages(type, id, query, this._deferred)
-          .then(
-            _.bind(this._onSuccessRequest, this, query),
-            _.bind(this._onErrorRequest, this, query))
-          .finally(_.bind(this._onDoneRequest, this));
+          query = query || MessageQuery.get();
+          query = _.cloneDeep(query);
+
+
+
+          return messageAPIservice.getMessages(type, id, query, this._deferred)
+            .then(
+              _.bind(this._onSuccessRequest, this, query),
+              _.bind(this._onErrorRequest, this, query))
+            .finally(_.bind(this._onDoneRequest, this));
+        } else {
+          this._deferred.reject();
+          return this._deferred.promise;
+        }
       },
 
       /**

@@ -14,7 +14,7 @@
                            NetInterceptor, jndPubSub, jndKeyCode, MessageCacheCollection, MessageSendingCollection,
                            AnalyticsHelper, Announcement, NotificationManager, Dialog, RendererUtil, HybridAppHelper,
                            TopicInvitedFlagMap, UserList, JndConnect, RoomTopicList, SocketEventApi, jndWebSocket,
-                           ActiveNotifier, EntityFilterMember) {
+                           ActiveNotifier, EntityFilterMember, DmApi) {
 
     var TEXTAREA_MAX_LENGTH = 40000;
     var CURRENT_ENTITY_ARCHIVED = 2002;
@@ -29,7 +29,7 @@
     var _messageCollection;
 
     var _entityType = $state.params.entityType;
-    var _entityId = $state.params.entityId;
+    var _entityId = +$state.params.entityId;
 
     // 처음에 center에 진입할 때, 현재 entityId가 가지고 있는 마지막으로 읽은 message marker를 불러온다.
     // message marker는 link id와 동일하다. message id 아님.
@@ -145,7 +145,9 @@
         _initializeFocusStatus();
 
         if (!_messageCollection.status.isInitialized) {
-          _messageCollection.getRequestPromise().then(_getCurrentRoomMarker);
+          _messageCollection.getRequestPromise().then(
+            _getCurrentRoomMarker
+          );
         } else {
           _getCurrentRoomMarker();
         }
@@ -310,7 +312,7 @@
           _messageCollection.toBackground();
         }
         _entityType = entityType;
-        _entityId = entityId;
+        _entityId = +entityId;
         _initialRender();
       }
     }
@@ -769,11 +771,21 @@
 
     function post(msg, sticker, mentions) {
       var hasNew = hasMoreNewMessageToLoad();
+      var isRoomIdExist = true;
       MessageSendingCollection.enqueue(msg, sticker, mentions, hasNew);
       if (!hasNew) {
         _scrollToBottom();
       }
-      _requestPostMessages();
+
+      if (_entityType === 'users') {
+        isRoomIdExist = !!EntityFilterMember.getChatRoomId(_entityId);
+      }
+      if (!isRoomIdExist) {
+        DmApi.createRoom(_entityId)
+          .success(_requestPostMessages);
+      } else {
+        _requestPostMessages();
+      }
     }
 
     /**
@@ -1316,20 +1328,22 @@
      */
     function _getCurrentRoomMarker() {
       var currentRoomId = _getEntityId();
-      _deferredObject.getRoomInformation = $q.defer();
-      messageAPIservice.getRoomInformation(currentRoomId, _deferredObject.getRoomInformation)
-        .success(function (response) {
-          _initMarkers(response.markers);
-          _hasRetryGetRoomInfo = false;
-          //console.log('success')
-        })
-        .error(function (err) {
-          if (!_hasRetryGetRoomInfo && publicService.isNullOrUndefined(currentRoomId)) {
-            //console.log('me')
-            _getCurrentRoomMarker();
-            _hasRetryGetRoomInfo = true;
-          }
-        });
+      if (currentRoomId) {
+        _deferredObject.getRoomInformation = $q.defer();
+        messageAPIservice.getRoomInformation(currentRoomId, _deferredObject.getRoomInformation)
+          .success(function (response) {
+            _initMarkers(response.markers);
+            _hasRetryGetRoomInfo = false;
+            //console.log('success')
+          })
+          .error(function (err) {
+            if (!_hasRetryGetRoomInfo && publicService.isNullOrUndefined(currentRoomId)) {
+              //console.log('me')
+              _getCurrentRoomMarker();
+              _hasRetryGetRoomInfo = true;
+            }
+          });
+      }
     }
 
     /**

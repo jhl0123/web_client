@@ -171,7 +171,8 @@
 
     /**
      * 방의 정보(mostly marker)를 얻는다.
-     * @param roomId
+     * @param {number} roomId
+     * @param {object} canceller
      * @returns {*}
      */
     function getRoomInformation(roomId, canceller) {

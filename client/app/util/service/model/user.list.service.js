@@ -60,7 +60,7 @@
        */
       getChatRoomId: function(userId) {
         var user = this.get(userId);
-        return CoreUtil.pick(user, 'entityId');
+        return user && user.entityId;
       }
     });
 

@@ -831,9 +831,7 @@
           _pushMarkup(htmlList, message, index);
         });
         el.empty().html(_getCompiledEl(htmlList.join('')));
-        if (list.length) {
-          scope.onRepeatDone();
-        }
+        scope.onRepeatDone();
       }
 
       /**
