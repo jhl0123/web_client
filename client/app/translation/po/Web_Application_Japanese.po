@@ -3576,12 +3576,8 @@ msgid "@web-notification-body-messages-pre"
 msgstr " "
 
 #: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@web-notification-body-other-team-post"
-msgstr "{{teamName}}に新規メッセージが届きました。"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@web-notification-body-other-team-pre"
-msgstr ""
+msgid "@web-notification-body-other-team"
+msgstr "に新規メッセージが届きました。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@web-notification-body-private-topic-invited"

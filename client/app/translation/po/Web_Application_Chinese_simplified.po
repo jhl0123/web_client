@@ -3445,12 +3445,8 @@ msgid "@web-notification-body-messages-pre"
 msgstr "有从"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@web-notification-body-other-team-post"
+msgid "@web-notification-body-other-team"
 msgstr " 有新信息"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@web-notification-body-other-team-pre"
-msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@web-notification-body-private-topic-invited"

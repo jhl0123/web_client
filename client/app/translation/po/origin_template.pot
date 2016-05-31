@@ -3342,11 +3342,7 @@ msgid "@web-notification-body-messages-pre"
 msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@web-notification-body-other-team-post"
-msgstr ""
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@web-notification-body-other-team-pre"
+msgid "@web-notification-body-other-team"
 msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html

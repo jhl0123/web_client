@@ -3588,11 +3588,7 @@ msgid "@web-notification-body-messages-pre"
 msgstr "from "
 
 #: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@web-notification-body-other-team-post"
-msgstr "You received a new message in "
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@web-notification-body-other-team-pre"
+msgid "@web-notification-body-other-team"
 msgstr "You received a new message in "
 
 #: client/app/center/messages/services/renderers/templates/translate.html
@@ -3630,6 +3626,9 @@ msgstr "JANDI Message Received"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@wednesday"
 msgstr "Wednesday"
+
+#~ msgid "@web-notification-body-other-team-post"
+#~ msgstr "You received a new message in "
 
 #~ msgid "@topic-admin-transfer-kickout-confirm-2"
 #~ msgstr ""
