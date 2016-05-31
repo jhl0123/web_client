@@ -8,7 +8,7 @@
     .module('jandiApp')
     .directive('jndCustomFocus', jndCustomFocus);
 
-  function jndCustomFocus($timeout, JndUtil, jndKeyCode, jndPubSub) {
+  function jndCustomFocus($timeout, JndUtil, jndKeyCode, CoreUtil) {
     return {
       restrict: 'A',
       link: link,
@@ -45,6 +45,7 @@
        scope.$on('custom-focus:blur', _blur);
        scope.$on('custom-focus:focus', _onFocus);
        scope.$on('custom-focus:focus-value', _onFocusByValue);
+       scope.$on('custom-focus:focus-item', _onFocusByItem);
        scope.$on('custom-focus:focus-next', _focusNext);
        scope.$on('custom-focus:focus-prev', _focusPrev);
      }
@@ -107,7 +108,7 @@
        jqTarget = jqTarget || _jqCurrent;
        if (_.isFunction(scope.onChange)) {
          JndUtil.safeApply(scope, function() {
-           scope.onChange(angular.element(jqTarget).scope());
+           scope.onChange(jqTarget, angular.element(jqTarget).scope());
            if (!isInitial) {
              _close();
            } else {
@@ -154,8 +155,8 @@
        var jqTarget = jqList.eq(0);
 
        _.forEach(jqList, function (el, index) {
-         jqEl = angular.element(el);
-         if (jqEl.scope().item && jqEl.scope().item[scope.key] == value) {
+         jqEl = $(el);
+         if (CoreUtil.pick(jqEl.data('item'), scope.key) == value) {
            jqTarget = jqEl;
            return false;
          }
@@ -209,6 +210,16 @@
        _focus(jqTarget);
      }
 
+     /**
+      * item 에 해당하는 element 에 focus 처리 한다.
+      * @param {object} angularEvent
+      * @param {object} item
+      * @private
+      */
+     function _onFocusByItem(angularEvent, item) {
+       _onFocusByValue(angularEvent, item[scope.key]);
+     }
+     
      /**
       * value 값을 이용하여 focus 한다
       * @param {object} angularEvent
