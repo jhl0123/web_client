@@ -85,7 +85,7 @@
       return {
         type: data.type,
         id: data.id,
-        name: data.name,
+        name: data.extEncodedName,
         status: data.status,
         profileImage: memberService.getProfileImage(data.id),
         count: data.count || data.alarmCnt,

@@ -57,7 +57,7 @@
       var creatorId = isPublic ? data.ch_creatorId : data.pg_creatorId;
 
       return {
-        name: data.name,
+        name: data.extEncodedName,
         createTime: $filter('getyyyyMMddformat')(createTime),
         topicDescription: data.description,
         creatorName: $filter('getName')(creatorId),
