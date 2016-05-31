@@ -691,9 +691,8 @@
 /*
     MODAL TAB HEADER
 */
-.modal-body .list-tabs .tab-pane {
+.modal-body .list-tabs .tab-pane .list-viewport {
   margin-top: 0;
-  min-height: 44px;
   max-height: 662px;
   overflow-y: auto;
   background-color: #fff;

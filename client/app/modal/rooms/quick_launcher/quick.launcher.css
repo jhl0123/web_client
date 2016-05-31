@@ -55,11 +55,14 @@
   border: none;
   /*border-bottom: 1px solid #e1e1e1;*/
 }
+.quick-launcher-list {
+  background-color: rgba(255,255,255,0.95);
+}
 
-.quick-launcher-modal .quick-launcher-list {
+.quick-launcher-list .list-viewport {
+  max-height: 244px;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: rgba(255,255,255,0.95);
 }
 
 .quick-launcher-modal .empty-matches {

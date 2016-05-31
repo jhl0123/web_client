@@ -51,8 +51,8 @@
                           on-keyword-type-select="onKeywordTypeSelect(newValue, oldValue)"></search-type-user>
       </div>
 
-      <div class="member-list-container">
-        <list-on-modal type="avaliableMember"
+      <div class="member-list-container" dynamic-render-viewport>
+        <dynamic-render-list type="avaliableMember"
                        list="availableMemberList"
                        item-type="member"
                        item-class="member-item"
@@ -63,8 +63,7 @@
                        get-matches="getMatches"
                        activeted="true"
                        item-height="68"
-                       viewport-max-height="500"
-                       buffer-length="10"></list-on-modal>
+                       buffer-length="10"></dynamic-render-list>
       </div>
 
       <div class="no-result-container" ng-show="!hasAllMembers && selectingMembers.length === 0">
