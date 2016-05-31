@@ -10,18 +10,19 @@
            placeholder="{{ '@quick-launcher-placeholder' | translate }}">
   </div>
   <div class="quick-launcher-list">
-    <list-on-modal type="roomList"
-                   list="roomList"
-                   item-type="room"
-                   item-class="room-item"
-                   model="roomNameQuery"
-                   filter="#quick-launcher-filter"
-                   on-select="onRoomSelect"
-                   get-matches="getMatches"
-                   activeted="true"
-                   item-height="44"
-                   viewport-max-height="244"
-                   buffer-length="10"></list-on-modal>
+    <div class="list-viewport" dynamic-render-viewport>
+      <dynamic-render-list type="roomList"
+                           list="roomList"
+                           item-type="room"
+                           item-class="room-item"
+                           model="roomNameQuery"
+                           filter="#quick-launcher-filter"
+                           on-select="onRoomSelect"
+                           get-matches="getMatches"
+                           activeted="true"
+                           item-height="44"
+                           buffer-length="10"></dynamic-render-list>
+    </div>
     <div class="empty-matches" ng-show="isEmptyMatches">
       <span class="empty-matches-msg keep" ng-bind-html="noMatchesMsg"></span>
       <button class="empty-matches-button btn btn-cancel cursor_pointer" ng-click="openCreateTopicModal(roomNameQuery)" ng-bind-html="noMatchesButtonMsg"></button>
