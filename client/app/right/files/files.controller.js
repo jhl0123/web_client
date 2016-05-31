@@ -8,7 +8,7 @@
     .module('jandiApp')
     .controller('RightFilesCtrl', RightFilesCtrl);
 
-  function RightFilesCtrl($scope, $filter, $q, $state, $timeout, AnalyticsHelper, analyticsService, CoreUtil,
+  function RightFilesCtrl($scope, $filter, $q, $state, $timeout, AnalyticsHelper, analyticsService, jndPubSub,
                           currentSessionHelper, Dialog, EntityHandler, fileAPIservice, FileDetail, JndUtil, modalHelper,
                           publicService, RoomTopicList, TopicFolderModel, UserList) {
     var _disabledMemberAddedOnSharedIn = false;
@@ -58,6 +58,7 @@
       $scope.loadMore = loadMore;
       $scope.onClickShare = onClickShare;
       $scope.onClickUnshare = onClickUnshare;
+      $scope.onFileUploadClick = onFileUploadClick;
   
       _localCurrentEntity = currentSessionHelper.getCurrentEntity();
 
@@ -739,6 +740,13 @@
             title: $filter('translate')('@success-file-unshare').replace('{{filename}}', message.content.title)
           });
         });
+    }
+
+    /**
+     * file upload하기 버튼 클릭 이벤트 핸들러
+     */
+    function onFileUploadClick() {
+      jndPubSub.pub('RightFilesCtrl:fileUpload');
     }
 
     /**

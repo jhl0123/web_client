@@ -69,7 +69,8 @@
        * @private
        */
       function _attachScopeEvents() {
-        scope.$on('jndMainKeyHandler:upload', _onHotkeyUpload);
+        scope.$on('jndMainKeyHandler:upload', _onOpenFileSelector);
+        scope.$on('RightFilesCtrl:fileUpload', _onOpenFileSelector);
         scope.$on('onCurrentEntityChanged', _onCurrentEntityChanged);
         scope.$on('RoomTopicList:changed', _onRoomTopicListChanged);
         scope.$on('jndWebSocketMember:memberUpdated', _setMentionList);
@@ -126,10 +127,10 @@
       }
 
       /**
-       * hotkey 로 업로드 시
+       * open local file selector
        * @private
        */
-      function _onHotkeyUpload() {
+      function _onOpenFileSelector() {
         _uploadMap['computer']();
         Tutorial.hideTooltip('upload');
       }
