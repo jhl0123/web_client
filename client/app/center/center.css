@@ -137,6 +137,12 @@ article {
   border-bottom-width: 0;
 }
 
+.msg-item.text .prettyprint a:hover {
+  text-decoration: underline;
+  border-bottom-width: 0;
+  color: #808080;
+}
+
 .post-retry {
   font-size: 12px;
   line-height: 12px;
