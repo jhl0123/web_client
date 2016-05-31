@@ -3,17 +3,17 @@
 
   angular
     .module('jandiApp')
-    .directive('chats', chats);
+    .directive('dmList', dmList);
 
-  function chats() {
+  function dmList() {
     return {
       restrict: 'EA',
       scope: true,
       link: link,
       transclude: true,
       replace: true,
-      templateUrl: 'app/left/chats/chats.html',
-      controller: 'ChatsCtrl'
+      templateUrl: 'app/left/dm/dm.list.html',
+      controller: 'DmCtrl'
     };
 
     function link(scope, el, attrs) {

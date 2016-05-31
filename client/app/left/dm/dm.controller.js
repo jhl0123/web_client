@@ -6,12 +6,12 @@
 
   angular
     .module('jandiApp')
-    .controller('ChatsCtrl', ChatsCtrl);
+    .controller('DmCtrl', DmCtrl);
 
   /* @ngInject */
-  function ChatsCtrl($scope, $timeout, storageAPIservice, ChatApi, entityAPIservice, currentSessionHelper,
+  function DmCtrl($scope, $timeout, storageAPIservice, DmApi, entityAPIservice, currentSessionHelper,
                            publicService, $filter, modalHelper, jndPubSub, Dialog, JndUtil, centerService,
-                           EntityHandler, MessageCacheCollection, Chats) {
+                           EntityHandler, MessageCacheCollection, DmHandler) {
     // okay - okay to go!
     // loading - currently loading.
     // failed - failed to retrieve list from server.
@@ -45,7 +45,7 @@
       $scope.$on('updateBadgePosition', _setTotalAlarmCnt);
       $scope.$on('updateChatList', getMessageList);
       $scope.$watch('isMessageListCollapsed', _onCollapseStatusChanged);
-      _parseChats();
+      _parseDm();
     }
 
     function openTeamMemberListModal() {
@@ -63,7 +63,7 @@
     function getMessageList() {
       if ($scope.messageListLoadingStatus == 'loading') return;
       $scope.messageListLoadingStatus = 'loading';
-      Chats.getRecentList().then(_onSuccessGetRecentList, _onErrorGetRecentList);
+      DmHandler.getRecentList().then(_onSuccessGetRecentList, _onErrorGetRecentList);
     }
 
     /**
@@ -72,7 +72,7 @@
      */
     function _onSuccessGetRecentList() {
       $scope.messageListLoadingStatus = 'okay';
-      _parseChats();
+      _parseDm();
     }
 
     /**
@@ -84,13 +84,13 @@
     }
 
     /**
-     * Chats.list 의 데이터를 파싱하여 컨트롤러에서 필요한 배열을 생성한다.
+     * Dm.list 의 데이터를 파싱하여 컨트롤러에서 필요한 배열을 생성한다.
      * @private
      */
-    function _parseChats() {
+    function _parseDm() {
       var room;
       $scope.messageList = [];
-      _.forEach(Chats.list, function(chat) {
+      _.forEach(DmHandler.list, function(chat) {
         room = EntityHandler.get(chat.companionId);
         if (!_.isUndefined(room)) {
           //현재 activate DM 이 아닌곳에 한해서 unread count 를 업데이트 한다.
@@ -166,7 +166,7 @@
         body: $filter('translate')('@common-conversation-leave-confirm'),
         onClose: function(result) {
            if (result === 'okay') {
-             ChatApi.leaveCurrentMessage(entityId)
+             DmApi.leaveCurrentMessage(entityId)
                .success(function(response) {
                  //if (entityId == $scope.currentEntity.id) {
                  if (entityId == currentSessionHelper.getCurrentEntity().id) {

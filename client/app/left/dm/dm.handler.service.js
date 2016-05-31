@@ -6,10 +6,10 @@
 
   angular
     .module('jandiApp')
-    .service('Chats', Chats);
+    .service('DmHandler', DmHandler);
 
   /* @ngInject */
-  function Chats(ChatApi, EntityHandler, MessageCacheCollection) {
+  function DmHandler(DmApi, EntityHandler, MessageCacheCollection) {
     var _that = this;
 
     this.list = [];
@@ -21,7 +21,7 @@
      * @returns {*}
      */
     function getRecentList() {
-      return ChatApi.getRecentMessageList()
+      return DmApi.getRecentMessageList()
         .then(_onSuccessGetRecent);
     }
 

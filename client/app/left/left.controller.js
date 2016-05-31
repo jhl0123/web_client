@@ -3,7 +3,7 @@
 var app = angular.module('jandiApp');
 
 app.controller('leftPanelController', function(
-  $scope, $state, $timeout, $q, leftpanelAPIservice, entityAPIservice, accountService, Chats,
+  $scope, $state, $timeout, $q, leftpanelAPIservice, entityAPIservice, accountService, DmHandler,
   publicService, memberService, storageAPIservice, analyticsService, currentSessionHelper, jndWebSocket, jndPubSub,
   modalHelper, UnreadBadge, AnalyticsHelper, HybridAppHelper, NotificationManager, TopicFolderModel, TopicUpdateLock,
   JndUtil, EntityFilterMember, EntityHandler, Auth, initialPromise, JndPanelSizeStorage, MessageCacheCollection) {
@@ -77,9 +77,9 @@ app.controller('leftPanelController', function(
    */
   function _initResponses(responses) {
     var responseLeftSideMenu = responses[0].data;
-    var responseChats = responses[2].data;
+    var responseDmList = responses[2].data;
     _onSuccessGetLeftSideMenu(false, responseLeftSideMenu);
-    Chats.parse(responseChats);
+    DmHandler.parse(responseDmList);
     
     publicService.setInitDone();
 
