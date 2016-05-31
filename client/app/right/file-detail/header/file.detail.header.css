@@ -1,23 +1,25 @@
 .file-detail-header {
   position: relative;
-  padding: 15px;
+  padding: 15px 15px 0px 15px;
   font-size: 14px;
   color: #666;
   background-color: rgba(255, 255, 255, 0.95);
-  border-bottom: 1px solid #D5DADE;
-  box-shadow: 0 1px 2px 0px rgba(7, 37, 53, 0.08);
 }
 
 .file-detail-header .file-creator {
   position: relative;
   width: 290px;
-  padding: 0px 20px 0px 38px;
+  padding: 0px 20px 0px 43px;
 }
 
 .file-detail-header .file-creator-profile {
   position: absolute;
-  left: 0;
-  top: 3px;
+  left: -2px;
+  top: -1px;
+}
+.file-detail-header .file-creator-profile .user-profile {
+  width: 35px;
+  height: 35px;
 }
 
 .file-detail-header .file-creator-name {
@@ -28,7 +30,7 @@
 }
 
 .file-detail-header .file-creator-time {
-  font-size: 11px;
+  font-size: 12px;
   color: #9DA7AD;
 }
 
@@ -42,6 +44,9 @@
   color: #363636;
 }
 
+.file-detail-header .file-meta.file-archived {
+  display: none;
+}
 .file-detail-header .file-meta .file-title {
   margin-right: 2px;
   line-height: 20px;
