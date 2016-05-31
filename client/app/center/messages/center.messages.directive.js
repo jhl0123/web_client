@@ -19,9 +19,43 @@
     };
 
     function link(scope, el, attrs) {
+      var that = this;
       var _teamId;
       var _listScope = scope.$new();
-      var that = this;
+
+      var _events = {
+        click: [
+          {
+            apply: true,
+            currentTarget: '._star',
+            handler: _onClickStar
+          },
+          {
+            apply: true,
+            currentTarget: '._fileStar',
+            handler: _onClickFileStar
+          },
+          {
+            apply: true,
+            currentTarget: '._user',
+            handler: _onClickUser
+          },
+          {
+            apply: true,
+            currentTarget: '._fileShare',
+            handler: _onClickFileShare
+          },
+          {
+            apply: true,
+            currentTarget: '._commentDelete',
+            handler: _onClickCommentDelete
+          },
+          {
+            currentTarget: '._fileDetail',
+            handler: _onClickFileDetail
+          }
+        ]
+      }
 
       _init();
 
@@ -204,7 +238,6 @@
       function _attachDomEvents() {
         _attachDelegateDomHandlers();
         el
-          .on('click', _onClick)
           .on('mouseover', _onMouseOver)
           .on('mouseout', _onMouseOut);
       }
@@ -249,21 +282,56 @@
        */
       function _attachDelegateDomHandlers() {
         var renderers = CenterRendererFactory.getAll();
+
+        // renderer 고유의 event handler
         _.forEach(renderers, function(renderer) {
-          if (renderer.delegateHandler) {
-            _attachEachDelegateHandler(renderer.delegateHandler);
+          if (renderer.events) {
+            _attachEvents(renderer.delegateHandlers);
+          }
+        });
+
+        // renderer 공통의 event handler
+        _attachEvents(_events);
+      }
+
+      /**
+       * center element에 각 events를 추가한다.
+       * @param {object} events
+       * @private
+       */
+      function _attachEvents(events) {
+        _.each(events, function(event, eventName) {
+          if (eventName === 'click') {
+            _attachClickEvent(event, eventName);
           }
         });
       }
 
       /**
-       * 각각의 dom event handler 를 추가한다.
-       * @param {Object} handlers
+       * center element에 click event를 추가한다.
+       * @param {array} event
+       * @param {string} eventName
        * @private
        */
-      function _attachEachDelegateHandler(handlers) {
-        _.each(handlers, function(handler, eventName) {
-          el.on(eventName, handler);
+      function _attachClickEvent(event, eventName) {
+        _.each(event, function(delegate) {
+          el.on(eventName, delegate.currentTarget, function(clickEvent) {
+            var jqTarget = $(clickEvent.target);
+            var jqMessage = jqTarget.closest('.message');
+            var id = jqMessage.attr('id');
+            var msg = MessageCollection.get(id);
+
+            delegate.handler(clickEvent, {
+              jqTarget: jqTarget,
+              jqMessage: jqMessage,
+              id: id,
+              msg: msg
+            });
+
+            if (delegate.apply) {
+              JndUtil.safeApply(scope);
+            }
+          })
         });
       }
 
@@ -300,64 +368,29 @@
       }
 
       /**
-       * 모든 랜더러 공통 click 이벤트 핸들러
-       * @param {Event} clickEvent
-       * @private
-       */
-      function _onClick(clickEvent) {
-        var jqTarget = $(clickEvent.target);
-        var id = jqTarget.closest('.message').attr('id');
-        var msg = MessageCollection.get(id);
-        var hasAction = false;
-        var jqElement;
-
-        //star 클릭 시
-        if (jqTarget.closest('._star').length) {
-          _onClickStar(msg);
-          hasAction = true;
-        } else if ((jqElement = jqTarget.closest('._fileStar')).length) {
-          _onClickFileStar(msg, jqElement);
-          hasAction = true;
-        } else if (jqTarget.closest('._user').length) {
-          _onClickUser(msg);
-          hasAction = true;
-        } else if (jqTarget.closest('._fileShare').length) {
-          _onClickFileShare(msg);
-          hasAction = true;
-        } else if (jqTarget.closest('._commentDelete').length) {
-          _onClickCommentDelete(msg);
-          hasAction = true;
-        } else if (jqTarget.closest('._fileDetail').length) {
-          _onClickFileDetail(msg);
-        }
-
-        if (hasAction) {
-          JndUtil.safeApply(scope);
-        }
-      }
-
-      /**
        * file share click 이벤트 핸들러
-       * @param {object} msg
+       * @param {object} clickEvent
+       * @param {object} data
        * @private
        */
-      function _onClickFileShare(msg) {
-        scope.onShareClick(msg.message);
+      function _onClickFileShare(clickEvent, data) {
+        scope.onShareClick(data.msg.message);
       }
 
       /**
        * comment delete
-       * @param {object} msg
+       * @param {object} clickEvent
+       * @param {object} data
        * @private
        */
-      function _onClickCommentDelete(msg) {
-        var file = RendererUtil.getFeedbackMessage(msg);
-        var comment = msg.message;
+      function _onClickCommentDelete(clickEvent, data) {
+        var file = RendererUtil.getFeedbackMessage(data.msg);
+        var comment = data.msg.message;
 
         // message collection에서 바로 삭제한다.
         MessageCollection.remove(comment.id, true);
 
-        if (msg.message.contentType === 'comment_sticker') {
+        if (data.msg.message.contentType === 'comment_sticker') {
           FileDetail.deleteSticker(comment.id)
             .success(_onSuccessCommentDelete);
         } else {
@@ -378,61 +411,57 @@
 
       /**
        * file detail
-       * @param {object} msg
-       * @param {boolean} [isFocusCommentInput=false]
+       * @param {object} clickEvent
+       * @param {object} data
        * @private
        */
-      function _onClickFileDetail(msg, isFocusCommentInput) {
-        var contentType = msg.message.contentType;
-        var userName = $filter('getName')(msg.message.writerId);
-        var itemId = contentType === 'comment' ? msg.feedbackId : msg.message.id;
+      function _onClickFileDetail(clickEvent, data) {
+        var contentType = data.msg.message.contentType;
+        var userName = $filter('getName')(data.msg.message.writerId);
+        var itemId = contentType === 'comment' ? data.msg.feedbackId : data.msg.message.id;
 
         if ($state.params.itemId != itemId) {
-          if (msg.feedback && contentType !== 'file') {
-            userName = $filter('getName')(msg.feedback.writerId);
-            itemId = msg.feedback.id;
-          }
-
-          if (isFocusCommentInput) {
-            $rootScope.setFileDetailCommentFocus = true;
+          if (data.msg.feedback && contentType !== 'file') {
+            userName = $filter('getName')(data.msg.feedback.writerId);
+            itemId = data.msg.feedback.id;
           }
 
           $state.go('files', {
             userName: userName,
             itemId: itemId
           });
-        } else if (isFocusCommentInput) {
-          fileAPIservice.broadcastCommentFocus();
         }
       }
 
       /**
        * star click 핸들러
-       * @param {object} msg
+       * @param {object} clickEvent
+       * @param {object} data
        * @private
        */
-      function _onClickStar(msg) {
-        var message = msg.message;
+      function _onClickStar(clickEvent, data) {
+        var message = data.msg.message;
 
-        _requestStar(msg, message, '._star');
+        _requestStar(data.msg, message, '._star');
       }
 
       /**
        * file star click 핸들러
-       * @param {object} msg
-       * @param {object} jqElement
+       * @param {object} clickEvent
+       * @param {object} data
        * @private
        */
-      function _onClickFileStar(msg, jqElement) {
+      function _onClickFileStar(clickEvent, data) {
+        var jqCurrentTarget = $(clickEvent.currentTarget);
         var message;
 
-        if (jqElement.hasClass('_feedbackStar')) {
-          message = RendererUtil.getFeedbackMessage(msg);
+        if (jqCurrentTarget.hasClass('_feedbackStar')) {
+          message = RendererUtil.getFeedbackMessage(data.msg);
         } else {
-          message = msg.message;
+          message = data.msg.message;
         }
 
-        _requestStar(msg, message, '._fileStar');
+        _requestStar(data.msg, message, '._fileStar');
       }
 
       /**
@@ -472,11 +501,12 @@
 
       /**
        * user 클릭 이벤트 핸들러
-       * @param {object} msg
+       * @param {object} clickEvent
+       * @param {object} data
        * @private
        */
-      function _onClickUser(msg) {
-        var writer = msg.extWriter;
+      function _onClickUser(clickEvent, data) {
+        var writer = data.msg.extWriter;
 
         if (!memberService.isConnectBot(writer.id)) {
           jndPubSub.pub('onMemberClick', writer.id);

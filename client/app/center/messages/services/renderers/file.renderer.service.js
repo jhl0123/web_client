@@ -21,8 +21,25 @@
      * center 에서 delegate 하여 처리할 핸들러를 정의한다.
      * @type {{click: _onClick}}
      */
-    this.delegateHandler = {
-      'click': _onClick
+    this.events = {
+      'click': [
+        {
+          currentTarget: '._fileDownload',
+          handler: _onClickFileDownload
+        },
+        {
+          currentTarget: '._fileMore',
+          handler: _onClickFileMore
+        },
+        {
+          currentTarget: '._previewToggle',
+          handler: _onClickPreviewToggle
+        },
+        {
+          currentTarget: '._previewExpand',
+          handler: _onClickPreviewExpand
+        }
+      ]
     };
 
     _init();
@@ -36,55 +53,34 @@
     }
 
     /**
-     * click 이벤트 핸들러
-     * @param {Object} clickEvent
-     * @private
-     */
-    function _onClick(clickEvent) {
-      var jqTarget = $(clickEvent.target);
-      var jqMessage = jqTarget.closest('.message');
-      var id = jqMessage.attr('id');
-      var msg = MessageCollection.get(id);
-
-      if (jqTarget.closest('._fileDownload').length) {
-        _onClickFileDownload(msg);
-      } else if (jqTarget.closest('._fileMore').length) {
-        _onClickFileMore(msg, jqTarget);
-      } else if (jqTarget.closest('._previewToggle').length) {
-        _onClickPreviewToggle(msg, jqMessage);
-      } else if (jqTarget.closest('._previewExpand').length) {
-        _onClickPreviewExpand(msg);
-      }
-    }
-
-    /**
      * preview toggle click event handler
-     * @param {object} msg
-     * @param {object} jqMessage
+     * @param {object} clickEvent
+     * @param {object} data
      * @private
      */
-    function _onClickPreviewToggle(msg, jqMessage) {
-      var jqCardContent = jqMessage.find('.card-content');
-      var jqPreviewImage = jqMessage.find('.preview-image');
+    function _onClickPreviewToggle(clickEvent, data) {
+      var jqCardContent = data.jqMessage.find('.card-content');
+      var jqPreviewImage = data.jqMessage.find('.preview-image');
 
       if (jqCardContent.hasClass('open')) {
-        messageHeightMap[msg.id] = jqPreviewImage.height();
+        messageHeightMap[data.msg.id] = jqPreviewImage.height();
 
         jqPreviewImage.height(12);
         jqCardContent.removeClass('open');
       } else {
-        jqPreviewImage.height(messageHeightMap[msg.id]);
+        jqPreviewImage.height(messageHeightMap[data.msg.id]);
         jqCardContent.addClass('open');
       }
     }
 
     /**
      * preview expand click event handler
-     * @param {object} msg
+     * @param {object} clickEvent
+     * @param {object} data
      * @private
      */
-    function _onClickPreviewExpand(msg) {
-      var message = RendererUtil.getFeedbackMessage(msg);
+    function _onClickPreviewExpand(clickEvent, data) {
+      var message = RendererUtil.getFeedbackMessage(data.msg);
 
       if (FileDetail.hasPdfPreview(message)) {
         // pdf preview
@@ -93,7 +89,7 @@
       } else {
         // image preview
 
-        _openImagePreview(msg, message);
+        _openImagePreview(data.msg, message);
       }
     }
 
@@ -135,26 +131,27 @@
 
     /**
      * file download 클릭 이벤트 핸들러
-     * @param {object} msg
+     * @param {object} clickEvent
+     * @param {object} data
      * @private
      */
-    function _onClickFileDownload(msg) {
+    function _onClickFileDownload(clickEvent, data) {
       AnalyticsHelper.track(AnalyticsHelper.EVENT.FILE_DOWNLOAD, {
-        'FILE_ID': msg.message.id
+        'FILE_ID': data.msg.message.id
       });
     }
 
     /**
      * file more 이벤트 핸들러
-     * @param {object} msg
-     * @param {object} jqTarget
+     * @param {object} clickEvent
+     * @param {object} data
      * @private
      */
-    function _onClickFileMore(msg, jqTarget) {
+    function _onClickFileMore(clickEvent , data) {
       jndPubSub.pub('show:center-file-dropdown', {
-        target: jqTarget,
-        msg: msg,
-        isIntegrateFile: RendererUtil.isIntegrateFile(msg)
+        target: data.jqTarget,
+        msg: data.msg,
+        isIntegrateFile: RendererUtil.isIntegrateFile(data.msg)
       });
     }
 

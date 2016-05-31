@@ -20,8 +20,17 @@
     var _templateConnectPreview;
 
     this.render = render;
-    this.delegateHandler = {
-      'click': _onClick
+    this.events = {
+      'click': [
+        {
+          currentTarget: '._textMore',
+          handler: _showMoreDropdown
+        },
+        {
+          currentTarget: '._link-preview',
+          handler: _openLinkPreviewUrl
+        }
+      ]
     };
 
     _init();
@@ -39,48 +48,32 @@
       _templateConnectPreview = Handlebars.templates['center.text.connect.preview'];
     }
 
-
-    /**
-     * click 이벤트 핸들러
-     * @param clickEvent
-     * @private
-     */
-    function _onClick(clickEvent) {
-      var jqTarget = $(clickEvent.target);
-      var id = jqTarget.closest('.message').attr('id');
-
-      if (jqTarget.hasClass('_textMore')) {
-        _showMoreDropdown(jqTarget, MessageCollection.get(id));
-      } else if (jqTarget.closest('_link-preview')) {
-        _openLinkPreviewUrl(jqTarget);
-      }
-    }
-
     /**
      * '더보기' dropdown 을 노출한다.
-     * @param {object} jqTarget
-     * @param {object} msg
+     * @param {object} clickEvent
+     * @param {object} data
      * @private
      */
-    function _showMoreDropdown(jqTarget, msg) {
+    function _showMoreDropdown(clickEvent, data) {
       var entityType = currentSessionHelper.getCurrentEntityType();
-      var showAnnouncement = _isShowAnnouncement(msg, entityType);
+      var showAnnouncement = _isShowAnnouncement(data.msg, entityType);
       jndPubSub.pub('show:center-item-dropdown', {
-        target: jqTarget,
-        msg: msg,
-        hasStar: msg.hasStar,
-        isMyMessage: RendererUtil.isMyMessage(msg),
+        target: data.jqTarget,
+        msg: data.msg,
+        hasStar: data.msg.hasStar,
+        isMyMessage: RendererUtil.isMyMessage(data.msg),
         showAnnouncement: showAnnouncement
       });
     }
 
     /**
      * open link preview url
-     * @param {object} jqTarget
+     * @param {object} clickEvent
+     * @param {object} data
      * @private
      */
-    function _openLinkPreviewUrl(jqTarget) {
-      var jqLinkPreview = jqTarget.parents('._link-preview');
+    function _openLinkPreviewUrl(clcikEvent, data) {
+      var jqLinkPreview = data.jqTarget.parents('._link-preview');
       var href;
       var target;
 
