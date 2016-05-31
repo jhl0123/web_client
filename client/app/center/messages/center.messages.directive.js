@@ -55,7 +55,7 @@
             handler: _onClickFileDetail
           }
         ]
-      }
+      };
 
       _init();
 
@@ -65,7 +65,7 @@
        */
       function _init() {
         _teamId = memberService.getTeamId();
-        _attachEvents();
+        _attachScopeEvents();
         _attachDomEvents();
         _renderAll();
       }
@@ -74,7 +74,7 @@
        * angular event 를 바인딩한다.
        * @private
        */
-      function _attachEvents() {
+      function _attachScopeEvents() {
         scope.$on('messages:reset', _renderAll);
         scope.$on('messages:append', _onAppend);
         scope.$on('messages:prepend', _onPrepend);
@@ -164,7 +164,6 @@
               }
             });
           });
-
       }
 
       /**
@@ -286,12 +285,12 @@
         // renderer 고유의 event handler
         _.forEach(renderers, function(renderer) {
           if (renderer.events) {
-            _attachEvents(renderer.delegateHandlers);
+            _attachRendererDomEvents(renderer.events);
           }
         });
 
         // renderer 공통의 event handler
-        _attachEvents(_events);
+        _attachRendererDomEvents(_events);
       }
 
       /**
@@ -299,7 +298,7 @@
        * @param {object} events
        * @private
        */
-      function _attachEvents(events) {
+      function _attachRendererDomEvents(events) {
         _.each(events, function(event, eventName) {
           if (eventName === 'click') {
             _attachClickEvent(event, eventName);
@@ -333,30 +332,6 @@
             }
           })
         });
-      }
-
-      /**
-       * delegation 을 사용하지 않고,
-       * 각각의 Renderer 에 설정된 이벤트 핸들러를 바인딩 한다.
-       * (현재 사용하지 않는 함수. 추후 사용 가능성 있음.)
-       * @param {object} jqTarget
-       * @param {object} renderer
-       * @private
-       * @deprecated
-       */
-      function _attachRendererHandler(jqTarget, renderer) {
-        if (renderer.eventHandler) {
-          _.each(renderer.eventHandler, function(handler, name) {
-            var tmp = name.split(' '),
-              eventName = tmp[0],
-              selector = tmp[1] || '';
-
-            if (selector) {
-              jqTarget = jqTarget.find(selector);
-            }
-            jqTarget.on(eventName, handler);
-          });
-        }
       }
 
       /**
@@ -508,6 +483,9 @@
       function _onClickUser(clickEvent, data) {
         var writer = data.msg.extWriter;
 
+        // user를 event가 파일 상세에 전달되어 파일 상세가 열리지 않도록 한다.
+        clickEvent.stopPropagation();
+
         if (!memberService.isConnectBot(writer.id)) {
           jndPubSub.pub('onMemberClick', writer.id);
         }
@@ -640,7 +618,6 @@
         }
         return true;
       }
-
 
       /**
        * prepend 이벤트 핸들러

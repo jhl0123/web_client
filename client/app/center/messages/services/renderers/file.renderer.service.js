@@ -38,6 +38,14 @@
         {
           currentTarget: '._previewExpand',
           handler: _onClickPreviewExpand
+        },
+        {
+          currentTarget: '._commentText',
+          handler: _onClickCommentContent
+        },
+        {
+          currentTarget: '._commentActions',
+          handler: _onClickCommentContent
         }
       ]
     };
@@ -61,6 +69,9 @@
     function _onClickPreviewToggle(clickEvent, data) {
       var jqCardContent = data.jqMessage.find('.card-content');
       var jqPreviewImage = data.jqMessage.find('.preview-image');
+
+      // preview toggle 클릭시 image 또는 pdf preview가 수행되지 않도록 한다.
+      clickEvent.stopPropagation();
 
       if (jqCardContent.hasClass('open')) {
         messageHeightMap[data.msg.id] = jqPreviewImage.height();
@@ -91,6 +102,18 @@
 
         _openImagePreview(data.msg, message);
       }
+    }
+
+    /**
+     * comment content click event handler
+     * @param {object} clickEvent
+     * @private
+     */
+    function _onClickCommentContent(clickEvent) {
+      // comment card의 경우 클릭시 오른쪽 패널이 열려야 하기 때문에 comment card의 상위 element에 오른쪽 패널이 열리는
+      // delegate selector를 넣어 두었는데 그렇게 되면 comment 내용중 하나인 mention 또는 mail, href, star, delete 클릭시에도
+      // 오른쪽 패널이 열리기 때문에 comment text 클릭시에는 오른쪽 패널이 열리지 않도록 stopPropagation을 수행한다.
+      clickEvent.stopPropagation();
     }
 
     /**
