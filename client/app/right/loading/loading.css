@@ -19,11 +19,17 @@
 
 .search-result-container .search-result-summary-ing{
   padding: 14px 0 13px 40px;
-  border-bottom:1px solid #E1E1E1;
+  border-bottom:1px solid #D5DADB;
+  
+  -webkit-box-shadow: 0 -1px 0 0 #DEDEDE;
+  box-shadow: 0 -1px 0 0 #DEDEDE;
 }
 .search-result-container .search-result-summary {
   padding: 14px 0 13px 16px;
-  border-bottom:1px solid #E1E1E1;
+  border-bottom:1px solid #D5DADB;
+  
+  -webkit-box-shadow: 0 -1px 0 0 #DEDEDE;
+  box-shadow: 0 -1px 0 0 #DEDEDE;
 }
 .search-result-container .search-result-summary .searchQueryKeyword {
   font-weight: bold;
