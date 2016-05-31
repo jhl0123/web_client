@@ -6,15 +6,28 @@
 
 .file-detail-preview .preview-body {
   text-align: center;
+  background-color: #F1F4F8;
+  border-bottom: 1px solid #E1E4E6;
 }
 
 .file-detail-preview .preview-body img {
   max-width: 100%;
-  height: auto;
+}
+.file-detail-preview .preview-body div img {
+  height: inherit !important;
+  width:inherit !important;
+  /*-webkit-box-shadow: 0 0 3px 1px rgba(5, 35, 60, 0.35);
+  box-shadow: 0 0 3px 1px rgba(5, 35, 60, 0.35);*/
+  -webkit-box-shadow: 0 0 3px 1px rgba(5, 35, 60, 0);
+  box-shadow: 0 0 3px 1px rgba(5, 35, 60, 0);
 }
 
 .file-detail-preview .image_wrapper {
   display: inline-block;
+  margin: 0.75em auto;
+  max-height: 500px;
+  width:auto;
+  height: auto;
 }
 
 .filter-type-preview-wrapper {
@@ -22,6 +35,7 @@
   display: block;
   width: 100%;
   height: auto;
+  /*background-color: #F1F4F8;*/
 }
 
 .filter-type-preview-wrapper:hover > div {
@@ -31,25 +45,25 @@
 .filter-type-preview-bg {
   display: none;
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.5);
-  border-radius: 3px;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  background-color: rgba(0,0,0,0.45);
+  border-radius: 0;
 }
 
 .filter-type-preview-text {
   display: none;
   position: absolute;
-  top: 52px;
+  top: 60px;
   width: 100%;
 }
 
 .filter-type-preview-text > span {
   display: inline-block;
   padding: 8px 30px;
-  border: 2px solid #999;
+  border: 2px solid rgba(255,255,255,0.65);
   border-radius: 20px;
   font-size: 16px;
   font-weight: 600;
@@ -57,10 +71,15 @@
 }
 
 .file-detail-preview .external-share-btn {
-  top: -6px;
-  right: -6px;
+  bottom: 10px;
+  right: 10px;
   padding: 6px;
   font-size: 22px;
+  border: 1px solid #D5DADB;
+  box-shadow: 0 0 3px rgba(5, 35, 60, 0.13);
+}
+.file-detail-preview .external-share-btn:hover {
+  border:1px solid rgba(5, 35, 60, 0.25);
 }
 
 .file-detail-preview ._fileExpand {
