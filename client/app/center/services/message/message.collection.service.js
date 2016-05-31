@@ -331,7 +331,9 @@
       _cutByMaxCacheCount: function(isPrepend) {
         var list = this.list;
         var length = list.length;
+        var lastReadId = memberService.getLastReadMessageMarker(this.id);
         var difference = length - MAX_CACHE_MESSAGE_COUNT;
+
         if (difference > 0) {
           if (isPrepend) {
             list.splice(MAX_CACHE_MESSAGE_COUNT);
@@ -357,6 +359,7 @@
         }
         
       },
+
       /**
        * id 와 messageId 로 index 된 Map 에 데이터를 추가한다.
        * @param {Array} list
@@ -413,7 +416,7 @@
        * @returns {boolean} 삭제에 성공했는지 여부
        */
       remove: function(messageId, isReversal) {
-        var targetIdx = this.at(messageId, isReversal);
+        var targetIdx = this.atByMessageId(messageId, isReversal);
         
         if (targetIdx !== -1) {
           this._pub('MessageCollection:beforeRemove', targetIdx);
@@ -448,17 +451,39 @@
        * @param {boolean} [isReversal=false] 역순으로 순회할지 여부
        * @returns {number}
        */
-      at: function(messageId, isReversal) {
+      atByMessageId: function(messageId, isReversal) {
+        return this._at('messageId', messageId, isReversal);
+      },
+
+      /**
+       * linkId 에 해당하는 message 가 몇번째 index 인지 반환한다.
+       * @param {number|string} id - linkId
+       * @param {boolean} [isReversal=false] - 역순으로 순회할지 여부
+       * @returns {number}
+       */
+      at: function(id, isReversal) {
+        return this._at('id', id, isReversal);
+      },
+
+      /**
+       * key, value 에 해당하는 message 가 몇번째 index 인지 반환한다.
+       * @param {string} key - 조회할 속성명
+       * @param {number|string} value - linkId
+       * @param {boolean} [isReversal=false] - 역순으로 순회할지 여부
+       * @returns {number}
+       */
+      _at: function(key, value, isReversal) {
         var targetIdx = -1;
         var list = this.list;
         var iterator = isReversal ? _.forEachRight : _.forEach;
-
-        iterator(list, function(message, index) {
-          if (message.messageId.toString() === messageId.toString()) {
-            targetIdx = index;
-            return false;
-          }
-        });
+        if (value) {
+          iterator(list, function (message, index) {
+            if (message[key].toString() === value.toString()) {
+              targetIdx = index;
+              return false;
+            }
+          });
+        }
 
         return targetIdx;
       },
