@@ -37,7 +37,7 @@
        * @private
        */
       function _init() {
-        scope.activeIndex = -1;
+        scope.activeIndex = 0;
         scope.isOpen = false;
 
         scope.isActive = isActive;
@@ -152,7 +152,7 @@
             _jqList.slideToggle(200);
 
             if (newIsOpen) {
-              scope.activeIndex = -1;
+              scope.activeIndex = 0;
               _jqSwitchButton.focus();
             }
           }
@@ -196,8 +196,10 @@
        * @param {object} team
        */
       function go(team) {
-        $('body').addClass('fade out');
-        window.location.href = configuration.base_protocol + team.t_domain + configuration.base_url;
+        if (team) {
+          $('body').addClass('fade out');
+          window.location.href = configuration.base_protocol + team.t_domain + configuration.base_url;
+        }
       }
 
       /**
