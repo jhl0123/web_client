@@ -73,7 +73,8 @@
       notification = new Notification(title, {
         tag: options.tag,
         body: options.body,
-        icon: options.icon
+        icon: options.icon,
+        silent: true
       });
 
       notification.onshow = function() {
