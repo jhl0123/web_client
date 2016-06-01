@@ -31,8 +31,9 @@
        */
       initializeTopics: function() {
         var joinedTopics = RoomTopicList.toJSON(true);
+        joinedTopics = _.sortBy(joinedTopics, 'alarmCnt');
         this._initCurrent();
-        _.forEach(joinedTopics, function(topic, index) {
+        _.forEachRight(joinedTopics, function(topic, index) {
           setTimeout(_.bind(this.add, this, topic.id), UNIT * index);
         }, this);
         this._removeUnjoinedTopics();
