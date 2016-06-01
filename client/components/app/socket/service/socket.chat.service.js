@@ -9,7 +9,7 @@
     .service('jndWebSocketChat', jndWebSocketChat);
 
   /* @ngInject */
-  function jndWebSocketChat(jndWebSocketCommon, jndPubSub) {
+  function jndWebSocketChat(jndWebSocketCommon, jndPubSub, RoomChatDmList) {
     var CHAT_CLOSE = 'chat_close';
 
     var events = [
@@ -17,6 +17,11 @@
         name: 'chat_close',
         version: 1,
         handler: _onChatClose
+      },
+      {
+        name: 'chat_created',
+        version: 1,
+        handler: _onChatCreated
       }
     ];
 
@@ -40,6 +45,15 @@
         jndPubSub.toDefaultTopic();
       }
       jndPubSub.pub('updateChatList');
+    }
+
+    /**
+     * chat create 이벤트 핸들러
+     * @param {object} socketEvent
+     * @private
+     */
+    function _onChatCreated(socketEvent) {
+      RoomChatDmList.add(socketEvent.data.chat);
     }
   }
 })();
