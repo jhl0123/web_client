@@ -10,9 +10,9 @@
     {{#if isSticker}}
       <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
     {{else}}
-      <span class="keep selectable _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
+      <span class="keep selectable _commentText _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
     {{/if}}
-    <div class="msg-extra">
+    <div class="msg-extra _commentActions">
       <div class="msg-item-info no-select">
         <span class="msg-badge unread-badge">{{ msg.unreadCount }}</span>
         {{#unless hasChild}}

@@ -47,23 +47,23 @@
                 </div>
               {{/if}}
             </div>
-          <div class="card-body cursor_pointer _compile">
-            <!--    FILE TYPE THUMBNAIL -->
-            <div class="card-info _fileDetail">
-              {{#if file.isIconPreview}}
-                <div class="card-image expand icon _previewExpand">
-                  <div class="fileicon fileicon-{{ file.icon }}"></div>
-                </div>
-              {{else if file.hasPreview}}
-                <div class="card-image expand _previewExpand">
-                  <img src="{{file.smallImageUrl}}">
-                </div>
-              {{else}}
-                <div class="card-image icon">
-                  <div class="fileicon fileicon-{{ file.icon }}"></div>
-                </div>
-              {{/if}}
-                <div class="info-group">
+            <div class="card-body cursor_pointer _compile">
+              <!--    FILE TYPE THUMBNAIL -->
+              <div class="card-info">
+                {{#if file.isIconPreview}}
+                  <div class="card-image expand icon _previewExpand">
+                    <div class="fileicon fileicon-{{ file.icon }}"></div>
+                  </div>
+                {{else if file.hasPreview}}
+                  <div class="card-image expand _previewExpand">
+                    <img src="{{file.smallImageUrl}}">
+                  </div>
+                {{else}}
+                  <div class="card-image icon">
+                    <div class="fileicon fileicon-{{ file.icon }}"></div>
+                  </div>
+                {{/if}}
+                <div class="info-group _fileDetail">
                   <div class="info-group-up">
                     <span class="info-writer inline-overflow-ellipsis selectable">{{ file.writerName }}</span>
                     <span class="info-created-time">{{ file.time }}</span>
@@ -107,13 +107,13 @@
                        data-direction="top">
                     <!--  MORE  -->
                     <span class="msg-item-icon msg-item-circle msg-item-more">
-                      <i class="action-file-more icon-cog _fileMore"></i>
+                      <i class="action-file-more icon-more _fileMore"></i>
                     </span>
                   </div>
                   <!-- Star -->
                   <div class="action-item">
-                    <span class="msg-item-icon msg-item-star msg-item-circle  _fileStar _feedbackStar _star-{{msg.message.id}} {{css.star}}">
-                      <i class="{{css.starIcon}}"></i>
+                    <span class="msg-item-icon msg-item-star msg-item-circle _fileStar _feedbackStar _star-{{file.id}} {{css.fileStar}}">
+                      <i class="{{css.fileStarIcon}}"></i>
                     </span>
                   </div>
                 </div>
@@ -174,13 +174,13 @@
                      data-direction="top">
                   <!--  MORE  -->
                   <span class="msg-item-icon msg-item-circle msg-item-more">
-                    <i class="action-file-more icon-cog _fileMore"></i>
+                    <i class="action-file-more icon-more _fileMore"></i>
                   </span>
                 </div>
                 <!-- Star -->
                 <div class="action-item">
-                  <span class="msg-item-icon msg-item-star msg-item-circle _fileStar _feedbackStar _star-{{msg.message.id}} {{css.star}}">
-                    <i class="{{css.starIcon}}"></i>
+                  <span class="msg-item-icon msg-item-star msg-item-circle _fileStar _feedbackStar _star-{{file.id}} {{css.fileStar}}">
+                    <i class="{{css.fileStarIcon}}"></i>
                   </span>
                 </div>
               </div>
@@ -225,9 +225,9 @@
       {{#if isSticker}}
         <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
       {{else}}
-        <span class="keep selectable _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
+        <span class="keep selectable _commentText _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
       {{/if}}
-      <div class="msg-extra">
+      <div class="msg-extra _commentActions">
         <div class="msg-item-info no-select">
           <span class="msg-badge unread-badge">{{ msg.unreadCount }}</span>
           {{#unless hasChild}}

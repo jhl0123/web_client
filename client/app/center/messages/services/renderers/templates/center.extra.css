@@ -14,26 +14,26 @@
 
 .msg-item-icon {
   float: right;
-  margin: 2px;
-  padding-top: 1px;
+  padding: 2px 4px;
   color: #575757;
   opacity: 0.45;
   font-size: 15px;
   cursor: pointer;
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
   text-align: center;
   vertical-align: middle;
   line-height: 19px;
   visibility: hidden;
 }
 .msg-item-icon:hover {
-  color: #58829b !important;
+  color: #38678A !important;
   opacity: 1 !important;
 }
+.msg-item-icon > i {
+  line-height: inherit;
+}
 .msg-item-circle:hover {
-  background-color: rgba(143, 174, 186, 0.2);
+  background-color: #DBEBF8;
 }
 
 .msg-item-icon.msg-item-circle:hover {
@@ -42,11 +42,13 @@
 
 .msg-item-delete {
   font-size: 14px;
-  margin-top: 3px;
+  margin-top: 1px;
+  margin-right: 2px;
+  float: left;
 }
 
 .msg-item-star.on {
-  color: #FFB32A !important;
+  color: #FBBA06 !important;
   opacity: 1 !important;
   visibility: visible;
 }
@@ -79,7 +81,7 @@
   border-radius: 16px;
   font-family: "Helvetica Neue";
   font-size: 10px;
-  color: #00abe6;
+  color: #00ACE9;
   padding: 2px 5px 3px 5px;
   font-weight: 600;
   margin-left: -3px;

@@ -87,9 +87,9 @@
      * @param {number} fileId
      * @private
      */
-    function _onFileChange(angularEvent, fileId) {
-      if (_fileId !== fileId) {
-        _fileId = fileId;
+    function _onFileChange(angularEvent, data) {
+      if (_fileId !== data.fileId) {
+        _fileId = data.fileId;
         _resetVariables();
         _requestFileDetail('all', true);
       }

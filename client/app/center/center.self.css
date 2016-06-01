@@ -1,6 +1,14 @@
-.message.self .msg-item {
-  background-color: rgba(208, 231, 249, 0.8);
+.message.self .msg-item:not(.comment-all) {
+  background-color: #E8F2FB;
+  border-bottom-color: #CBDCEA;
+}
+.message.self.comment:not(.first):not(.comment-child) .msg-item {
+  border-top-color: #FFF;
+}
+
+.message.self.comment .msg-item:hover {
+  background-color: #F7FBFE;
 }
 .message.self.text .msg-item {
-  border: 1px solid rgba(15,65,105,0.1);
+  border: 1px solid #CBDCEA;
 }
