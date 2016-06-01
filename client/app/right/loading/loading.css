@@ -30,8 +30,10 @@
   border-top: 1px solid rgba(5, 35, 60, 0.1);
   background-color: #FFF;
 }
-.search-result-container .search-result-summary:before,
-.search-result-container .search-result-summary-ing:before {
+.file-tab .search-result-container .search-result-summary:before,
+.file-tab .search-result-container .search-result-summary-ing:before,
+.message-tab .search-result-container .search-result-summary:before,
+.message-tab .search-result-container .search-result-summary-ing:before  {
   content: '';
   position: absolute;
   left: 0;

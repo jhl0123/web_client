@@ -132,10 +132,10 @@
   padding: 2px 5px;
   font-size: 14px;
 }
-.msg-file-actions .file-download:hover,
-.msg-file-actions .file-download:focus {
+.msg-file-actions .msg-item-icon:hover,
+.msg-file-actions .msg-item-icon:focus {
   text-decoration: none;
-  background-color: rgba(143, 174, 186, 0.2);
+  background-color: #EAF1F5;
 }
 
 .file-uploaded-extra {
