@@ -88,7 +88,7 @@ article {
   margin: 1rem 0 0;
 }
 .msgs-holder {
-  padding-bottom: 14px
+  padding-bottom: 0;
 }
 
 .msg-header {
@@ -134,7 +134,13 @@ article {
   border-bottom: 1px solid rgba(0, 172, 233, 0.7);
 }
 .msg-item.text a.mention.all:hover {
-  border-bottom: 1px solid rgba(0, 172, 233, 0);
+  border-bottom-width: 0;
+}
+
+.msg-item.text .prettyprint a:hover {
+  text-decoration: underline;
+  border-bottom-width: 0;
+  color: #808080;
 }
 
 .post-retry {

@@ -7,19 +7,27 @@
   right: 0;
   left: 0;
   bottom: 0;
-  padding: 6px 9px 9px 9px;
+  padding: 9px;
+  border-top: 1px solid #D5DADB;
   background-color: white;
   -webkit-transition: bottom ease-out 0.2s;
   transition: bottom ease-out 0.2s;
+  box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.1);
 }
-
+.rpanel-detail-body-comment + .message-input-container {
+  margin-top: -8px;
+}
+.rpanel-detail-body-comment + .message-input-container .message-input-wrapper {
+  border-top-color: transparent;
+  box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0);
+}
 .file-detail .message-input-wrapper.float {
   bottom: -400px;
 }
 
 .file-detail .message-input-inner {
   position: relative;
-  border: 1px solid #e1e1e1;
+  border: 1px solid #D6D8E0;
   border-radius: 3px;
 }
 
@@ -33,7 +41,8 @@
 
 /* sticker panel */
 .file-detail .sticker_panel {
-  width: 333px;
+  width: calc(100% - 2px);
+  margin-bottom: 12px !important;
 }
 
 .file-detail .sticker_panel.dropdown-menu-up {

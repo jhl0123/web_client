@@ -5,9 +5,8 @@
   margin: 0;
   max-height: 50%;
   
-  -webkit-box-shadow: 0 2px 3px 0 rgba(0,0,0,0.10);
-  -moz-box-shadow: 0 2px 3px 0 rgba(0,0,0,0.10);
-  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.10);
+  -webkit-box-shadow: 0 0 3px 0 rgba(5, 35, 60, 0.13);
+  box-shadow: 0 0 3px 0 rgba(5, 35, 60, 0.13);
 }
 .center-announcement-container:hover {
   /*cursor: pointer;*/
@@ -81,7 +80,7 @@
 /* 공지사항 컨테이너 */
 .announcement-container {
   background-color: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid #D9DDE0;
+  border-bottom: 1px solid rgba(5,35,60,0.2);
   padding: 18px 18px 0 18px;
   overflow-y: auto;
   
