@@ -40,6 +40,8 @@
 
 .file-detail-preview .preview-body .filter-type-preview-wrapper > img {
   max-width: 370px;
+  border-radius: 4px;
+  margin: 15px 0;
 }
 
 .filter-type-preview-wrapper:hover > div {
@@ -60,8 +62,11 @@
 .filter-type-preview-text {
   display: none;
   position: absolute;
-  top: 54px;
+  top: 50%;
   width: 100%;
+  
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .filter-type-preview-text > span {
