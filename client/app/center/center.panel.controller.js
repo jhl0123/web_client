@@ -683,6 +683,8 @@
           .error(function (response) {
             log('message marker not updated for ' + $scope.currentEntity.id);
           });
+      } else {
+        _messageCollection.updateUnreadCount();
       }
     }
 
