@@ -176,23 +176,17 @@
         }
         this._deferred = $q.defer();
         //DM 일 경우, chatRoomId 가 없으면 request 하지 않는다.
-        if (type !== 'users' || EntityFilterMember.getChatRoomId(id)) {
-          this.status.isLoading = true;
+        this.status.isLoading = true;
 
-          query = query || MessageQuery.get();
-          query = _.cloneDeep(query);
-
+        query = query || MessageQuery.get();
+        query = _.cloneDeep(query);
 
 
-          return messageAPIservice.getMessages(type, id, query, this._deferred)
-            .then(
-              _.bind(this._onSuccessRequest, this, query),
-              _.bind(this._onErrorRequest, this, query));
-        } else {
-          this._onDoneRequest();
-          this._deferred.reject();
-          return this._deferred.promise;
-        }
+
+        return messageAPIservice.getMessages(type, id, query, this._deferred)
+          .then(
+            _.bind(this._onSuccessRequest, this, query),
+            _.bind(this._onErrorRequest, this, query));
       },
 
       /**
