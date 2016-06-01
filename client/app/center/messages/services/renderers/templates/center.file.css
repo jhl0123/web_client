@@ -294,7 +294,7 @@
   font-size: 15px;
   line-height: 20px;
   display: inline-block;
-  margin: 0.15em 0.25em 0.1em 0;
+  margin: 0.15em 0.25em 0.15em 0;
 }
 
 .info-group-bottom .info-size,
@@ -342,6 +342,7 @@
   display: inline-block;
   margin-left: 0;
   line-height: 18px;
+  display: none;
 }
 .msg-file.unshared .info-extra,
 .msg-file.unshared .info-extra .unshared-label {
