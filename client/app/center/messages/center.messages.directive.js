@@ -11,7 +11,7 @@
   
   function centerMessagesDirective($filter, $state, CenterRenderer, CenterRendererFactory, MessageCacheCollection,
                                    StarAPIService, jndPubSub, FileDetail, memberService, Dialog, currentSessionHelper,
-                                   EntityHandler, JndUtil, RendererUtil, fileAPIservice) {
+                                   EntityHandler, JndUtil, RendererUtil, fileAPIservice, CoreUtil) {
     return {
       restrict: 'E',
       replace: true,
@@ -73,6 +73,7 @@
 
         scope.$on('jndWebSocketFile:commentCreated', _onFileCommentCreated);
         scope.$on('jndWebSocketFile:commentDeleted', _onFileCommentDeleted);
+        scope.$on('UserList:added', _onMemberAdded);
       }
 
       /**
@@ -237,6 +238,34 @@
         _refreshMsgByMemberId(id);
       }
 
+      /**
+       * 새로운 member 추가되었을 때 이벤트 핸들러
+       * 초대 메시지에 관해서만 refresh 한다.
+       * @param {object} angularEvent
+       * @param {object} member
+       * @private
+       */
+      function _onMemberAdded(angularEvent, member) {
+        var memberId = member.id;
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var list = messageCollection.list;
+        var info;
+        _.forEach(list, function(msg, index) {
+          if (msg.status === 'event') {
+            info = CoreUtil.pick(msg, 'info');
+            if (info && info.eventType === 'invite' && _.contains(info.inviteUsers, memberId)) {
+              messageCollection.manipulateMessage(msg);
+              _refresh(msg.id, index);
+            }
+          }
+        });
+      }
+
+      /**
+       * 인자로 받은 멤버가 작성한 메시지에 대해서만 refresh 한다.
+       * @param {number} id
+       * @private
+       */
       function _refreshMsgByMemberId(id) {
         var messageCollection = MessageCacheCollection.getCurrent();
         var list = messageCollection.list;

@@ -765,16 +765,6 @@
           case 'announcement_deleted':
             action = $filter('translate')('@system-msg-announcement-deleted');
             break;
-          case 'invite':
-            action = $filter('translate')('@msg-invited');
-            newMsg.message.invites = [];
-            _.each(msg.info.inviteUsers, function(element, index, list) {
-              entity = EntityHandler.get(element);
-              if (!_.isUndefined(entity)) {
-                newMsg.message.invites.push(entity);
-              }
-            });
-            break;
           case 'join' :
             action = $filter('translate')('@msg-joined');
             break;

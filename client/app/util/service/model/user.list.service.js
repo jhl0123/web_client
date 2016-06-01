@@ -10,7 +10,7 @@
     .factory('UserList', UserList);
 
   /* @ngInject */
-  function UserList(CoreUtil, configuration, EntityCollection) {
+  function UserList(CoreUtil, configuration, EntityCollection, jndPubSub) {
 
     var UserListClass = CoreUtil.defineClass(EntityCollection, /**@lends EntityCollection.prototype */{
       /**
@@ -29,6 +29,7 @@
         var protocol = configuration.protocol;
         var domain = configuration.domain;
         var thumbnailUrl = protocol + 'www.' + domain + '/images/profile_img_dummyaccount_640x640.png';
+        var wasExist = this.isExist(user.id);
 
         //inactive user 의 경우 thumbnail url 정보를 덮어쓴다.
         if (user.status === 'inactive') {
@@ -40,7 +41,13 @@
             }
           });
         }
+
         EntityCollection.prototype.add.call(this, user);
+
+        //존재 하지 않았던 user 에 대해서만 added 이벤트를 트리거 한다.
+        if (!wasExist) {
+          jndPubSub.pub('UserList:added', user);
+        }
       },
       
       /**
