@@ -85,7 +85,7 @@
     function _attachEvents() {
       $scope.$on('JndConnectUnion:showLoading', _onShowLoading);
       $scope.$on('JndConnectUnion:hideLoading', _onHideLoading);
-      $scope.$on('unionFooter:save', _onSave);
+      $scope.$on('JndConnectUnion:save', _onSave);
       $scope.$on('$destroy', JndConnectUnionFormData.clear);
       $scope.$on('JndConnectUnionFormData:getCurrentFormData', _onGetCurrentFormData);
     }

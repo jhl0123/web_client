@@ -20,21 +20,34 @@
 
   <div class="full-screen" id="connect-setting-ui">
 
-    <aside class="connect-setting-lpanel non-selectable opac-zero opac-in"
+    <aside class="connect-setting-lpanel non-selectable opac-zero opac-in _header"
            ng-class="">
 
       <div class="jnd-connect-logo-container">
         <i class="jnd-connect-logo"></i>
         <span class="jnd-connect-title" translate>@jnd-connect-3</span>
       </div>
-      <div class="jnd-connect-back-container">
-	    <div class="inner-container"><jnd-connect-union-nav></jnd-connect-union-nav></div>
+      <!-- connect setting page sub-header START Here -->
+      <div class="jnd-connect integrated-service left-header sub-header">
+
+			  <span class="jnd-connect-detail back-button cursor_pointer" ng-click="historyBack()">
+		      <i class="icon-long-arrow-left jnd-connect-detail"></i>
+		      <span translate>@jnd-connect-31</span>
+		    </span>
+
+        <span class="jnd-connect-detail save-button pull-right cursor_pointer"
+              ng-click="save()"
+              translate>
+          @jnd-connect-108
+        </span>
+
+        <div class="clear"></div>
       </div>
-      <jnd-connect-submenu></jnd-connect-submenu>
+      <!-- connect setting page sub-header END Here -->
     </aside>
 
     <!--MAIN-->
-    <div ng-switch="current.union.name">
+    <div ng-switch="current.union.name" class="_container">
       <div class="jnd-connect-service-container" id="jnd-connect-available-service"
            ng-switch-default>
         <jnd-connect-loading ng-show="isLoading"></jnd-connect-loading>
@@ -57,23 +70,32 @@
           </a>
         </div>
       </div>
-      <div ng-switch-when="googleCalendar">
+      <div ng-switch-when="googleCalendar"
+           jnd-connect-scroll>
         <jnd-connect-union-auth ng-if="current.isShowAuth" jnd-data-current="current"></jnd-connect-union-auth>
-        <jnd-connect-google-calendar ng-if="!current.isShowAuth" jnd-data-current="current"></jnd-connect-google-calendar>
+        <jnd-connect-google-calendar ng-if="!current.isShowAuth" jnd-data-current="current" jnd-connect-scroll>
+        </jnd-connect-google-calendar>
       </div>
       <div ng-switch-when="github">
         <jnd-connect-union-auth ng-if="current.isShowAuth" jnd-data-current="current"></jnd-connect-union-auth>
-        <jnd-connect-github ng-if="!current.isShowAuth" jnd-data-current="current"></jnd-connect-github>
+        <jnd-connect-github ng-if="!current.isShowAuth" jnd-data-current="current" jnd-connect-scroll>
+        </jnd-connect-github>
       </div>
-      <div ng-switch-when="trello">
+      <div ng-switch-when="trello"
+           jnd-connect-scroll>
         <jnd-connect-union-auth ng-if="current.isShowAuth" jnd-data-current="current"></jnd-connect-union-auth>
-        <jnd-connect-trello ng-if="!current.isShowAuth" jnd-data-current="current"></jnd-connect-trello>
+        <jnd-connect-trello ng-if="!current.isShowAuth" jnd-data-current="current" jnd-connect-scroll>
+        </jnd-connect-trello>
       </div>
-      <div ng-switch-when="jira">
-        <jnd-connect-webhook jnd-data-current="current"></jnd-connect-webhook>
+      <div ng-switch-when="jira"
+           jnd-connect-scroll>
+        <jnd-connect-webhook jnd-data-current="current" jnd-connect-scroll>
+        </jnd-connect-webhook>
       </div>
-      <div ng-switch-when="incoming">
-        <jnd-connect-webhook jnd-data-current="current"></jnd-connect-webhook>
+      <div ng-switch-when="incoming"
+           jnd-connect-scroll>
+        <jnd-connect-webhook jnd-data-current="current" jnd-connect-scroll>
+        </jnd-connect-webhook>
       </div>
     </div>
   </div>

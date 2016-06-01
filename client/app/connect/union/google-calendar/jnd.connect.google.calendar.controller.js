@@ -42,7 +42,7 @@
      */
     function _attachEvents() {
       $scope.$on('unionHeader:accountInfoChange', _onAccountInfoChange);
-      $scope.$on('unionFooter:save', _onSave);
+      $scope.$on('JndConnectUnion:save', _onSave);
       $scope.$on('accountMenuDirective:removeAccountBefore', _onRemoveAccountBefore);
       $scope.$on('accountMenuDirective:removeAccountDone', _onRemoveAccountDone);
       $scope.$on('JndConnectUnion:showLoading', _onShowLoading);

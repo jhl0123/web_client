@@ -150,14 +150,14 @@
   .jnd-connect-logo-container {
     box-shadow: 0 1px 0 #E3E7EA;
   }
-  .connect-setting-lpanel._show-sub-header {
+  .connect-setting-lpanel.show-sub-header {
 	
 	height: 99px;
 	
   }
-  .connect-setting-lpanel._show-sub-header:hover,
-  .connect-setting-lpanel._show-sub-header:active,
-  .connect-setting-lpanel._show-sub-header:focus {
+  .connect-setting-lpanel.show-sub-header:hover,
+  .connect-setting-lpanel.show-sub-header:active,
+  .connect-setting-lpanel.show-sub-header:focus {
 	background-color: #FFF;
   }
   
@@ -170,15 +170,12 @@
 	background-color: rgba(255, 255, 255, 0.9);
   }
   .connect-setting-lpanel .integrated-service.sub-header {
-	 margin-top: -32px;
-	 z-index: 0;
-	 -webkit-transition: margin 150ms ease-in-out;
-	 display: block !important;
-	 max-width: 1038px;
-     margin: 0 auto;
-     border-bottom-width: 0;
-     
-     background-color: transparent;
+    z-index: 0;
+    -webkit-transition: margin 150ms ease-in-out;
+    display: block !important;
+    max-width: 1038px;
+    margin: 0;
+    border-bottom-width: 0;
   }
   .integrated-service.sub-header .back-button {
 	color: #808080;
@@ -206,7 +203,7 @@
 	color: #555;
 	background-color: transparent;
   }
-  ._show-sub-header .integrated-service.sub-header {
+  .show-sub-header .integrated-service.sub-header {
 	
 	border-bottom-width: 0;
 	margin-top: 0;
@@ -670,12 +667,12 @@
 	console.log(currentScr);
 	
 	if (currentScr > targetScrVal) {
-	  $('.connect-setting-lpanel').addClass('_show-sub-header');
+	  $('.connect-setting-lpanel').addClass('show-sub-header');
 	  
 	  
 	}
 	else {
-	  $('.connect-setting-lpanel').removeClass('_show-sub-header');
+	  $('.connect-setting-lpanel').removeClass('show-sub-header');
 	}
 	
 	
