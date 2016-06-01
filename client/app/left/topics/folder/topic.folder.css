@@ -98,8 +98,10 @@
 }
 
 .topic-folder-border.on{
-  background:  #8CC0E6;
+  background: rgba(0, 172, 233, 0.65);
   opacity: 1;
+  top: -4px;
+  height: 4px;
 }
 
 .topic-folder-area {
