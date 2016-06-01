@@ -318,6 +318,7 @@
   overflow: hidden;
   margin-right: 0;
   vertical-align: middle;
+  padding-left: 2px;
 }
 .msg-file.unshared .info-title:lang(en),
 .msg-file.unshared .info-title:lang(zh-cn),
@@ -367,7 +368,7 @@
   white-space: nowrap;
   
   float: left;
-  margin: 2px 6px 0 -1px;
+  margin: 2px 5px 0 -1px;
 }
 
 .msg-item ._fileExpand {
