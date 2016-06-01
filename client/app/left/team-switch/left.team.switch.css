@@ -1,11 +1,21 @@
 .team-switch-container {
   color: white;
-  background-color: #366480;
+  background-color: #38678A;
 }
 .team-switch-container:hover,
 .team-switch-container.open {
 	
-  background-color: #2B5C79;
+  background-color: #2E5E82;
+}
+
+.lpanel-user:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  right: 0;
+  border-bottom: 1px solid #DEE1E4;
+  z-index: 12;
 }
 
 /* team switch dropdown toggle button */
@@ -15,9 +25,8 @@
 
 .lpanel-user .lpanel-user__user {
   padding: 8px 15px;
-  background-color: #f1f4f8;
-  border-right: 1px solid #e1e1e1;
-  border-bottom: 1px solid #e1e1e1;
+  background-color: #F8FAFD;
+  margin-right: 1px;
 }
 
 .lpanel-user__team {
@@ -61,7 +70,7 @@
   width: 9px;
   height: 9px;
   background-color: #e63939;
-  border: 2px solid #366480;
+  border: 2px solid #38678A;
   border-radius: 100%;
 }
 .team-switch-container:hover .team-switch-button .dot,
@@ -75,7 +84,7 @@
 
 /* team switch dropdown menu */
 .team-switch-container ul {
-  background: #366480;
+  background: #38678A;
   overflow-x: hidden;
   overflow-y: auto;
   position: absolute;
@@ -114,5 +123,5 @@
   padding: 3px 7px;
 }
 .team-list .team-item.active {
-  background-color: #2D576F;
+  background-color: #2E5E82;
 }
