@@ -35,7 +35,7 @@
 }
 .topic-folder.has-folder:hover,
 .topic-folder.has-folder.open {
-  background: rgba(248, 250, 253, 0.7);
+  background: rgba(220,235,245,0.25);
   border-top: 1px solid #E2E9EF;
   border-bottom: 1px solid #E2E9EF;
 }
@@ -55,8 +55,7 @@
 }
 
 .topic-folder.hover ul {
-	background-color:#ECF3F7;
-	-webkit-transition: background 0.2s, border 0.2s;
+  -webkit-transition: background 0.2s, border 0.2s;
   -moz-transition: background 0.2s, border 0.2s;
   -ms-transition: background 0.2s, border 0.2s;
   -o-transition: background 0.2s, border 0.2s;
@@ -76,10 +75,9 @@
 }
 
 .topic-folder.hover {
-  /*background-color:#f2fbff;*/
-  background-color:#ECF3F7 !important;
-  border-top: 1px solid #C4DAEF !important;
-  border-bottom:1px solid #C4DAEF !important;
+  background: rgba(190,220,245,0.25) !important;
+  border-top: 1px solid #DAE5EF !important;
+  border-bottom: 1px solid #DAE5EF !important;
 }
 .lpanel-list .topic-folder.hover ul li:hover {
 	background-color:transparent;
