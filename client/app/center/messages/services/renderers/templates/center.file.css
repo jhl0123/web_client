@@ -292,17 +292,21 @@
   color: #333;
   font-weight: 700;
   font-size: 15px;
-  line-height: 22px;
-  display: inline;
-  margin-right: 0.25em;
+  line-height: 20px;
+  display: inline-block;
+  margin: 0.15em 0.25em 0.1em 0;
 }
 
 .info-group-bottom .info-size,
 .info-group-bottom .info-type {
   color: #666;
   font-size: 12px;
+  line-height: 18px;
   white-space: nowrap;
   text-transform: uppercase;
+  font-weight: 400;
+  margin-right: 2px;
+  display: none;
 }
 
 
@@ -313,6 +317,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   margin-right: 0;
+  vertical-align: middle;
 }
 .msg-file.unshared .info-title:lang(en),
 .msg-file.unshared .info-title:lang(zh-cn),
@@ -321,9 +326,6 @@
 }
 .msg-file.unshared .info-title:lang(ja) {
   max-width: calc(100% - 180px);
-}
-.msg-file.unshared .info-group-bottom {
-  padding-bottom: 5px;
 }
 
 /* unshared image preview & filter type preview */
@@ -345,8 +347,6 @@
 .msg-file.unshared .info-extra .unshared-label {
   display: inline-block;
   margin-left: 0;
-  line-height: 18px;
-  vertical-align: top;
   float: left;
 }
 .msg-file.archived .info-title {
@@ -355,7 +355,7 @@
 
 .msg-file.unshared .unshared-label {
   padding: 2px 7px;
-  line-height: 18px;
+  line-height: 16px;
   background-color: rgba(15,60,85,0.105);
   color: rgba(14,60,85,0.4);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -366,7 +366,7 @@
   white-space: nowrap;
   
   float: left;
-  margin: 1px 6px 0 -1px;
+  margin: 2px 6px 0 -1px;
 }
 
 .msg-item ._fileExpand {
