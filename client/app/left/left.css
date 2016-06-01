@@ -70,7 +70,7 @@
   margin: 1px 0 0 0;
   z-index: 0;
 
-  /* box-shadow: 0 -1px 0 0 #E6E9EC; */
+  box-shadow: 0 0 3px 0 rgba(56, 103, 138, 0.25);
   
   -webkit-transition: margin ease-out 0.35s;
   -moz-transition: margin ease-out 0.35s;
@@ -79,13 +79,15 @@
   transition: margin ease-out 0.35s;
 }
 .lpanel-list__users .lpanel-list__header {
-  box-shadow: none;
   margin-top: -1px;
+}
+.lpanel-list__header.topic-header {
+  z-index: 1;
 }
 .lpanel-list__header:before,
 .lpanel-list__header:after {
   content: '';
-  border-top: 1px solid #DEE1E4;
+  border-top: 1px solid #D5DADB;
   position:absolute;
   top:-1px;
   left:0px;
@@ -96,6 +98,7 @@
 }
 .lpanel-list__header.collapsed {
   background-color: #FFF;
+  box-shadow: 0 0 0px 0 rgba(56, 103, 138, 0);
 }
 /*
 .lpanel-list__header.collapsed:before,
