@@ -36,7 +36,7 @@
     var _lastReadMessageMarker;
     var _isFromSearch = false;
     var _isLogEnabled = true;
-
+    var _hasRoomMarkerInfo = false;
     /**
      * right panel 이 open 되었을 때 scroll 을 최 하단으로 보낼지 여부
      * @type {boolean}
@@ -203,6 +203,7 @@
      * @private
      */
     function _initLocalVariables() {
+      _hasRoomMarkerInfo = false;
       _isFromSearch = false;
       _hasRetryGetRoomInfo = false;
       _wasBottomReached = false;
@@ -615,7 +616,6 @@
      */
     function _scrollToBottom() {
       document.getElementById('msgs-container').scrollTop = document.getElementById('msgs-container').scrollHeight;
-      _showContents();
     }
 
     function _scrollToBottomWithAnimate(duration) {
@@ -647,7 +647,6 @@
 
         _scrollTo(targetScrollTop);
         _animateBackgroundColor(jqTarget);
-        _showContents();
       }
     }
 
@@ -782,10 +781,15 @@
       }
       if (!isRoomIdExist) {
         DmApi.createRoom(_entityId)
-          .success(_requestPostMessages);
+          .success(_onCreateRoomSuccess);
       } else {
         _requestPostMessages();
       }
+    }
+
+    function _onCreateRoomSuccess() {
+      _getCurrentRoomMarker();
+      _requestPostMessages();
     }
 
     /**
@@ -1334,6 +1338,7 @@
           .success(function (response) {
             _initMarkers(response.markers);
             _hasRetryGetRoomInfo = false;
+            _hasRoomMarkerInfo = true;
             //console.log('success')
           })
           .error(function (err) {
@@ -1359,14 +1364,19 @@
      * 랜더링 repeat 가 끝났을 때 호출되는 함수
      */
     function onRepeatDone() {
-      jndPubSub.pub('onRepeatDone');
       _adjustScroll();
       _checkEntityMessageStatus();
-      publicService.hideDummyLayout();
-      if (!$scope.isInitializeRender) {
-        _onInitialRenderDone();
-        $scope.isInitializeRender = true;
+      if (_messageCollection.status.isInitialized) {
+        publicService.hideDummyLayout();
+        if (!$scope.isInitializeRender) {
+          _onInitialRenderDone();
+          $scope.isInitializeRender = true;
+        }
       }
+      if (!_hasRoomMarkerInfo) {
+        _getCurrentRoomMarker();
+      }
+      _showContents();
     }
 
     /**

@@ -187,9 +187,9 @@
           return messageAPIservice.getMessages(type, id, query, this._deferred)
             .then(
               _.bind(this._onSuccessRequest, this, query),
-              _.bind(this._onErrorRequest, this, query))
-            .finally(_.bind(this._onDoneRequest, this));
+              _.bind(this._onErrorRequest, this, query));
         } else {
+          this._onDoneRequest();
           this._deferred.reject();
           return this._deferred.promise;
         }
@@ -216,7 +216,7 @@
       _onSuccessRequest: function(query, result) {
         var response = result.data;
         var messageList = response.records;
-        
+        this._onDoneRequest();
         _.extend(this.roomData, {
           firstLinkId: response.firstLinkId,
           lastLinkId: response.lastLinkId,
@@ -239,6 +239,7 @@
        * @private
        */
       _onErrorRequest: function(query, result) {
+        this._onDoneRequest();
         this._pub('MessageCollection:requestError', result, query);
       },
       
