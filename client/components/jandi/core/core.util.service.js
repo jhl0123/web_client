@@ -50,14 +50,15 @@
         target = args[0],
         length = args.length,
         i;
-      try {
-        for (i = 1; i < length; i++) {
+      for (i = 1; i < length; i++) {
+        if (!_.isObject(target)) {
+          target = undefined;
+          break;
+        } else {
           target = target[args[i]];
         }
-        return target;
-      } catch(e) {
-        return;
       }
+      return target;
     }
 
     /**
