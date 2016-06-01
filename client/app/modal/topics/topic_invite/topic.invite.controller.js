@@ -68,7 +68,6 @@
      * set member list
      */
     function generateMemberList() {
-      var prevAvailableMemberMap = $scope.availableMemberMap;
       var users = RoomTopicList.getUserIdList($scope.currentEntity.id);
 
       $scope.availableMemberMap = {};
@@ -79,12 +78,13 @@
       // 선택 가능한 member list
       $scope.selectingMembers = [];
 
+      // 초대할 user list
+      $scope.inviteUsers = [];
+
       $scope.availableMemberList = _.reject(currentSessionHelper.getCurrentTeamUserList(), function(user) {
         var isActiveMember = memberService.isActiveMember(user);
 
-        if (prevAvailableMemberMap && prevAvailableMemberMap[user.id]) {
-          user.extSelected = prevAvailableMemberMap[user.id].extSelected;
-        }
+        user.extSelected = false;
 
         if (isActiveMember) {
           $scope.activeMembers.push(user);
@@ -93,10 +93,6 @@
         $scope.availableMemberMap[user.id] = user;
 
         return users.indexOf(user.id) > -1 || !isActiveMember;
-      });
-
-      $scope.inviteUsers = _.reject($scope.availableMemberList, function(user) {
-        return !!user.extSelected === false;
       });
 
       $scope.isInviteChannel = $scope.availableMemberList.length !== 0;
