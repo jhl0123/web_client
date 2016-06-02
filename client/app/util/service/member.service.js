@@ -21,9 +21,6 @@
     // 현재 멤버의 marker 정보를 {entityId: marker} 로 가지고 있다.
     var lastMessageReadMarkerMap = {};
 
-    // 현재 멤버의 이전 marker 정보를 {entityId: marker} 로 가지고 있다.
-    var prevLastMessageReadMarkerMap = {};
-
     var currentMember;
 
     var thumbnailUrlMap = {
@@ -79,7 +76,6 @@
       initLastReadMessageMarker: initLastReadMessageMarker,
       setLastReadMessageMarker: setLastReadMessageMarker,
       getLastReadMessageMarker: getLastReadMessageMarker,
-      getPrevLastReadMessageMarker: getPrevLastReadMessageMarker,
       
       isTopicNotificationOn: isTopicNotificationOn,
       setTopicNotificationStatus: setTopicNotificationStatus,
@@ -565,8 +561,6 @@
      * @param {number} lastLinkId - 해당하는 entity의 유져가 가지고 있는 link의 id
      */
     function setLastReadMessageMarker(entityId, lastLinkId) {
-      prevLastMessageReadMarkerMap[entityId] = prevLastMessageReadMarkerMap[entityId];
-
       lastMessageReadMarkerMap[entityId] = lastLinkId;
     }
 
@@ -576,27 +570,6 @@
      * @returns {nubmer}
      */
     function getLastReadMessageMarker(entityId) {
-      return _getLastReadMessageMarker(lastMessageReadMarkerMap, entityId);
-    }
-
-    /**
-     * 갱신 이전에 작성된 entityId에 해당하는 lastLinkId를 전달한다.
-     * 룸 진입시 last read message marker가 바로 갱신되기 때문에
-     * 룸 진입 전 last read message marker의 상태가 필요할때 사용함.
-     * @param {number} entityId - 찾고싶은 entity의 id
-     * @returns {nubmer}
-     */
-    function getPrevLastReadMessageMarker(entityId) {
-      return _getLastReadMessageMarker(prevLastMessageReadMarkerMap, entityId);
-    }
-
-    /**
-     * entityId에 해당하는 lastLinkId를 리턴한다.
-     * @param {object} lastMarkerMap
-     * @param {number} entityId - 찾고싶은 entity의 id
-     * @returns {nubmer} - lastLinkId
-     */
-    function _getLastReadMessageMarker(lastMarkerMap, entityId) {
       var jandiBot = BotList.getJandiBot();
 
       // initLastReadMessageMarker를 통해 전달되는 markers의 DM data중 user들은 memberId로 전달되고, jandi bot은 roomId로
@@ -605,7 +578,7 @@
       if (jandiBot && jandiBot.id == entityId) {
         entityId = jandiBot.entityId;
       }
-  
+
       return CoreUtil.pick(lastMessageReadMarkerMap, entityId);
     }
 
