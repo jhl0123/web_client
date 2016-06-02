@@ -1,3 +1,37 @@
+<a name="1.29.0"></a>
+# [1.29.0](https://github.com/tosslab/web_client/compare/v1.28.2...v1.29.0) (2016-05-31)
+
+
+### Bug Fixes
+
+* **file-detail:** 파일 상세가 활성화 된 상태에서 다른 파일 url 로 접근 시 우측 패널 갱신되지 않는 현상 수정 ([5c0b1f9](https://github.com/tosslab/web_client/commit/5c0b1f9)), closes [#2](https://github.com/tosslab/web_client/issues/2)
+* **filecard:** 센터 파일 카드에 공유자가 아닌 파일 업로더를 표현하도록 수정 ([7d6557f](https://github.com/tosslab/web_client/commit/7d6557f))
+* **mention:** 댓글에 작성된 mention 선택시 dm 으로 이동하도록 수정 ([3074b97](https://github.com/tosslab/web_client/commit/3074b97))
+* **mention-tab:** 멘션이 있는 댓글에 대해 멘션탭에서 소켓 이벤트 수신 ([5708563](https://github.com/tosslab/web_client/commit/5708563)), closes [#2](https://github.com/tosslab/web_client/issues/2)
+* **mobile:** 모바일 사파리에서 접근 시 대응 ([4accc12](https://github.com/tosslab/web_client/commit/4accc12))
+* **modal:** 초대가 취소된 Dummy Member 를 차단된 멤버 리스트에 표시하지 않음 ([b486b75](https://github.com/tosslab/web_client/commit/b486b75))
+* **net:** Linux 를 위해 timeout threshold 값 증가 ([e81dea2](https://github.com/tosslab/web_client/commit/e81dea2))
+* **net:** Linux 를 위해 timeout 추가 ([17270a3](https://github.com/tosslab/web_client/commit/17270a3))
+* **net:** Linux 를 위해 timeout 추가 ([7ab94dd](https://github.com/tosslab/web_client/commit/7ab94dd))
+* **pdf:** 파일 상세에서 pdf의 l10n 수정 & image card와 view 통일 ([b37b6f6](https://github.com/tosslab/web_client/commit/b37b6f6))
+* **pdf-viewer:** PDF 뷰어 레이아웃 오류 수정 ([46c2f03](https://github.com/tosslab/web_client/commit/46c2f03))
+* **pdf-viewer:** 링크일 경우 새창으로 열도록 수정 ([95f43e2](https://github.com/tosslab/web_client/commit/95f43e2))
+* **socket:** 타인이 토픽에 멤버 초대 시 멤버 목록 갱신되지 않는 현상 수정 ([6a5e5c6](https://github.com/tosslab/web_client/commit/6a5e5c6))
+* **topicjoin:** 토픽 리스트 출력에서 참여한 토픽이 private일때 아이콘 다릴 표시하도록 수정 ([23fc1f9](https://github.com/tosslab/web_client/commit/23fc1f9))
+
+### Features
+
+* **center:** input 필드에 keyboard focus가 있어도 특정 시간 동안 움직임이 없는 경우 inactive 상태 처리하도록 수정 ([89ad473](https://github.com/tosslab/web_client/commit/89ad473))
+* **center:** 토픽 멤버 목록에 검색창 추가 ([4ead756](https://github.com/tosslab/web_client/commit/4ead756))
+* **center:** 토픽 멤버 목록에서 자기 자신이 최상단에 오도록 함 ([906d941](https://github.com/tosslab/web_client/commit/906d941))
+* **custom-selectbox:** 대화방 선택에서 1:1 메시지의 멤버 배열 순서 알파벳 순으로 조정 ([4a5edac](https://github.com/tosslab/web_client/commit/4a5edac))
+* **network:** 네트워크 끊긴 상태와 소켓 끊긴 상태 구분 ([a761a28](https://github.com/tosslab/web_client/commit/a761a28))
+* **sticker:** Dingo 스티커 추가 ([3611129](https://github.com/tosslab/web_client/commit/3611129))
+* **sticker:** 새로운 스티커 표시인 N 에 transition 효과 추가 ([da250b8](https://github.com/tosslab/web_client/commit/da250b8))
+* **sticker:** 스티커에 마우스 오른쪽 버튼 클릭했을때 이미지 속성으로 context menu 표현하지 않도록함 ([7eda797](https://github.com/tosslab/web_client/commit/7eda797))
+
+
+
 <a name="1.28.2"></a>
 ## [1.28.2](https://github.com/tosslab/web_client/compare/v1.28.1...v1.28.2) (2016-05-26)
 
