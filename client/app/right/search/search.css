@@ -10,7 +10,11 @@
 .rpanel-body .advanced-search-option__category .custom-select-box-btn:hover {
   background-color: #F1F4F8;
 }
-
+.rpanel-body .advanced-search-option__category .custom-select-box-btn:active,
+.rpanel-body .advanced-search-option__category .custom-select-box-btn:focus,
+.rpanel-body .advanced-search-option__category .custom-select-box-btn.active {
+  background-color: #E6E9EB;
+}
 .modal-dialog .add-on-left,
 .rpanel-search .add-on-left,
 .tab-content .add-on-left {
