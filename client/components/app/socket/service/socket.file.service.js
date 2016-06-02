@@ -162,6 +162,8 @@
      * @private
      */
     function _onFileExternalShared(socketEvent) {
+      //TODO: http://its.tosslab.com/browse/BD-571 이슈 해결 이후 이벤트 핸들러 추가 작업 필요
+      jndPubSub.pub('jndWebSocketFile:externalFileShared', socketEvent);
     }
 
     /**
@@ -170,6 +172,8 @@
      * @private
      */
     function _onFileExternalUnshared(socketEvent) {
+      //TODO: http://its.tosslab.com/browse/BD-571 이슈 해결 이후 이벤트 핸들러 추가 작업 필요
+      jndPubSub.pub('jndWebSocketFile:externalFileUnShared', socketEvent);
     }
   }
 })();

@@ -8,7 +8,7 @@
     .module('jandiApp')
     .directive('externalFile', externalFile);
 
-  function externalFile($filter, memberService, ExternalFile, Dialog, jndPubSub, JndUtil) {
+  function externalFile($filter, memberService, ExternalFile, Dialog, jndPubSub, JndUtil, currentSessionHelper) {
     return {
       restrict: 'A',
       scope: {
