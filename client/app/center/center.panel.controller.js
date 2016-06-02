@@ -192,9 +192,6 @@
       $scope.currentEntity = currentSessionHelper.getCurrentEntity();
       $scope.analytics.entityType = _entityType;
       MessageSendingCollection.reset();
-
-      centerService.setEntityId(centerService.isChat() ? currentSessionHelper.getCurrentEntity().entityId : _entityId);
-
       modalHelper.closeModal('cancel');
       _cancelHttpRequest();
       _initLocalVariables();
@@ -211,7 +208,7 @@
       _hasRetryGetRoomInfo = false;
       _wasBottomReached = false;
       _hasLastReadMarker = false;
-      _lastReadMessageMarker = _getEntityId() ? memberService.getLastReadMessageMarker(_getEntityId()) : null;
+      _lastReadMessageMarker = memberService.getLastReadMessageMarker(_getRoomId());
 
       _deferredObject = {
         getMessage: null,
@@ -676,10 +673,10 @@
 
     function _postMessageMarker() {
       var lastLinkId = _messageCollection.roomData.lastLinkId;
-      if (memberService.getLastReadMessageMarker(_entityId) !== lastLinkId) {
+      if (memberService.getLastReadMessageMarker(_getRoomId()) !== lastLinkId) {
         messageAPIservice.updateMessageMarker(_entityId, _entityType, lastLinkId)
           .success(function (response) {
-            memberService.setLastReadMessageMarker(_getEntityId(), lastLinkId);
+            memberService.setLastReadMessageMarker(_getRoomId(), lastLinkId);
             _messageCollection.updateUnreadCount();
             //log('----------- successfully updated message marker for entity name ' + $scope.currentEntity.name + ' to ' + lastMessageId);
           })
@@ -800,15 +797,12 @@
     function _requestPostMessages(isForce) {
       var queue = MessageSendingCollection.queue;
       var payload;
-      var roomId = _entityId;
+      var roomId = _getRoomId();
 
       if (isForce || (NetInterceptor.isConnected() && !$scope.isPosting)) {
         if (queue.length) {
           $scope.isPosting = true;
           _deferredObject.postMessage = $q.defer();
-          if (EntityFilterMember.isExist(roomId)) {
-            roomId = EntityFilterMember.getChatRoomId(roomId);
-          }
           payload = queue.shift();
 
           messageAPIservice.postMessage(roomId, _getPostParam(payload), _deferredObject.postMessage)
@@ -817,6 +811,19 @@
             .finally(_onFinallyPost);
         }
       }
+    }
+
+    /**
+     * 현재 방의 id 를 받아온다. (DM 일 경우 _entityId 가 memberId 이기 때문에)
+     * @returns {number}
+     * @private
+     */
+    function _getRoomId() {
+      var roomId = _entityId;
+      if (EntityFilterMember.isExist(roomId)) {
+        roomId = EntityFilterMember.getChatRoomId(roomId);
+      }
+      return roomId;
     }
 
     /**
@@ -853,7 +860,7 @@
       if (_messageCollection.hasLastMessage()) {
         _messageCollection.append(response, true);
       }
-      memberService.setLastReadMessageMarker(_entityId, linkId);
+      memberService.setLastReadMessageMarker(_getRoomId(), linkId);
       MessageSendingCollection.clearSentMessages();
       try {
         //analytics
@@ -1214,12 +1221,6 @@
       }
     }
 
-
-    function _getEntityId() {
-      return centerService.getEntityId();
-    }
-
-
     /**
      * Decide to whether display badge or not.
      *
@@ -1334,7 +1335,7 @@
      * @private
      */
     function _getCurrentRoomMarker() {
-      var currentRoomId = _getEntityId();
+      var currentRoomId = _getRoomId();
       if (currentRoomId) {
         _deferredObject.getRoomInformation = $q.defer();
         messageAPIservice.getRoomInformation(currentRoomId, _deferredObject.getRoomInformation)

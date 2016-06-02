@@ -53,7 +53,7 @@
       var data = socketEvent.data;
 
       if (parseInt(memberService.getMemberId(), 10) === parseInt(data.memberId, 10)) {
-        jndPubSub.pub('message:starred', data);
+        jndPubSub.pub('jndWebSocketMessage:starred', data);
       }
     }
 
@@ -65,7 +65,7 @@
     function _onMessageUnStarred(socketEvent) {
       var data = socketEvent.data;
       if (parseInt(memberService.getMemberId(), 10) === parseInt(data.memberId, 10)) {
-        jndPubSub.pub('message:unStarred', data);
+        jndPubSub.pub('jndWebSocketMessage:unStarred', data);
       }
     }
 
@@ -109,6 +109,16 @@
      * @private
      */
     function _onMessageCreated(socketEvent) {
+      var msg = socketEvent.data.linkMessage;
+      var linkId = msg.id;
+      var writerId = msg.message.writerId;
+      var myId = memberService.getMemberId();
+      //내가 쓴 message 일 경우 나의 marker 정보를 업데이트 한다.
+      if (writerId === myId) {
+        _.forEach(msg.toEntity, function(roomId) {
+          jndWebSocketCommon.updateMyLastMessageMarker(roomId, linkId);
+        });
+      }
       jndPubSub.pub('jndWebSocketMessage:messageCreated', socketEvent);
     }
 
@@ -202,17 +212,12 @@
 
     /**
      * 현재 보고 있는 토픽에 일어난 이벤트에만 센터를 업데이트한다.
-     * @param data
+     * @param socketEvent
      * @private
      */
-    function _onTopicFileShareStatusChange(data) {
-
-      // 현재 토픽이라면 센터를 업데이트하고 아니라면 왼쪽을 업데이트한다
-      if (jndWebSocketCommon.isCurrentEntity(data.room)) {
-        jndPubSub.updateCenterPanel();
-      }
-
-      _updateRight(data);
+    function _onTopicFileShareStatusChange(socketEvent) {
+      jndPubSub.pub('jndWebSocketMessage:fileShareStatusChange', socketEvent);
+      _updateRight(socketEvent);
     }
 
     /**

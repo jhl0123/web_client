@@ -79,8 +79,8 @@
       $scope.$on('rightPanelStatusChange', _onRightPanelStatusChange);
 
       // star / unstar
-      $scope.$on('message:starred', _starred);
-      $scope.$on('message:unStarred', _unStarred);
+      $scope.$on('jndWebSocketMessage:starred', _starred);
+      $scope.$on('jndWebSocketMessage:unStarred', _unStarred);
 
       // create/delete comment
       $scope.$on('jndWebSocketFile:commentCreated', _rightFileDetailOnFileCommentCreated);

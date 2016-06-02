@@ -83,35 +83,31 @@
         scope.$on('MessageCollection:remove', _onRemove);
         scope.$on('MessageCollection:set', _renderAll);
         scope.$on('MessageCollection:embed', _onEmbed);
+        scope.$on('MessageCollection:refresh', _onRefresh);
+        scope.$on('MessageCollection:refresh:commentCount', _onRefreshCommentCount);
+        scope.$on('MessageCollection:refresh:star', _onRefreshStar);
         
         scope.$on('MessageCollection:updateUnread', _onUpdateUnread);
 
-        scope.$on('message:starred', _onStarred);
-        scope.$on('message:unStarred', _onUnStarred);
+        // scope.$on('jndWebSocketMessage:starred', _onStarred);
+        // scope.$on('jndWebSocketMessage:unStarred', _onUnStarred);
 
         scope.$on('webSocketConnect:connectUpdated', _onConnectUpdated);
 
         scope.$on('$destroy', _onDestroy);
 
-        scope.$on('updateCenterForRelatedFile', _onFileUpdated);
-        scope.$on('centerOnFileDeleted', _onFileDeleted);
-
         scope.$on('toggleLinkPreview', _onAttachMessagePreview);
         scope.$on('jndWebSocketMember:memberUpdated', _onUpdateMemberProfile);
         scope.$on('errorThumbnailImage', _onErrorThumbnailImage);
-        scope.$on('fileShared', _onFileShareStatusChange);
-        scope.$on('fileUnshared', _onFileShareStatusChange);
 
         scope.$on('hotkey-scroll-page-up', _onHotkeyScrollUp);
         scope.$on('hotkey-scroll-page-down', _onHotkeyScrollDown);
 
-        scope.$on('jndWebSocketFile:commentCreated', _onFileCommentCreated);
-        scope.$on('jndWebSocketFile:commentDeleted', _onFileCommentDeleted);
         scope.$on('UserList:added', _onMemberAdded);
       }
 
       /**
-       *
+       * scrollUp 핫키 이벤트 핸들러
        * @private
        */
       function _onHotkeyScrollUp() {
@@ -121,7 +117,7 @@
       }
 
       /**
-       *
+       * scroll down 핫키 이벤트 핸들러
        * @private
        */
       function _onHotkeyScrollDown() {
@@ -131,109 +127,14 @@
       }
 
       /**
-       * file 공유 상태 변경시 이벤트 핸들러
+       * msg 에 해당하는 item 을 갱신한다.
        * @param {object} angularEvent
-       * @param {object} data
-       *    @param {object} data.file
-       *    @param {string} data.event
+       * @param {object} msg
        * @private
        */
-      function _onFileShareStatusChange(angularEvent, data) {
+      function _onRefresh(angularEvent, msg) {
         var messageCollection = MessageCacheCollection.getCurrent();
-        var entityIndex;
-        var currentEntityId = currentSessionHelper.getCurrentEntityId(true);
-        var eventType = data.event;
-        var fileId = data.file.id;
-        var message;
-
-        _onFileUpdated(angularEvent, data.file)
-          .error(function() {
-            _.forEach(messageCollection.list, function(msg, index) {
-              if (msg.message.id === fileId) {
-                message = msg.message
-              } else if ((msg.feedback && msg.feedback.id) === fileId) {
-                message = msg.feedback;
-              } else {
-                message = null;
-              }
-
-              if (message) {
-                entityIndex = message.shareEntities.indexOf(currentEntityId);
-                if (eventType === 'file_unshared' && entityIndex !== -1) {
-                  message.shareEntities.splice(entityIndex, 1);
-                } else if (eventType === 'file_shared' && entityIndex === -1) {
-                  message.shareEntities.push(currentEntityId);
-                }
-                _refresh(msg.id, index);
-              }
-            });
-          });
-      }
-
-      /**
-       * file update 되었을 때 이벤트 핸들러
-       * @param {object} angularEvent
-       * @param {object} file
-       * @private
-       */
-      function _onFileUpdated(angularEvent, file) {
-        var messageCollection = MessageCacheCollection.getCurrent();
-        var fileId = file.id;
-        return FileDetail.get(fileId)
-          .success(function(response) {
-            var shareEntities;
-            var message;
-
-            _.forEach(response.messageDetails, function(item) {
-              if (item.contentType === 'file') {
-                shareEntities = _toEntityIdList(item.shareEntities);
-              }
-            });
-            _.forEach(messageCollection.list, function(msg, index) {
-              message = RendererUtil.getFeedbackMessage(msg);
-              if (message.id === fileId) {
-                message.shareEntities = shareEntities;
-                _refresh(msg.id, index);
-              }
-            });
-          });
-      }
-
-      /**
-       * entityIdList 로 변경하여 반영한다
-       * @param {Array} memberIdList
-       * @returns {Array}
-       * @private
-       */
-      function _toEntityIdList(memberIdList) {
-        var entityIdList = [];
-        var entity;
-        _.forEach(memberIdList, function(memberId) {
-          entity = EntityHandler.get(memberId);
-          entityIdList.push(entity.entityId || entity.id);
-        });
-        return entityIdList;
-      }
-
-      /**
-       * file 삭제 이벤트 핸들러
-       * @param {object} angularEvent
-       * @param {object} param
-       * @private
-       */
-      function _onFileDeleted(angularEvent, param) {
-        var messageCollection = MessageCacheCollection.getCurrent();
-        var deletedFileId = parseInt(param.file.id, 10);
-        _.forEach(messageCollection.list, function(msg, index) {
-          if (msg.message.id === deletedFileId) {
-            msg.message.status = 'archived';
-            _refresh(msg.id, index);
-          }
-          if (msg.feedback && msg.feedback.id === deletedFileId) {
-            msg.feedback.status = 'archived';
-            _refresh(msg.id, index);
-          }
-        });
+        _refresh(msg.id, messageCollection.at(msg.id, true));
       }
 
       /**
@@ -479,18 +380,19 @@
        * request star
        * @param {object} msg
        * @param {object} message
+       * @param {object} jqTarget
        * @private
        */
       function _requestStar(msg, message, jqTarget) {
-        var messageId = message.id;
+        var linkId = message.id;
 
         message.isStarred = !message.isStarred;
-        _refreshStar(msg, message, jqTarget);
+        _refreshStar(linkId, message.isStarred, jqTarget);
         if (message.isStarred) {
-          StarAPIService.star(messageId, _teamId)
+          StarAPIService.star(linkId, _teamId)
             .error(_.bind(_onStarRequestError, that, msg, message, jqTarget));
         } else {
-          StarAPIService.unStar(messageId, _teamId)
+          StarAPIService.unStar(linkId, _teamId)
             .error(_.bind(_onStarRequestError, that, msg, message, jqTarget));
         }
       }
@@ -499,11 +401,12 @@
        * star 오류 핸들러
        * @param {object} msg
        * @param {object} message
+       * @param {object} jqTarget
        * @private
        */
       function _onStarRequestError(msg, message, jqTarget) {
         message.isStarred = !message.isStarred;
-        _refreshStar(msg, message, jqTarget);
+        _refreshStar(msg.id, message.isStarred, jqTarget);
 
         Dialog.error({
           title: $filter('translate')('@star-forbidden')
@@ -528,68 +431,28 @@
       }
 
       /**
-       * socket 에서 starred 이벤트 발생시
-       * @param {Object} event - angular 이벤트
-       * @param {Object} param
-       *     @param {Number|String} param.teamId - team id
-       *     @param {Number|String} param.messageId - message id
-       * @private
-       */
-      function _onStarred(event, param) {
-        if (_teamId.toString() === param.teamId.toString()) {
-          _setStarred(param.messageId, true);
-        }
-      }
-
-      /**
-       * socket 에서 un-starred 이벤트 발생시 이벤트 핸들러
-       * @param {Object} event - angular 이벤트
-       * @param {Object} param
-       *     @param {Number|String} param.teamId - team id
-       *     @param {Number|String} param.messageId - message id
-       * @private
-       */
-      function _onUnStarred(event, param) {
-        if (_teamId.toString() === param.teamId.toString()) {
-          _setStarred(param.messageId, false);
-        }
-      }
-
-      /**
-       * set starred
-       * @param {number|string} messageId
+       * star 정보를 refresh 한다.
+       * @param {object} angularEvent
+       * @param {number} linkId
+       * @param {number} messageId
        * @param {boolean} isStarred
        * @private
        */
-      function _setStarred(messageId, isStarred) {
-        var messageCollection = MessageCacheCollection.getCurrent();
-        messageCollection.forEach(function(msg) {
-          var message;
-
-          if (msg.feedbackId === messageId) {
-            message = RendererUtil.getFeedbackMessage(msg);
-
-            message.isStarred = isStarred;
-            _refreshStar(msg, message, '._star-' + msg.feedbackId);
-          } else if (msg.message.id === messageId) {
-            message = msg.message;
-
-            message.isStarred = isStarred;
-            _refreshStar(msg, message, '._star-' + msg.message.id);
-          }
-        });
+      function _onRefreshStar(angularEvent, linkId, messageId, isStarred) {
+        _refreshStar(linkId, isStarred, '._star-' + messageId);
       }
 
       /**
        * star 의 상태를 변경한다.
-       * @param {object} message
-       * @param {string|object} jqTarget
+       * @param {number} linkId
+       * @param {boolean} isStarred
+       * @param {object|string} jqTarget - target 또는 셀렉터
        * @private
        */
-      function _refreshStar(msg, message, jqTarget) {
-        jqTarget = $('#' + msg.id).find(jqTarget || '._star');
+      function _refreshStar(linkId, isStarred, jqTarget) {
+        jqTarget = $('#' + linkId).find(jqTarget || '._star');
         if (jqTarget.length) {
-          if (message.isStarred) {
+          if (isStarred) {
             jqTarget.removeClass('off').addClass('on');
             jqTarget.find('i').removeClass('icon-star-off').addClass('icon-star-on');
           } else {
@@ -921,43 +784,25 @@
       }
 
       /**
-       * created file comment
+       * comment count refresh 이벤트 핸들러
        * @param {object} angularEvent
-       * @param {object} data
+       * @param {number} messageId - fileId 혹은 pollId
+       * @param {number} commentCount
        * @private
        */
-      function _onFileCommentCreated(angularEvent, data) {
-        _updateFileComment(data);
+      function _onRefreshCommentCount(angularEvent, messageId, commentCount) {
+        _refreshCommentCount(messageId, commentCount);
       }
 
+      
       /**
-       * deleted file comment
-       * @param {object} angularEvent
-       * @param {object} data
+       * comment count 를 갱신한다.
+       * @param {number} messageId
+       * @param {number} commentCount
        * @private
        */
-      function _onFileCommentDeleted(angularEvent, data) {
-        _updateFileComment(data);
-      }
-
-      /**
-       * comment count update handler
-       * @param data
-       * @private
-       */
-      function _updateFileComment(data) {
-        var fileId = data.file.id;
-        var commentCount = data.file.commentCount;
-        var message;
-        var messageCollection = MessageCacheCollection.getCurrent();
-        
-        _.forEach(messageCollection.list, function(msg) {
-          message = RendererUtil.getFeedbackMessage(msg);
-          if (message.id === fileId) {
-            message.commentCount = commentCount;
-          }
-        });
-        $('.comment-count-' + data.file.id).text(commentCount);
+      function _refreshCommentCount(messageId, commentCount) {
+        $('.comment-count-' + messageId).text(commentCount);
       }
     }
   }

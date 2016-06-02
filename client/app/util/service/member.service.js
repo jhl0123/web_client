@@ -557,29 +557,27 @@
 
     /**
      * 맵에 entityId - lastLinkId pair를 추가한다.
-     * @param {number} entityId - entity의 id
+     * @param {number} roomId - room 의 id. (memberId 를 넣으면 오류 발생)
      * @param {number} lastLinkId - 해당하는 entity의 유져가 가지고 있는 link의 id
      */
-    function setLastReadMessageMarker(entityId, lastLinkId) {
-      lastMessageReadMarkerMap[entityId] = lastLinkId;
+    function setLastReadMessageMarker(roomId, lastLinkId) {
+      if (EntityFilterMember.isExist(roomId)) {
+        throw new Error('memberService.setLastReadMessageMarker - memberId isn\'t allowed');
+      } else {
+        lastMessageReadMarkerMap[roomId] = lastLinkId;
+      }
     }
 
     /**
      * entityId에 해당하는 lastLinkId를 리턴한다.
-     * @param {number} entityId - 찾고싶은 entity의 id
-     * @returns {nubmer} - lastLinkId
+     * @param {number} roomId - 찾고싶은 room 의 id
      */
-    function getLastReadMessageMarker(entityId) {
-      var jandiBot = BotList.getJandiBot();
-
-      // initLastReadMessageMarker를 통해 전달되는 markers의 DM data중 user들은 memberId로 전달되고, jandi bot은 roomId로
-      // 전달되기 때문에 getLastReadMessageMarker에 전달된 entityId(memberId)값이 jandi bot일 경우에는 roomId로 변환하여
-      // lastMessageReadMarkerMap에 할당된 값을 전달하여야 한다.
-      if (jandiBot && jandiBot.id == entityId) {
-        entityId = jandiBot.entityId;
+    function getLastReadMessageMarker(roomId) {
+      if (EntityFilterMember.isExist(roomId)) {
+        throw new Error('memberService.setLastReadMessageMarker - memberId isn\'t allowed');
+      } else {
+        return CoreUtil.pick(lastMessageReadMarkerMap, roomId);
       }
-
-      return CoreUtil.pick(lastMessageReadMarkerMap, entityId);
     }
 
     /**
