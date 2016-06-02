@@ -9,10 +9,12 @@
 
 .comment-item {
   position: relative;
-  padding: 16px 12px 12px 58px;
+  margin-bottom: 12px;
+  padding: 16px 12px 0 58px;
   font-size: 14px;
   color: #333;
   border: 1px solid #e4e8eb;
+  border-bottom: 0;
   border-width: 1px 0;
   margin-top: -1px;
 }
@@ -91,7 +93,7 @@
 
 .comment-profile {
   display: inline-block;
-  max-width: calc(100% - 24px);
+  max-width: calc(100% - 40px);
 }
 
 .comment-item-body {

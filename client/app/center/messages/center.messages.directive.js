@@ -296,6 +296,22 @@
        * @private
        */
       function _onClickCommentDelete(clickEvent, data) {
+        Dialog.confirm({
+          body: $filter('translate')('@web-notification-body-messages-confirm-delete'),
+          onClose: function (result) {
+            if (result === 'okay') {
+              _deleteComment(data);
+            }
+          }
+        });
+      }
+
+      /**
+       * delete comment
+       * @param {object} data
+       * @private
+       */
+      function _deleteComment(data) {
         var file = RendererUtil.getFeedbackMessage(data.msg);
         var comment = data.msg.message;
         var messageCollection = MessageCacheCollection.getCurrent();

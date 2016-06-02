@@ -88,7 +88,7 @@ article {
   margin: 1rem 0 0;
 }
 .msgs-holder {
-  padding-bottom: 0;
+  padding-bottom: 8px;
 }
 
 .msg-header {

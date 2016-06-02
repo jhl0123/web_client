@@ -152,9 +152,25 @@
 
       /**
        * comment 를 삭제한다.
-       * @param {number} commentId 코멘트 ID
+       * @param {object} comment
        */
       function deleteComment(comment) {
+        Dialog.confirm({
+          body: $filter('translate')('@web-notification-body-messages-confirm-delete'),
+          onClose: function (result) {
+            if (result === 'okay') {
+              _deleteComment(comment);
+            }
+          }
+        });
+      }
+
+      /**
+       * comment 를 삭제한다.
+       * @param {object} comment
+       * @private
+       */
+      function _deleteComment(comment) {
         var commentId = comment.id;
         var isSticker = comment.extIsSticker;
 

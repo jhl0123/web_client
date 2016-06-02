@@ -9,8 +9,14 @@
 }
 .rpanel-body .advanced-search-option__category .custom-select-box-btn:hover {
   background-color: #F1F4F8;
+  border-color: rgba(5,35,60,0.2);
 }
-
+.rpanel-body .advanced-search-option__category .custom-select-box-btn:active,
+.rpanel-body .advanced-search-option__category .custom-select-box-btn:focus,
+.rpanel-body .advanced-search-option__category .custom-select-box-btn.active {
+  background-color: #E6E9EB;
+  border-color: rgba(5,35,60,0.23);
+}
 .modal-dialog .add-on-left,
 .rpanel-search .add-on-left,
 .tab-content .add-on-left {
