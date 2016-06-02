@@ -1289,6 +1289,8 @@
     function _onBeforeRightPanelOpen($event, isOpen) {
       if (isOpen && $scope.isInitializeRender && _isBottomReached()) {
         _wasBottomReached = true;
+      } else {
+        _wasBottomReached = false;
       }
     }
 
