@@ -58,9 +58,9 @@
       _resetLocalVariables();
 
       Dialog.confirm({
-        body: $filter('translate')('@web-notification-body-messages-confirm-delete'),
-        onClose: function(result) {
-          if (result === 'okay') {
+            body: $filter('translate')('@web-notification-body-messages-confirm-delete'),
+            onClose: function(result) {
+              if (result === 'okay') {
             if ($scope.msg.status === 'sending' || $scope.msg.status === 'failed') {
               MessageSendingCollection.remove($scope.msg);
             } else {
