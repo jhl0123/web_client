@@ -58,7 +58,7 @@
 
       return {
         name: data.extEncodedName,
-        createTime: $filter('getyyyyMMddformat')(data.ch_createTime),
+        createTime: $filter('getyyyyMMddformat')(createTime),
         topicDescription: data.description,
         creatorName: $filter('getName')(creatorId),
         userCount: RoomTopicList.getUserLength(data.id),

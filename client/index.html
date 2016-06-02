@@ -100,8 +100,6 @@
   <link rel="stylesheet" href="app/modal/files/upload/upload.css">
   <link rel="stylesheet" href="app/modal/fullscreen.modal.css">
   <link rel="stylesheet" href="app/modal/images/carousel/image.carousel.css">
-  <link rel="stylesheet" href="app/modal/lists/services/renderers/templates/modal.member.list.item.css">
-  <link rel="stylesheet" href="app/modal/lists/services/renderers/templates/modal.room.list.item.css">
   <link rel="stylesheet" href="app/modal/members/bot-profile/bot.profile.css">
   <link rel="stylesheet" href="app/modal/members/expanding-input/expanding.input.css">
   <link rel="stylesheet" href="app/modal/members/member.profile.css">
@@ -168,6 +166,9 @@
   <link rel="stylesheet" href="app/util/directive/loading/initial/loading-initial.css">
   <link rel="stylesheet" href="app/util/directive/pdf-viewer/jnd.pdf.viewer.css">
   <link rel="stylesheet" href="app/util/directive/switch-button/switch.button.css">
+  <link rel="stylesheet" href="app/util/dynamic-render/services/renderers/templates/mention.list.item.css">
+  <link rel="stylesheet" href="app/util/dynamic-render/services/renderers/templates/modal.member.list.item.css">
+  <link rel="stylesheet" href="app/util/dynamic-render/services/renderers/templates/modal.room.list.item.css">
   <link rel="stylesheet" href="assets/components/google-code-prettify/prettify.css">
   <link rel="stylesheet" href="assets/components/pdfjs/pdf_viewer.css">
   <link rel="stylesheet" href="components/app/mention_ahead/mention.ahead.css">
@@ -451,13 +452,6 @@
 <script src="app/modal/images/carousel/image.carousel.directive.js"></script>
 <script src="app/modal/images/carousel/image.carousel.item.directive.js"></script>
 <script src="app/modal/images/carousel/image.carousel.service.js"></script>
-<script src="app/modal/lists/list.directive.js"></script>
-<script src="app/modal/lists/list.viewport.service.js"></script>
-<script src="app/modal/lists/services/item.renderer.factory.service.js"></script>
-<script src="app/modal/lists/services/list.renderer.service.js"></script>
-<script src="app/modal/lists/services/renderers/member.item.renderer.service.js"></script>
-<script src="app/modal/lists/services/renderers/room.item.renderer.service.js"></script>
-<script src="app/modal/lists/services/renderers/topic.item.renderer.service.js"></script>
 <script src="app/modal/members/member.profile.service.js"></script>
 <script src="app/modal/members/bot-profile/bot.profile.controller.js"></script>
 <script src="app/modal/members/bot-profile/bot.profile.directive.js"></script>
@@ -574,6 +568,16 @@
 <script src="app/util/directive/pdf-viewer/jnd.pdf.viewer.directive.js"></script>
 <script src="app/util/directive/pdf-viewer/jnd.pdf.viewer.service.js"></script>
 <script src="app/util/directive/switch-button/switch.button.directive.js"></script>
+<script src="app/util/dynamic-render/dynamic.render.list.directive.js"></script>
+<script src="app/util/dynamic-render/dynamic.render.viewport.controller.js"></script>
+<script src="app/util/dynamic-render/dynamic.render.viewport.directive.js"></script>
+<script src="app/util/dynamic-render/dynamic.render.viewport.service.js"></script>
+<script src="app/util/dynamic-render/services/item.renderer.factory.service.js"></script>
+<script src="app/util/dynamic-render/services/list.renderer.service.js"></script>
+<script src="app/util/dynamic-render/services/renderers/member.item.renderer.service.js"></script>
+<script src="app/util/dynamic-render/services/renderers/mention.item.renderer.service.js"></script>
+<script src="app/util/dynamic-render/services/renderers/room.item.renderer.service.js"></script>
+<script src="app/util/dynamic-render/services/renderers/topic.item.renderer.service.js"></script>
 <script src="app/util/filter/camel.to.dot.js"></script>
 <script src="app/util/filter/date.filter.js"></script>
 <script src="app/util/filter/entity.search.filter.js"></script>

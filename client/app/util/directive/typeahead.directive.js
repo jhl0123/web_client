@@ -79,6 +79,7 @@ app.directive('jandiTypeahead', ['$compile', '$parse', '$q', '$timeout', '$docum
           query: 'query',
           position: 'position'
         });
+
         //custom item template
         if (angular.isDefined(attrs.jandiTypeaheadTemplateUrl)) {
           popUpEl.attr('template-url', attrs.jandiTypeaheadTemplateUrl);
@@ -377,7 +378,7 @@ app.directive('jandiTypeahead', ['$compile', '$parse', '$q', '$timeout', '$docum
       }
     };
   }).
-  directive('jandiMentionaheadPopup', function ($position) {
+  directive('jandiMentionaheadPopup', function (JndUtil) {
     return {
       restrict:'EA',
       scope:{
@@ -389,58 +390,61 @@ app.directive('jandiTypeahead', ['$compile', '$parse', '$q', '$timeout', '$docum
       },
       replace:true,
       templateUrl:'components/app/mention_ahead/mention.ahead.html',
-      link:function (scope, element, attrs) {
-        var $parent = scope.$parent;
-        var originSelectActive = $parent.selectActive;
-        var prevMousePoint;
+      link:function (scope, el, attrs) {
+        var _$parent = scope.$parent;
+        var _originSelectActive = _$parent.selectActive;
 
-        $parent.selectActive = function (matchIdx) {
-          var jqMentionItem;
-          var itemPosition;
-          var contPosition;
-          var scrollTop;
-          var compare;
+        var jqMentionMembers = el.find('.mention-members');
 
-          jqMentionItem = element.children().eq(matchIdx);
-          scrollTop = element.scrollTop();
-
-          itemPosition = $position.offset(jqMentionItem);
-          contPosition = $position.offset(element);
-
-          compare = itemPosition.top - contPosition.top;
-          if (compare < 0) {
-            element.scrollTop(scrollTop + compare);
-          } else if ( compare + itemPosition.height > contPosition.height ) {
-            element.scrollTop(scrollTop + compare - contPosition.height + itemPosition.height);
-          }
-
-          originSelectActive.call($parent, matchIdx);
-        };
-
+        scope.isOpen = isOpen;
         scope.templateUrl = attrs.templateUrl;
 
-        scope.isOpen = function () {
-          return scope.matches.length > 0;
-        };
+        _init();
 
-        scope.isActive = function (matchIdx) {
-          return scope.active == matchIdx;
-        };
+        /**
+         * init
+         * @private
+         */
+        function _init() {
+          // parent selectActive override
+          _$parent.selectActive = function (matchIdx) {
+            _$parent.setActiveIndex(matchIdx);
+            _$parent.setActiveClass();
 
-        scope.selectActive = function(matchIdx, $event) {
-          if (!prevMousePoint || prevMousePoint.x != $event.clientX && prevMousePoint.y != $event.clientY) {
-            // 화면에서 mouse point가 움직였을때만 'mouseenter' event로 activeIdx 변경
-            $parent.selectActive(matchIdx);
-          }
-          prevMousePoint = {
-            x: $event.clientX,
-            y: $event.clientY
+            _originSelectActive.call(_$parent, matchIdx);
           };
-        };
 
-        scope.selectMatch = function (activeIdx) {
-          scope.select({activeIdx:activeIdx});
-        };
+          _attachDomEvents();
+        }
+
+        /**
+         * attach dom events
+         * @private
+         */
+        function _attachDomEvents() {
+          jqMentionMembers.on('mousedown', '.mention-item', _onMentionItemClick);
+        }
+
+        /**
+         * mention item click
+         * @param {object} $event
+         * @private
+         */
+        function _onMentionItemClick($event) {
+          var activeIdx = $($event.currentTarget).data('viewport-index');
+
+          JndUtil.safeApply(scope, function() {
+            scope.select({activeIdx:activeIdx});
+          });
+        }
+
+        /**
+         * mention open 여부
+         * @returns {boolean}
+         */
+        function isOpen() {
+          return scope.matches.length > 0;
+        }
       }
     };
   });
