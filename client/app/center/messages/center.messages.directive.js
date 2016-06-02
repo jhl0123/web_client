@@ -348,9 +348,9 @@
        * @private
        */
       function _attachClickEvent(event, eventName) {
-        var messageCollection = MessageCacheCollection.getCurrent();
         _.each(event, function(delegate) {
           el.on(eventName, delegate.currentTarget, function(clickEvent) {
+            var messageCollection = MessageCacheCollection.getCurrent();
             var jqTarget = $(clickEvent.target);
             var jqMessage = jqTarget.closest('.message');
             var id = jqMessage.attr('id');
