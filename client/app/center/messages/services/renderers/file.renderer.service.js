@@ -9,9 +9,8 @@
     .service('FileRenderer', FileRenderer);
 
   /* @ngInject */
-  function FileRenderer($filter, modalHelper, MessageCollection, RendererUtil, JndPdfViewer,
-                        FileDetail, fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper,
-                        publicService) {
+  function FileRenderer($filter, modalHelper, MessageCacheCollection, RendererUtil, JndPdfViewer, FileDetail, 
+                        fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper, publicService) {
     var messageHeightMap = {};
     var _template = '';
 
@@ -184,7 +183,8 @@
      * @returns {*}
      */
     function render(index) {
-      var msg = MessageCollection.list[index];
+      var messageCollection = MessageCacheCollection.getCurrent();
+      var msg = messageCollection.list[index];
       var content = msg.message.content;
       var icon = $filter('fileIcon')(content);
       var isArchived = (msg.message.status === 'archived');

@@ -8,7 +8,7 @@
     .module('jandiApp')
     .controller('RightFilesCtrl', RightFilesCtrl);
 
-  function RightFilesCtrl($scope, $filter, $q, $state, $timeout, AnalyticsHelper, analyticsService, CoreUtil,
+  function RightFilesCtrl($scope, $filter, $q, $state, $timeout, AnalyticsHelper, analyticsService, RightPanel,
                           currentSessionHelper, Dialog, EntityHandler, fileAPIservice, FileDetail, JndUtil, modalHelper,
                           publicService, RoomTopicList, TopicFolderModel, UserList) {
     var _disabledMemberAddedOnSharedIn = false;
@@ -222,6 +222,9 @@
           _refreshFileList();
         }
         _setKeywordFocus();
+
+        // render 후 pub
+        $timeout(RightPanel.pubRendered);
       }
     }
 

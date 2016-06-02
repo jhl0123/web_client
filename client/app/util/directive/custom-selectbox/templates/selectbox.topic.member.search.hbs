@@ -1,0 +1,14 @@
+<li class="topic-title menu-item _selectable {{extCss.li}}">
+  <img class="header-title-member__dropdown__thumb" src="{{extThumbnail}}">
+  <a>
+    <span>{{{extSearchName}}}</span>
+  </a>
+  {{#if isKickedOutEnable}}
+    <span class="kick-item-icon pull-right _kickout">
+    <i class="icon-sign-out"></i>
+    </span>
+  {{/if}}
+  {{#if isTopicAdmin}}
+    <span class="member-auth-label">{{text.topicAdmin}}</span>
+  {{/if}}
+</li>

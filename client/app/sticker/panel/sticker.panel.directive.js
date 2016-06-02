@@ -86,7 +86,7 @@
 
           // close sticker
           scope.$apply(function() {
-            scope.status.isOpen = false;
+            scope.stickerStatus.isOpen = false;
           });
         }
       }

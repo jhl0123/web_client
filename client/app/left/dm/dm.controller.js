@@ -6,12 +6,12 @@
 
   angular
     .module('jandiApp')
-    .controller('messageListCtrl', messageListCtrl);
+    .controller('DmCtrl', DmCtrl);
 
   /* @ngInject */
-  function messageListCtrl($scope, $timeout, storageAPIservice, messageList, entityAPIservice, currentSessionHelper,
+  function DmCtrl($scope, $timeout, storageAPIservice, DmApi, entityAPIservice, currentSessionHelper,
                            publicService, $filter, modalHelper, jndPubSub, Dialog, JndUtil, centerService,
-                           EntityHandler) {
+                           EntityHandler, MessageCacheCollection, DmHandler) {
     // okay - okay to go!
     // loading - currently loading.
     // failed - failed to retrieve list from server.
@@ -45,7 +45,7 @@
       $scope.$on('updateBadgePosition', _setTotalAlarmCnt);
       $scope.$on('updateChatList', getMessageList);
       $scope.$watch('isMessageListCollapsed', _onCollapseStatusChanged);
-      getMessageList();
+      _parseDm();
     }
 
     function openTeamMemberListModal() {
@@ -62,22 +62,47 @@
 
     function getMessageList() {
       if ($scope.messageListLoadingStatus == 'loading') return;
-
       $scope.messageListLoadingStatus = 'loading';
-
-      messageList.getRecentMessageList()
-        .success(function(response) {
-          $scope.messageList = _generateMessageList(response);
-          $scope.messageListLoadingStatus = 'okay';
-          publicService.setInitDone();
-        })
-        .error(function(err) {
-          $scope.messageListLoadingStatus = 'failed';
-        })
-        .finally(function() {
-        });
+      DmHandler.getRecentList().then(_onSuccessGetRecentList, _onErrorGetRecentList);
     }
 
+    /**
+     * 최신 대화 목록 조회 성공 콜백
+     * @private
+     */
+    function _onSuccessGetRecentList() {
+      $scope.messageListLoadingStatus = 'okay';
+      _parseDm();
+    }
+
+    /**
+     * 최신 대화 목록 조회 실패 콜백
+     * @private
+     */
+    function _onErrorGetRecentList() {
+      $scope.messageListLoadingStatus = 'failed';
+    }
+
+    /**
+     * Dm.list 의 데이터를 파싱하여 컨트롤러에서 필요한 배열을 생성한다.
+     * @private
+     */
+    function _parseDm() {
+      var room;
+      $scope.messageList = [];
+      _.forEach(DmHandler.list, function(chat) {
+        room = EntityHandler.get(chat.companionId);
+        if (!_.isUndefined(room)) {
+          //현재 activate DM 이 아닌곳에 한해서 unread count 를 업데이트 한다.
+          if (!_isActiveCurrentDm(room)) {
+            entityAPIservice.updateBadgeValue(room, chat.unread);
+          }
+          $scope.messageList.push(room);
+        }
+      });
+      _setTotalAlarmCnt();
+    }
+    
     /**
      * message header 클릭 이벤트
      */
@@ -123,29 +148,6 @@
       return totalCnt;
     }
 
-    function _generateMessageList(messages) {
-      EntityHandler.parseChatRoomLists(messages);
-
-      var messageList = [];
-
-      messages = _.uniq(messages, 'entityId');
-
-      _.each(messages, function(message) {
-
-        var entity = EntityHandler.get(message.companionId);
-
-        if (!angular.isUndefined(entity)) {
-          //현재 activate DM 이 아닌곳에 한해서 unread count 를 업데이트 한다.
-          if (!_isActiveCurrentDm(entity)) {
-            entityAPIservice.updateBadgeValue(entity, message.unread);
-          }
-          messageList.push(entity);
-        }
-      });
-      _setTotalAlarmCnt();
-      return messageList;
-    }
-
     /**
      * 현재 active 상태인 DM 인지 여부를 확인한다.
      * @returns {*|Object|boolean}
@@ -164,7 +166,7 @@
         body: $filter('translate')('@common-conversation-leave-confirm'),
         onClose: function(result) {
            if (result === 'okay') {
-             messageList.leaveCurrentMessage(entityId)
+             DmApi.leaveCurrentMessage(entityId)
                .success(function(response) {
                  //if (entityId == $scope.currentEntity.id) {
                  if (entityId == currentSessionHelper.getCurrentEntity().id) {

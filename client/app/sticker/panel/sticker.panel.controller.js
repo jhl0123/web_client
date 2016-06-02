@@ -9,7 +9,7 @@
     .module('jandiApp')
     .controller('StickerPanelCtrl', StickerPanelCtrl);
 
-  function StickerPanelCtrl($scope, $attrs, jndPubSub, Sticker, JndUtil) {
+  function StickerPanelCtrl($scope, $attrs, jndPubSub, Sticker, JndUtil, AccountHasSeen) {
     var _groups;
 
     var MAX_COLUMN = parseInt($attrs.maxColumns, 10);
@@ -25,7 +25,7 @@
      */
     function _init() {
       $scope.name = $attrs.name;
-      $scope.status = {
+      $scope.stickerStatus = {
         isOpen: false
       };
 
@@ -80,7 +80,7 @@
      */
     function _onToggleSticker() {
       JndUtil.safeApply($scope, function() {
-        $scope.status.isOpen = !$scope.status.isOpen;
+        $scope.stickerStatus.isOpen = !$scope.stickerStatus.isOpen;
       });
     }
 
@@ -90,7 +90,7 @@
      */
     function _onModalOpened() {
       JndUtil.safeApply($scope, function() {
-        $scope.status.isOpen = false;
+        $scope.stickerStatus.isOpen = false;
       });
     }
 
@@ -117,7 +117,7 @@
 
       if (item) {
         JndUtil.safeApply($scope, function() {
-          $scope.status.isOpen = false;
+          $scope.stickerStatus.isOpen = false;
 
           jndPubSub.pub('selectSticker:' + $scope.name, item);
         });
@@ -163,6 +163,12 @@
      */
     function _setStickers(group, stickers, isForward) {
       JndUtil.safeApply($scope, function() {
+        //dingo 스티커에 대해 isNew 제거 처리
+        //TODO: Dingo 스티커에 대한 new 아이콘 제거시 아래 로직 제거해야 함.
+        if (group.id === 103) {
+          AccountHasSeen.set('STICKER_DINGO', true);
+          group.isNew =false;
+        }
         $scope.list = stickers;
       });
 

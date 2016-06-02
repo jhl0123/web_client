@@ -3,17 +3,17 @@
 
   angular
     .module('jandiApp')
-    .directive('messages', messages);
+    .directive('dmList', dmList);
 
-  function messages() {
+  function dmList() {
     return {
       restrict: 'EA',
       scope: true,
       link: link,
       transclude: true,
       replace: true,
-      templateUrl: 'app/left/messages/messages.html',
-      controller: 'messageListCtrl'
+      templateUrl: 'app/left/dm/dm.list.html',
+      controller: 'DmCtrl'
     };
 
     function link(scope, el, attrs) {

@@ -14,7 +14,7 @@
     .directive('downloadTracker', downloadTracker);
 
   /* @ngInject */
-  function downloadTracker(GAHelper, AnalyticsHelper){
+  function downloadTracker(GAHelper, AnalyticsHelper, CoreUtil){
     return {
       restrict: 'A',
       link: linkFunc
@@ -26,7 +26,7 @@
       var fileId;
 
       scope.track = function(fileInfo) {
-        fileId = fileInfo.id;
+        fileId = CoreUtil.pick(fileInfo, 'id');
       };
 
       element.on('click', function() {

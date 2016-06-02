@@ -41,8 +41,8 @@
   <link rel="stylesheet" href="app/app.css">
   <link rel="stylesheet" href="app/banner/desktop.notification.banner.css">
   <link rel="stylesheet" href="app/center/announcement/announcement.css">
-  <link rel="stylesheet" href="app/center/center.css">
   <link rel="stylesheet" href="app/center/center.dragndrop.css">
+  <link rel="stylesheet" href="app/center/center.panel.css">
   <link rel="stylesheet" href="app/center/center.self.css">
   <link rel="stylesheet" href="app/center/help_messages/help.messages.css">
   <link rel="stylesheet" href="app/center/messages/services/renderers/templates/center.comment.css">
@@ -92,9 +92,9 @@
   <link rel="stylesheet" href="app/disconnect/disconnect.css">
   <link rel="stylesheet" href="app/external-file/external.file.css">
   <link rel="stylesheet" href="app/header/header.css">
+  <link rel="stylesheet" href="app/left/dm/dm.css">
   <link rel="stylesheet" href="app/left/left.css">
   <link rel="stylesheet" href="app/left/member/member.css">
-  <link rel="stylesheet" href="app/left/messages/messages.css">
   <link rel="stylesheet" href="app/left/team-switch/left.team.switch.css">
   <link rel="stylesheet" href="app/left/topics/dropdown/left.folder.dropdown.layer.css">
   <link rel="stylesheet" href="app/left/topics/folder/topic.folder.css">
@@ -322,9 +322,10 @@
 <script src="app/banner/desktop.notification.banner.controller.js"></script>
 <script src="app/banner/desktop.notification.banner.directive.js"></script>
 <script src="app/banner/desktop.notification.banner.service.js"></script>
-<script src="app/center/center.controller.js"></script>
-<script src="app/center/center.directive.js"></script>
-<script src="app/center/center.event.handler.js"></script>
+<script src="app/center/center.event.handler.directive.js"></script>
+<script src="app/center/center.panel.controller.js"></script>
+<script src="app/center/center.panel.directive.js"></script>
+<script src="app/center/center.scroll.directive.js"></script>
 <script src="app/center/announcement/announcement.controller.js"></script>
 <script src="app/center/announcement/announcement.data.service.js"></script>
 <script src="app/center/announcement/announcement.directive.js"></script>
@@ -346,6 +347,7 @@
 <script src="app/center/services/marker.service.js"></script>
 <script src="app/center/services/message.query.service.js"></script>
 <script src="app/center/services/message.service.js"></script>
+<script src="app/center/services/message/message.cache.collection.service.js"></script>
 <script src="app/center/services/message/message.collection.service.js"></script>
 <script src="app/center/services/message/message.comment.service.js"></script>
 <script src="app/center/services/message/message.file.service.js"></script>
@@ -426,11 +428,12 @@
 <script src="app/left/left.controller.js"></script>
 <script src="app/left/left.service.js"></script>
 <script src="app/left/badge/badge.directive.js"></script>
+<script src="app/left/dm/dm.api.service.js"></script>
+<script src="app/left/dm/dm.controller.js"></script>
+<script src="app/left/dm/dm.handler.service.js"></script>
+<script src="app/left/dm/dm.list.directive.js"></script>
 <script src="app/left/member/member.controller.js"></script>
 <script src="app/left/member/user.directive.js"></script>
-<script src="app/left/messages/messages.controller.js"></script>
-<script src="app/left/messages/messages.directive.js"></script>
-<script src="app/left/messages/messages.service.js"></script>
 <script src="app/left/team-switch/left.team.switch.controller.js"></script>
 <script src="app/left/team-switch/left.team.switch.directive.js"></script>
 <script src="app/left/topics/topics.controller.js"></script>
@@ -567,6 +570,7 @@
 <script src="app/util/directive/custom-selectbox/jnd.selectbox.file.directive.js"></script>
 <script src="app/util/directive/custom-selectbox/jnd.selectbox.member.directive.js"></script>
 <script src="app/util/directive/custom-selectbox/jnd.selectbox.member.service.js"></script>
+<script src="app/util/directive/custom-selectbox/jnd.selectbox.repeat.directive.js"></script>
 <script src="app/util/directive/custom-selectbox/jnd.selectbox.room.directive.js"></script>
 <script src="app/util/directive/custom-selectbox/jnd.selectbox.topic.member.directive.js"></script>
 <script src="app/util/directive/dropdown-position/dropdown.position.directive.js"></script>

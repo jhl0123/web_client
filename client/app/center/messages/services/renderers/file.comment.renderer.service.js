@@ -9,19 +9,12 @@
     .service('FileCommentRenderer', FileCommentRenderer);
 
   /* @ngInject */
-  function FileCommentRenderer($filter, MessageCollection, RendererUtil, publicService, memberService, FileDetail) {
+  function FileCommentRenderer($filter, MessageCacheCollection, RendererUtil, publicService, memberService, CoreUtil,
+                               FileDetail) {
     var _templateTitle = '';
     var _template = '';
 
     this.render = render;
-
-    /**
-     * center 에서 delegate 하여 처리할 핸들러를 정의한다.
-     * @type {{click: _onClick}}
-     */
-    this.delegateHandler = {
-      'click': _onClick
-    };
 
     _init();
 
@@ -33,19 +26,6 @@
       _templateTitle = Handlebars.templates['center.file.comment.title'];
       _template = Handlebars.templates['center.file.comment'];
     }
-
-    /**
-     * click 이벤트 핸들러
-     * @param {Object} clickEvent
-     * @private
-     */
-    function _onClick(clickEvent) {
-      var jqTarget = $(clickEvent.target);
-      var jqMessage = jqTarget.closest('.message');
-      var id = jqMessage.attr('id');
-      var msg = MessageCollection.get(id);
-
-    }
     
     /**
      * index 에 해당하는 메세지를 랜더링한다.
@@ -53,7 +33,8 @@
      * @returns {*}
      */
     function render(index) {
-      var msg = MessageCollection.list[index];
+      var messageCollection = MessageCacheCollection.getCurrent();
+      var msg = messageCollection.list[index];
       var content = msg.feedback.content;
 
       var icon = $filter('fileIcon')(content);
@@ -63,10 +44,10 @@
 
       var hasPermission = publicService.hasFilePermission(msg, true);
 
-      var isTitle = MessageCollection.isTitleComment(index);
-      var isChild = MessageCollection.isChildComment(index);
-      var isFirst = MessageCollection.isFirstComment(index);
-      var isLast = MessageCollection.isLastComment(index);
+      var isTitle = messageCollection.isTitleComment(index);
+      var isChild = messageCollection.isChildComment(index);
+      var isFirst = messageCollection.isFirstComment(index);
+      var isLast = messageCollection.isLastComment(index);
 
       var template = isTitle ? _templateTitle : _template;
 
@@ -114,7 +95,7 @@
         hasStar: RendererUtil.hasStar(msg),
         isSticker: RendererUtil.isSticker(msg),
         isChild: isChild,
-        hasChild: MessageCollection.hasChildComment(index),
+        hasChild: messageCollection.hasChildComment(index),
         isTitle: isTitle,
         isFirst: isFirst,
         isLast: isLast,

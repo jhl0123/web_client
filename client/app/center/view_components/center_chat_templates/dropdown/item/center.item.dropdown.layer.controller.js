@@ -62,7 +62,6 @@
         onClose: function(result) {
           if (result === 'okay') {
             if ($scope.msg.status === 'sending' || $scope.msg.status === 'failed') {
-              //MessageCollection.
               MessageSendingCollection.remove($scope.msg);
             } else {
               if ($scope.msg.message.contentType === 'sticker') {
@@ -81,7 +80,7 @@
 
                     try {
                       AnalyticsHelper.track(AnalyticsHelper.EVENT.MESSAGE_DELETE, {
-                        'MESSAGE_ID': message.messageId,
+                        'MESSAGE_ID': $scope.msg.messageId,
                         'RESPONSE_SUCCESS': true
                       });
                     } catch (e) {

@@ -1,7 +1,7 @@
-<div class="sticker_panel_wrap non-selectable" dropdown on-toggle="onToggled(open);" is-open="status.isOpen">
+<div class="sticker_panel_wrap non-selectable" dropdown on-toggle="onToggled(open);" is-open="stickerStatus.isOpen">
   <!-- 스티커 패널 오픈 버튼-->
   <a class="dropdown-toggle sticker_panel_btn cursor_pointer"
-          ng-class="{'on': status.isOpen}"
+          ng-class="{'on': stickerStatus.isOpen}"
           dropdown-toggle>
     <i class="icon-sticker"></i>
     <div class="lip"></div>
@@ -38,7 +38,11 @@
           <div class="sticker_panel_tab_item {{::group.className}}">
             <i ng-if="isRecentGroup($index)" class="icon-clock"></i>
           </div>
-          <span ng-if="group.isNew" class="new-sticker on">
+          <span class="new-sticker"
+                ng-class="{
+                   'on': stickerStatus.isOpen,
+                   'off': !group.isNew
+                  }">
             N
           </span>
         </li>

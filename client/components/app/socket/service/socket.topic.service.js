@@ -112,7 +112,7 @@
     }
 
     /**
-     * topic invited 이벤트 핸들러. 어느 사용자이건 topic 에 초대된 경우 발생한다.
+     * topic invited 이벤트 핸들러. 자기 자신이 topic 에 초대된 경우 발생한다.
      * @param {object} socketEvent
      * @private
      */
@@ -133,6 +133,8 @@
     /**
      * 'topic_left' EVENT HANDLER
      * 내가 토픽을 나갔을 때
+     * 
+     * TODO: 향후 v2 는 해당 토픽의 모든 멤버에게 이벤트를 발생하게 되므로, memberId 를 체크하는 로직 추가 필요. 
      * @param {object} socketEvent - socket event parameter
      * @private
      */
@@ -140,7 +142,7 @@
       _convertSocketEvent(socketEvent);
 
       var roomId = socketEvent.room.id;
-
+      
       if (jndWebSocketCommon.isCurrentEntity(socketEvent.room)) {
         jndPubSub.toDefaultTopic();
       }
@@ -152,7 +154,7 @@
 
     /**
      * 'topic_joined' EVENT HANDLER
-     * 내가 토픽에 join 했을 때
+     * 멤버가 토픽에 join 했을 때 방에 있는 모든 멤버에게 발생
      * @param {object} socketEvent - socket event object
      * @private
      */
@@ -162,13 +164,14 @@
       var user = socketEvent.member;
       var room = socketEvent.room;
 
-      //message 소켓 이벤트 중 messageType 이 topic_join인 소켓 이벤트 발생 시점에 join 한 member 정보가 없을 수 있기 때문에
-      //leftSideMenu request 실행 이전에 소켓 이벤트에 포함된 join 한 member 데이터 추가/업데이트를 먼저 수행한다.
-      if (!UserList.isExist(user.id)) {
-        UserList.add(user);
+      if (user.id === memberService.getMemberId()) {
+        RoomTopicList.join(room.id);
+      } else {
+        if (!UserList.isExist(user.id)) {
+          UserList.add(user);
+        }
       }
-      RoomTopicList.join(room.id);
-      
+      RoomTopicList.addMember(room.id, user.id);
       jndPubSub.onChangeShared(socketEvent);
     }
 
@@ -216,6 +219,7 @@
       var memberId = memberService.getMemberId();
       return room.members.indexOf(memberId) !== -1;
     }
+
     /**
      * 'topic_updated' EVENT HANDLER
      * @param {object} socketEvent - socket event parameter

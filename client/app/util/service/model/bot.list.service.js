@@ -52,7 +52,7 @@
        */
       isJandiBot: function(id) {
         var bot = this.get(id);
-        return CoreUtil.pick(bot, 'botType') === 'jandi_bot';
+        return (bot && bot.botType) === 'jandi_bot';
       },
 
       /**
@@ -62,7 +62,17 @@
        */
       isConnectBot: function(id) {
         var bot = this.get(id);
-        return CoreUtil.pick(bot, 'botType') === 'connect_bot';
+        return (bot && bot.botType) === 'connect_bot';
+      },
+      
+      /**
+       * id 에 해당하는 chatRoom id 를 반환한다.
+       * @param {number|string} id
+       * @returns {*}
+       */
+      getChatRoomId: function(id) {
+        var bot = this.get(id);
+        return bot && bot.entityId;
       }
     });
 

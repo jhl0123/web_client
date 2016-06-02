@@ -8,10 +8,10 @@
   angular
     .module('jandiApp')
     .directive('centerMessagesDirective', centerMessagesDirective);
-
-  function centerMessagesDirective($filter, $state, CenterRenderer, CenterRendererFactory, MessageCollection,
+  
+  function centerMessagesDirective($filter, $state, CenterRenderer, CenterRendererFactory, MessageCacheCollection,
                                    StarAPIService, jndPubSub, FileDetail, memberService, Dialog, currentSessionHelper,
-                                   EntityHandler, JndUtil, RendererUtil, fileAPIservice) {
+                                   EntityHandler, JndUtil, RendererUtil, fileAPIservice, CoreUtil) {
     return {
       restrict: 'E',
       replace: true,
@@ -75,14 +75,16 @@
        * @private
        */
       function _attachScopeEvents() {
-        scope.$on('messages:reset', _renderAll);
-        scope.$on('messages:append', _onAppend);
-        scope.$on('messages:prepend', _onPrepend);
-        scope.$on('messages:beforeRemove', _onBeforeRemove);
-        scope.$on('messages:remove', _onRemove);
-        scope.$on('messages:set', _renderAll);
-
-        scope.$on('messages:updateUnread', _onUpdateUnread);
+        scope.$on('MessageCollection:render', _renderAll);
+        scope.$on('MessageCollection:reset', _renderAll);
+        scope.$on('MessageCollection:append', _onAppend);
+        scope.$on('MessageCollection:prepend', _onPrepend);
+        scope.$on('MessageCollection:beforeRemove', _onBeforeRemove);
+        scope.$on('MessageCollection:remove', _onRemove);
+        scope.$on('MessageCollection:set', _renderAll);
+        scope.$on('MessageCollection:embed', _onEmbed);
+        
+        scope.$on('MessageCollection:updateUnread', _onUpdateUnread);
 
         scope.$on('message:starred', _onStarred);
         scope.$on('message:unStarred', _onUnStarred);
@@ -105,6 +107,7 @@
 
         scope.$on('jndWebSocketFile:commentCreated', _onFileCommentCreated);
         scope.$on('jndWebSocketFile:commentDeleted', _onFileCommentDeleted);
+        scope.$on('UserList:added', _onMemberAdded);
       }
 
       /**
@@ -136,6 +139,7 @@
        * @private
        */
       function _onFileShareStatusChange(angularEvent, data) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var entityIndex;
         var currentEntityId = currentSessionHelper.getCurrentEntityId(true);
         var eventType = data.event;
@@ -144,7 +148,7 @@
 
         _onFileUpdated(angularEvent, data.file)
           .error(function() {
-            _.forEach(MessageCollection.list, function(msg, index) {
+            _.forEach(messageCollection.list, function(msg, index) {
               if (msg.message.id === fileId) {
                 message = msg.message
               } else if ((msg.feedback && msg.feedback.id) === fileId) {
@@ -173,6 +177,7 @@
        * @private
        */
       function _onFileUpdated(angularEvent, file) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var fileId = file.id;
         return FileDetail.get(fileId)
           .success(function(response) {
@@ -184,7 +189,7 @@
                 shareEntities = _toEntityIdList(item.shareEntities);
               }
             });
-            _.forEach(MessageCollection.list, function(msg, index) {
+            _.forEach(messageCollection.list, function(msg, index) {
               message = RendererUtil.getFeedbackMessage(msg);
               if (message.id === fileId) {
                 message.shareEntities = shareEntities;
@@ -217,8 +222,9 @@
        * @private
        */
       function _onFileDeleted(angularEvent, param) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var deletedFileId = parseInt(param.file.id, 10);
-        _.forEach(MessageCollection.list, function(msg, index) {
+        _.forEach(messageCollection.list, function(msg, index) {
           if (msg.message.id === deletedFileId) {
             msg.message.status = 'archived';
             _refresh(msg.id, index);
@@ -264,12 +270,41 @@
         _refreshMsgByMemberId(id);
       }
 
+      /**
+       * 새로운 member 추가되었을 때 이벤트 핸들러
+       * 초대 메시지에 관해서만 refresh 한다.
+       * @param {object} angularEvent
+       * @param {object} member
+       * @private
+       */
+      function _onMemberAdded(angularEvent, member) {
+        var memberId = member.id;
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var list = messageCollection.list;
+        var info;
+        _.forEach(list, function(msg, index) {
+          if (msg.status === 'event') {
+            info = CoreUtil.pick(msg, 'info');
+            if (info && info.eventType === 'invite' && _.contains(info.inviteUsers, memberId)) {
+              messageCollection.manipulateMessage(msg);
+              _refresh(msg.id, index);
+            }
+          }
+        });
+      }
+
+      /**
+       * 인자로 받은 멤버가 작성한 메시지에 대해서만 refresh 한다.
+       * @param {number} id
+       * @private
+       */
       function _refreshMsgByMemberId(id) {
-        var list = MessageCollection.list;
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var list = messageCollection.list;
 
         _.forEach(list, function(msg, index) {
           if (msg.extFromEntityId === id) {
-            MessageCollection.manipulateMessage(msg);
+            messageCollection.manipulateMessage(msg);
             _refresh(msg.id, index);
           }
         });
@@ -315,10 +350,11 @@
       function _attachClickEvent(event, eventName) {
         _.each(event, function(delegate) {
           el.on(eventName, delegate.currentTarget, function(clickEvent) {
+            var messageCollection = MessageCacheCollection.getCurrent();
             var jqTarget = $(clickEvent.target);
             var jqMessage = jqTarget.closest('.message');
             var id = jqMessage.attr('id');
-            var msg = MessageCollection.get(id);
+            var msg = messageCollection.get(id);
 
             delegate.handler(clickEvent, {
               jqTarget: jqTarget,
@@ -361,9 +397,9 @@
       function _onClickCommentDelete(clickEvent, data) {
         var file = RendererUtil.getFeedbackMessage(data.msg);
         var comment = data.msg.message;
-
+        var messageCollection = MessageCacheCollection.getCurrent();
         // message collection에서 바로 삭제한다.
-        MessageCollection.remove(comment.id, true);
+        messageCollection.remove(comment.id, true);
 
         if (data.msg.message.contentType === 'comment_sticker') {
           FileDetail.deleteSticker(comment.id)
@@ -526,7 +562,8 @@
        * @private
        */
       function _setStarred(messageId, isStarred) {
-        MessageCollection.forEach(function(msg) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        messageCollection.forEach(function(msg) {
           var message;
 
           if (msg.feedbackId === messageId) {
@@ -610,9 +647,10 @@
        * @private
        */
       function _isDateRendered(id, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var jqTarget = $('#' + id);
         if (jqTarget.length) {
-          if (MessageCollection.isNewDate(index) && jqTarget.prev().attr('content-type') !== 'dateDivider') {
+          if (messageCollection.isNewDate(index) && jqTarget.prev().attr('content-type') !== 'dateDivider') {
             return false;
           }
         }
@@ -627,7 +665,8 @@
        */
       function _onPrepend(angularEvent, list) {
         var htmlList = [];
-        var headMsg = MessageCollection.list[list.length];
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var headMsg = messageCollection.list[list.length];
         _.forEach(list, function(message, index) {
           _pushMarkup(htmlList, message, index);
         });
@@ -648,7 +687,8 @@
        * @private
        */
       function _pushMarkup(htmlList, message, index) {
-        if (MessageCollection.isNewDate(index)) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        if (messageCollection.isNewDate(index)) {
           htmlList.push(CenterRenderer.render(index, 'dateDivider'));
         }
         htmlList.push(CenterRenderer.render(index));
@@ -667,7 +707,8 @@
       function _onAppend(angularEvent, list) {
         var length = list.length;
         var htmlList = [];
-        var index = MessageCollection.list.length - length;
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var index = messageCollection.list.length - length;
         var prevIndex;
         var prevMessage;
 
@@ -678,16 +719,40 @@
 
         // append 되는 메시지가 child text 또는 child comment이면
         // 이전 메시지의 뷰가 바뀌어야 한다(조건에 부합하는 이전 메시지는 메시지 작성 시간을 출력하지 않음).
-        if (MessageCollection.isChildText(MessageCollection.list.length - 1) ||
-          MessageCollection.isChildComment(MessageCollection.list.length - 1)) {
-          prevIndex = MessageCollection.list.length - 2;
-          prevMessage = MessageCollection.list[prevIndex];
+        if (messageCollection.isChildText(messageCollection.list.length - 1) ||
+          messageCollection.isChildComment(messageCollection.list.length - 1)) {
+          prevIndex = messageCollection.list.length - 2;
+          prevMessage = messageCollection.list[prevIndex];
           _refresh(prevMessage.id, prevIndex);
         }
 
         el.append(_getCompiledEl(htmlList.join('')));
         scope.onRepeatDone();
-        //$compile(el.contents())(scope);
+      }
+
+      /**
+       *
+       * @param angularEvent
+       * @param {number} index - embed 한 item 의 index
+       * @private
+       */
+      function _onEmbed(angularEvent, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var message;
+        var prevMessage;
+        var prevIndex = index - 1;
+        var htmlList = [];
+        var jqPrev;
+        
+        if (index > 0) {
+          message = messageCollection.list[index];
+          prevMessage = messageCollection.list[prevIndex];
+          jqPrev = $('#' + prevMessage.id);
+          _pushMarkup(htmlList, message, index);
+          _refresh(prevMessage.id, prevIndex);
+          jqPrev.after(_getCompiledEl(htmlList.join('')));
+          scope.onRepeatDone();
+        }
       }
 
       /**
@@ -744,8 +809,9 @@
        * @private
        */
       function _onBeforeRemove(angularEvent, index) {
-        var msg = MessageCollection.list[index];
-        var isLastMsg = (index === MessageCollection.list.length - 1);
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var msg = messageCollection.list[index];
+        var isLastMsg = (index === messageCollection.list.length - 1);
         var jqTarget = $('#' + msg.id);
         var jqPrev = jqTarget.prev();
 
@@ -770,15 +836,16 @@
        * @private
        */
       function _onRemove(angularEvent, index) {
-        var msg = MessageCollection.list[index];
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var msg = messageCollection.list[index];
         var prevIndex = index - 1;
         var prevMessage;
 
         // 삭제된 메시지의 이전 메시지가 child text 또는 child comment가 아니라면
         // 이전 메시지의 뷰가 바뀌어야 한다(조건에 부합하는 이전 메시지는  메시지 작성 시간을 출력하지 않음).
-        if (!MessageCollection.hasChildText(prevIndex) ||
-          !MessageCollection.hasChildComment(prevIndex)) {
-          prevMessage = MessageCollection.list[prevIndex];
+        if (!messageCollection.hasChildText(prevIndex) ||
+          !messageCollection.hasChildComment(prevIndex)) {
+          prevMessage = messageCollection.list[prevIndex];
           _refresh(prevMessage.id, prevIndex);
         }
 
@@ -793,15 +860,14 @@
        */
       function _renderAll() {
         var htmlList = [];
-        var list = MessageCollection.list;
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var list = messageCollection.list;
         _destroyCompiledScope();
         _.forEach(list, function(message, index) {
           _pushMarkup(htmlList, message, index);
         });
         el.empty().html(_getCompiledEl(htmlList.join('')));
-        if (list.length) {
-          scope.onRepeatDone();
-        }
+        scope.onRepeatDone();
       }
 
       /**
@@ -811,7 +877,8 @@
        * @private
        */
       function _onAttachMessagePreview(angularEvent, messageId) {
-        MessageCollection.forEach(function(msg, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        messageCollection.forEach(function(msg, index) {
           if (messageId === (msg.message && msg.message.id)) {
             _refresh(msg.id, index);
           }
@@ -838,7 +905,8 @@
        */
       function _refreshFileMessage(socketEvent, callback) {
         var messageId = socketEvent.data.message.id;
-        MessageCollection.forEach(function(msg, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        messageCollection.forEach(function(msg, index) {
           if (messageId === (msg.message && msg.message.id) && !msg.message.content.extHasPreview) {
             // back-end에서 link
             msg.message.content.extHasPreview = true;
@@ -881,8 +949,9 @@
         var fileId = data.file.id;
         var commentCount = data.file.commentCount;
         var message;
-
-        _.forEach(MessageCollection.list, function(msg) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        
+        _.forEach(messageCollection.list, function(msg) {
           message = RendererUtil.getFeedbackMessage(msg);
           if (message.id === fileId) {
             message.commentCount = commentCount;

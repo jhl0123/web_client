@@ -9,7 +9,7 @@
     .service('TextRenderer', TextRenderer);
 
   /* @ngInject */
-  function TextRenderer($filter, MessageCollection, currentSessionHelper, jndPubSub, RendererUtil, memberService) {
+  function TextRenderer($filter, MessageCacheCollection, currentSessionHelper, jndPubSub, RendererUtil, memberService) {
     var _encodeHTML = $filter('htmlEncode');
 
     var _template;
@@ -114,8 +114,9 @@
      * @returns {*}
      */
     function render(index) {
-      var msg = MessageCollection.list[index];
-      var isChild = MessageCollection.isChildText(index);
+      var messageCollection = MessageCacheCollection.getCurrent();
+      var msg = messageCollection.list[index];
+      var isChild = messageCollection.isChildText(index);
       var isSticker = RendererUtil.isSticker(msg);
       var template = isChild ? _templateChild : _template;
 
@@ -149,7 +150,7 @@
           hasConnectPreview: !!connectPreview,
           isSticker: isSticker,
           isChild: isChild,
-          hasChild: MessageCollection.hasChildText(index),
+          hasChild: messageCollection.hasChildText(index),
           msg: msg
         })
       };
@@ -206,10 +207,11 @@
      * @private
      */
     function _getLinkPreview(msg, index) {
+      var messageCollection = MessageCacheCollection.getCurrent();
       var html = '';
       var linkPreview;
 
-      if (MessageCollection.hasLinkPreview(index)) {
+      if (messageCollection.hasLinkPreview(index)) {
         if (msg.message.linkPreview.extThumbnail) {
          msg.message.linkPreview.extThumbnail.hasSuccess = RendererUtil.hasThumbnailCreated(msg.message.linkPreview);
         } else {
@@ -251,12 +253,12 @@
      * @private
      */
     function _getConnectPreview(msg, index) {
+      var messageCollection = MessageCacheCollection.getCurrent();
       var html = '';
       var content = msg.message.content;
       var connectPreview;
 
-      //if (memberService.isConnectBot(msg.message.writerId) && MessageCollection.hasIntegrationPreview(index)) {
-      if (MessageCollection.hasConnectPreview(index)) {
+      if (messageCollection.hasConnectPreview(index)) {
         connectPreview = '';
 
         _.each(content.connectInfo, function(info) {

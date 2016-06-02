@@ -10,7 +10,7 @@
 
   /* @ngInject */
   function RightMessagesCtrl($scope, $timeout, AnalyticsHelper, currentSessionHelper, fileAPIservice, JndUtil,
-                             messageAPIservice, RoomTopicList, TopicFolderModel) {
+                             messageAPIservice, RightPanel, RoomTopicList, TopicFolderModel) {
     var DEFAULT_PAGE = 1;
     var DEFAULT_PER_PAGE = 10;
 
@@ -150,6 +150,10 @@
 
           _refreshMessageList();
         }
+
+        // render 후 pub
+        $timeout(RightPanel.pubRendered);
+
         setKeywordFocus();
       }
     }

@@ -9,7 +9,7 @@
     .service('SystemEventRenderer', SystemEventRenderer);
 
   /* @ngInject */
-  function SystemEventRenderer($templateRequest, $filter, MessageCollection, language) {
+  function SystemEventRenderer($filter, MessageCacheCollection, language, EntityHandler) {
 
     var _template = '';
 
@@ -64,20 +64,27 @@
      * @returns {*}
      */
     function render(index) {
-      var msg = MessageCollection.list[index];
+      var messageCollection = MessageCacheCollection.getCurrent();
+      var msg = messageCollection.list[index];
       var filter = $filter('getName');
-      var length = (msg && msg.message && msg.message.invites && msg.message.invites.length) || 0;
+      var length = (msg && msg.info && msg.info.inviteUsers && msg.info.inviteUsers.length) || 0;
       var invitees = [];
       var lang = language.preferences.language;
       var hasPostfix = !!(lang === 'ko' || lang === 'ja');
       var status = _getEventTypeStatus(msg);
+      var member;
 
-      _.forEach(msg.message.invites, function(invitee, index) {
-        invitees.push({
-          name: filter(invitee),
-          isLast: length - 1 === index
+      if (length) {
+        _.forEach(msg.info.inviteUsers, function(memberId, index) {
+          member = EntityHandler.get(memberId);
+          if (member) {
+            invitees.push({
+              name: filter(member),
+              isLast: length - 1 === index
+            });
+          }
         });
-      });
+      }      
 
       return {
         conditions: ['system-event', 'noti'],

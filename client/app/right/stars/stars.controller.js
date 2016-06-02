@@ -9,7 +9,7 @@
     .controller('RightStarsCtrl', RightStarsCtrl);
 
   /* @ngInject */
-  function RightStarsCtrl($scope, $filter, $timeout, StarAPIService, JndUtil) {
+  function RightStarsCtrl($scope, $filter, $timeout, JndUtil, RightPanel, StarAPIService) {
     var _starListData = {
       messageId: null
     };
@@ -118,10 +118,15 @@
      * @private
      */
     function _onRightPanelStatusChange() {
-      if ($scope.status.isActive && !$scope.tabs[$scope.activeTabName].hasFirstLoad) {
-        // 'rightPanelStatusChange' event 발생시 tab(all, file)이 최초로 로드되는 시점에만 star list를 호출한다
+      if ($scope.status.isActive) {
+        if (!$scope.tabs[$scope.activeTabName].hasFirstLoad) {
+          // 'rightPanelStatusChange' event 발생시 tab(all, file)이 최초로 로드되는 시점에만 star list를 호출한다
 
-        _refreshActiveTab($scope.activeTabName);
+          _refreshActiveTab($scope.activeTabName);
+        }
+
+        // render 후 pub
+        $timeout(RightPanel.pubRendered);
       }
     }
 

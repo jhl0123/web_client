@@ -170,6 +170,15 @@ input[type="email"] {
   transition: opacity 1.5s;
 }
 
+.opac-in-very-fast {
+  opacity: 1 !important;
+  -webkit-transition: opacity 0.15s;
+  -moz-transition: opacity 0.15s;
+  -ms-transition: opacity 0.15s;
+  -o-transition: opacity 0.15s;
+  transition: opacity 0.15s;
+}
+
 .opac-in-fast {
   opacity: 1 !important;
   -webkit-transition: opacity 0.3s;
@@ -1487,7 +1496,7 @@ input[type="radio"] {
   right: 8px;
   position: absolute;
   background-color: rgba(15,60,85,0.105);
-  color: rgba(14,60,85,0.3);
+  color: rgba(14,60,85,0.3)  !important;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   padding: 2px 5px;

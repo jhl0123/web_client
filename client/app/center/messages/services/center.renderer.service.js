@@ -9,9 +9,8 @@
     .service('CenterRenderer', CenterRenderer);
 
   /* @ngInject */
-  function CenterRenderer($filter, MessageCollection, CenterRendererFactory, memberService) {
+  function CenterRenderer($filter, MessageCacheCollection, CenterRendererFactory, memberService) {
     var _template = '';
-
     this.render = render;
 
     _init();
@@ -63,8 +62,9 @@
      * @returns {*}
      */
     function render(index, type) {
+      var messageCollection = MessageCacheCollection.getCurrent();
       var hasId = _.isUndefined(type);
-      var msg = MessageCollection.list[index];
+      var msg = messageCollection.list[index];
       var contentType = type || msg.message.contentType;
       var renderer = CenterRendererFactory.get(contentType);
       var content = renderer ? renderer.render(index) : '';

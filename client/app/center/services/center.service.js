@@ -95,10 +95,14 @@
      */
     function hasBottomReached() {
       var element = document.getElementById('msgs-container');
-      var scrollHeight = element.scrollHeight;
-      element = angular.element(element);
-
-      return scrollHeight - (element.outerHeight() + element.scrollTop()) < SCROLL_BOTTOM_THRESHOLD;
+      var scrollHeight;
+      var isBottomReached = false;
+      if (element) {
+        scrollHeight = element.scrollHeight;
+        element = angular.element(element);
+        isBottomReached = scrollHeight - (element.outerHeight() + element.scrollTop()) < SCROLL_BOTTOM_THRESHOLD;
+      }
+      return isBottomReached;
     }
 
     /**

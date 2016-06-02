@@ -20,7 +20,8 @@
       'GUIDE_TOPIC_FOLDER': 0,
       'GUIDE_CONNECT': 1,
       'TUTORIAL_VER3_WELCOME': 2,
-      'TUTORIAL_VER3_POPOVER': 3
+      'TUTORIAL_VER3_POPOVER': 3,
+      'STICKER_DINGO': 4
     };
 
     this.get = get;
