@@ -537,19 +537,20 @@
        */
       isChildComment: function(index) {
         var contentType = this.getContentType(index);
-        var message = this.list[index - 1];
-        var isLastMarker = false;
+        //var message = this.list[index - 1];
+        //var isLastMarker = false;
 
         // Todo
         // memberService.getLastReadMessageMarker는 dom에 message가 rendering된 다음 갱신된 unread marker 최신 정보를 전달한다.
         // 하지만 isChildComment는 message가 rendering 할때 사용한 상태 기준으로 동작하기 때문에 unread marker 가 갱신되기 전의
         // 값을 전달받아야 한다.
-        if (message && message.id == memberService.getLastReadMessageMarker(centerService.getEntityId())) {
-          isLastMarker = true;
-        }
+        // center.panel.controller에서 init render 호출시 가지고 있는 marker id값과 비교해야한다.
+        //if (message && message.id == memberService.getLastReadMessageMarker(centerService.getEntityId())) {
+        //  isLastMarker = true;
+        //}
   
         return !!(centerService.isCommentType(contentType) &&
-          !isLastMarker &&
+          //!isLastMarker &&
           MessageComment.isChild(index, this.list));
       },
 
@@ -560,19 +561,20 @@
        */
       hasChildComment: function(index) {
         var contentType = this.getContentType(index);
-        var message = this.list[index];
-        var isLastMarker = false;
+        //var message = this.list[index];
+        //var isLastMarker = false;
 
         // Todo
         // memberService.getLastReadMessageMarker는 dom에 message가 rendering된 다음 갱신된 unread marker 최신 정보를 전달한다.
         // 하지만 hasChildComment는 message가 rendering 할때 사용한 상태 기준으로 동작하기 때문에 unread marker 가 갱신되기 전의
         // 값을 전달받아야 한다.
-        if (message && message.id == memberService.getLastReadMessageMarker(centerService.getEntityId())) {
-          isLastMarker = true;
-        }
+        // center.panel.controller에서 init render 호출시 가지고 있는 marker id값과 비교해야한다.
+        //if (message && message.id == memberService.getLastReadMessageMarker(centerService.getEntityId())) {
+        //  isLastMarker = true;
+        //}
   
         return !!(centerService.isCommentType(contentType) &&
-          !isLastMarker &&
+          //!isLastMarker &&
           MessageComment.isChild(index + 1, this.list));
       },
       
