@@ -48,6 +48,7 @@
     this.isLastComment = isLastComment;
     this.isTitleComment = isTitleComment;
     this.isNewDate = isNewDate;
+    this.isLastReadMarker = isLastReadMarker;
 
     this.isElapsed = isElapsed;
     this.getContentType = getContentType;
@@ -332,7 +333,16 @@
      */
     function isChildComment(index) {
       var contentType = getContentType(index);
-      return !!(centerService.isCommentType(contentType) && MessageComment.isChild(index, that.list));
+      var message = that.list[index - 1];
+      var isLastMarker = false;
+
+      if (message && message.id == memberService.getPrevLastReadMessageMarker(centerService.getEntityId())) {
+        isLastMarker = true;
+      }
+
+      return !!(centerService.isCommentType(contentType) &&
+        !isLastMarker &&
+        MessageComment.isChild(index, that.list));
     }
 
     /**
@@ -342,7 +352,16 @@
      */
     function hasChildComment(index) {
       var contentType = getContentType(index);
-      return !!(centerService.isCommentType(contentType) && MessageComment.isChild(index + 1, that.list));
+      var message = that.list[index];
+      var isLastMarker = false;
+
+      if (message && message.id == memberService.getPrevLastReadMessageMarker(centerService.getEntityId())) {
+        isLastMarker = true;
+      }
+
+      return !!(centerService.isCommentType(contentType) &&
+        !isLastMarker &&
+        MessageComment.isChild(index + 1, that.list));
     }
 
     /**
@@ -372,7 +391,9 @@
      */
     function isTitleComment(index) {
       var contentType = getContentType(index);
-      return !!(centerService.isCommentType(contentType) && MessageComment.isTitle(index, that.list));
+
+      return !!(centerService.isCommentType(contentType) &&
+        (isNewDate(index) || MessageComment.isTitle(index, that.list)));
     }
 
     /**
