@@ -290,9 +290,9 @@ app.controller('leftPanelController', function(
    */
   function enterEntity(entity) {
     JndUtil.safeApply($scope, function() {
-      NotificationManager.set(entity, 0);
-      HybridAppHelper.onAlarmCntChanged(entity.id, 0);
-      entity.alarmCnt = '';
+      // NotificationManager.set(entity, 0);
+      // HybridAppHelper.onAlarmCntChanged(entity.id, 0);
+      // entity.alarmCnt = '';
       $scope.entityId = entity.id;
       jndPubSub.pub('onBeforeEntityChange', entity);
     });

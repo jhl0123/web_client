@@ -18,7 +18,7 @@
   <!--    WRAPPING DIV FOR FILE DRAG&DROP -->
   <div>
     <div class="msgs__loading initial"
-         ng-if="!status.isInitialized && status.isLoading">
+         ng-if="!status.isInitialRequestSuccess || status.isLoading">
       <span class="three-quarters-loader jnd-three-quarters-loader center"></span>
     </div>
     <!-- 컨테이너 -->

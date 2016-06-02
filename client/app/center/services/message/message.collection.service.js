@@ -11,7 +11,7 @@
   /* @ngInject */
   function MessageCollection($q, $filter, $injector, $rootScope, RoomTopicList, CoreUtil, markerService, jndPubSub, memberService,
                              currentSessionHelper, centerService, MessageComment, MessageText, DateFormatter, EntityFilterMember,
-                             messageAPIservice, MessageQuery) {
+                             messageAPIservice, MessageQuery, JndUtil, NetInterceptor) {
     /**
      * 한번에 조회할 기본 메시지 개수
      * @type {number}
@@ -55,6 +55,7 @@
           },
           status: {
             isInitialized: false,
+            isInitialRequestSuccess: false,
             isLoading: false
           },         
 
@@ -131,8 +132,35 @@
         this._scope.$on('jndWebSocketFile:commentDeleted', _.bind(this._onFileCommentDeleted, this));
         this._scope.$on('externalFile:fileShareChanged', _.bind(this._onExternalFileShareChanged, this));
         this._scope.$on('centerpanelController:getEventHistoryError', _.bind(this.initialRequest, this));
+
+
+        this._scope.$on('NetInterceptor:connect', _.bind(this._check, this));
+        this._scope.$on('NetInterceptor:disconnect', _.bind(this._cancelRequest, this));
+        this._scope.$on('NetInterceptor:onGatewayTimeoutError', _.bind(this._check, this));
+        this._scope.$on('jndWebSocket:connect', _.bind(this._check, this));
       },
 
+      /**
+       * 현재 캐시 상태를 체크하고, 데이터가 없다면 다시 initialRequest 를 요청한다.
+       * @private
+       */
+      _check: function() {
+        var status = this.status;
+        if (!status.isInitialRequestSuccess && !status.isLoading) {
+          this.initialRequest();
+        }
+      },
+
+      /**
+       * request 를 cancel 한다.
+       * @private
+       */
+      _cancelRequest: function() {
+        if (this._deferred) {
+          this._deferred.resolve();
+        }
+      },
+      
       /**
        * message created 이벤트 핸들러
        * @param {object} angularEvent
@@ -220,18 +248,24 @@
           this._deferred.resolve();
         }
         this._deferred = $q.defer();
-        //DM 일 경우, chatRoomId 가 없으면 request 하지 않는다.
-        this.status.isLoading = true;
 
-        query = query || MessageQuery.get();
-        query = _.cloneDeep(query);
+        if (NetInterceptor.isConnected()) {
+          this.status.isLoading = true;
+
+          query = query || MessageQuery.get();
+          query = _.cloneDeep(query);
 
 
 
-        return messageAPIservice.getMessages(type, id, query, this._deferred)
-          .then(
-            _.bind(this._onSuccessRequest, this, query),
-            _.bind(this._onErrorRequest, this, query));
+          return messageAPIservice.getMessages(type, id, query, this._deferred)
+            .then(
+              _.bind(this._onSuccessRequest, this, query),
+              _.bind(this._onErrorRequest, this, query));
+        } else {
+          this._deferred.reject();
+          return this._deferred.promise;
+        }
+
       },
 
       /**
@@ -255,6 +289,7 @@
       _onSuccessRequest: function(query, result) {
         var response = result.data;
         var messageList = response.records;
+        this.status.isInitialRequestSuccess = true;
         this._onDoneRequest();
         _.extend(this.roomData, {
           firstLinkId: response.firstLinkId,
@@ -279,6 +314,9 @@
        */
       _onErrorRequest: function(query, result) {
         this._onDoneRequest();
+        if (this._isCurrentRoom()) {
+          JndUtil.alertUnknownError(result.data, result.status);
+        }
         this._pub('MessageCollection:requestError', result, query);
       },
       
@@ -297,6 +335,9 @@
             last: -1
           };
           this.status.isInitialized = false;
+          this.status.isInitialRequestSuccess = false;
+          this.status.isLoading = false;
+
           this._pub('MessageCollection:reset');
         }
       },
@@ -345,11 +386,9 @@
         if (!this._isCurrentRoom()) {
           this._cutByMaxCacheCount();
         }
-        if (appendList.length) {
-          this._setLinkId(appendList);
-          this._addIndexMap(appendList);
-          this._pub('MessageCollection:append', appendList);
-        }
+        this._setLinkId(appendList);
+        this._addIndexMap(appendList);
+        this._pub('MessageCollection:append', appendList);
       },
 
       /**

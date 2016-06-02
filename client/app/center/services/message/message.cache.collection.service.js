@@ -11,7 +11,7 @@
   /* @ngInject */
   function MessageCacheCollection($rootScope, CoreUtil, CoreCollection, MessageCollection, RoomTopicList, currentSessionHelper,
                                   RoomChatDmList, EntityFilterMember) {
-    var UNIT = 100;
+    var UNIT = 300;
     var MessageCacheCollectionClass = CoreUtil.defineClass(CoreCollection, /**@lends Collection.prototype */{
       /**
        * 인자로 받은 option 값에 대해 초기 세팅을 한다.
@@ -34,7 +34,7 @@
         joinedTopics = _.sortBy(joinedTopics, 'alarmCnt');
         this._initCurrent();
         _.forEachRight(joinedTopics, function(topic, index) {
-          setTimeout(_.bind(this.add, this, topic.id), UNIT * index);
+          setTimeout(_.bind(this.add, this, topic.id), UNIT * (index + 1));
         }, this);
         this._removeUnjoinedTopics();
       },
@@ -45,7 +45,7 @@
       initializeChats: function() {
         var chats = RoomChatDmList.toJSON(true);
         _.forEach(chats, function(chat, index) {
-          setTimeout(_.bind(this.add, this, chat.extMember.id), UNIT * index);
+          setTimeout(_.bind(this.add, this, chat.extMember.id), UNIT * (index + 1));
         }, this);
       },
 

@@ -143,15 +143,18 @@
         _initMessageCollection();
         _initializeView();
         _initializeFocusStatus();
-
-        if (!_messageCollection.status.isInitialized) {
-          _messageCollection.getRequestPromise().then(
-            _getCurrentRoomMarker
-          );
+        _initMarkers();
+        if (!_messageCollection.status.isInitialRequestSuccess) {
+          if (_messageCollection.status.isLoading) {
+            _messageCollection.getRequestPromise().then(
+              _getCurrentRoomMarker
+            );
+          } else {
+            _refreshCurrentTopic();
+          }
         } else {
           _getCurrentRoomMarker();
         }
-        _checkEntityMessageStatus();
         centerService.setHistory(_entityType, _entityId);
       }
     }
@@ -236,8 +239,10 @@
      */
     function _initializeListeners() {
 
-      $scope.$on('NetInterceptor:connect', _onConnected);
+      $scope.$on('NetInterceptor:connect', _refreshView);
       $scope.$on('NetInterceptor:onGatewayTimeoutError', _refreshView);
+      $scope.$on('jndWebSocket:connect', _refreshView);
+
       $scope.$on('Auth:refreshTokenSuccess', _refreshView);
 
       $scope.$on('refreshCurrentTopic', _refreshCurrentTopic);
@@ -695,23 +700,19 @@
     }
 
     /**
-     * 네트워크 연결 되었을때 콜백
-     * @private
-     */
-    function _onConnected() {
-      _refreshView();
-    }
-
-    /**
      * view 갱신
      * @private
      */
     function _refreshView() {
-      _initMarkers();
-      if (MessageSendingCollection.queue.length) {
-        _requestPostMessages(true);
+      if (!_messageCollection.status.isInitialRequestSuccess) {
+        _refreshCurrentTopic();
+      } else {
+        _initMarkers();
+        if (MessageSendingCollection.queue.length) {
+          _requestPostMessages(true);
+        }
+        _requestEventsHistory();
       }
-      _requestEventsHistory();
     }
 
     /**
@@ -1366,17 +1367,17 @@
     function onRepeatDone() {
       _adjustScroll();
       _checkEntityMessageStatus();
-      if (_messageCollection.status.isInitialized) {
+      if (_messageCollection.status.isInitialRequestSuccess) {
         publicService.hideDummyLayout();
         if (!$scope.isInitializeRender) {
           _onInitialRenderDone();
           $scope.isInitializeRender = true;
         }
+        if (!_hasRoomMarkerInfo) {
+          _getCurrentRoomMarker();
+        }
+        _showContents();
       }
-      if (!_hasRoomMarkerInfo) {
-        _getCurrentRoomMarker();
-      }
-      _showContents();
     }
 
     /**
