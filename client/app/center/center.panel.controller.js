@@ -252,10 +252,7 @@
 
       $scope.$on('centerOnMarkerUpdated', _onCenterMarkerUpdated);
       $scope.$on('centerOnTopicLeave', _onCenterOnTopicLeave);
-      $scope.$on('jndWebSocketFile:commentDeleted', _onFileCommentDeleted);
       $scope.$on('onChangeSticker:' + _stickerType, _onChangeSticker);
-      $scope.$on('externalFile:fileShareChanged', _onFileShareChanged);
-
       $scope.$on('center:scrollToBottom', _centerScrollToBottom);
       $scope.$on('Router:openRightPanel', _onBeforeRightPanelOpen);
       $scope.$on('RightPanel:rendered', _onAfterRightPanelOpen);
@@ -277,7 +274,8 @@
       $scope.$on('body:dragStart', _onDragStart);
       $scope.$on('topicDeleted', _onTopicDeleted);
 
-      $scope.$on('jndWebSocketMessage:messageDeleted', _onMessageDeleted);
+      $scope.$on('MessageCollection:messageDeleted', _checkEntityMessageStatus);
+      $scope.$on('MessageCollection:commentDeleted', _checkEntityMessageStatus);
     }
 
     /**
@@ -1397,27 +1395,6 @@
     }
 
     /**
-     * message 삭제 시 콜백
-     * @param {object} angularEvent
-     * @param {object} socketEvent
-     * @private
-     */
-    function _onMessageDeleted(angularEvent, socketEvent) {
-      _messageCollection.remove(socketEvent.messageId, true);
-      _checkEntityMessageStatus();
-    }
-
-    /**
-     * file comment 삭제 시 콜백
-     * @param {object} angularEvent
-     * @param {object} socketEvent
-     */
-    function _onFileCommentDeleted(angularEvent, socketEvent) {
-      _messageCollection.remove(socketEvent.comment.id);
-      _checkEntityMessageStatus();
-    }
-
-    /**
      * Someone left current topic -> update markers
      * @param event
      * @param param
@@ -1655,20 +1632,6 @@
         $scope.hasMessage = message > 0 || !!_sticker;
         $scope.showMarkdownGuide = message > 1;
         TextBuffer.set(_entityId, value);
-      }
-    }
-
-    /**
-     * 외부 파일공유 상태 변경 이벤트 핸들러
-     * @param {object} $event
-     * @param {object} data
-     * @private
-     */
-    function _onFileShareChanged($event, data) {
-      var msg = _messageCollection.getByMessageId(data.id);
-
-      if (msg && msg.message.contentType === 'file') {
-        msg.message.content.externalShared = data.content.externalShared;
       }
     }
   }

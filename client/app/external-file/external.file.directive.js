@@ -107,10 +107,10 @@
        * @private
        */
       function _setExternalContent(data) {
+        data.roomId = currentSessionHelper.getCurrentEntityId();
         scope.fileData.externalUrl = data.content.externalUrl;
         scope.fileData.externalCode = data.content.externalCode;
-        scope.fileData.externalShared = data.content.externalShared;
-
+        scope.fileData.externalShared = data.content.externalShared;        
         jndPubSub.pub('externalFile:fileShareChanged', data);
       }
     }

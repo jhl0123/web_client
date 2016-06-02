@@ -127,6 +127,9 @@
        */
       _attachScopeEvents: function() {
         this._scope.$on('jndWebSocketMessage:messageCreated', _.bind(this._onMessageCreated, this));
+        this._scope.$on('jndWebSocketMessage:messageDeleted', _.bind(this._onMessageDeleted, this));
+        this._scope.$on('jndWebSocketFile:commentDeleted', _.bind(this._onFileCommentDeleted, this));
+        this._scope.$on('externalFile:fileShareChanged', _.bind(this._onExternalFileShareChanged, this));
         this._scope.$on('centerpanelController:getEventHistoryError', _.bind(this.initialRequest, this));
       },
 
@@ -155,6 +158,48 @@
         }
       },
 
+      /**
+       * message 삭제 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      _onMessageDeleted: function(angularEvent, socketEvent) {
+        if (socketEvent.room.id === this._getCurrentRoomId()) {
+          this.remove(socketEvent.messageId, true);
+        }
+        this._pub('MessageCollection:messageDeleted', socketEvent.messageId);
+      },
+
+      /**
+       * file comment 삭제 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      _onFileCommentDeleted: function(angularEvent, socketEvent) {
+        if (socketEvent.room.id === this._getCurrentRoomId()) {
+          this.remove(socketEvent.comment.id, true);
+          this._pub('MessageCollection:commentDeleted', socketEvent.comment.id);
+        }
+      },
+      
+      /**
+       * 외부 파일 공유 상태 변경시 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} data
+       * @private
+       */
+      _onExternalFileShareChanged: function(angularEvent, data) {
+        var msg;
+        if (data.roomId === this.id) {
+          msg = this.getByMessageId(data.id);
+          if (msg && msg.message.contentType === 'file') {
+            msg.message.content.externalShared = data.content.externalShared;
+          }
+        } 
+      },
+      
       /**
        * 서버로 질의를 요청한다.
        * @param {object} [query] - 없을 경우 MessageQuery 에 저장된 값을 사용한다.
@@ -957,7 +1002,7 @@
       },
 
       /**
-       * 현
+       * 현재 방의 room id 를 조회한다.
        * @returns {*}
        * @private
        */

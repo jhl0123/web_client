@@ -149,10 +149,11 @@
      */
     function _onTopicLeave(socketEvent) {
       var room = socketEvent.room;
-      if (jndWebSocketCommon.isCurrentEntity(room)) {
-        jndPubSub.updateCenterPanel();
+      if (memberService.getMemberId() === socketEvent.writer) {
+        RoomTopicList.unjoin(socketEvent.room.id);
+      } else {
+        RoomTopicList.removeMember(socketEvent.room.id, socketEvent.writer);
       }
-      RoomTopicList.removeMember(socketEvent.room.id, socketEvent.writer);
       jndPubSub.pub('jndWebSocketMessage:topicLeave', socketEvent);
     }
 
@@ -163,10 +164,12 @@
      */
     function _onTopicJoin(socketEvent) {
       var room = socketEvent.room;
-      if (jndWebSocketCommon.isCurrentEntity(room)) {
-        jndPubSub.updateCenterPanel();
+      if (memberService.getMemberId() === socketEvent.writer) {
+        RoomTopicList.join(socketEvent.room.id);
+      } else {
+        RoomTopicList.addMember(socketEvent.room.id, socketEvent.writer);
       }
-      RoomTopicList.addMember(socketEvent.room.id, socketEvent.writer);
+
       jndPubSub.pub('jndWebSocketMessage:topicJoin', socketEvent);
     }
 
@@ -267,10 +270,6 @@
     function _onDm(socketEvent) {
       var room = socketEvent.room;
       room.extWriterId = socketEvent.writer;
-
-      if (jndWebSocketCommon.isCurrentEntity(room)) {
-        jndPubSub.updateCenterPanel();
-      }
 
       jndPubSub.pub('updateChatList');
       if (socketEvent.messageType === 'file_share') {
