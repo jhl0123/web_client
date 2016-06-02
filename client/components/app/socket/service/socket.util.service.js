@@ -6,8 +6,8 @@
     .service('jndWebSocketCommon', jndWebSocketCommon);
 
   /* @ngInject */
-  function jndWebSocketCommon(CoreUtil, jndPubSub, currentSessionHelper, entityAPIservice, EntityHandler, UserList, logger,
-                              memberService, accountService, RoomTopicList) {
+  function jndWebSocketCommon(CoreUtil, jndPubSub, currentSessionHelper, entityAPIservice, EntityHandler, logger,
+                              memberService, accountService, RoomTopicList, EntityFilterMember) {
 
     var _chatEntity = 'chat';
 
@@ -148,7 +148,7 @@
      * @private
      */
     function getActionOwner(writerId) {
-      return UserList.get(writerId);
+      return EntityFilterMember.get(writerId);
     }
 
     /**
