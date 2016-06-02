@@ -8,7 +8,7 @@
   margin-top: 20px;
 }
 .message.system-event + .message.message-group {
-  margin-top: -8px;
+  margin-top: -6px;
 }
 
 .message.comment .msg-item {
