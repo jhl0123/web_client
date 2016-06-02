@@ -51,6 +51,13 @@
         scope.isShown = false;
         scope.searchKeyword = '';
         scope.cssIconMap = CSS_ICON_MAP;
+        scope.fileList = [];
+        
+        _.forEach(scope.list, function(item, index) {
+          if (index > 0) {
+            scope.fileList.push(item);
+          }
+        });
         _initializeData();
         _attachEvents();
         _attachDomEvents();
@@ -140,18 +147,22 @@
        * @private
        */
       function _initializeData() {
+        _.forEach(scope.list, function(item) {
+          item.extCssIcon = CSS_ICON_MAP[item.value]
+        });
         scope.searchList = [];
         scope.selectedName = _getSelectedName();
       }
 
       /**
        * change 이벤트 핸들러
-       * @param targetScope
+       * @param jqTarget
        */
-      function onChange(targetScope) {
-        if (targetScope.item) {
-          scope.selectedName = targetScope.item.viewValue;
-          scope.selectedValue = targetScope.item.value;
+      function onChange(jqTarget) {
+        var item = jqTarget.data('item');
+        if (item) {
+          scope.selectedName = item.viewValue;
+          scope.selectedValue = item.value;
         } else {
           scope.selectedName = scope.list[0].viewValue;
           //모든 파일의 value

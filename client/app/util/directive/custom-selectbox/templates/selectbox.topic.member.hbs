@@ -1,0 +1,16 @@
+<li class="menu-item _selectable {{extCss.li}}">
+  <div class="{{extCss.div}}">
+    <img class="header-title-member__dropdown__thumb" src="{{extThumbnail}}">
+    <a>
+      <span>{{name}}</span>
+    </a>
+    {{#if isKickedOutEnable}}
+      <span class="kick-item-icon pull-right _kickout">
+        <i class="icon-sign-out"></i>
+      </span>
+    {{/if}}
+    {{#if isTopicAdmin}}
+      <span class="member-auth-label">{{text.topicAdmin}}</span>
+    {{/if}}
+  </div>
+</li>

@@ -9,7 +9,7 @@
     .module('jandiApp')
     .directive('jndSelectboxTopicMember', jndSelectboxTopicMember);
 
-  function jndSelectboxTopicMember($filter, EntityFilterMember, publicService, JndUtil, jndPubSub, memberService,
+  function jndSelectboxTopicMember($filter, $timeout, EntityFilterMember, publicService, JndUtil, jndPubSub, memberService,
                                    CoreUtil) {
     return {
       restrict: 'AE',
@@ -25,10 +25,15 @@
     };
 
     function link(scope, el, attrs) {
-      var _lastKeyword = '';
-      var _isPreventSelect = false;
+      var SEARCH_DELAY = 100;
       var TOGGLE_DISABLE_SCROLL_DURATION = 500;
-
+      
+      var _lastKeyword = '';
+      var _timerSearch;
+      var _isPreventSelect = false;
+      var _l10n = {
+        topicAdmin: $filter('translate')('@common-topic-admin')
+      };
       // profile image를 보여줄지 여부
       var _isShowProfileImage = attrs.isShowProfileImage === 'true';
 
@@ -37,7 +42,6 @@
       scope.toggleShow = toggleShow;
       scope.onChange = onChange;
       scope.toggleDisabled = toggleDisabled;
-      scope.onClickKickout = onClickKickout;
       
       _init();
 
@@ -64,13 +68,15 @@
        * @param {object} clickEvent
        * @param {number} memberId
        */
-      function onClickKickout(clickEvent, memberId) {
+      function _onClickKickout(clickEvent, memberId) {
+        var jqTarget = $(clickEvent.target);
+        var jqLi = jqTarget.closest('._selectable');
+        var item = jqLi.data('item');
         _isPreventSelect = true;
         scope.onKickout({
-          memberId: memberId
+          memberId: item.id
         });
       }
-      
       /**
        * selectbox 를 닫는다
        */
@@ -102,6 +108,7 @@
        */
       function _attachDomEvents() {
         $(document).on('mousedown', _onMouseDownDocument);
+        el.on('click', '._kickout', _onClickKickout);
       }
 
       /**
@@ -110,6 +117,7 @@
        */
       function _detachDomEvents() {
         $(document).off('mousedown', _onMouseDownDocument);
+        el.off('click', '._kickout', _onClickKickout);
       }
 
       /**
@@ -142,6 +150,8 @@
        */
       function _initializeData() {
         _isPreventSelect = true;
+        _lastKeyword = '';
+        scope.searchKeyword = '';
         scope.selectedValue = CoreUtil.pick(scope, 'list', 0, 'id');
         scope.memberData = _getMemberData();
         scope.searchList = [];
@@ -150,10 +160,10 @@
 
       /**
        * change 이벤트 핸들러
-       * @param targetScope
+       * @param {object} jqTarget
        */
-      function onChange(targetScope) {
-        var item = targetScope.item;
+      function onChange(jqTarget) {
+        var item = jqTarget.data('item');
         scope.selectedValue = _getSelectedValue(item);
         if (!_isPreventSelect) {
           scope.onSelect({
@@ -231,6 +241,7 @@
                 enabledList.push(member);
               }
             }
+            _extendMember(member);
           }
         });
         return {
@@ -239,6 +250,36 @@
         };
       }
 
+      /**
+       * member 정보를 rendering 을 위해 확장한다.
+       * @param {object} member
+       * @private
+       */
+      function _extendMember(member) {
+        var cssLi = [];
+        var cssDiv = [];
+        
+        member.extCss = {};
+        
+        if (member.isKickedOutEnable) {
+          cssLi.push('has-kickout-icon');
+        }
+        if (member.isTopicAdmin) {
+          cssLi.push('admin');
+        }
+        if (member.extIsJandiBot) {
+          cssDiv.push('jandi-bot');
+        }
+        _.extend(member.extCss, {
+          li: cssLi.join(' '),
+          div: cssDiv.join(' ')        
+        });
+        member.extThumbnail = $filter('getSmallThumbnail')(member);
+        member.text = {
+          topicAdmin: _l10n.topicAdmin
+        };
+      }
+      
       /**
        * member list 를 반환한다
        * @returns {string|*}
@@ -261,7 +302,8 @@
        * keyup 이벤트 핸들러
        */
       function onKeyUp(keyEvent) {
-        _search($(keyEvent.target).val());
+        $timeout.cancel(_timerSearch);
+        _timerSearch = $timeout(_.bind(_search, this, $(keyEvent.target).val()), SEARCH_DELAY);
       }
 
       /**
@@ -270,6 +312,7 @@
        * @private
        */
       function _search(keyword) {
+        scope.searchKeyword = keyword;
         var start;
         var result = [];
         keyword = _.trim(keyword);
