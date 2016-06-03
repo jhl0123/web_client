@@ -70,7 +70,7 @@
   margin: 1px 0 0 0;
   z-index: 0;
 
-  box-shadow: 0 0 3px 0px rgba(5, 35, 60, 0.15);
+  box-shadow: 0 0 3px 0px rgba(5, 35, 60, 0.07);
   
   -webkit-transition: margin ease-out 0.35s;
   -moz-transition: margin ease-out 0.35s;
@@ -80,6 +80,9 @@
 }
 .lpanel-list__users .lpanel-list__header {
   margin-top: -1px;
+}
+.lpanel-list__users > div {
+  overflow: hidden;
 }
 .lpanel-list__header.topic-header {
   z-index: 1;
