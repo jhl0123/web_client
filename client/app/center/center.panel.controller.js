@@ -446,6 +446,7 @@
     function _search() {
       _hideContents();
       _reset();
+      console.log('MessageQuery.hasSearchLinkId()', MessageQuery.hasSearchLinkId());
       _isFromSearch = true;
       _messageCollection.reset();
       _messageCollection.request();
@@ -556,19 +557,21 @@
      */
     function _adjustScroll() {
       // console.log('::updateScroll')
-      if (_isFromSearch && MessageQuery.hasSearchLinkId()) {
-        _findMessageDomElementById(MessageQuery.get('linkId'), true);
-        MessageQuery.clearSearchLinkId();
-        _isFromSearch = false;
-      } else if (!$scope.isInitializeRender) {
-        _scrollAfterInitialLoad();
-        MessageQuery.clearSearchLinkId();
-      } else if (_isLoadingNewMessages()) {
-        _animateBackgroundColor($('#' + _messageCollection.getFirstLinkId()));
-      } else if (_isLoadingOldMessages()) {
-        _scrollAfterRenderOldMessages();
+      if ($scope.status.isInitialRequestSuccess) {
+        if (_isFromSearch && MessageQuery.hasSearchLinkId()) {
+          _findMessageDomElementById(MessageQuery.get('linkId'), true);
+          MessageQuery.clearSearchLinkId();
+          _isFromSearch = false;
+        } else if (!$scope.isInitializeRender) {
+          _scrollAfterInitialLoad();
+          MessageQuery.clearSearchLinkId();
+        } else if (_isLoadingNewMessages()) {
+          _animateBackgroundColor($('#' + _messageCollection.getFirstLinkId()));
+        } else if (_isLoadingOldMessages()) {
+          _scrollAfterRenderOldMessages();
+        }
+        MessageQuery.reset();
       }
-      MessageQuery.reset();
     }
 
     /**
