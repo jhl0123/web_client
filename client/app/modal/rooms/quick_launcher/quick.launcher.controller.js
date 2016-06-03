@@ -9,9 +9,9 @@
     .controller('QuickLauncherCtrl', QuickLauncherCtrl);
 
   /* @ngInject */
-  function QuickLauncherCtrl($rootScope, $scope, $state, $filter, UnreadBadge, EntityHandler, centerService,
-                             memberService, currentSessionHelper, entityheaderAPIservice, jndPubSub, modalHelper,
-                             BotList, RoomTopicList) {
+  function QuickLauncherCtrl($scope, $state, $filter, UnreadBadge, EntityHandler, centerService, memberService,
+                             currentSessionHelper, entityheaderAPIservice, jndPubSub, modalHelper, BotList,
+                             RoomTopicList, AnalyticsHelper) {
     _init();
 
     /**
@@ -79,6 +79,11 @@
         if (room.type === 'channels') {
           if (RoomTopicList.get(room.id, true)) {
             // join한 topic
+
+            AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_JOIN, {
+              ERROR_CODE: ''
+            });
+
             _joinRoom(room);
           } else {
             if (!$scope.isLoading) {
@@ -86,6 +91,8 @@
 
               entityheaderAPIservice.joinChannel(room.id)
                 .success(function () {
+                  AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_ENTER);
+
                   _joinRoom(room);
                 })
                 .finally(function() {

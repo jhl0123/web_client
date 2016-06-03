@@ -74,7 +74,7 @@
       $scope.openRightPanel = openRightPanel;
       $scope.showConnect = showConnect;
 
-      $scope.openQuickLauncher = openQuickLauncher;
+      $scope.onJumpButtonClick = onJumpButtonClick;
       $scope.quickLauncherButtonTooltip = getQuickLauncherButtonTooltip();
 
       RightPanel.initTabs();
@@ -345,9 +345,22 @@
     }
 
     /**
-     * open quick launcher
+     * jump button click
      */
-    function openQuickLauncher() {
+    function onJumpButtonClick() {
+      AnalyticsHelper.track(AnalyticsHelper.EVENT.BUTTON_CLICK, {
+        BUTTON_NAME: 'Jump Modal',
+        BUTTON_POSITION: 'Header'
+      });
+
+      _openQuickLauncher();
+    }
+
+    /**
+     * open quick launcher
+     * @private
+     */
+    function _openQuickLauncher() {
       quickLauncherModal = modalHelper.openQuickLauncherModal();
 
       quickLauncherModal.opened.then(function() {
@@ -369,7 +382,11 @@
       } else {
         timerOpenQuickLauncher = $timeout.cancel(timerOpenQuickLauncher);
         $timeout(function() {
-          openQuickLauncher();
+          AnalyticsHelper.track(AnalyticsHelper.EVENT.KEY_UP, {
+            KEY_UP_RESULT: 'Jump Modal'
+          });
+
+          _openQuickLauncher();
         }, 50);
       }
     }
