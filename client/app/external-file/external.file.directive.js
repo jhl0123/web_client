@@ -12,7 +12,8 @@
     return {
       restrict: 'A',
       scope: {
-        fileData: '='
+        fileData: '=',
+        fileId: '@'
       },
       link: link
     };
@@ -29,6 +30,16 @@
        */
       function _init() {
         _attachDomEvents();
+        _attachScopeEvents();
+      }
+
+      /**
+       * scope 이벤트를 바인딩한다.
+       * @private
+       */
+      function _attachScopeEvents() {
+        scope.$on('jndWebSocketFile:externalFileShared', _onExternalFileStatusChange);
+        scope.$on('jndWebSocketFile:externalFileUnShared', _onExternalFileStatusChange);
       }
 
       /**
@@ -52,6 +63,18 @@
           });
         } else {
           _setExternalShare();
+        }
+      }
+
+      /**
+       * 외부 파일 공유 상태 변경 소켓 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      function _onExternalFileStatusChange(angularEvent, socketEvent) {
+        if (socketEvent.data.messageId === scope.fileId) {
+          _.extend(scope.fileData, socketEvent.data.fileData);
         }
       }
 

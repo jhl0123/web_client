@@ -148,6 +148,9 @@
         this._scope.$on('NetInterceptor:disconnect', _.bind(this._cancelRequest, this));
         this._scope.$on('NetInterceptor:onGatewayTimeoutError', _.bind(this._check, this));
         this._scope.$on('jndWebSocket:connect', _.bind(this._check, this));
+
+        this._scope.$on('jndWebSocketFile:externalFileShared', _.bind(this._onExternalFileStatusChange, this));
+        this._scope.$on('jndWebSocketFile:externalFileUnShared', _.bind(this._onExternalFileStatusChange, this));
       },
 
       /**
@@ -196,6 +199,26 @@
         }
       },
 
+      /**
+       * 외부 파일 공유 해제 시 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      _onExternalFileStatusChange: function(angularEvent, socketEvent) {
+        var messageId = socketEvent.data.messageId;
+        var fileData = socketEvent.data.fileData;
+        var msg = this.getByMessageId(messageId);
+        var comments = this.getByFeedbackId(messageId);
+
+        if (msg) {
+          _.extend(msg.message.content, fileData);
+        }
+        _.forEach(comments, function(comment) {
+          _.extend(comment.feedback.content, fileData);
+        }, this);
+      },
+      
       /**
        * message 삭제 이벤트 핸들러
        * @param {object} angularEvent
