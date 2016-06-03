@@ -76,8 +76,8 @@
   display: inline-block;
 }
 
-.comment-item-action.comment-item-action-more {
-  padding-right: 3px;
+.comment-item-action:last-child {
+  padding-right: 8px;
 }
 
 .comment-item-header__action {
@@ -125,7 +125,7 @@
 
 .comment-item-body .create-time {
   display: inline;
-  margin-left: 0.25em;
+  margin-left: 0.75em;
 }
 
 .comment-item-body .comment .mention,

@@ -35,9 +35,9 @@
 }
 .topic-folder.has-folder:hover,
 .topic-folder.has-folder.open {
-  background: rgba(220,235,245,0.25);
-  border-top: 1px solid #E2E9EF;
-  border-bottom: 1px solid #E2E9EF;
+  background: #FAFAFA;
+  border-top: 1px solid #D5DADB;
+  border-bottom: 1px solid #D5DADB;
 }
 .topic-folder.has-folder:hover .topic-folder-area-icon, 
 .topic-folder.has-folder:hover .topic-folder-title-text,
