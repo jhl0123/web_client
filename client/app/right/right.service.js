@@ -9,7 +9,7 @@
     .service('RightPanel', RightPanel);
 
   /* @ngInject */
-  function RightPanel($state) {
+  function RightPanel($state, jndPubSub) {
     var _that = this;
     var _tabs = {
       files: {
@@ -32,6 +32,22 @@
 
     var _tail;
 
+    _that.initTabs = initTabs;
+
+    _that.isOpen = isOpen;
+    _that.isOpenFileDetail = isOpenFileDetail;
+
+    _that.closeTabs = closeTabs;
+
+    _that.getTabStatus = getTabStatus;
+    _that.getActiveTab = getActiveTab;
+    _that.getStateName = getStateName;
+
+    _that.getTail = getTail;
+    _that.setTail = setTail;
+
+    _that.pubRendered = pubRendered;
+
     _init();
 
     /**
@@ -39,19 +55,6 @@
      * @private
      */
     function _init() {
-      _that.initTabs = initTabs;
-
-      _that.isOpen = isOpen;
-      _that.isOpenFileDetail = isOpenFileDetail;
-
-      _that.closeTabs = closeTabs;
-
-      _that.getTabStatus = getTabStatus;
-      _that.getActiveTab = getActiveTab;
-      _that.getStateName = getStateName;
-
-      _that.getTail = getTail;
-      _that.setTail = setTail;
     }
 
     /**
@@ -139,6 +142,13 @@
      */
     function setTail(value) {
       _tail = value;
+    }
+
+    /**
+     * pub rendered
+     */
+    function pubRendered() {
+      jndPubSub.pub('RightPanel:rendered');
     }
   }
 })();

@@ -1,0 +1,42 @@
+.dnd-not-support {
+  display: block;
+}
+
+.dnd-over .dnd-over-content {
+  display: block;
+}
+
+.dnd-over-content {
+  display: none;
+  z-index: 10;
+}
+.dnd-over-content .dnd-over-border,
+.dnd-over-content .dnd-over-area,
+.dnd-over-content .dnd-over-msg {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1010;
+}
+
+.dnd-over-content .dnd-over-border {
+  border: 5px solid rgba(0, 166, 233, 0.5);
+}
+
+.dnd-over-content .dnd-over-msg {
+  margin: auto;
+  width: 100%;
+  height: 0;
+  text-align: center;
+}
+.dnd-over-content .dnd-over-msg>span {
+  padding: 3px 5px;
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  height: 35px;
+  font-size: 16px;
+  background-color: rgba(21, 74, 103, 0.8);
+}

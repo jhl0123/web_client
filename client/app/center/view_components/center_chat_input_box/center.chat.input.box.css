@@ -17,11 +17,11 @@
   line-height: 26px;
   -webkit-transition: all .2s ease-out;
   transition: all .2s ease-out;
-  box-shadow: 0 0 0 1px #bfbfbf;
+  box-shadow: 0 0 0 1px #C7CFD8;
   border-radius: 50%;
   
-  background-color: #f9f9f9;
-  color: #7b7b7b;
+  background-color: #FFF;
+  color: #8AA2B5;
 }
 
 .file-upload-wrapper .icon-upload-button:hover {
@@ -108,13 +108,14 @@
 /* message input wrapper */
 .center-chat-input-container .message-input-wrapper {
   margin: 6px 9px 9px 58px;
-  border: 1px solid #e1e1e1;
+  border: 1px solid #D6D8E0;
   border-radius: 3px;
   background-color: #fff;
   position: relative;
 }
 
-#message-input {
+.comment-input,
+.message-input {
   padding-top:5px;
   padding-left: 8px;
   width: 100%;
@@ -132,16 +133,19 @@
   border-radius: 3px;
 }
 
-#message-input.with-emoji-menu {
+.comment-input.with-emoji-menu,
+.message-input.with-emoji-menu {
   padding:9px 30px 9px 8px
 }
 
-#message-input:focus{
+.comment-input:focus,
+.message-input:focus{
   -webkit-box-shadow:none;
   box-shadow:none;
 }
 
-#message-input.offline{
+.comment-input.offline,
+.message-input.offline{
   background-color:#fdf1c1
 }
 
@@ -329,7 +333,7 @@
   width: 34px;
   height: 34px;
   background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(208, 236, 237, 0.9);
+  border: 1px solid #CBDCEA;
   border-radius: 10px;
   padding: 6px 6px 6px 7px;
 }

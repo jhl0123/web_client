@@ -27,6 +27,20 @@
 
       var _fileIcon = $filter('fileIcon')(_content);
 
+      // preview width
+      scope.width = undefined;
+
+      // preview height
+      scope.height = undefined;
+
+      // preview orientation
+      scope.orientation = undefined;
+
+      scope.onImageClick = onImageClick;
+      scope.onImageLoad = onImageLoad;
+      scope.onExternalShareClick = onExternalShareClick;
+      scope.loadPdf = loadPdf;
+
       _init();
 
       /**
@@ -34,11 +48,6 @@
        * @private
        */
       function _init() {
-        scope.onImageClick = onImageClick;
-        scope.onImageLoad = onImageLoad;
-        scope.onExternalShareClick = onExternalShareClick;
-        scope.loadPdf = loadPdf;
-        
         if (_content.extraInfo) {
           scope.width = _content.extraInfo.width;
           scope.height = _content.extraInfo.height;

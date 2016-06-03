@@ -1,30 +1,32 @@
 /**
- * @fileoverview file detail의 meta directive
+ * @fileoverview file detail의 shared directive
  */
 (function() {
   'use strict';
 
   angular
     .module('jandiApp')
-    .directive('fileDetailMeta', fileDetailMeta);
+    .directive('fileDetailShared', fileDetailMeta);
 
   /* @ngInject */
-  function fileDetailMeta($state, $filter, AnalyticsHelper, analyticsService, Dialog, EntityHandler,
+  function fileDetailMeta($filter, $state, $timeout, AnalyticsHelper, analyticsService, Dialog, EntityHandler,
                           entityheaderAPIservice, fileAPIservice, jndPubSub, RoomTopicList) {
     return {
+      require: '^fileDetailContent',
       restrict: 'E',
       replace: true,
-      scope: {
-        file: '=',
-        isArchivedFile: '=',
-        isInvalidRequest: '='
-      },
-      templateUrl : 'app/right/file-detail/meta/file.detail.meta.html',
+      templateUrl : 'app/right/file-detail/shared/file.detail.shared.html',
       link: link
     };
 
-    function link(scope) {
+    function link(scope, el, attrs, ctrl) {
       var _unsharedForMe;
+
+      // 공유 토픽을 가지고 있는지 여부
+      scope.hasTopic = undefined;
+
+      scope.onClickSharedEntity = onClickSharedEntity;
+      scope.onClickUnshare = onClickUnshare;
 
       _init();
 
@@ -33,14 +35,7 @@
        * @private
        */
       function _init() {
-        var file = scope.file;
-
         if (!scope.isInvalidRequest) {
-          scope.fileIcon = $filter('fileIcon')(file.content);
-
-          scope.onClickSharedEntity = onClickSharedEntity;
-          scope.onClickUnshare = onClickUnshare;
-
           _setShared();
 
           _attachEvents();
@@ -52,8 +47,8 @@
        * @private
        */
       function _attachEvents() {
-        scope.$on('fileShared', _onFileShared);
-        scope.$on('fileUnshared', _onFileUnshared);
+        scope.$on('jndWebSocketFile:fileShared', _onFileShared);
+        scope.$on('jndWebSocketFile:fileUnshared', _onFileUnshared);
 
         scope.$on('onChangeShared', _onChangeShared);
 
@@ -168,6 +163,12 @@
 
         file.extShared = fileAPIservice.updateShared(file);
         scope.hasTopic = !!file.extShared.length;
+
+        // extShared에 값이 설정되고 rendering이 완료된 다음 file detail body element의 높이값을 재설정 해야한다.
+        $timeout(function() {
+          ctrl.resizeFileDetailBody();
+          ctrl.setCommentInputLayout();
+        });
       }
 
       /**

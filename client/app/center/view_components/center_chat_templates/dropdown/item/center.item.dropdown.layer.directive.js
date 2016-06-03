@@ -20,6 +20,7 @@
     };
 
     function link(scope, el, attr, ctrl) {
+      var _jqMsgsContainer = $('#msgs-container');
       var _jqTarget;
       var _timerWrap;
       var _timer;
@@ -117,6 +118,12 @@
         var top = offset.top - _jqTarget.outerHeight() + $('#msgs-container').scrollTop() - parentOffset.top - 8;
 
         top = top < 0 ? 0 : top;
+
+        if (_jqMsgsContainer.offset().left > left - el.width()) {
+          // container에 가려서 dropdown menu가 안보임
+
+          el.addClass('left-over');
+        }
 
         _jqTarget.css({
           left: left + 'px',

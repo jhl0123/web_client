@@ -246,6 +246,12 @@ msgstr "議題"
 msgid "@comment-all-desc"
 msgstr "顯示{{commentCount}}則留言"
 
+#: client/app/tutorial/popup/tutorial.main.html
+#: client/app/tutorial/popup/view_components/tutor/tutorial.tutor.html
+#: client/app/tutorial/welcome/tutorial.welcome.html
+msgid "@common_skip_all"
+msgstr "跳過使用教學"
+
 #: client/app/modal/teams/team_member_list/team.member.list.html
 msgid "@common-active-member"
 msgstr "現行成員"
@@ -285,6 +291,10 @@ msgstr "留言"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-connect-setting"
 msgstr "JANDI Connect 設定"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-connection-lost"
+msgstr "連線中斷。自動重新連結"
 
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@common-connection-retry"
@@ -597,6 +607,10 @@ msgid "@common-new-message"
 msgstr "新訊息"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-no"
+msgstr "否"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-off"
 msgstr "關閉"
 
@@ -775,6 +789,10 @@ msgid "@common-visit-homepage"
 msgstr "造訪首頁"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-yes"
+msgstr "是"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-zoom-in"
 msgstr "放大"
 
@@ -785,12 +803,6 @@ msgstr "縮小"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@common-zoom-reset"
 msgstr "原始尺寸"
-
-#: client/app/tutorial/popup/tutorial.main.html
-#: client/app/tutorial/popup/view_components/tutor/tutorial.tutor.html
-#: client/app/tutorial/welcome/tutorial.welcome.html
-msgid "@common_skip_all"
-msgstr "跳過使用教學"
 
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@confirm-kickout"
@@ -1008,6 +1020,10 @@ msgstr "預覽檔案"
 msgid "@filecard-button-preview-tooltip"
 msgstr "全螢幕預覽"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@filecard-unshared-file"
+msgstr "檔案已取消分享"
+
 #: client/app/left/topics/topics.html
 msgid "@folder-enter-name"
 msgstr "鍵入資料夾名稱"
@@ -1143,6 +1159,10 @@ msgid "@integration-title-google-drive"
 msgstr "從Google雲端硬碟上傳"
 
 #: client/app/modal/teams/team_invite/team.invite.html
+msgid "@invitation_success_copy_link"
+msgstr "成員邀請的連結已複製到剪貼簿"
+
+#: client/app/modal/teams/team_invite/team.invite.html
 msgid "@invitation-already-member"
 msgstr "此電子郵箱已為 {{invitedTeamName}} 的成員"
 
@@ -1168,10 +1188,6 @@ msgstr "邀請連結已關閉。"
 #: client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.html
 msgid "@invitation-link-desc"
 msgstr "或者直接轉發此連結"
-
-#: client/app/modal/teams/team_invite/team.invite.html
-msgid "@invitation_success_copy_link"
-msgstr "成員邀請的連結已複製到剪貼簿"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jandi-bot-role"
@@ -2142,6 +2158,21 @@ msgid "@login-reset-password"
 msgstr "忘了密碼？"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-button-download"
+msgstr "下載"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-desc"
+msgstr ""
+"在經過審慎的評估過後，為了能提供服務更穩定、功能更完善且具有自動更新版本功能"
+"的應用程式，我們決定搬移Mac App Store！享受新的應用程式，請直接下載並將檔案移"
+"至Finder的「應用程式」中，新版本將會自動覆蓋舊版本！"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macappupdate-title"
+msgstr "新版本上線"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@managemembers-dropdown-pending"
 msgstr "未加入成員"
 
@@ -2193,6 +2224,10 @@ msgstr "删除"
 #: client/app/center/center.html
 msgid "@message-deleted"
 msgstr "訊息已刪除"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@message-exceeded-max-length"
+msgstr "可填入最多5000字"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@message-mention"
@@ -2366,6 +2401,14 @@ msgstr "放大 (+)"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@pdfviewer-tooltip-zoomout"
 msgstr "縮小 (-)"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@placeholder-input-comment"
+msgstr "輸入討論（Shift+Enter 進行換行）"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@placeholder-input-message"
+msgstr "輸入訊息（Shift+Enter 進行換行）"
 
 #: client/app/left/left.html
 msgid "@privateGroup"
@@ -2716,6 +2759,10 @@ msgid "@socket-connection-lost"
 msgstr "您的電腦與 JANDI 伺服器中斷連線，我們正嘗試重新連線，請您稍後..."
 
 #: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@socket-connection-retry"
+msgstr "您的電腦與 JANDI 伺服器中斷連線，我們正嘗試重新連線，請您稍後..."
+
+#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@sounds-arise"
 msgstr "雙音"
 
@@ -2867,6 +2914,7 @@ msgstr ""
 msgid "@team-invite-invalid-email"
 msgstr "電子郵箱格式不正確"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/modal/teams/team_invite/team.invite.html
 msgid "@team-invite-link-copy-desc"
 msgstr "點擊 Ctrl+C 複製邀請連結並分享給工作夥伴"
@@ -2962,189 +3010,6 @@ msgstr "開啟電腦版的推撥通知"
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@turn-on-topic-alarm"
 msgstr "開啟議題推播通知"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-click-blink"
-msgstr "點擊跳動的標記來查看一下吧！"
-
-#: client/app/modal/change_log/changeLog.html
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-done"
-msgstr "知道了！"
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-msg1"
-msgstr ""
-"所有分享過的檔案都在檔案庫裡。想分享、留言、下載或刪除檔案，只需要在選定檔案"
-"後，將點擊右邊的「ᵒᵒᵒ」即可。"
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-msg2"
-msgstr ""
-"想找到封塵已久的檔案，透過鍵入關鍵字或篩選功能中“檔案類別、曾經被誰分享、曾經"
-"分享在哪個議題下”的項目進行搜尋。"
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-msg3"
-msgstr ""
-"收放搜尋欄好簡單！點擊右上角的「搜尋」開啟關鍵字搜尋功能；點擊「關閉」即可收"
-"納搜尋欄。"
-
-#: client/app/modal/change_log/changeLog.msg.search.html
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-file-title"
-msgstr "檔案庫和搜尋欄"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-message-file-title"
-msgstr "送出訊息及上傳檔案"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal1-content"
-msgstr ""
-"使用議題資料夾歸納冗長的議題列表！拖拉議題放置於另一個議題，即可建立新的資料"
-"夾；另外，將議題拖拉至現有資料夾中，即完成歸納"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal1-title"
-msgstr "使用資料夾管理議題"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal2-content"
-msgstr "標示重要檔案或代辦項目"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal2-title"
-msgstr "標示項目"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal3-content"
-msgstr "輸入\"@\"提醒成員新任務或注意事項，同時瀏覽所有自己曾被提及的對話"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal3-title"
-msgstr "成員提及"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal4-content"
-msgstr "進階搜尋幫助你縮小搜尋範圍"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal4-title"
-msgstr "搜尋歷史訊息"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal5-content"
-msgstr "使用快搜(Ctrl/Cmd+J)快速切換議題或對話成員"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal5-title"
-msgstr "迅速切換討論視窗"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal6-content"
-msgstr ""
-"成為專業的JANDI哲人，使用快捷鍵快速執行如多檔案上傳(Ctrl/Cmd+U)等重複的動作"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal6-title"
-msgstr "快捷鍵"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal7-content"
-msgstr ""
-"串聯你的Google日曆、Trello、JIRA、GitHub及其他第三方平台，並將所有通知連結到"
-"JANDI"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-modal7-title"
-msgstr "JANDI Connect"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-msg-explanation"
-msgstr ""
-"要發送訊息，只需在文字欄中開始打字然後按‘Enter’。要上傳檔案，點擊左側的按鈕和"
-"選擇所需的檔案路徑，或任意拖拽檔案到中間留言板上的任何地方。"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-skip"
-msgstr "跳過教學示範"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-slide-1"
-msgstr ""
-"一下社群媒體、一下私人通訊軟體，頁面跳來跳去，訊息檔案散落四處，工作變得好"
-"累？"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-slide-2"
-msgstr "儘管無法獲得輕鬆的工作，但我們可以選擇輕鬆工作！"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-slide-3"
-msgstr "現在就開啟<strong>JANDI</strong>，開始輕鬆工作！"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-tips"
-msgstr "TIPS"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-1"
-msgstr "建立議題為你的專案/團隊/任務打造討論空間"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-2"
-msgstr "上傳檔案至討論區"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-3"
-msgstr "使用貼圖緩和嚴肅的工作氣氛"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@tutorial-tooltip-4"
-msgstr "開啟右視窗瀏覽所有檔案、標示項目和其他功能"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-dm-explanation"
-msgstr ""
-"私訊是介於兩位成員之間的私人、一對一的對話。當您收到一個新訊息，私訊會自動出"
-"現，或者您也可以透過點擊‘+添加’啓動對話。您也可以關閉並隱藏私訊，同時仍然保留"
-"訊息歷史直到對話重新啟動。"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-group-explanation"
-msgstr ""
-"私人議題是僅限邀請機制，分享的資訊僅對參與者顯示。透過點擊‘+添加’來啟動新的私"
-"人議題。"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-title"
-msgstr "‘公開議題’、‘私人議題’及‘私訊’有什麽不同？"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-topic-topic-explanation"
-msgstr ""
-"’議題‘是以社群爲主的討論及分享任何事物的空間 - 專案、更新、會議行程、午餐的建"
-"議等等。公開議題是開放給您團隊上的任何人來參與。您可以透過‘+添加’來建立您自己"
-"的，或則透過點擊‘☰瀏覽’加入其它現行的公開議題。"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-tour"
-msgstr "繼續 »"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-welcome-intro"
-msgstr ""
-"JANDI要讓您的團隊溝通更加無縫和緊密。以下您瞭解JANDI而需要知道的三個最重要的"
-"提示。"
-
-#: client/app/tutorial/tutorial.html
-msgid "@tutorial-welcome-title"
-msgstr "歡迎使用JANDI!"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_awesome"
@@ -3340,6 +3205,189 @@ msgstr "想繼續上次未完成的使用教學嗎？"
 msgid "@tutorial_welcome_title"
 msgstr "歡迎 {{username}}"
 
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-click-blink"
+msgstr "點擊跳動的標記來查看一下吧！"
+
+#: client/app/modal/change_log/changeLog.html
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-done"
+msgstr "知道了！"
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-msg1"
+msgstr ""
+"所有分享過的檔案都在檔案庫裡。想分享、留言、下載或刪除檔案，只需要在選定檔案"
+"後，將點擊右邊的「ᵒᵒᵒ」即可。"
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-msg2"
+msgstr ""
+"想找到封塵已久的檔案，透過鍵入關鍵字或篩選功能中“檔案類別、曾經被誰分享、曾經"
+"分享在哪個議題下”的項目進行搜尋。"
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-msg3"
+msgstr ""
+"收放搜尋欄好簡單！點擊右上角的「搜尋」開啟關鍵字搜尋功能；點擊「關閉」即可收"
+"納搜尋欄。"
+
+#: client/app/modal/change_log/changeLog.msg.search.html
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-file-title"
+msgstr "檔案庫和搜尋欄"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-message-file-title"
+msgstr "送出訊息及上傳檔案"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal1-content"
+msgstr ""
+"使用議題資料夾歸納冗長的議題列表！拖拉議題放置於另一個議題，即可建立新的資料"
+"夾；另外，將議題拖拉至現有資料夾中，即完成歸納"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal1-title"
+msgstr "使用資料夾管理議題"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal2-content"
+msgstr "標示重要檔案或代辦項目"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal2-title"
+msgstr "標示項目"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal3-content"
+msgstr "輸入\"@\"提醒成員新任務或注意事項，同時瀏覽所有自己曾被提及的對話"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal3-title"
+msgstr "成員提及"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal4-content"
+msgstr "進階搜尋幫助你縮小搜尋範圍"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal4-title"
+msgstr "搜尋歷史訊息"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal5-content"
+msgstr "使用快搜(Ctrl/Cmd+J)快速切換議題或對話成員"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal5-title"
+msgstr "迅速切換討論視窗"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal6-content"
+msgstr ""
+"成為專業的JANDI哲人，使用快捷鍵快速執行如多檔案上傳(Ctrl/Cmd+U)等重複的動作"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal6-title"
+msgstr "快捷鍵"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal7-content"
+msgstr ""
+"串聯你的Google日曆、Trello、JIRA、GitHub及其他第三方平台，並將所有通知連結到"
+"JANDI"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-modal7-title"
+msgstr "JANDI Connect"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-msg-explanation"
+msgstr ""
+"要發送訊息，只需在文字欄中開始打字然後按‘Enter’。要上傳檔案，點擊左側的按鈕和"
+"選擇所需的檔案路徑，或任意拖拽檔案到中間留言板上的任何地方。"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-skip"
+msgstr "跳過教學示範"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-slide-1"
+msgstr ""
+"一下社群媒體、一下私人通訊軟體，頁面跳來跳去，訊息檔案散落四處，工作變得好"
+"累？"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-slide-2"
+msgstr "儘管無法獲得輕鬆的工作，但我們可以選擇輕鬆工作！"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-slide-3"
+msgstr "現在就開啟<strong>JANDI</strong>，開始輕鬆工作！"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-tips"
+msgstr "TIPS"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-1"
+msgstr "建立議題為你的專案/團隊/任務打造討論空間"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-2"
+msgstr "上傳檔案至討論區"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-3"
+msgstr "使用貼圖緩和嚴肅的工作氣氛"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@tutorial-tooltip-4"
+msgstr "開啟右視窗瀏覽所有檔案、標示項目和其他功能"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-dm-explanation"
+msgstr ""
+"私訊是介於兩位成員之間的私人、一對一的對話。當您收到一個新訊息，私訊會自動出"
+"現，或者您也可以透過點擊‘+添加’啓動對話。您也可以關閉並隱藏私訊，同時仍然保留"
+"訊息歷史直到對話重新啟動。"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-group-explanation"
+msgstr ""
+"私人議題是僅限邀請機制，分享的資訊僅對參與者顯示。透過點擊‘+添加’來啟動新的私"
+"人議題。"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-title"
+msgstr "‘公開議題’、‘私人議題’及‘私訊’有什麽不同？"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-topic-topic-explanation"
+msgstr ""
+"’議題‘是以社群爲主的討論及分享任何事物的空間 - 專案、更新、會議行程、午餐的建"
+"議等等。公開議題是開放給您團隊上的任何人來參與。您可以透過‘+添加’來建立您自己"
+"的，或則透過點擊‘☰瀏覽’加入其它現行的公開議題。"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-tour"
+msgstr "繼續 »"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-welcome-intro"
+msgstr ""
+"JANDI要讓您的團隊溝通更加無縫和緊密。以下您瞭解JANDI而需要知道的三個最重要的"
+"提示。"
+
+#: client/app/tutorial/tutorial.html
+msgid "@tutorial-welcome-title"
+msgstr "歡迎使用JANDI!"
+
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@unread-bookmark-message"
 msgstr "以下為未讀訊息"
@@ -3492,9 +3540,6 @@ msgstr "周三"
 #~ msgid "@common-more"
 #~ msgstr "瀏覽"
 
-#~ msgid "@common-files"
-#~ msgstr "檔案"
-
 #~ msgid "@ch-menu-rename"
 #~ msgstr "重新命名議題"
 
@@ -3509,9 +3554,6 @@ msgstr "周三"
 
 #~ msgid "@tutorial_congratulation"
 #~ msgstr "恭喜 {{username}}！"
-
-#~ msgid "@placeholder-input-message"
-#~ msgstr "輸入訊息（Shift+Enter 進行換行）"
 
 #, fuzzy
 #~ msgid "@announcement-delete"

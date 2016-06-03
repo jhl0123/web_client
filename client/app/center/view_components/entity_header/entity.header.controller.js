@@ -622,33 +622,8 @@
                 $scope.connectInfo = data;
               });
           }
-        } else {
-          // currentEntity.entityId를 전달 못받을 수도 있다. 예를들어, DM의 경우 currentEntity 는 member object에서 room 정보를
-          // 포함하는 확장된 값을 사용하는데 사용자가 상대방과 DM에서 메세지를 주고 받다가 DM리스트에서 삭제한 경우 currentEntity는
-          // member object로서의 역활만 가능하다. 그러므로 DM에 해당하는 entityId를 알 수 있는 시점에 connect 정보를 요청해야 한다.
-          // center.controller에 messageAPIservice.getMessages 호출한 응답값으로 entityId를 알 수 있으므로 여기에 해당 처리의
-          // 코드를 작성한다.
-
-          _attachEntityIdChange();
         }
       }
-    }
-
-    /**
-     * attach entityId change event handler
-     * DM이고 해당 DM의 roomId를 entityMap에서 읽을 수 없을때 사용함
-     * @private
-     */
-    function _attachEntityIdChange() {
-      var entityIdChanged;
-      entityIdChanged = $scope.$on('centerService:roomIdChanged', function (angularEvent, entityId) {
-        requestConnectInfo && requestConnectInfo.abort();
-        requestConnectInfo = entityHeader.getConnectInfo(entityId)
-          .success(function(data) {
-            $scope.connectInfo = data;
-            entityIdChanged();
-          });
-      });
     }
 
     /**

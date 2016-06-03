@@ -28,7 +28,7 @@
        * @private
        */
       function _init() {
-        var jqContent = $('<div>' + scope.content + '<div>');
+        var jqContent = $('<div>' + scope.content + '</div>');
 
         JndUtil.safeCompile(scope, jqContent);
 

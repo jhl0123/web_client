@@ -9,7 +9,7 @@
     .directive('fileDetailComments', fileDetailComments);
 
   /* @ngInject */
-  function fileDetailComments($filter, $state, Dialog, FileDetail, jndPubSub, JndUtil, memberService) {
+  function fileDetailComments($filter, $state, DateFormatter, Dialog, FileDetail, jndPubSub, JndUtil, memberService) {
     return {
       restrict: 'E',
       replace: true,
@@ -28,6 +28,13 @@
     function link(scope, el) {
       var _commentMap = {};
 
+      scope.hasOwnComment = hasOwnComment;
+      scope.starComment = starComment;
+      scope.deleteComment = deleteComment;
+
+      scope.retry = retry;
+      scope.deleteSendingComment = deleteSendingComment;
+
       _init();
 
       /**
@@ -41,13 +48,6 @@
 
           _commentMap[comment.id] = comment;
         });
-
-        scope.hasOwnComment = hasOwnComment;
-        scope.starComment = starComment;
-        scope.deleteComment = deleteComment;
-
-        scope.retry = retry;
-        scope.deleteSendingComment = deleteSendingComment;
 
         _attachScopeEvents();
         _attachDomEvents();
@@ -125,9 +125,7 @@
        * @param {object} $event
        */
       function starComment($event) {
-        setTimeout(function() {
-          $($event.target).parents('.comment-item-header__action').find('.comment-star i').trigger('click');
-        });
+        $($event.target).parents('.comment-item-header__action').find('.comment-star i').trigger('click');
       }
 
       /**
@@ -154,9 +152,25 @@
 
       /**
        * comment 를 삭제한다.
-       * @param {number} commentId 코멘트 ID
+       * @param {object} comment
        */
       function deleteComment(comment) {
+        Dialog.confirm({
+          body: $filter('translate')('@web-notification-body-messages-confirm-delete'),
+          onClose: function (result) {
+            if (result === 'okay') {
+              _deleteComment(comment);
+            }
+          }
+        });
+      }
+
+      /**
+       * comment 를 삭제한다.
+       * @param {object} comment
+       * @private
+       */
+      function _deleteComment(comment) {
         var commentId = comment.id;
         var isSticker = comment.extIsSticker;
 

@@ -6,7 +6,7 @@
     .service('markerService', markerService);
 
   /* @ngInject */
-  function markerService(publicService, memberService) {
+  function markerService(publicService, CoreUtil) {
 
     var lastLinkIdToCount;     // Map of lastLinkId - count pair
     var memberIdToLastLinkId;  // Map of memberId - lastLinkId pair
@@ -29,6 +29,9 @@
     this.resetMarkerOffset = resetMarkerOffset;
 
     this.getLastLinkIdOfMemberId = getLastLinkIdOfMemberId;
+
+    init();
+    
     /**
      * Initialize local variables.
      *
@@ -49,7 +52,7 @@
      */
     function putNewMarker(memberId, lastLinkId, localLastMessageId) {
       if (lastLinkId >= 0) {
-        if (lastLinkId > localLastMessageId) {
+        if (localLastMessageId !== -1 && lastLinkId > localLastMessageId) {
           //console.log('was going to put a marker but current market is way to ahead.')
           markerOffset++;
         } else {
@@ -89,7 +92,7 @@
     }
 
     function putLastLinkId(lastLinkId, memberId) {
-      if (lastLinkIdToCount[lastLinkId]) {
+      if (CoreUtil.pick(lastLinkIdToCount, lastLinkId)) {
         var currentObj = lastLinkIdToCount[lastLinkId];
 
         if (currentObj.members[memberId]) {
@@ -122,7 +125,7 @@
      * @returns {*}
      */
     function getLastLinkIdOfMemberId(memberId) {
-      return memberIdToLastLinkId[memberId];
+      return CoreUtil.pick(memberIdToLastLinkId, memberId);
     }
 
     /**

@@ -9,7 +9,7 @@
     .service('TextRenderer', TextRenderer);
 
   /* @ngInject */
-  function TextRenderer($filter, MessageCollection, currentSessionHelper, jndPubSub, RendererUtil, memberService) {
+  function TextRenderer($filter, MessageCacheCollection, currentSessionHelper, jndPubSub, RendererUtil, memberService) {
     var _encodeHTML = $filter('htmlEncode');
 
     var _template;
@@ -20,8 +20,17 @@
     var _templateConnectPreview;
 
     this.render = render;
-    this.delegateHandler = {
-      'click': _onClick
+    this.events = {
+      'click': [
+        {
+          currentTarget: '._textMore',
+          handler: _showMoreDropdown
+        },
+        {
+          currentTarget: '._link-preview',
+          handler: _openLinkPreviewUrl
+        }
+      ]
     };
 
     _init();
@@ -39,37 +48,41 @@
       _templateConnectPreview = Handlebars.templates['center.text.connect.preview'];
     }
 
-
     /**
-     * click 이벤트 핸들러
-     * @param clickEvent
+     * '더보기' dropdown 을 노출한다.
+     * @param {object} clickEvent
+     * @param {object} data
      * @private
      */
-    function _onClick(clickEvent) {
-      var jqTarget = $(clickEvent.target);
-      var id = jqTarget.closest('.msgs-group').attr('id');
-
-      if (jqTarget.hasClass('_textMore')) {
-        _showMoreDropdown(jqTarget, MessageCollection.get(id));
-      }
+    function _showMoreDropdown(clickEvent, data) {
+      var entityType = currentSessionHelper.getCurrentEntityType();
+      var showAnnouncement = _isShowAnnouncement(data.msg, entityType);
+      jndPubSub.pub('show:center-item-dropdown', {
+        target: data.jqTarget,
+        msg: data.msg,
+        hasStar: data.msg.hasStar,
+        isMyMessage: RendererUtil.isMyMessage(data.msg),
+        showAnnouncement: showAnnouncement
+      });
     }
 
     /**
-     * '더보기' dropdown 을 노출한다.
-     * @param {object} jqTarget
-     * @param {object} msg
+     * open link preview url
+     * @param {object} clickEvent
+     * @param {object} data
      * @private
      */
-    function _showMoreDropdown(jqTarget, msg) {
-      var entityType = currentSessionHelper.getCurrentEntityType();
-      var showAnnouncement = _isShowAnnouncement(msg, entityType);
-      jndPubSub.pub('show:center-item-dropdown', {
-        target: jqTarget,
-        msg: msg,
-        hasStar: msg.hasStar,
-        isMyMessage: RendererUtil.isMyMessage(msg),
-        showAnnouncement: showAnnouncement
-      });
+    function _openLinkPreviewUrl(clcikEvent, data) {
+      var jqLinkPreview = data.jqTarget.parents('._link-preview');
+      var href;
+      var target;
+
+      if (jqLinkPreview.length > 0) {
+        href = jqLinkPreview.data('href');
+        target = jqLinkPreview.data('target');
+
+        window.open(href, target);
+      }
     }
 
     /**
@@ -101,8 +114,10 @@
      * @returns {*}
      */
     function render(index) {
-      var msg = MessageCollection.list[index];
-      var isChild = MessageCollection.isChildText(index);
+      var messageCollection = MessageCacheCollection.getCurrent();
+      var msg = messageCollection.list[index];
+      var isChild = messageCollection.isChildText(index);
+      var isSticker = RendererUtil.isSticker(msg);
       var template = isChild ? _templateChild : _template;
 
       var linkPreview = _getLinkPreview(msg, index);
@@ -116,25 +131,53 @@
         profileCursor = 'cursor_pointer';
       }
 
-      return template({
-        html: {
-          linkPreview: linkPreview,
-          connectPreview: connectPreview
-        },
-        css: {
-          star: RendererUtil.getStarCssClass(msg.message),
-          disabledMember: RendererUtil.getDisabledMemberCssClass(msg),
-          profileCursor: profileCursor,
-          botText: _getMsgItemClass(msg)
-        },
-        hasMore: RendererUtil.hasMore(msg),
-        hasStar: RendererUtil.hasStar(msg),
-        hasLinkPreview: !!linkPreview,
-        hasConnectPreview: !!connectPreview,
-        isSticker: RendererUtil.isSticker(msg),
-        isChild: isChild,
-        msg: msg
-      });
+      return {
+        conditions: _getConditions(msg, isChild, isSticker),
+        template: template({
+          html: {
+            linkPreview: linkPreview,
+            connectPreview: connectPreview
+          },
+          css: {
+            star: RendererUtil.getStarCssClass(msg.message),
+            starIcon: msg.message.isStarred ? 'icon-star-on' : 'icon-star-off',
+            disabledMember: RendererUtil.getDisabledMemberCssClass(msg),
+            profileCursor: profileCursor
+          },
+          hasMore: RendererUtil.hasMore(msg),
+          hasStar: RendererUtil.hasStar(msg),
+          hasLinkPreview: !!linkPreview,
+          hasConnectPreview: !!connectPreview,
+          isSticker: isSticker,
+          isChild: isChild,
+          hasChild: messageCollection.hasChildText(index),
+          msg: msg
+        })
+      };
+    }
+
+    /**
+     * message의 상태들 전달함
+     * @param {object} msg
+     * @param {boolean} isChild
+     * @param {boolean} isSticker
+     * @returns {array}
+     * @private
+     */
+    function _getConditions(msg, isChild, isSticker) {
+      var conditions = ['text'];
+
+      conditions.push(_getMsgItemClass(msg));
+
+      if (isChild) {
+        conditions.push('text-child');
+      }
+
+      if (isSticker) {
+        conditions.push('sticker');
+      }
+
+      return conditions;
     }
 
     /**
@@ -164,10 +207,11 @@
      * @private
      */
     function _getLinkPreview(msg, index) {
+      var messageCollection = MessageCacheCollection.getCurrent();
       var html = '';
       var linkPreview;
 
-      if (MessageCollection.hasLinkPreview(index)) {
+      if (messageCollection.hasLinkPreview(index)) {
         if (msg.message.linkPreview.extThumbnail) {
          msg.message.linkPreview.extThumbnail.hasSuccess = RendererUtil.hasThumbnailCreated(msg.message.linkPreview);
         } else {
@@ -177,6 +221,11 @@
         }
 
         linkPreview = _templateLinkPreview({
+          css: {
+            loading: msg.message.linkPreview.extThumbnail.isWaiting ? 'is-loading': '',
+            image: msg.message.linkPreview.extThumbnail.hasSuccess ? 'has-image' : '',
+            domain: msg.message.linkPreview.domain ? 'has-domain' : ''
+          },
           html: {
             title: msg.message.linkPreview.title,
             description: msg.message.linkPreview.description,
@@ -204,12 +253,12 @@
      * @private
      */
     function _getConnectPreview(msg, index) {
+      var messageCollection = MessageCacheCollection.getCurrent();
       var html = '';
       var content = msg.message.content;
       var connectPreview;
 
-      //if (memberService.isConnectBot(msg.message.writerId) && MessageCollection.hasIntegrationPreview(index)) {
-      if (MessageCollection.hasConnectPreview(index)) {
+      if (messageCollection.hasConnectPreview(index)) {
         connectPreview = '';
 
         _.each(content.connectInfo, function(info) {

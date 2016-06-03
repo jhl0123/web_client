@@ -31,7 +31,7 @@
      * @private
      */
     function _onRoomMarkerUpdated(socketEvent) {
-      var room = EntityHandler.get(socketEvent.room.id);
+      var roomId = socketEvent.room.id;
       var marker = socketEvent.marker;
       var memberId = marker.memberId;
       var lastLinkId = marker.lastLinkId;
@@ -40,7 +40,7 @@
       markerService.updateMarker(memberId, lastLinkId);
 
       if (jndWebSocketCommon.isActionFromMe(memberId)) {
-        jndWebSocketCommon.updateMyLastMessageMarker(room.id, lastLinkId);
+        jndWebSocketCommon.updateMyLastMessageMarker(roomId, lastLinkId);
       }
       
       if (jndWebSocketCommon.isCurrentEntity(socketEvent.room)) {

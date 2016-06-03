@@ -170,6 +170,15 @@ input[type="email"] {
   transition: opacity 1.5s;
 }
 
+.opac-in-very-fast {
+  opacity: 1 !important;
+  -webkit-transition: opacity 0.15s;
+  -moz-transition: opacity 0.15s;
+  -ms-transition: opacity 0.15s;
+  -o-transition: opacity 0.15s;
+  transition: opacity 0.15s;
+}
+
 .opac-in-fast {
   opacity: 1 !important;
   -webkit-transition: opacity 0.3s;

@@ -25,7 +25,7 @@
      */
     function _init() {
       $scope.name = $attrs.name;
-      $scope.status = {
+      $scope.stickerStatus = {
         isOpen: false
       };
 
@@ -80,7 +80,7 @@
      */
     function _onToggleSticker() {
       JndUtil.safeApply($scope, function() {
-        $scope.status.isOpen = !$scope.status.isOpen;
+        $scope.stickerStatus.isOpen = !$scope.stickerStatus.isOpen;
       });
     }
 
@@ -90,7 +90,7 @@
      */
     function _onModalOpened() {
       JndUtil.safeApply($scope, function() {
-        $scope.status.isOpen = false;
+        $scope.stickerStatus.isOpen = false;
       });
     }
 
@@ -117,7 +117,7 @@
 
       if (item) {
         JndUtil.safeApply($scope, function() {
-          $scope.status.isOpen = false;
+          $scope.stickerStatus.isOpen = false;
 
           jndPubSub.pub('selectSticker:' + $scope.name, item);
         });

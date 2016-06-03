@@ -108,8 +108,8 @@
        */
       update: function(item) {
         var map = this._data.map;
-        if (map[item.id]) {
-          map[item.id] = item;
+        if (map[item[this._key]]) {
+          map[item[this._key]] = item;
           return true;
         } else {
           return false;

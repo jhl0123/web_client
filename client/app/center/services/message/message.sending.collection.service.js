@@ -10,7 +10,7 @@
     .service('MessageSendingCollection', MessageSendingCollection);
 
   /* @ngInject */
-  function MessageSendingCollection($rootScope, CoreUtil, MessageCollection, Sticker, jndPubSub) {
+  function MessageSendingCollection($rootScope, CoreUtil, Sticker, jndPubSub, MessageCacheCollection) {
     var that = this;
     var _sendingKey = 0;
     var _payloads = {};
@@ -157,9 +157,10 @@
      */
     function _prepend(payload) {
       var messageList = _getMessageList(payload);
-      messageList = MessageCollection.beforeAddMessages(messageList);
+      var messageCollection = MessageCacheCollection.getCurrent();
+      messageList = messageCollection.beforeAddMessages(messageList);
       _.forEachRight(messageList, function(msg) {
-        msg = MessageCollection.getFormattedMessage(msg);
+        msg = messageCollection.getFormattedMessage(msg);
         that.list.unshift(msg);
         jndPubSub.pub('MessageSendingCollection:prepend', msg);
       });
@@ -172,9 +173,10 @@
      */
     function _append(payload) {
       var messageList = _getMessageList(payload);
-      messageList = MessageCollection.beforeAddMessages(messageList);
+      var messageCollection = MessageCacheCollection.getCurrent();
+      messageList = messageCollection.beforeAddMessages(messageList);
       _.forEach(messageList, function(msg) {
-        msg = MessageCollection.getFormattedMessage(msg);
+        msg = messageCollection.getFormattedMessage(msg);
         that.list.push(msg);
         jndPubSub.pub('MessageSendingCollection:append', msg);
       });

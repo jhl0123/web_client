@@ -1,15 +1,15 @@
 .file-card {
   position: relative;
   padding: 8px;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid rgba(5, 35, 60, 0.1);
   min-height: 65px;
   color: #333;
-  background-color: #fff;
+  background-color: #FFF;
   cursor: pointer;
 }
 
 .file-card:hover {
-  background-color: #f2fbff;
+  background-color: #F7FBFE;;
 }
 
 .file-card .file-image {
@@ -18,15 +18,14 @@
 }
 
 .file-card .file-image .icon-wrapper {
-  background-color: #f2f2f2;
   padding: 15px;
   border-radius: 3px;
-  border: 1px solid #e1e1e1;
+  border: 1px solid rgba(5, 35, 60, 0.13);
 }
 
 .file-card .file-card-body {
   width: 350px;
-  min-height: 64px;
+  min-height: 60px;
   padding-left: 75px;
 }
 
@@ -34,6 +33,7 @@
   position: relative;
   word-wrap: break-word;
   margin: 0;
+  margin-top: -2px;
   font-size: 15px;
   line-height: 1.5em;
   max-width: 260px;
@@ -41,7 +41,9 @@
   overflow: hidden;
   white-space: nowrap;
 }
-
+.file-card-body .file-meta {
+  margin-top: 4px;
+}
 .file-card-body .file-title {
   height: 30px;
   line-height: 30px;
@@ -101,7 +103,7 @@
 }
 
 .file-card .file-star .icon-star-on {
-  color: #f9bb00;
+  color: #FBBA06;
 }
 
 .file-card .file-menu {
@@ -134,7 +136,7 @@
 .msg-file-body__img__background {
   background-color: #f1f4f8;
   border-radius: 3px;
-  box-shadow: 0 0 3px rgba(0,0,0,0.08);
+  box-shadow: 0 0 3px 0px rgba(5, 35, 60, 0.1);
 }
 
  /* LOADING BAR */
@@ -165,8 +167,11 @@
   bottom: -5px;
   padding: 2.5px;
   font-size: 16px;
+  border: 1px solid #D5DADB;
+  background-color: rgba(255,255,255,0.75);
+  box-shadow: 0 0 3px rgba(5, 35, 60, 0.13);
 }
 .file-card .external-share-btn:hover {
-  opacity: 1;
   background-color: rgba(255,255,255,1);
+  border: 1px solid rgba(5, 35, 60, 0.25);
 }

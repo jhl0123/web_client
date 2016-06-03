@@ -3,10 +3,10 @@
 var app = angular.module('jandiApp');
 
 app.controller('leftPanelController', function(
-  $scope, $state, $timeout, $q, leftpanelAPIservice, entityAPIservice, accountService,
+  $scope, $state, $timeout, $q, leftpanelAPIservice, entityAPIservice, accountService, DmHandler,
   publicService, memberService, storageAPIservice, analyticsService, currentSessionHelper, jndWebSocket, jndPubSub,
   modalHelper, UnreadBadge, AnalyticsHelper, HybridAppHelper, NotificationManager, TopicFolderModel, TopicUpdateLock,
-  JndUtil, EntityFilterMember, EntityHandler, Auth, initialPromise, JndPanelSizeStorage) {
+  JndUtil, EntityFilterMember, EntityHandler, Auth, initialPromise, JndPanelSizeStorage, MessageCacheCollection) {
 
   var _that = this;
   var _getLeftListDeferredObject;
@@ -14,7 +14,6 @@ app.controller('leftPanelController', function(
   //unread 갱신시 $timeout 에 사용될 타이머
   var _unreadTimer;
   var _isBadgeMoveLocked = false;
-  var _entityEnterTimer;
   var _hasToUpdate = false;
   // center chat timer
   var _timerUpdateCenterChat;
@@ -57,17 +56,15 @@ app.controller('leftPanelController', function(
    * @private
    */
   function _init() {
-    var responseLeftSideMenu = initialPromise[0].data;
-
     $scope.leftPanelWidth = JndPanelSizeStorage.getLeftPanelWidth();
 
     if (initialPromise[0].data) {
       publicService.showDummyLayout();
       publicService.hideInitialLoading();
-
       _attachScopeEvents();
       _attachDomEvents();
-      _initLeftSideMenuData(responseLeftSideMenu);
+      _initResponses(initialPromise);
+
     } else {
       Auth.requestAccessTokenWithRefreshToken();
     }
@@ -75,11 +72,17 @@ app.controller('leftPanelController', function(
 
   /**
    * leftSideMenu 데이터 초기화 메서드
-   * @param {object} response
+   * @param {array} responses
    * @private
    */
-  function _initLeftSideMenuData(response) {
-    _onSuccessGetLeftSideMenu(false, response);
+  function _initResponses(responses) {
+    var responseLeftSideMenu = responses[0].data;
+    var responseDmList = responses[2].data;
+    _onSuccessGetLeftSideMenu(false, responseLeftSideMenu);
+    DmHandler.parse(responseDmList);
+    
+    publicService.setInitDone();
+
     if (!$state.params.entityId) {
       _goToDefaultTopic();
     }
@@ -221,6 +224,7 @@ app.controller('leftPanelController', function(
     EntityHandler.parseLeftSideMenuData(response);
     _parseAlarmInfoCount(response.alarmInfoCount, response.alarmInfos);
     entityAPIservice.setCurrentEntityWithId(entityId);
+    MessageCacheCollection.initializeTopics();
     TopicFolderModel.update();
   }
 
@@ -232,14 +236,14 @@ app.controller('leftPanelController', function(
    */
   function _parseAlarmInfoCount(alarmInfoCnt, alarms) {
     _.each(alarms, function (alarm) {
-      var entity;
-      var entityId = alarm.entityId;
-
-      // TODO: 서버님께서 alarmCount가 0인 entity에 대해서 data를 생성해서 주시는 이유가 궁금합니다.
-      if (alarm.alarmCount != 0 && (entity = EntityHandler.get(entityId))) {
-        entityAPIservice.updateBadgeValue(entity, alarm.alarmCount);
+      var roomId = alarm.entityId;
+      var room = EntityHandler.get(roomId);
+      //초기에 DM 의 room 정보가 없으므로 현 시점에서 DM 에 대해서는 badge 값을 업데이트 할 수 없다.
+      //chats API 를 통해 badge count 를 업데이트 할 수 있다.
+      if (room) {
+        entityAPIservice.updateBadgeValue(room, alarm.alarmCount);
       }
-      memberService.setLastReadMessageMarker(entityId, alarm.lastLinkId);
+      memberService.setLastReadMessageMarker(roomId, alarm.lastLinkId);
     });
   }
 
@@ -286,14 +290,13 @@ app.controller('leftPanelController', function(
    */
   function enterEntity(entity) {
     JndUtil.safeApply($scope, function() {
-      NotificationManager.set(entity, 0);
-      HybridAppHelper.onAlarmCntChanged(entity.id, 0);
-      entity.alarmCnt = '';
+      // NotificationManager.set(entity, 0);
+      // HybridAppHelper.onAlarmCntChanged(entity.id, 0);
+      // entity.alarmCnt = '';
       $scope.entityId = entity.id;
       jndPubSub.pub('onBeforeEntityChange', entity);
     });
-    $timeout.cancel(_entityEnterTimer);
-    _entityEnterTimer = $timeout(_.bind(_doEnter, _that, entity), 10);
+    _doEnter(entity);
   }
 
   /**

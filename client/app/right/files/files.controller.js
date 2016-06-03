@@ -8,7 +8,7 @@
     .module('jandiApp')
     .controller('RightFilesCtrl', RightFilesCtrl);
 
-  function RightFilesCtrl($scope, $filter, $q, $state, $timeout, AnalyticsHelper, analyticsService, CoreUtil,
+  function RightFilesCtrl($scope, $filter, $q, $state, $timeout, AnalyticsHelper, analyticsService, RightPanel,
                           currentSessionHelper, Dialog, EntityHandler, fileAPIservice, FileDetail, JndUtil, modalHelper,
                           publicService, RoomTopicList, TopicFolderModel, UserList) {
     var _disabledMemberAddedOnSharedIn = false;
@@ -39,6 +39,7 @@
         isScrollLoading: false,
         isEndOfList: false,
         isInitDone: false,
+        isKeywordFocus: false,
 
         length: '',
         type: ''
@@ -215,10 +216,15 @@
      * @private
      */
     function _onRightPanelStatusChange() {
-      if ($scope.status.isActive && !$scope.searchStatus.isInitDone) {
-        // 아직 초기화가 진행되어 있지 않다면 전체 갱신한다.
+      if ($scope.status.isActive) {
+        if (!$scope.searchStatus.isInitDone) {
+          // 아직 초기화가 진행되어 있지 않다면 전체 갱신한다.
+          _refreshFileList();
+        }
+        _setKeywordFocus();
 
-        _refreshFileList();
+        // render 후 pub
+        $timeout(RightPanel.pubRendered);
       }
     }
 
@@ -830,6 +836,14 @@
       }
 
       return type || '';
+    }
+
+    /**
+     * 오른쪽 상단에 있는 search input box 에 focus 를 맞춘다.
+     * @type {setSearchInputFocus}
+     */
+    function _setKeywordFocus() {
+      $scope.searchStatus.isKeywordFocus = true;
     }
 
     /////////////////////////////////////////// analytics ////////////////////////////////////////////////

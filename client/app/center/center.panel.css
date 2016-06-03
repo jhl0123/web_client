@@ -1,0 +1,352 @@
+.alert-badge {
+  background-color: #ef6700;
+  border-radius: 16px;
+  font-family: "Helvetica Neue";
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFFFFF;
+  padding: 2px 5px 3px 5px;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+article {
+  padding-bottom: 10px;
+}
+
+.cpanel {
+  position: absolute;
+  top: 0;
+  left: 240px;
+  right: 0;
+  bottom: 0;
+  min-width: 608px;
+
+  -webkit-transition: opacity 0.7s, left !important;
+  transition: opacity 0.7s, left !important;
+}
+.cpanel .panel-title-container {
+  z-index: 28;
+}
+.rpanel-show {
+  margin-right: 400px;
+}
+
+.cpanel-home {
+  position: relative;
+  text-align: center;
+  top: 30%;
+}
+
+.msgs {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  right: 0;
+  bottom: 103px;
+  min-width: 260px;
+  margin-right: 0;
+  padding-bottom: 0;
+  background-color:#F1F7FC;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 9;
+}
+
+.rpanel-show .scroll-gray .msgs {
+  margin-right: 4px;
+}
+
+.msgs__loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 2px;
+  bottom: 2px;
+  z-index: 12;
+  text-align: center;
+  background: linear-gradient(rgba(239,243,250,1), rgba(239,243,250,0));
+}
+.msgs__loading.initial {
+  height: 100%;
+  background:#EFF3FA;
+}
+.msgs__loading.load-more-top {
+  position: absolute;
+  top: 0;
+  height: 60px;
+  background-position: center center;
+  background-size: 60px 60px;
+}
+.msgs__loading .three-quarters-loader {
+  position: absolute;
+  top: 50%;
+  margin-top: -16px;
+}
+.msgs-intro {
+  padding: 1rem 1rem 1rem 1.5rem;
+  margin: 1rem 0 0;
+}
+.msgs-holder {
+  padding-bottom: 8px;
+}
+
+.msg-header {
+  position: relative;
+}
+
+.msg-item {
+  display: inline-block;
+  position: relative;
+  margin: 6px 0 0 0;
+  max-width: calc(100% - 84px);
+  border-radius: 3px 3px 4px 4px;
+  border: 1px solid rgba(5, 35, 60, 0.1);
+  border-bottom: 1px solid rgba(5,35,60,0.2);
+  background-color: #fff;
+  color: #333;
+}
+
+.msg-item.file-upload {
+  margin: 13px 0 15px;
+}
+.msg-item.comment_first,
+.msg-item.comment_continue {
+  margin-bottom: 8px;
+}
+
+.msg-item.system {
+  margin: 0 5px 0 0;
+  border: 0;
+  background-color: transparent;
+  box-shadow: 0 0 0 1px transparent;
+  color: #929498;
+}
+.msg-item.text a,
+.message.comment a,
+.message.bot-text .attachment-content a {
+  color: #00ACE9;
+}
+.msg-item.text a:hover,
+.message.comment a:hover,
+.message.bot-text .attachment-content a:hover {  
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 172, 233, 0.7);
+}
+.msg-item.text a.mention.all:hover {
+  border-bottom-width: 0;
+}
+
+.msg-item.text .prettyprint a:hover {
+  text-decoration: underline;
+  border-bottom-width: 0;
+  color: #808080;
+}
+
+.post-retry {
+  font-size: 12px;
+  line-height: 12px;
+  font-weight: 500;
+  margin-left: 4px;
+  color: #1C6C88;
+  text-decoration: none;
+}
+.post-retry:hover {
+  color: #154a67;
+}
+
+.msg-item-body {
+  position: relative;
+}
+
+.msg-item-body .tooltip {
+}
+
+.msg-item-body p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  color: #333333;
+}
+
+.msg-text {
+  word-wrap: break-word;
+  margin-right: 55px;
+}
+
+.msg-text-body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  color: #333333;
+}
+
+.msg-file-header {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/*
+issue : JND-974
+fix : add margin-bottom: 10px;
+by ysyun 2015.2.25
+*/
+.msg-file-body-float {
+  margin-right: 10px;
+  position: relative;
+}
+
+.msg-file-body-float .icon-comment {
+  position: absolute;
+  bottom: 9px;
+  right: 7px;
+  width: 18px;
+  font-size: 18px;
+  color: white;
+  opacity: 0.8;
+  /*z-index: 1;  center chat 영역 위에 출력되는 layout이 있을때 comment 이미지가 해당 layout을 침범함*/
+  -ms-transform: scaleX(-1); /* IE 9 */
+  -webkit-transform: scaleX(-1); /* Chrome, Safari, Opera */
+  transform: scaleX(-1);
+}
+.large-thumbnail-parent.msg-file-body-float::before {
+  display: none;
+}
+.msg-file-body-float > img {
+  max-width: 100%;
+}
+.msg-file-body__img {
+  height: 63px;
+  width: 63px;
+}
+.msg-file-body__thumbnail {
+  height: 65px;
+  width: 65px;
+  background-color: #f2f2f2;
+  padding: 15px;
+}
+
+.large-thumbnail {
+  min-height: 50px;
+  max-width: 700px;
+}
+
+.large-thumbnail-parent {
+  width: auto;
+  height: auto;
+  max-width: 700px;
+  position: relative;
+  overflow: hidden;
+}
+
+.large-thumbnail-parent .fa-comment {
+  display: none;
+}
+
+.msg-comment-header {
+  color: #999999;
+  font-size: 14px;
+  margin: 5px 0 4px;
+  letter-spacing: 0;
+}
+
+.msg-comment-body {
+  margin-top: 10px;
+}
+.msg-comment-body p {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6rem;
+}
+
+.footer {
+  background: #FFF;
+  position: absolute;
+  margin-right: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid #D5DADB;
+  z-index: 12;
+}
+.footer:after {
+  content: '';
+  position: absolute;
+  left: -30px;
+  right: -30px;
+  bottom: 0;
+  box-shadow: 0 -25px 15px -15px #fff; /* 우측 스크롤바를 덮는 화이트 그라디언트 스타일 추가 */
+}
+
+.editable-wrap {
+  width: 100%;
+  position: relative;
+}
+.editable-wrap .editable-controls,
+.editable-wrap .editable-error {
+  display: block;
+  margin-right: 90px;
+}
+
+/*
+  animation을 사용해봤으나 효과가 매끄럽지 못해 부득이하게 클래스 2개를 사용해서 효과를 줬음. -jihoon
+*/
+.message-highlight {
+  background-color: #f2fbff;
+  /*animation: backgroundcolor-to-white  1510ms linear;*/
+}
+.message-highlight-out {
+  background-color: white;
+  transition: background-color 517ms linear;
+}
+@-webkit-keyframes opacIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+/* Standard syntax */
+@keyframes opacIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@-webkit-keyframes backgroundcolor-to-white {
+  from { background-color: #f2fbff; }
+  to { background-color: white; }
+}
+@keyframes backgroundcolor-to-white {
+  from { background-color: #f2fbff; }
+  to { background-color: white; }
+}
+.post-message {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  z-index: 1  ;
+  top: 7px;
+  left: 70px;
+}
+
+.js-fileapi-wrapper > div {
+  height: 0 !important;
+}
+
+.member-profile,
+.user-profile {
+  display: inline-block;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.member-thumb,
+.user-thumb {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid #e1e1e1;
+}
+
+.jandi-bot .member-thumb {
+  height: auto;
+  border-radius: 0;
+  margin-top: -8px;
+  border-width: 0;
+}

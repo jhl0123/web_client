@@ -11,10 +11,9 @@
 
   /* @ngInject */
   function EntityHandler($rootScope, RoomTopicList, BotList, UserList, RoomChatDmList, CoreUtil, entityheaderAPIservice,
-                         AnalyticsHelper, jndPubSub, currentSessionHelper, memberService) {
+                         AnalyticsHelper, jndPubSub, currentSessionHelper, memberService, $injector) {
     var _scope;
     var _starredEntitiesMap = {};
-
     this.parseLeftSideMenuData = parseLeftSideMenuData;
     this.parseChatRoomLists = parseChatRoomLists;
     this.get = get;

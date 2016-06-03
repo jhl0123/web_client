@@ -1,48 +1,33 @@
-<div id="{{id}}" class="msgs-group">
-  <div class="msg-item text {{ css.child }}">
-    <div class="text-msg-item-container">
-      <!--  User Thumbnail -->
-      {{#if hasProfile}}
-      <div class="msg-item-float cursor_pointer _user">
-        <img class="user-profile user-thumb" src="{{ msg.exProfileImg }}"/>
-      </div>
-
-      <div class="msg-item-header _user">
-        <!--    WRITER-->
-          <span class="msg-item-header__name cursor_pointer">
-            <span class="msg-item-header__nameSpace">
-              <span>{{ msg.extWriterName }}</span>
-            </span>
-          </span>
-      </div>
+<div id="{{id}}" class="message text {{css.child}} {{css.sticker}}">
+  <!--  User Thumbnail -->
+  {{#if hasProfile}}
+    <!--  User Thumbnail -->
+    <div class="msg-header {{css.disabledMember}}">
+      <img class="member-profile member-thumb {{css.profileCursor}} _user" src="{{ msg.exProfileImg }}"/>
+      <span class="member-name selectable {{css.profileCursor}} _user">{{ msg.extWriterName }}</span>
+    </div>
+  {{/if}}
+  {{#if isSticker}}
+    <div class="msg-item">
+      <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
+    </div>
+  {{else}}
+    <div class="msg-item text">
+      <span class="keep msg-text-body msg-text-sending selectable">{{{ msg.message.content.body }}}</span>
+    </div>
+  {{/if}}
+  <div class="msg-text-extra">
+    <div class="msg-buttons">
+      <!--More -->
+      <span class="msg-item-icon msg-item-more msg-item-circle">
+        <i class="icon-more _textMore"></i>
+      </span>
+    </div>
+    <div class="msg-item-info sending no-select">
+      <!--  SENDING STATUS SPINNING WHEEL -->
+      {{#if isFailed}}
+        <span class="post-retry cursor_pointer _retry"><i class="icon-refresh"></i> Retry</span>
       {{/if}}
-      <div class="msg-item-body">
-        <!-- TEXT -->
-        <div class="msg-text">
-          {{#if isSticker}}
-          <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
-          {{else}}
-          <span class="keep msg-text-body msg-text-sending">{{{ msg.message.content.body }}}</span>
-          {{/if}}
-          <!--  TIME  -->
-          <span class="msg-item-header__created">{{ msg.extTime }}</span>
-
-          <!--  SENDING STATUS SPINNING WHEEL -->
-          {{#if isFailed}}
-          <span>
-            <a class="cursor_pointer">
-              <span class="msg-item-header__retry cursor_pointer _retry"><i class="icon-refresh"></i> Retry</span>
-            </a>
-          </span>
-          {{/if}}
-        </div>
-        <div class="msg-extra">
-          <!-- More -->
-          <span class="msg-item-icon _textMore">
-            <i class="icon-more-fill msg-item__action msg-item-circle msg-item-more cursor_pointer"></i>
-          </span>
-        </div>
-      </div>
     </div>
   </div>
 </div>

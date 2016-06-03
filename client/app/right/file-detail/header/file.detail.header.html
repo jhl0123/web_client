@@ -1,27 +1,33 @@
 <div>
   <div class="file-detail-header" ng-if="!isArchivedFile && !isInvalidRequest">
-    <div class="file-detail-header-box" ng-class="{'file-detail-disabled-member': file.extIsDisabledMember}">
-      <div class="file-detail-header__thumbnail">
+    <div class="file-creator" ng-class="{'file-detail-disabled-member': file.extIsDisabledMember}">
+      <div class="file-creator-profile">
         <img class="user-profile user-thumb-sm cursor_pointer" ng-src="{{file.extProfileImg}}" ng-click="onMemberClick(file.extWriter)"/>
       </div>
-      <div class="file-detail-header__writer">
+      <div class="file-creator-name inline-overflow-ellipsis selectable">
         <span ng-click="onMemberClick(file.extWriter)">{{file.extWriterName}}</span>
       </div>
-      <div class="file-detail-header__title">
-        <a href="{{::originalUrl}}" target="_blank">{{file.content | fileTitle}}</a>
+      <div class="file-creator-time">{{::file.createTime|getyyyyMMddformat}}</div>
+    </div>
+    <div class="file-meta break-word">
+      <a class="file-title selectable" href="{{::originalUrl}}" target="_blank">{{file.content | fileTitle}}</a>
+      <div class="file-meta-extra">
+        <span ng-if="::file.content.size > 0">{{::file.content.size | bytes}}</span>
+        <span ng-if="::file.content.type">{{::file.content | fileType}}</span>
       </div>
     </div>
-    <div class="file-item-meta__action">
+    <file-detail-shared></file-detail-shared>
+    <div class="file-actions">
       <div class="action-star cursor_pointer" tooltip="{{::'@star'|translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
-        <i class="file_action star-btn" ng-class="isStarred ? 'icon-star-on' : 'icon-star-off'" star-view="isStarred" star-view-id="file.id"></i>
+        <i class="file-action star-btn" ng-class="isStarred ? 'icon-star-on' : 'icon-star-off'" star-view="isStarred" star-view-id="file.id"></i>
       </div>
 
       <div class="action-download cursor_pointer"
            tooltip="{{::(isIntegrateFile ? '@msg-open-original' : '@common-download')|translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
-        <a ng-if="::isIntegrateFile" class="file_action opac-in-fast" href="{{::originalUrl}}" target="_blank" ng-click="onClickDownload();" download-tracker="{{track(file)}}">
+        <a class="file-action" ng-if="::isIntegrateFile" href="{{::originalUrl}}" target="_blank" ng-click="onClickDownload();" download-tracker="{{track(file)}}">
           <i class="icon-download"></i>
         </a>
-        <a ng-if="::!isIntegrateFile" class="file_action opac-in-fast" href="{{::downloadUrl}}" ng-click="onClickDownload();" download-tracker="{{track(file)}}">
+        <a class="file-action" ng-if="::!isIntegrateFile" href="{{::downloadUrl}}" ng-click="onClickDownload();" download-tracker="{{track(file)}}">
           <i class="icon-download"></i>
         </a>
       </div>
@@ -29,7 +35,7 @@
       <div class="action-more" dropdown
            tooltip="{{::'@file-action-more'|translate}}" tooltip-placement="bottom" tooltip-append-to-body="true"
            tooltip-class="absolute-right-tooltip">
-        <a class="file_action opac-in-fast">
+        <a class="file-action">
           <i class="icon-more" dropdown-toggle></i>
         </a>
         <ul class="dropdown-menu grey_dropdown dropdown-menu-right" role="menu">
@@ -91,27 +97,24 @@
   </div>
 
   <!-- FILE ARCHIVED -->
-  <div class="file-detail-header" ng-if="isArchivedFile && !isInvalidRequest">
-    <div class="file-detail-header-box">
-      <div class="file-detail-header__thumbnail">
+  <div class="file-detail-header _fileDetailHeader" ng-if="isArchivedFile && !isInvalidRequest">
+    <div class="file-creator">
+      <div class="file-creator-profile">
         <img class="user-profile user-thumb-sm cursor_pointer"
              ng-src="{{file.extProfileImg}}"
              ng-click="onMemberClick(file.extWriter);"/>
       </div>
-
-      <div class="file-detail-header__writer">
+      <div class="file-creator-name inline-overflow-ellipsis">
         <span ng-click="onMemberClick(file.extWriter)">{{file.extWriterName}}</span>
       </div>
-
-      <div class="file-detail-header__title archived-file__title">
-        <div>{{::'@common-deleted-file-title'|translate}}</div>
-      </div>
+      <div class="file-creator-time">{{::file.createTime|getyyyyMMddformat}}</div>
     </div>
-  </div>
+    <div class="file-meta file-archived">
+      <div>{{::'@common-deleted-file-title'|translate}}</div>
+    </div>
 
-  <div class="file-detail-archive-status-container"  ng-if="isArchivedFile && !isInvalidRequest">
-    <div class="file-detail-archive-status-container__inner" ng-click="backToPrevState()">
-      <div class="archived-file-icon-center fileicon fileicon-archived"></div>
+    <div class="file-archive-preview"  ng-if="isArchivedFile && !isInvalidRequest" ng-click="backToPrevState()">
+      <div class="fileicon fileicon-archived"></div>
       <span>{{::'@file-delete-time-msg-pre'|translate}}</span>
       {{file.updateTime|getyyyyMMddformat}}
       <span>{{::'@file-delete-time-msg-post'|translate}}</span>
@@ -119,12 +122,10 @@
   </div>
 
   <!-- FILE API ERROR -->
-  <div class="file-not-available-container" ng-if="isInvalidRequest">
-    <div class="alert-msg-container cursor_pointer">
-      <alert class="warning file-not-available-msg-container" ng-click="backToPrevState()">
-        <div class="archived-file-icon-center fileicon fileicon-unshared"></div>
-        <span>{{::'@file-unshared-no-longer-accessible'|translate}}</span>
-      </alert>
+  <div class="file-detail-header _fileDetailHeader" ng-if="isInvalidRequest">
+    <div class="warning file-unshare-preview" ng-click="backToPrevState()">
+      <div class="fileicon fileicon-unshared"></div>
+      <span>{{::'@file-unshared-no-longer-accessible'|translate}}</span>
     </div>
   </div>
 </div>

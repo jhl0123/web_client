@@ -1,17 +1,17 @@
 <div class="integration-preview-wrapper">
   <div class="preview-item">
     {{#if hasTitle}}
-    <div class="preview-title break">{{{html.title}}}</div>
+    <div class="preview-title break selectable">{{{html.title}}}</div>
     {{/if}}
     {{#if hasDescription}}
-    <div class="preview-description break">{{{html.description}}}</div>
+    <div class="preview-description break selectable">{{{html.description}}}</div>
     {{/if}}
     {{#if hasImage}}
     <div class="preview-image break">{{{html.image}}}</div>
     {{/if}}
   </div>
   {{#if hasSubsets}}
-  <div class="preview-item preview-subsets">
+  <div class="preview-item preview-subsets selectable">
     {{#if hasSubset1}}
     <div class="preview-subset">
       <div class="preview-subset-title overflow-ellipsis">{{{html.subsetTitle1}}}</div>

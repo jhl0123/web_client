@@ -9,9 +9,10 @@
     .directive('fileDetailHeader', fileDetailHeader);
 
   /* @ngInject */
-  function fileDetailHeader($state, $filter, AnalyticsHelper, analyticsService, Dialog, fileAPIservice, jndPubSub,
+  function fileDetailHeader($state, $filter, $timeout, AnalyticsHelper, analyticsService, Dialog, fileAPIservice, jndPubSub,
                             modalHelper, RightPanel) {
     return {
+      require: '^fileDetailContent',
       restrict: 'E',
       replace: true,
       scope: {
@@ -29,7 +30,17 @@
       link: link
     };
 
-    function link(scope) {
+    function link(scope, el, attrs, ctrl) {
+      scope.isStarred = undefined;
+      scope.isFileOwner = undefined;
+
+      scope.backToFileList = backToFileList;
+      scope.onClickDownload = onClickDownload;
+      scope.onClickShare = onClickShare;
+      scope.onCommentFocusClick = onCommentFocusClick;
+      scope.onStarClick = onStarClick;
+      scope.onFileDeleteClick = onFileDeleteClick;
+
       _init();
 
       /**
@@ -37,21 +48,17 @@
        * @private
        */
       function _init() {
-        var file = scope.file;
+        ctrl.setJqHeader(el);
 
         if (!scope.isInvalidRequest) {
-          scope.isStarred = file.isStarred;
-          scope.isFileOwner = $filter('isFileWriter')(file);
-
-          scope.backToFileList = backToFileList;
-          scope.onClickDownload = onClickDownload;
-          scope.onClickShare = onClickShare;
-          scope.onCommentFocusClick = onCommentFocusClick;
-          scope.onStarClick = onStarClick;
-          scope.onFileDeleteClick = onFileDeleteClick;
+          scope.isStarred = scope.file.isStarred;
+          scope.isFileOwner = $filter('isFileWriter')(scope.file);
 
           _attachScopeEvents();
         }
+
+        // render 후 pub
+        $timeout(RightPanel.pubRendered);
       }
 
       /**

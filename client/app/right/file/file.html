@@ -21,7 +21,7 @@
         </div>
         <div class="file-info">
           <span class="file-date">{{::createDate}}</span>
-          <span class="file-comment-count"><i class="icon-comment-fill file-item-meta__comments"></i>{{fileData.message.commentCount}}</span>
+          <span class="file-comment-count"><i class="icon-comment-fill file-item-meta__comments"></i>{{fileData.message.commentCount || 0}}</span>
         </div>
       </div>
     </div>

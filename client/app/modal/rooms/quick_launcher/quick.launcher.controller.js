@@ -106,7 +106,7 @@
      */
     function _joinRoom(room) {
       var entityType = memberService.isBot(room.id) ? 'users' : room.type;
-
+      modalHelper.closeModal();
       $state.go('archives', {entityType: entityType, entityId: room.id});
     }
 

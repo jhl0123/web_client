@@ -17,14 +17,14 @@
   
   <!--    WRAPPING DIV FOR FILE DRAG&DROP -->
   <div>
-    <div class="msgs__loading initial opac-zero"
-         ng-if="isShowLoadingWheel"
-         ng-class="{'opac-in-fast' : isShowLoadingWheel}">
+    <div class="msgs__loading initial"
+         ng-if="!status.isInitialRequestSuccess || (!status.isInitialized && status.isLoading)">
       <span class="three-quarters-loader jnd-three-quarters-loader center"></span>
     </div>
     <!-- 컨테이너 -->
-    <article class="msgs" id="msgs-container" when-scrolled="loadMore()">
-      <div class="msgs-holder opac-zero" id="msgs-holder">
+    <article class="msgs" id="msgs-container" center-scroll>
+      <div class="msgs-holder opac-zero"
+           id="msgs-holder">
         <!-- 로딩 영역 -->
         <div ng-show="hasOldMessageToLoad" class="msgs__loading load-more-top">
           <span class="three-quarters-loader jnd-three-quarters-loader center"></span>

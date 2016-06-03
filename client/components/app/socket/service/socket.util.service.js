@@ -7,7 +7,7 @@
 
   /* @ngInject */
   function jndWebSocketCommon(CoreUtil, jndPubSub, currentSessionHelper, entityAPIservice, EntityHandler, logger,
-                              memberService, accountService, RoomTopicList, EntityFilterMember) {
+                              memberService, accountService, RoomTopicList, EntityFilterMember, RoomChatDmList) {
 
     var _chatEntity = 'chat';
 
@@ -99,10 +99,13 @@
      * @param {number} linkId
      */
     function updateMyLastMessageMarker(roomId, linkId) {
+      var isChat = RoomChatDmList.isExist(roomId);
       var room = EntityHandler.get(roomId);
+      var entity = isChat ? RoomChatDmList.getMember(roomId) : room;
+      
       if (room) {
         memberService.setLastReadMessageMarker(room.id, linkId);
-        entityAPIservice.updateBadgeValue(room, 0);
+        entityAPIservice.updateBadgeValue(entity, 0);
       }
     }
     

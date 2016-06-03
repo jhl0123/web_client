@@ -88,17 +88,22 @@
       jndPubSub.pub('errorThumbnailImage', data);
     }
 
-    function _onFileShared(data) {
-      jndPubSub.pub('fileShared', data);
+    /**
+     *
+     * @param socketEvent
+     * @private
+     */
+    function _onFileShared(socketEvent) {
+      jndPubSub.pub('jndWebSocketFile:fileShared', socketEvent);
     }
 
     /**
      * 파일이 공유되었을때
-     * @param data
+     * @param socketEvent
      * @private
      */
-    function _onFileUnshared(data) {
-      jndPubSub.pub('fileUnshared', data);
+    function _onFileUnshared(socketEvent) {
+      jndPubSub.pub('jndWebSocketFile:fileUnshared', socketEvent);
     }
 
     /**
@@ -109,7 +114,7 @@
     function _onFileDeleted(data) {
       jndPubSub.pub('rightFileOnFileDeleted', data);
       jndPubSub.pub('rightFileDetailOnFileDeleted', data);
-      jndPubSub.pub('centerOnFileDeleted', data);
+      jndPubSub.pub('jndWebSocketFile:fileDeleted', data);
     }
 
     /**
@@ -157,6 +162,8 @@
      * @private
      */
     function _onFileExternalShared(socketEvent) {
+      //TODO: http://its.tosslab.com/browse/BD-571 이슈 해결 이후 이벤트 핸들러 추가 작업 필요
+      jndPubSub.pub('jndWebSocketFile:externalFileShared', socketEvent);
     }
 
     /**
@@ -165,6 +172,8 @@
      * @private
      */
     function _onFileExternalUnshared(socketEvent) {
+      //TODO: http://its.tosslab.com/browse/BD-571 이슈 해결 이후 이벤트 핸들러 추가 작업 필요
+      jndPubSub.pub('jndWebSocketFile:externalFileUnShared', socketEvent);
     }
   }
 })();
