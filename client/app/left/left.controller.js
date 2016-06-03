@@ -17,6 +17,7 @@ app.controller('leftPanelController', function(
   var _hasToUpdate = false;
   // center chat timer
   var _timerUpdateCenterChat;
+  var _timerEnter;
 
   $scope.entityId = $state.params.entityId;
 
@@ -296,7 +297,10 @@ app.controller('leftPanelController', function(
       $scope.entityId = entity.id;
       jndPubSub.pub('onBeforeEntityChange', entity);
     });
-    _doEnter(entity);
+    $timeout.cancel(_timerEnter);
+    _timerEnter = $timeout(function() {
+      _doEnter(entity);
+    });
   }
 
   /**
