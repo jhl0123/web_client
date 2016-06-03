@@ -620,15 +620,25 @@
         var message;
         var prevMessage;
         var prevIndex = index - 1;
+        var nextMessage;
+        var nextIndex = index + 1;
         var htmlList = [];
         var jqPrev;
+        var jqNext;
         
         if (index > 0) {
-          message = messageCollection.list[index];
-          prevMessage = messageCollection.list[prevIndex];
+          message = CoreUtil.pick(messageCollection.list, index);
+          prevMessage = CoreUtil.pick(messageCollection.list, prevIndex);
+          nextMessage = CoreUtil.pick(messageCollection.list, nextIndex);
           jqPrev = $('#' + prevMessage.id);
+
           _pushMarkup(htmlList, message, index);
-          _refresh(prevMessage.id, prevIndex);
+          if (prevMessage) {
+            _refresh(prevMessage.id, prevIndex);
+          }
+          if (nextMessage) {
+            _refresh(nextMessage.id, nextIndex);
+          }
           jqPrev.after(_getCompiledEl(htmlList.join('')));
           scope.onRepeatDone();
         }
