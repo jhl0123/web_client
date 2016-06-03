@@ -106,6 +106,9 @@
 .comment-item-body .sticker {
   display: inline-block;
 }
+.error-comment-item .comment-item-body {
+  margin-right: 21px;
+}
 .comment-item.comment-child .comment-item-body {
   margin-right: 42px;
 }

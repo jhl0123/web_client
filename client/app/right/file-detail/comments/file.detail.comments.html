@@ -40,14 +40,7 @@
 
   <div class="error-comment-item comment-item" ng-repeat="comment in errorComments"
        ng-class="{'file-detail-disabled-member': comment.extIsDisabledMember}">
-    <div class="comment-writer-profile">
-      <img class="user-profile user-thumb-sm cursor_pointer"
-           ng-src="{{ comment.extProfileImg }}" />
-    </div>
     <div class="comment-item-header">
-      <span class="comment-writer-name" ng-click="onMemberClick(comment.extWriter)">{{comment.extWriterName}}</span>
-      <span class="comment-writer-date">{{comment.extCreateDate}}</span>
-
       <div class="comment-item-header__action pull-right">
         <div class="comment-item-action comment-delete link-dark cursor_pointer"
              ng-if="hasOwnComment(comment)"
