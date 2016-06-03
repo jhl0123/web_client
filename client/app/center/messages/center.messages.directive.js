@@ -624,8 +624,7 @@
         var nextIndex = index + 1;
         var htmlList = [];
         var jqPrev;
-        var jqNext;
-        
+
         if (index > 0) {
           message = CoreUtil.pick(messageCollection.list, index);
           prevMessage = CoreUtil.pick(messageCollection.list, prevIndex);
