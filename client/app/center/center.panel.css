@@ -77,6 +77,8 @@ article {
   height: 60px;
   background-position: center center;
   background-size: 60px 60px;
+  background-color: #F1F7FC;
+  box-shadow: 0 0 10px 4px #F1F7FC;
 }
 .msgs__loading .three-quarters-loader {
   position: absolute;
