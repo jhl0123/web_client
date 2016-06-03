@@ -574,7 +574,7 @@
             msg = this.getFormattedMessage(msg);
             index = this._getEmbedPosition(msg);
             if (index > 0) {
-              list.splice(index, 0, msg);
+              list.splice(index + 1, 0, msg);
               this._pub('MessageCollection:embed', msg, index + 1);
               this._updateMarker(msg);
             }
