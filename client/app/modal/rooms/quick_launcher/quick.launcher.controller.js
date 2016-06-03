@@ -74,15 +74,14 @@
       if (currentSessionHelper.getCurrentEntityId() === room.id) {
         // 현재 room과 같은 room인 경우
 
+        // Jump 모달에서 참여하고 있는 토픽에 조인
+        AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_ENTER);
+
         modalHelper.closeModal();
       } else {
         if (room.type === 'channels') {
           if (RoomTopicList.get(room.id, true)) {
             // join한 topic
-
-            AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_JOIN, {
-              ERROR_CODE: ''
-            });
 
             _joinRoom(room);
           } else {
@@ -91,9 +90,7 @@
 
               entityheaderAPIservice.joinChannel(room.id)
                 .success(function () {
-                  AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_ENTER);
-
-                  _joinRoom(room);
+                  _joinRoom(room, true);
                 })
                 .finally(function() {
                   jndPubSub.hideLoading();
@@ -108,11 +105,22 @@
 
     /**
      * join room
-     * @param room
+     * @param {object} room
+     * @param {boolean} isNewJoin
      * @private
      */
-    function _joinRoom(room) {
+    function _joinRoom(room, isNewJoin) {
       var entityType = memberService.isBot(room.id) ? 'users' : room.type;
+
+      if (isNewJoin) {
+        // Jump 모달에서 참여 하지 않은 토픽에 조인
+        AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_JOIN, {
+          ERROR_CODE: ''
+        });
+      } else {
+        // Jump 모달에서 참여하고 있는 토픽에 조인
+        AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_ENTER);
+      }
 
       $state.go('archives', {entityType: entityType, entityId: room.id});
     }
