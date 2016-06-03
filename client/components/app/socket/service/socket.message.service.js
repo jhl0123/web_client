@@ -6,8 +6,9 @@
     .service('jndWebSocketMessage', jndWebSocketMessage);
 
   /* @ngInject */
-  function jndWebSocketMessage(jndWebSocketCommon, jndPubSub, memberService, currentSessionHelper, ActiveNotifier, RoomTopicList,
-                               MessageNotification, MentionNotification, FileShareNotification, TopicInviteNotification) {
+  function jndWebSocketMessage(jndWebSocketCommon, jndPubSub, memberService, currentSessionHelper, ActiveNotifier,
+                               RoomTopicList, MessageNotification, MentionNotification, FileShareNotification,
+                               TopicInviteNotification, CoreUtil) {
 
     var MESSAGE = 'message';
 
@@ -111,7 +112,7 @@
     function _onMessageCreated(socketEvent) {
       var msg = socketEvent.data.linkMessage;
       var linkId = msg.id;
-      var writerId = msg.message.writerId;
+      var writerId = CoreUtil.pick(msg, 'message', 'writerId');
       var myId = memberService.getMemberId();
       //내가 쓴 message 일 경우 나의 marker 정보를 업데이트 한다.
       if (writerId === myId) {
