@@ -17,25 +17,15 @@
         <span class="comment-writer-date">{{comment.extCreateDate}}</span>
       </div>
       <div class="comment-item-header__action pull-right" ng-if="::!comment.isSendingComment">
-        <div class="comment-item-action comment-item-action-more"
+        <div class="comment-item-action comment-delete link-dark cursor_pointer"
              ng-if="hasOwnComment(comment)"
-             dropdown
-             is-open="comment.extIsOpen">
-          <a href="#" class="link-dark" dropdown-toggle>
-            <i class="icon-cog"></i>
-          </a>
-          <ul class="dropdown-menu grey-dropdown"
-              dropdown-menu
-              dropdown-position
-              template-url="app/util/directive/dropdown-position/templates/right.file.detail.comment.html">
-          </ul>
+             ng-click="deleteComment(comment)">
+          <i class="icon-trash"></i>
         </div>
-        <div class="comment-item-action comment-star"
+        <div class="comment-item-action comment-star link-dark cursor_pointer"
              ng-if="!comment.extIsSticker"
              ng-class="{'show-inline-block': comment.isStarred}">
-          <a class="link-dark cursor_pointer">
-            <i ng-class="comment.isStarred ? 'icon-star-on' : 'icon-star-off'" star-view="comment.isStarred" star-view-id="comment.id"></i>
-          </a>
+          <i ng-class="comment.isStarred ? 'icon-star-on' : 'icon-star-off'" star-view="comment.isStarred" star-view-id="comment.id"></i>
         </div>
       </div>
     </div>
@@ -50,27 +40,12 @@
 
   <div class="error-comment-item comment-item" ng-repeat="comment in errorComments"
        ng-class="{'file-detail-disabled-member': comment.extIsDisabledMember}">
-    <div class="comment-writer-profile">
-      <img class="user-profile user-thumb-sm cursor_pointer"
-           ng-src="{{ comment.extProfileImg }}" />
-    </div>
     <div class="comment-item-header">
-      <span class="comment-writer-name" ng-click="onMemberClick(comment.extWriter)">{{comment.extWriterName}}</span>
-      <span class="comment-writer-date">{{comment.extCreateDate}}</span>
-
       <div class="comment-item-header__action pull-right">
-        <div class="comment-item-action comment-item-action-more" dropdown ng-if="hasOwnComment(comment)">
-          <a href="#" class="link-dark" dropdown-toggle>
-            <i class="icon-cog"></i>
-          </a>
-          <ul class="comment-item-dropdown dropdown-menu grey_dropdown" role="menu">
-            <li class="cursor_pointer">
-              <a ng-click="deleteSendingComment($index)">
-                <i class="icon-trash"></i>
-                <span>{{::'@btn-delete'|translate}}</span>
-              </a>
-            </li>
-          </ul>
+        <div class="comment-item-action comment-delete link-dark cursor_pointer"
+             ng-if="hasOwnComment(comment)"
+             ng-click="deleteSendingComment($index)">
+          <i class="icon-trash"></i>
         </div>
       </div>
     </div>

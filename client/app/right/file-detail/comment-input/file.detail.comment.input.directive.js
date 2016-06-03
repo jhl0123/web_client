@@ -37,7 +37,7 @@
       var _stickerType = 'file';
       var _sticker;
 
-      var _timerScrollBottom;
+      var _wasBottomReached = false;
 
       scope.member = memberService.getMember();
 
@@ -61,7 +61,6 @@
         _setProfileImage(scope.member);
 
         _attachScopeEvents();
-        _attachDomEvents();
       }
 
       /**
@@ -69,6 +68,8 @@
        * @private
        */
       function _attachScopeEvents() {
+        scope.$watch(_onDigestCycle);
+
         scope.$on('$destroy', _onDestroy);
         scope.$on('window:unload', _onWindowUnload);
 
@@ -89,11 +90,14 @@
       }
 
       /**
-       * attach dom events
+       * on digest cycle
        * @private
        */
-      function _attachDomEvents() {
-        el.on('keydown', _onKeyDown);
+      function _onDigestCycle() {
+        if (_wasBottomReached) {
+          _jqScrollContainer[0].scrollTop = _jqScrollContainer[0].scrollHeight;
+          _wasBottomReached = false;
+        }
       }
 
       /**
@@ -137,6 +141,8 @@
           _clearWithFocus();
         }
         scope.hasMessage = false;
+
+        _wasBottomReached = true;
       }
 
       /**
@@ -315,43 +321,9 @@
        * @private
        */
       function _onElasticResize() {
-        clearTimeout(_timerScrollBottom);
-        if (_isScrollOver()) {
-          _timerScrollBottom = setTimeout(function() {
-            _fixScrollBottom();
-          }, 100);
-        }
+        _wasBottomReached = true;
 
         _setMirrorHeight();
-      }
-
-      /**
-       * key down event handler
-       * @private
-       */
-      function _onKeyDown() {
-        if (_isScrollOver()) {
-          _fixScrollBottom();
-        }
-      }
-
-      /**
-       * is scroll over
-       * @returns {boolean}
-       * @private
-       */
-      function _isScrollOver() {
-        return !ctrl.hasFloatInput &&
-          el.height() + el.offset().top <= _jqScrollContainer.scrollTop() + _jqScrollContainer[0].scrollHeight;
-      }
-
-      /**
-       * 스크롤 바텀 고정함
-       * @returns {*}
-       * @private
-       */
-      function _fixScrollBottom() {
-        return _jqScrollContainer.scrollTop(_jqScrollContainer[0].scrollHeight);
       }
 
       /**

@@ -13,8 +13,6 @@
                             Mentionahead, Dialog, jndPubSub, JndUtil) {
     var that = this;
 
-    var entityId = $state.params.entityId;
-
     var $originScope;
     var $model;
 
@@ -165,6 +163,7 @@
      * @returns {{msg: string, mentions: Array}}
      */
     function getMentions() {
+      var entityId = $state.params.entityId;
       var value = getValue();
 
       return Mentionahead.getMentionAllForText(value, $scope._mentionMap, entityId);
