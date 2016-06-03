@@ -348,6 +348,7 @@
      * jump button click
      */
     function onJumpButtonClick() {
+      // 마우스 클릭으로 Jump 모달을 실행
       AnalyticsHelper.track(AnalyticsHelper.EVENT.BUTTON_CLICK, {
         BUTTON_NAME: 'Jump Modal',
         BUTTON_POSITION: 'Header'
@@ -382,6 +383,7 @@
       } else {
         timerOpenQuickLauncher = $timeout.cancel(timerOpenQuickLauncher);
         $timeout(function() {
+          // 단축키로 Jump 모달을 실행
           AnalyticsHelper.track(AnalyticsHelper.EVENT.KEY_UP, {
             KEY_UP_RESULT: 'Jump Modal'
           });
