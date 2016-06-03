@@ -1388,6 +1388,7 @@
      * @private
      */
     function _onInitialRenderDone() {
+      _clearBadgeCount($scope.currentEntity);
       _loadTextBuffer();
     }
 
