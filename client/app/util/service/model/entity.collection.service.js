@@ -80,7 +80,7 @@
        * @private
        */
       _isPlural: function(str) {
-        var length = CoreUtil.pick(str, 'length');
+        var length = str && str.length;
         return !!(length && str[length - 1] === 's');
       }
     });

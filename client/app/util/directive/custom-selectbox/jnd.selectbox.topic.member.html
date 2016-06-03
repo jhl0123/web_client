@@ -20,7 +20,6 @@
     <div class="custom-select-box__search-container">
       <span class="add-on-left"><i class="icon-search"></i></span>
       <input type="text"
-             ng-model="searchKeyword"
              ng-keyup="onKeyUp($event);"
              class="form-control custombox-search__input search-input" placeholder="{{::'@topic-joined-member' | translate }}">
     </div>
@@ -36,24 +35,7 @@
         <span class="menulist-item-header">{{searchList.length}}<span translate>@selectbox-query-matches</span></span>
 
         <ul class="menulist-item-members">
-
-          <li class="topic-title menu-item _selectable"
-              ng-repeat="item in searchList"
-              ng-class="{
-                  'has-kickout-icon': item.isKickedOutEnable,
-                  'admin': item.isTopicAdmin
-                }">
-            <img class="header-title-member__dropdown__thumb" ng-src="{{item | getSmallThumbnail}}">
-            <a>
-              <span ng-bind-html="item.extSearchName"></span>
-            </a>
-            <span class="kick-item-icon pull-right"
-                  ng-if="item.isKickedOutEnable"
-                  ng-click="onClickKickout($event, item.id)">
-              <i class="icon-sign-out"></i>
-              </span>
-            <span ng-if="item.isTopicAdmin" class="member-auth-label" translate>@common-topic-admin</span>
-          </li>
+          <jnd-selectbox-repeat list="searchList" template="selectbox.topic.member.search"></jnd-selectbox-repeat>
         </ul>
       </div>
     </div>
@@ -72,25 +54,7 @@
         <div class="custom-select-box__menulist-items">
           <span translate class="menulist-item-header">@selectbox-current-members</span>
           <ul class="menulist-item-members">
-            <li class="menu-item _selectable"
-                ng-repeat="item in memberData.enabledList"
-                ng-class="{
-                  'has-kickout-icon': item.isKickedOutEnable,
-                  'admin': item.isTopicAdmin
-                }">
-              <div ng-class="::{'jandi-bot': item.extIsJandiBot}">
-                <img class="header-title-member__dropdown__thumb" ng-src="{{item | getSmallThumbnail}}">
-                <a>
-                  <span>{{item.name}}</span>
-                </a>
-                <span class="kick-item-icon pull-right"
-                      ng-if="item.isKickedOutEnable"
-                      ng-click="onClickKickout($event, item.id)">
-                  <i class="icon-sign-out"></i>
-                </span>
-                <span ng-if="item.isTopicAdmin" class="member-auth-label" translate>@common-topic-admin</span>
-              </div>
-            </li>
+            <jnd-selectbox-repeat list="memberData.enabledList" template="selectbox.topic.member"></jnd-selectbox-repeat>
           </ul>
         </div>
 
@@ -105,14 +69,8 @@
           </div>
 
           <ul ng-if="isShowDisabled" class="menulist-item-block">
-
-            <li class="menu-item _selectable" ng-repeat="item in memberData.disabledList">
-              <a>
-                <span><del>{{item.name}}</del></span>
-              </a>
-            </li>
+            <jnd-selectbox-repeat list="memberData.disabledList" template="selectbox.disabled.members"></jnd-selectbox-repeat>
           </ul>
-
         </div>
 
       </div>

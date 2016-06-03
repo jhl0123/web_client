@@ -8,7 +8,7 @@
     .module('jandiApp')
     .directive('jndSelectboxMember', jndSelectboxMember);
 
-  function jndSelectboxMember($filter, EntityFilterMember, publicService, JndUtil, jndPubSub, memberService) {
+  function jndSelectboxMember($filter, $timeout, EntityFilterMember, publicService, JndUtil, jndPubSub, memberService) {
     return {
       restrict: 'AE',
       link: link,
@@ -23,9 +23,11 @@
     };
 
     function link(scope, el, attrs) {
+      var SEARCH_DELAY = 100;
       var _lastKeyword = '';
+      var _timerSearch;
       var TOGGLE_DISABLE_SCROLL_DURATION = 500;
-
+      
       // profile image를 보여줄지 여부
       var _isShowProfileImage = attrs.isShowProfileImage === 'true';
 
@@ -176,7 +178,8 @@
        */
       function _initializeData() {
         var selectedItem = _getSelectedItem();
-
+        _lastKeyword = '';
+        scope.searchKeyword = '';
         scope.memberData = _getMemberData();
         scope.searchList = [];
         scope.isShowDisabled = _isDisabledMemberSelected();
@@ -186,10 +189,10 @@
 
       /**
        * change 이벤트 핸들러
-       * @param targetScope
+       * @param jqTarget
        */
-      function onChange(targetScope) {
-        var item = targetScope.item;
+      function onChange(jqTarget) {
+        var item = jqTarget.data('item');
 
         scope.selectedName = _getSelectedName(item);
         scope.selectedImageUrl = _getSelectedImageUrl(item);
@@ -258,12 +261,14 @@
         var disabledList = [];
         _.each(members, function(member) {
           if (!memberService.isConnectBot(member.id)) {
+            _extendThumbnail(member);
             if (publicService.isDisabledMember(member)) {
               disabledList.push(member);
             } else {
               if (memberService.isJandiBot(member.id)) {
                 enabledList.unshift(member);
                 member.extIsJandiBot = true;
+                member.extCss = 'jandiBot';
               } else {
                 enabledList.push(member);
               }
@@ -294,11 +299,13 @@
           _initializeData();
         }
       }
+      
       /**
        * keyup 이벤트 핸들러
        */
       function onKeyUp(keyEvent) {
-        _search($(keyEvent.target).val());
+        $timeout.cancel(_timerSearch);
+        _timerSearch = $timeout(_.bind(_search, this, $(keyEvent.target).val()), SEARCH_DELAY);
       }
 
       /**
@@ -307,6 +314,7 @@
        * @private
        */
       function _search(keyword) {
+        scope.searchKeyword = keyword;
         var start;
         var result = [];
         keyword = _.trim(keyword);
@@ -319,6 +327,7 @@
               if (!memberService.isConnectBot(entity.id)) {
                 start = entity.name.toLowerCase().indexOf(keyword);
                 if (start !== -1) {
+                  _extendThumbnail(entity);
                   if (scope.isShowDisabled) {
                     entity.extSearchName = _highlight(entity.name, start, keyword.length);
                     if (publicService.isDisabledMember(entity)) {
@@ -337,6 +346,15 @@
         }
       }
 
+      /**
+       * member 의 thumbnail 정보를 확장한다.
+       * @param {object} member
+       * @private
+       */
+      function _extendThumbnail(member) {
+        member.extThumbnail = $filter('getSmallThumbnail')(member);
+      }
+      
       /**
        * 동일 keyword 인지 여부를 반환한다
        * @param {string} keyword

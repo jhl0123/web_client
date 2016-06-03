@@ -52,7 +52,7 @@
        */
       isJandiBot: function(id) {
         var bot = this.get(id);
-        return CoreUtil.pick(bot, 'botType') === 'jandi_bot';
+        return (bot && bot.botType) === 'jandi_bot';
       },
 
       /**
@@ -62,7 +62,7 @@
        */
       isConnectBot: function(id) {
         var bot = this.get(id);
-        return CoreUtil.pick(bot, 'botType') === 'connect_bot';
+        return (bot && bot.botType) === 'connect_bot';
       }
     });
 

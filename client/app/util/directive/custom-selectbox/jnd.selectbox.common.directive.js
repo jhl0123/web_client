@@ -186,9 +186,10 @@
 
       /**
        * change 이벤트 핸들러
-       * @param targetScope
+       * @param {object} jqTarget
+       * @param {object} targetScope
        */
-      function onChange(targetScope) {
+      function onChange(jqTarget, targetScope) {
         var item;
         if (targetScope.item) {
           scope.selectedName = targetScope.item.text;

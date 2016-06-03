@@ -328,7 +328,7 @@
       if (_isNumber(member)) {
         member = EntityFilterMember.get(member);
       }
-      return CoreUtil.pick(member, 'u_photoThumbnailUrl', 'smallThumbnailUrl') ||
+      return member && member.u_photoThumbnailUrl && member.smallThumbnailUrl ||
         getPhotoUrl(member) ||
         getProfileImage(member.id);
     }
@@ -342,7 +342,7 @@
       if (_isNumber(member)) {
         member = EntityFilterMember.get(member);
       }
-      return CoreUtil.pick(member, 'u_photoThumbnailUrl', 'mediumThumbnailUrl') || getPhotoUrl(member);
+      return member && member.u_photoThumbnailUrl && member.mediumThumbnailUrl || getPhotoUrl(member);
     }
 
     /**
@@ -354,7 +354,7 @@
       if (_isNumber(member)) {
         member = EntityFilterMember.get(member);
       }
-      return CoreUtil.pick(member, 'u_photoThumbnailUrl', 'largeThumbnailUrl') || getPhotoUrl(member);
+      return member && member.u_photoThumbnailUrl && member.largeThumbnailUrl || getPhotoUrl(member);
     }
 
     /**
@@ -363,7 +363,7 @@
      * @returns {string} url - profile photo url
      */
     function getPhotoUrl(member) {
-      return CoreUtil.pick(member, 'u_photoUrl');
+      return member && member.u_photoUrl;
     }
 
     /**

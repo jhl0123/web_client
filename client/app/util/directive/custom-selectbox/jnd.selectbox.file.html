@@ -33,12 +33,7 @@
         <span class="menulist-item-header">{{searchList.length}}<span translate>@selectbox-query-matches</span></span>
 
         <ul class="menulist-item-filetype">
-          <li class="topic-title menu-item _selectable" ng-repeat="item in searchList">
-            <div class="fileicon {{cssIconMap[item.value]}}"></div>
-            <a>
-              <span ng-bind-html="item.extSearchName"></span>
-            </a>
-          </li>
+          <jnd-selectbox-repeat list="searchList" template="selectbox.file.search"></jnd-selectbox-repeat>
         </ul>
       </div>
     </div>
@@ -56,12 +51,7 @@
         <div class="custom-select-box__menulist-items">
           <span translate class="menulist-item-header">@common-file-type</span>
           <ul class="menulist-item-filetype">
-            <li ng-if="$index > 0" class="topic-title menu-item _selectable" ng-repeat="item in list">
-              <div class="fileicon {{cssIconMap[item.value]}}"></div>
-              <a>
-                <span>{{ item.viewValue }}</span>
-              </a>
-            </li>
+            <jnd-selectbox-repeat list="fileList" template="selectbox.file"></jnd-selectbox-repeat>
           </ul>
         </div>
       </div>
