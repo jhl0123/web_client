@@ -74,14 +74,15 @@
       if (currentSessionHelper.getCurrentEntityId() === room.id) {
         // 현재 room과 같은 room인 경우
 
-        // Jump 모달에서 참여하고 있는 토픽에 조인
-        AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_ENTER);
+        _analyticsRoomEnter();
 
         modalHelper.closeModal();
       } else {
         if (room.type === 'channels') {
           if (RoomTopicList.get(room.id, true)) {
             // join한 topic
+
+            _analyticsRoomEnter();
 
             _joinRoom(room);
           } else {
@@ -90,7 +91,12 @@
 
               entityheaderAPIservice.joinChannel(room.id)
                 .success(function () {
-                  _joinRoom(room, true);
+                  _analyticsRoomJoin(true);
+
+                  _joinRoom(room);
+                })
+                .error(function(error) {
+                  _analyticsRoomJoin(false, error.code);
                 })
                 .finally(function() {
                   jndPubSub.hideLoading();
@@ -98,6 +104,8 @@
             }
           }
         } else {
+          _analyticsRoomEnter();
+
           _joinRoom(room);
         }
       }
@@ -106,24 +114,11 @@
     /**
      * join room
      * @param {object} room
-     * @param {boolean} isNewJoin
      * @private
      */
-    function _joinRoom(room, isNewJoin) {
+    function _joinRoom(room) {
       var entityType = memberService.isBot(room.id) ? 'users' : room.type;
-
-      if (isNewJoin) {
-        // Jump 모달에서 참여 하지 않은 토픽에 조인
-        AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_JOIN, {
-          ERROR_CODE: ''
-        });
-      } else {
-        // Jump 모달에서 참여하고 있는 토픽에 조인
-        AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_ENTER);
-      }
-
       modalHelper.closeModal();
-
       $state.go('archives', {entityType: entityType, entityId: room.id});
     }
 
@@ -346,6 +341,29 @@
           jumpListIndexs.push((jumpListIndexs[index - 1] || 0) + (args[index - 1] || 0));
         }
       });
+    }
+
+    /**
+     * analytics 참여 하지 않은 토픽에 진입
+     * @param {boolean} isSuccess
+     * @param {number} [errorCode]
+     * @private
+     */
+    function _analyticsRoomJoin(isSuccess, errorCode) {
+      // Jump 모달에서 참여 하지 않은 토픽에 조인
+      AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_JOIN, {
+        RESPONSE_SUCCESS: isSuccess,
+        ERROR_CODE: errorCode
+      });
+    }
+
+    /**
+     * analytics 참여하고 있는 토픽에 진입
+     * @private
+     */
+    function _analyticsRoomEnter() {
+      // Jump 모달에서 참여하고 있는 토픽에 조인
+      AnalyticsHelper.track(AnalyticsHelper.EVENT.TOPIC_ENTER);
     }
   }
 })();
