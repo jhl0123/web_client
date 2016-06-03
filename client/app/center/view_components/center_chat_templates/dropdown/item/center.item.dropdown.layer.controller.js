@@ -81,7 +81,7 @@
 
                     try {
                       AnalyticsHelper.track(AnalyticsHelper.EVENT.MESSAGE_DELETE, {
-                        'MESSAGE_ID': message.messageId,
+                        'MESSAGE_ID': $scope.msg.messageId,
                         'RESPONSE_SUCCESS': true
                       });
                     } catch (e) {
