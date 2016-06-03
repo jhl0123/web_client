@@ -67,8 +67,23 @@
        */
       function _attachScopeEvents() {
         scope.$on('externalFile:fileShareChanged', _onFileShareChanged);
+        scope.$on('jndWebSocketFile:externalFileShared', _onExternalFileStatusChange);
+        scope.$on('jndWebSocketFile:externalFileUnShared', _onExternalFileStatusChange);
       }
 
+      /**
+       * 외부 파일 공유 상태 변경 소켓 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      function _onExternalFileStatusChange(angularEvent, socketEvent) {
+        var file = scope.file;
+        if (socketEvent.data.messageId === file.id) {
+          _.extend(file.content, socketEvent.data.fileData);
+        }
+      }
+      
       /**
        * 외부 파일공유 상태 변경 이벤트 핸들러
        * @param {object} $event
