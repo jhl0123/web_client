@@ -88,11 +88,21 @@ app.config(function ($urlRouterProvider, $httpProvider, $tooltipProvider, $state
       })
       .state('messages.home', {
         url: '',
-        title: 'Welcome'
+        title: 'Welcome',
+        views: {
+          'centerpanel': {
+            
+          }
+        }
       })
       .state('messages.detail', {
         url: '^/{entityType}/{entityId:[0-9]+}',
-        title: 'Messages'
+        title: 'Messages',
+        views: {
+          'centerpanel': {
+          templateUrl: 'app/center/center.panel.html',
+          controller: 'CenterPanelCtrl'
+        }}
       })
       .state('messages.detail.files', {
         url: '/files',
