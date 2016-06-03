@@ -7,6 +7,9 @@
   border-color: transparent !important;
   border-radius: 5px 3px 4px 5px;
 }
+.message.bot-text .attachment-content-wrapper {
+  margin-bottom: 24px;
+}
 .attachment-content-wrapper .attachment-content-bar {
   display: table-cell;
   position: absolute;

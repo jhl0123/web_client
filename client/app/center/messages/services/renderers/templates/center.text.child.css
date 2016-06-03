@@ -6,9 +6,6 @@
   margin-top: 20px;
 }
 
-.message.bot-text.text-child {
-  margin-top:-14px;
-}
 .message.bot-text .attachment-content-wrapper .attachment-content {
   min-width: auto;
 }

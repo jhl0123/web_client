@@ -7,6 +7,9 @@
 .message.system-event + .message.comment {
   margin-top: 20px;
 }
+.message.system-event.unread-mark + .message.comment:not(.first) {
+  margin-top: 28px;
+}
 .message.system-event + .message.message-group {
   margin-top: -6px;
 }

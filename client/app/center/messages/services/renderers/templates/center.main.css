@@ -44,3 +44,13 @@
   margin: 0;
   padding: 0;
 }
+
+.message .center-panel-disabled-member .member-name,
+.message .center-panel-disabled-member .member-profile {
+  opacity: 0.25;
+  text-decoration: line-through;
+}
+
+.message .center-panel-disabled-member .member-name {
+  opacity: 0.4;
+}
