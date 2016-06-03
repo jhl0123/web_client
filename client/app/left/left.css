@@ -81,9 +81,6 @@
 .lpanel-list__users .lpanel-list__header {
   margin-top: -1px;
 }
-.lpanel-list__users > div {
-  overflow: hidden;
-}
 .lpanel-list__header.topic-header {
   z-index: 1;
 }
