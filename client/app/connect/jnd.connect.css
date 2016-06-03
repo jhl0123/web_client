@@ -71,7 +71,8 @@
   padding: 16px 36px 16px 58px;
   z-index: 705;
   background-color: #FFFFFF;
-  box-shadow: 0 1px 0 #DDDDDD;
+  /*box-shadow: 0 1px 0 #DDDDDD;*/
+  box-shadow: 0 1px 0 #E3E7EA;
 }
 .jnd-connect-logo {
   background: url('../../assets/images/service-logo-jnd-connect-active.png');
@@ -1127,6 +1128,66 @@
 }
 
 
+.connect-setting-lpanel.show-sub-header {
+  height: 99px;
+}
+.connect-setting-lpanel.show-sub-header:hover,
+.connect-setting-lpanel.show-sub-header:active,
+.connect-setting-lpanel.show-sub-header:focus {
+  background-color: #FFF;
+}
+
+
+.connect-setting-lpanel {
+  -webkit-transition: height 150ms ease-in-out;
+  height: 64px;
+  max-height: 99px;
+
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.connect-setting-lpanel .integrated-service.sub-header {
+  z-index: 0;
+  -webkit-transition: margin 150ms ease-in-out;
+  display: block !important;
+  max-width: 1038px;
+  margin: 0;
+  border-bottom-width: 0;
+
+  background-color: transparent;
+}
+.integrated-service.sub-header .back-button {
+  color: #808080;
+  margin-left: -14px;
+}
+
+.integrated-service.sub-header .back-button > i{
+  vertical-align: bottom;
+  display: inline-block;
+}
+
+.integrated-service.sub-header .save-button {
+  color: #13A4EB;
+  font-weight: bold;
+
+}
+.integrated-service.sub-header .save-button:hover {
+  color: #009FE2;
+
+}
+
+.integrated-service.sub-header .back-button:hover,
+.integrated-service.sub-header .back-button:focus,
+.integrated-service.sub-header .back-button:active {
+  color: #555;
+  background-color: transparent;
+}
+.show-sub-header .integrated-service.sub-header {
+
+  border-bottom-width: 0;
+  margin-top: 0;
+
+}
+
 
 @-moz-document url-prefix() {
   .integrated-service .header-title {
@@ -1141,7 +1202,6 @@
   .connect-setting-lpanel {
     width: 100%;
     position: relative;
-    max-height: 64px;
     border-bottom:1px solid #D7D8DB;
     box-shadow: 0px 1px 5px rgba(0,0,0,0.10);
   }
