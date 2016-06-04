@@ -1,3 +1,23 @@
+<a name="1.30.0"></a>
+# [1.30.0](https://github.com/tosslab/web_client/compare/v1.29.0...v1.30.0) (2016-06-04)
+
+
+### Bug Fixes
+
+* **bubbleview:** @all 멘션 텍스트에 스타일 적용 안되는 버그 수정 ([8851d74](https://github.com/tosslab/web_client/commit/8851d74))
+* **collection:** core collection 의 update  버그 수정 ([6b150cd](https://github.com/tosslab/web_client/commit/6b150cd))
+* **message.delete:** fix error with message delete event ([c55faa8](https://github.com/tosslab/web_client/commit/c55faa8))
+* **notification:** 웹훅 메시지에 대해 노티 배너 출력되지 않는 현상 수정 ([f6b1483](https://github.com/tosslab/web_client/commit/f6b1483))
+* **notification:** 윈도우 기본 사운드 off ([37282d4](https://github.com/tosslab/web_client/commit/37282d4))
+* **teamswitch:** 팀선택 드롭다운에서 팀 선택하지 않고 Enter 입력 시 백화 현상 수정 ([d1429e5](https://github.com/tosslab/web_client/commit/d1429e5))
+
+### Features
+
+* **connect:** scroll 위치에 따라 커넥트 상단 navigation 노출하는 기능 추가 ([be99da6](https://github.com/tosslab/web_client/commit/be99da6))
+* **jump:** tracker 추가 ([dd79d8b](https://github.com/tosslab/web_client/commit/dd79d8b))
+
+
+
 <a name="1.29.0"></a>
 # [1.29.0](https://github.com/tosslab/web_client/compare/v1.28.2...v1.29.0) (2016-05-31)
 
