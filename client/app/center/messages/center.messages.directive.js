@@ -13,7 +13,7 @@
                                    StarAPIService, jndPubSub, FileDetail, memberService, Dialog, currentSessionHelper,
                                    EntityHandler, JndUtil, RendererUtil, fileAPIservice, CoreUtil) {
     return {
-      restrict: 'E',
+      restrict: 'EA',
       replace: true,
       link: link
     };
