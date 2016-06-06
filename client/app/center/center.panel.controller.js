@@ -765,6 +765,7 @@
       $scope.hasMessage = false;
 
       jqInput.val('');
+      _saveTextBuffer();
       _hideSticker();
       _setChatInputFocus();
     }
