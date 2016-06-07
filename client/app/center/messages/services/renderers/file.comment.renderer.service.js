@@ -132,7 +132,7 @@
      * @private
      */
     function _getConditions(isTitle, isChild, isFirst, isLast) {
-      var conditions = [];
+      var conditions = ['non-selectable'];
 
       if (isTitle) {
         conditions.push('message-group');
