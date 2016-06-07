@@ -40,8 +40,10 @@
 }
 
 .attachment-content .link-preview-content:not(.has-image):hover .social-body {
-  box-shadow: 0px 0px 2px 1px rgba(0, 172, 233, 0.25);
+  /*box-shadow: 0px 0px 2px 1px rgba(0, 172, 233, 0.25);*/
   border-radius: 3px 3px 4px 4px;
+  box-shadow: 0 0 4px 0px rgba(5, 35, 60, 0.2);
+  border-color: rgba(5,35,60,0.15);
 }
 .attachment-content .link-preview-content.has-image:hover {
   box-shadow: 0px 0px 2px 1px rgba(0, 172, 233, 0.25);
