@@ -73,11 +73,11 @@
 }
 
 .comment-item-action:last-child {
-  padding-right: 8px;
+  padding-left: 8px;
 }
 
 .comment-item-action.comment-delete {
-  font-size: 13px;
+  font-size: 11px;
   vertical-align: bottom;
 }
 
