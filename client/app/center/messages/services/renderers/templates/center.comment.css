@@ -95,9 +95,6 @@
   margin: 0;
   vertical-align: inherit;
 }
-.message .msg-item-info .msg-badge {
-  padding: 0 2px 0 2px;
-}
 
 .message.comment.first .msg-item:after {
   content: '';
