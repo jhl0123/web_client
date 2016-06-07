@@ -138,17 +138,16 @@
         this._scope.$on('jndWebSocketFile:fileDeleted', _.bind(this._onFileDeleted, this));
         
         this._scope.$on('externalFile:fileShareChanged', _.bind(this._onExternalFileShareChanged, this));
-        this._scope.$on('centerpanelController:getEventHistoryError', _.bind(this.initialRequest, this));
-
         this._scope.$on('jndWebSocketMessage:starred', _.bind(this._onStarred, this));
-        this._scope.$on('jndWebSocketMessage:unStarred', _.bind(this._onUnStarred, this));
-        
+        this._scope.$on('jndWebSocketMessage:unStarred', _.bind(this._onUnStarred, this));        
         
         this._scope.$on('NetInterceptor:connect', _.bind(this._check, this));
         this._scope.$on('NetInterceptor:disconnect', _.bind(this._cancelRequest, this));
         this._scope.$on('NetInterceptor:onGatewayTimeoutError', _.bind(this._check, this));
         this._scope.$on('jndWebSocket:connect', _.bind(this._check, this));
-
+        
+        this._scope.$on('MessageCacheCollection:getEventHistoryError', _.bind(this.initialRequest, this));
+        
         this._scope.$on('jndWebSocketFile:externalFileShared', _.bind(this._onExternalFileStatusChange, this));
         this._scope.$on('jndWebSocketFile:externalFileUnShared', _.bind(this._onExternalFileStatusChange, this));
       },
