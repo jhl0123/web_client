@@ -4,9 +4,6 @@
 .message.file + .message.system-event.unread-mark {
   margin: -5px 0 -12px;
 }
-.message.system-event.date-divider + .message.system-event.unread-mark {
-  margin-top: -5px;
-}
 .message.system-event.unread-mark:before {
   background-color: #00abe6;
 }
