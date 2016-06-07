@@ -16,7 +16,7 @@
   margin-top: 28px;
 }
 .message.system-event.unread-mark + .message.system-event.noti  {
-  margin-top: 20px;
+  margin-top: 16px;
 }
 .text-highlight-background {
   background-color: #f2fbff;
