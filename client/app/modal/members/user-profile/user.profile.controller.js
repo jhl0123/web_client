@@ -118,10 +118,12 @@
         _onFileListClick(curUser.id);
       } else if (type === 'email') {
         _sendEmail($scope.curUser.u_email);
-      } else if (type === 'directMessage' && !_isMyself()) {
-        _goToDM(curUser.id);
-      } else if (type === 'mention') {
-        _goToMention();
+      } else if (type === 'go') {
+        if ($scope.isMyself) {
+          _goToMention();
+        } else {
+          _goToDM(curUser.id);
+        }
       } else if (type === 'resendInvitation') {
         _sendInvitationMail();
       } else if (type === 'cancelInvitation') {
@@ -290,10 +292,10 @@
      * @private
      */
     function _goToDM(userId) {
+      console.log('###_goToDM');
       if (_isMyself()) {
         return;
       }
-
       MemberProfile.goToDM(userId);
     }
 

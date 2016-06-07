@@ -110,7 +110,7 @@
     $scope.onSendingRepeatDone = onSendingRepeatDone;
 
     $scope.isLastReadMarker = isLastReadMarker;
-
+    $scope.postMessageMarker = postMessageMarker;
 
     _init();
 
@@ -124,11 +124,19 @@
 
       //entity 리스트 load 가 완료되지 않았다면 dataInitDone 이벤트를 기다린다
       if (publicService.isInitDone() && _entityId && _entityType) {
-        _initializeListeners();
-        _initialRender();
+        _onInitDone();
       } else {
-        $scope.$on('publicService:dataInitDone', _init);
+        $scope.$on('publicService:dataInitDone', _onInitDone);
       }
+    }
+
+    /**
+     * init done 이벤트 핸들러
+     * @private
+     */
+    function _onInitDone() {
+      _initializeListeners();
+      _initialRender();
     }
 
     /**
@@ -669,8 +677,10 @@
       }, 500);
     }
 
-
-    function _postMessageMarker() {
+    /**
+     * messageMarker 정보를 업데이트 한다
+     */
+    function postMessageMarker() {
       var lastLinkId = _messageCollection.roomData.lastLinkId;
       if (memberService.getLastReadMessageMarker(_getRoomId()) !== lastLinkId) {
         messageAPIservice.updateMessageMarker(_entityId, _entityType, lastLinkId)
@@ -1008,7 +1018,7 @@
     function _clearBadgeCount(entity) {
       if (entity) {
         entityAPIservice.updateBadgeValue(entity, '');
-        _postMessageMarker();
+        postMessageMarker();
       }
     }
 
@@ -1211,7 +1221,7 @@
           _refreshCurrentTopic(true);
         } else {
           _scrollToBottom();
-          _postMessageMarker();
+          postMessageMarker();
         }
       }
 

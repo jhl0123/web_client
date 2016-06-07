@@ -25,7 +25,7 @@
 
     function link(scope, el, attrs, ctrl) {
       var key = scope.group + '_' + scope.key;
-      var jqParent = el.parent().parent();
+      var jqParent = el.closest('._badgeParent');
 
       _init();
 

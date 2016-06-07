@@ -242,7 +242,7 @@
       });
 
       return {
-        conditions: ['file'],
+        conditions: ['file', 'non-selectable'],
         template: _template(data)
       };
     }
