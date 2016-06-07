@@ -1,6 +1,7 @@
 <span class="noti-content">
   {{#if status.isInvite}}
     <span>{{msg.message.content.actionOwner}}</span>
+    <span>{{translate '@msg-invited'}}</span>
     <span class="keep">{{{msg.message.content.body}}}</span>
     {{#each invitees}}
       <span>

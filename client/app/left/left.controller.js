@@ -104,6 +104,7 @@ app.controller('leftPanelController', function(
     $scope.$on('NetInterceptor:connect', _onConnected);
     $scope.$on('NetInterceptor:onGatewayTimeoutError', _requestLeftSideMenu);
     $scope.$on('Auth:refreshTokenSuccess', _requestLeftSideMenu);
+    $scope.$on('MessageCacheCollection:getEventHistoryError', _requestLeftSideMenu);
     $scope.$on('onMemberClick', function(event, user) {
       $scope.onMemberClick(user);
     });

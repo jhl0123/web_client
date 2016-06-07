@@ -20,7 +20,7 @@ article {
   left: 240px;
   right: 0;
   bottom: 0;
-  min-width: 608px;
+  min-width: 560px;
 
   -webkit-transition: opacity 0.7s, left !important;
   transition: opacity 0.7s, left !important;
@@ -104,7 +104,7 @@ article {
   max-width: calc(100% - 84px);
   border-radius: 3px 3px 4px 4px;
   border: 1px solid rgba(5, 35, 60, 0.1);
-  border-bottom: 1px solid rgba(5,35,60,0.2);
+  /* border-bottom: 1px solid rgba(5,35,60,0.2); */
   background-color: #fff;
   color: #333;
 }

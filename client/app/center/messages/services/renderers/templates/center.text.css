@@ -12,6 +12,15 @@
   word-break: keep-all;
 }
 
+.message.system-event.unread-mark + .message.text:not(.text-child):not(.bot-text) {
+  margin-top: 28px;
+}
+.message.system-event.unread-mark + .message.system-event.noti  {
+  margin-top: 16px;
+}
+.message.system-event.unread-mark + .message.system-event.date-divider  {
+  margin-top: 20px;
+}
 .text-highlight-background {
   background-color: #f2fbff;
 }
