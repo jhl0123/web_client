@@ -165,7 +165,7 @@
      * @private
      */
     function _getConditions(msg, isChild, isSticker) {
-      var conditions = ['text'];
+      var conditions = ['text', 'non-selectable'];
 
       conditions.push(_getMsgItemClass(msg));
 
