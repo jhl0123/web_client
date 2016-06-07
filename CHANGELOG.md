@@ -1,3 +1,23 @@
+<a name="1.30.1"></a>
+## [1.30.1](https://github.com/tosslab/web_client/compare/v1.30.0...v1.30.1) (2016-06-07)
+
+
+### Bug Fixes
+
+* **bubbleview:** 텍스트 복사시 unread count와 write time이 포함되지 않도록 수정 ([6d36a00](https://github.com/tosslab/web_client/commit/6d36a00))
+* **center:** scroll 아래로 내려갔을 때 marker API 호출 시 참조 오류 수정 ([9515327](https://github.com/tosslab/web_client/commit/9515327))
+* **center:** 내가 보낸 메시지가 잔존하는 현상 수정 ([3c21968](https://github.com/tosslab/web_client/commit/3c21968))
+* **center:** 여러 파일에 공유된 파일에 멘션을 걸어 comment 를 달 경우, 중복 파싱되어 태그가 노출되는 현상 수정 ([d160101](https://github.com/tosslab/web_client/commit/d160101))
+* **center:** 토픽 초대 system message 에서 xxx "님이" 에서 "님이" 가 출력되지 않는 현상 수정 ([b5450a7](https://github.com/tosslab/web_client/commit/b5450a7))
+* **connect:**  봇 프로필 변경되지 않는 현상 수정 ([3b9ca67](https://github.com/tosslab/web_client/commit/3b9ca67))
+* **connect:** 커넥트 항목 추가 시 추가 메시지 노출되지 않는 현상 수정 ([156a88d](https://github.com/tosslab/web_client/commit/156a88d))
+* **left:** 새 메시지 버튼 위치 잘못잡는 현상 수정 ([732dfd4](https://github.com/tosslab/web_client/commit/732dfd4))
+* **mention:** 멘션 리스트 갱신되지 않는 버그 수정 & 키입력시 active index 초기화 되는 버그수정 ([e6450f4](https://github.com/tosslab/web_client/commit/e6450f4))
+* **postMessage:** window.postMessage 로 들어오는 데이터 중 데이터가 undefined 일 경우 예외 처리 추가 ([fdeb49d](https://github.com/tosslab/web_client/commit/fdeb49d))
+* **profile:** 프로필 모달에서 1:1 메시지 클릭시 1:1 메시지로 이동되지 않는 현상 수정 ([d72213e](https://github.com/tosslab/web_client/commit/d72213e))
+
+
+
 <a name="1.30.0"></a>
 # [1.30.0](https://github.com/tosslab/web_client/compare/v1.29.0...v1.30.0) (2016-06-04)
 
