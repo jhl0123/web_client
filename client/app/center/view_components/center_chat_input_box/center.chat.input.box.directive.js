@@ -48,12 +48,12 @@
        * @private
        */
       function _init() {
-        scope.isDM = memberService.isMember(_entityId);
         scope.onMentionIconClick = onMentionIconClick;
         scope.onMessageInputFocus = onMessageInputFocus;
         scope.onMessageInputBlur = onMessageInputBlur;
         scope.isMentionaheadOpen = isMentionaheadOpen;
 
+        _initializeVariables();
         _attachScopeEvents();
         _attachDomEvents();
 
@@ -75,6 +75,14 @@
         scope.$on('jndWebSocketMember:memberUpdated', _setMentionList);
 
         scope.$watch('status.isLoading', _onChangeLoading);
+      }
+
+      /**
+       * 변수 값을 초기화 한다.
+       * @private
+       */
+      function _initializeVariables() {
+        scope.isDM = memberService.isMember(_entityId);
       }
 
       /**
@@ -102,6 +110,7 @@
       function _onCurrentEntityChanged(angularEvent, currentEntity) {
         _entityId = currentEntity.id;
         _setMentionList();
+        _initializeVariables();
       }
 
       /**
