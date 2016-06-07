@@ -9,9 +9,9 @@
     .controller('JndConnectUnionFooterCtrl', JndConnectUnionFooterCtrl);
 
   /* @ngInject */
-  function JndConnectUnionFooterCtrl($scope, $filter, CoreUtil, jndPubSub, modalHelper, JndUtil, Dialog) {
+  function JndConnectUnionFooterCtrl($scope, $filter, CoreUtil, jndPubSub, modalHelper, JndUtil, Dialog, JndConnectUnion) {
     var _translate = $filter('translate');
-    $scope.save = save;
+    $scope.save = JndConnectUnion.notifySave;
     $scope.onFileSelect = onFileSelect;
 
     $scope.langList = [
@@ -79,13 +79,6 @@
         $scope.changedFileUri = url;
         $scope.data.botThumbnailFile = CoreUtil.dataURItoBlob(url);
       }
-    }
-
-    /**
-     * 설정 저장하기 클릭 시
-     */
-    function save() {
-      jndPubSub.pub('unionFooter:save');
     }
 
     /**

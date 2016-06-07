@@ -21,6 +21,7 @@
     };
     this.getDefaultHeader = getDefaultHeader;
     this.getDefaultFooter = getDefaultFooter;
+    this.notifySave = notifySave;
     this.save = save;
     this.read = read;
     this.showLoading = showLoading;
@@ -28,10 +29,16 @@
     this.handleCommonLoadError = handleCommonLoadError;
     this.setHeaderAccountData = setHeaderAccountData;
 
+    /**
+     * loading 을 보인다.
+     */
     function showLoading() {
       jndPubSub.pub('JndConnectUnion:showLoading');
     }
 
+    /**
+     * loading 을 감춘다.
+     */
     function hideLoading() {
       jndPubSub.pub('JndConnectUnion:hideLoading');
     }
@@ -276,6 +283,13 @@
           _onErrorCommon(err, status);
         }
       }
+    }
+
+    /**
+     * 설정을 저장한다.
+     */
+    function notifySave() {
+      jndPubSub.pub('JndConnectUnion:save');
     }
   }
 })();

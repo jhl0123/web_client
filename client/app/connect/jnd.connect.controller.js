@@ -7,7 +7,7 @@
 
   /* @ngInject */
   function JndConnectCtrl($scope, $timeout, $filter, $q, JndConnect, EntityHandler, JndConnectApi, JndUtil, language,
-                          Dialog, JndConnectUnionFormData) {
+                          Dialog, JndConnectUnionFormData, JndConnectUnion) {
 
     var UNION_DATA = {
       '1': {
@@ -84,6 +84,7 @@
     $scope.historyBack = historyBack;
     $scope.close = JndConnect.close;
     $scope.closeBanner = closeBanner;
+    $scope.save = JndConnectUnion.notifySave;
 
     _init();
 

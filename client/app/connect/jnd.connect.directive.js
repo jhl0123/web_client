@@ -33,6 +33,9 @@
       function _init() {
         scope.$on('JndConnect:hideLoading', _onHideLoading);
         scope.$on('JndConnect:showLoading', _onShowLoading);
+        
+        scope.$on('jndConnectScroll:showHeaderNav', _showHeaderNav);
+        scope.$on('jndConnectScroll:hideHeaderNav', _hideHeaderNav);
         $timeout(_initializeElements);
       }
 
@@ -89,6 +92,24 @@
         });
         _setElementLoadingPosition();
         el.addClass('opac-in');
+      }
+
+      /**
+       * header navigation 을 노출한다.
+       * @private
+       */
+      function _showHeaderNav() {
+        var jqHeader = el.find('._header');
+        jqHeader.addClass('show-sub-header');
+      }
+
+      /**
+       * header navigation 을 감춘다.
+       * @private
+       */
+      function _hideHeaderNav() {
+        var jqHeader = el.find('._header');
+        jqHeader.removeClass('show-sub-header');
       }
 
       /**

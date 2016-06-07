@@ -1,0 +1,693 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html lang="{{ preferences.serverLang }}" ng-app="jandiApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="{{ preferences.serverLang }}" ng-app="jandiApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="{{ preferences.serverLang }}" ng-app="jandiApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="{{ preferences.serverLang }}" ng-app="jandiApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+
+  <title data-ng-bind="'Welcome to JANDI'"></title>
+  <link type="image/icon" rel="shortcut icon">
+
+  <meta name="description" content="JANDI Web application">
+  <meta name="keywords" content="JANDI, 잔디">
+  <meta name="author" content="TossLab">
+  <meta name="viewport" content="width=device-width">
+
+  <!-- build:css(client) app/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="../../client/bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="../../client/bower_components/angular-xeditable/dist/css/xeditable.css" />
+  <link rel="stylesheet" href="../../client/bower_components/angular-toastr/dist/angular-toastr.css" />
+  <link rel="stylesheet" href="../../client/bower_components/font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="../../client/bower_components/ngImgCrop/compile/minified/ng-img-crop.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:css({.tmp,client}) app/app.css -->
+  <link rel="stylesheet" href="../../client/app/app.css">
+  <!-- injector:css -->
+  <link rel="stylesheet" href="../../client/app/app.css">
+  <link rel="stylesheet" href="../../client/app/background/background.css">
+  <link rel="stylesheet" href="../../client/app/banner/desktop.notification.banner.css">
+  <link rel="stylesheet" href="../../client/app/center/announcement/announcement.css">
+  <link rel="stylesheet" href="../../client/app/center/center.css">
+  <link rel="stylesheet" href="../../client/app/center/view_components/center_chat_input_box/center.chat.input.box.css">
+  <link rel="stylesheet" href="../../client/app/center/help_messages/help.messages.css">
+  <link rel="stylesheet" href="../../client/app/center/messages/services/renderers/templates/center.file.comment.css">
+  <link rel="stylesheet" href="../../client/app/center/messages/services/renderers/templates/center.file.comment.title.css">
+  <link rel="stylesheet" href="../../client/app/center/messages/services/renderers/templates/center.file.css">
+  <link rel="stylesheet" href="../../client/app/center/messages/services/renderers/templates/center.text.css">
+  <link rel="stylesheet" href="../../client/app/center/messages/services/renderers/templates/center.unread.bookmark.css">
+  <link rel="stylesheet" href="../../client/app/center/view_components/center_chat_templates/dropdown/file/center.file.dropdown.layer.css">
+  <link rel="stylesheet" href="../../client/app/center/view_components/center_chat_templates/dropdown/item/center.item.dropdown.layer.css">
+  <link rel="stylesheet" href="../../client/app/center/view_components/center_chat_templates/text-sending/text.sending.css">
+  <link rel="stylesheet" href="../../client/app/center/view_components/entity_header/entity.header.css">
+  <link rel="stylesheet" href="../../client/app/center/view_components/entity_header/topic_description/topic.description.css">
+  <link rel="stylesheet" href="../../client/app/disconnect/disconnect.css">
+  <link rel="stylesheet" href="../../client/app/external_share/external.share.css">
+  <link rel="stylesheet" href="../../client/app/header/header.css">
+  <link rel="stylesheet" href="../../client/app/left/left.css">
+  <link rel="stylesheet" href="../../client/app/left/member/member.css">
+  <link rel="stylesheet" href="../../client/app/left/messages/messages.css">
+  <link rel="stylesheet" href="../../client/app/left/topics/dropdown/left.folder.dropdown.layer.css">
+  <link rel="stylesheet" href="../../client/app/left/topics/folder/topic.folder.css">
+  <link rel="stylesheet" href="../../client/app/left/topics/topic/topic.css">
+  <link rel="stylesheet" href="../../client/app/left/topics/topics.css">
+  <link rel="stylesheet" href="../../client/app/left/topics/tutorial/left.tutorial.folder.css">
+  <link rel="stylesheet" href="../../client/app/loading/loading.center.css">
+  <link rel="stylesheet" href="../../client/app/common.css">
+  <link rel="stylesheet" href="../../client/app/mention/mention.view.css">
+  <link rel="stylesheet" href="../../client/app/mobile/mobile.catcher.css">
+  <link rel="stylesheet" href="../../client/app/modal/files/integration/integration.css">
+  <link rel="stylesheet" href="../../client/app/modal/files/share/share.css">
+  <link rel="stylesheet" href="../../client/app/modal/images/carousel/image.carousel.css">
+  <link rel="stylesheet" href="../../client/app/modal/images/full_image/full.screen.image.css">
+  <link rel="stylesheet" href="../../client/app/modal/lists/services/renderers/templates/modal.room.list.item.css">
+  <link rel="stylesheet" href="../../client/app/modal/members/current_member_profile/current.member.profile.css">
+  <link rel="stylesheet" href="../../client/app/modal/modal.css">
+  <link rel="stylesheet" href="../../client/app/modal/rooms/quick_launcher/quick.launcher.css">
+  <link rel="stylesheet" href="../../client/app/modal/settings/notification/setting.notification.css">
+  <link rel="stylesheet" href="../../client/app/modal/teams/team_change/team.change.css">
+  <link rel="stylesheet" href="../../client/app/modal/teams/team_invite/invite_emails/invite.emails.css">
+  <link rel="stylesheet" href="../../client/app/modal/teams/team_invite/team.invite.css">
+  <link rel="stylesheet" href="../../client/app/modal/teams/team_member_list/team.member.list.css">
+  <link rel="stylesheet" href="../../client/app/modal/terms/terms.css">
+  <link rel="stylesheet" href="../../client/app/modal/topics/topic_create/topic.create.css">
+  <link rel="stylesheet" href="../../client/app/modal/topics/topic_invite/topic.invite.css">
+  <link rel="stylesheet" href="../../client/app/modal/topics/topic_join/topic.join.css">
+  <link rel="stylesheet" href="../../client/app/right/file.detail/comment_input/file.detail.comment.input.css">
+  <link rel="stylesheet" href="../../client/app/right/file.detail/comments/file.detail.comments.css">
+  <link rel="stylesheet" href="../../client/app/right/file.detail/file.detail.css">
+  <link rel="stylesheet" href="../../client/app/right/file.detail/header/file.detail.header.css">
+  <link rel="stylesheet" href="../../client/app/right/file.detail/meta/file.detail.meta.css">
+  <link rel="stylesheet" href="../../client/app/right/file.detail/preview/file.detail.preview.css">
+  <link rel="stylesheet" href="../../client/app/right/file.detail/title/file.detail.title.css">
+  <link rel="stylesheet" href="../../client/app/right/file/file.css">
+  <link rel="stylesheet" href="../../client/app/right/files/files.css">
+  <link rel="stylesheet" href="../../client/app/right/mentions/mentions.css">
+  <link rel="stylesheet" href="../../client/app/right/message/message.css">
+  <link rel="stylesheet" href="../../client/app/right/right.css">
+  <link rel="stylesheet" href="../../client/app/right/rpanel_search/rpanel.search.css">
+  <link rel="stylesheet" href="../../client/app/right/search.messages/search.message/search.message.css">
+  <link rel="stylesheet" href="../../client/app/right/search.messages/search.messages.css">
+  <link rel="stylesheet" href="../../client/app/right/stars/stars.css">
+  <link rel="stylesheet" href="../../client/app/signin/signin.css">
+  <link rel="stylesheet" href="../../client/app/sticker/sticker.css">
+  <link rel="stylesheet" href="../../client/app/tpl/503/503.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/tutorial.main.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/center/tutorial.center.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/completion/tutorial.completion.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/entity_header/tutorial.entity.header.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/lecture/dm/send/lecture.dm.send.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/lecture/file/comment/lecture.file.comment.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/lecture/file/upload/lecture.file.upload.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/lecture/menu/team/lecture.menu.team.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/lecture/profile/change/lecture.profile.change.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/lecture/topic/leave/lecture.topic.leave.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/left/tutorial.left.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/modal/member_list/tutorial.modal.member.list.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/modal/profile/tutorial.modal.profile.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/modal/topic_create/tutorial.modal.topic.create.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/modal/topic_list/tutorial.modal.topic.list.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/profile/tutorial.profile.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/purse/tutorial.purse.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/team/tutorial.team.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/top/tutorial.top.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/popup/view_components/tutor/tutorial.tutor.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/tutorial.css">
+  <link rel="stylesheet" href="../../client/app/tutorial/welcome/tutorial.welcome.css">
+  <link rel="stylesheet" href="../../client/app/util/css/jandi-common.css">
+  <link rel="stylesheet" href="../../client/app/util/css/jandi-icon.css">
+  <link rel="stylesheet" href="../../client/app/util/css/spinners.css">
+  <link rel="stylesheet" href="../../client/app/util/directive/custom-selectbox/jnd.selectbox.css">
+  <link rel="stylesheet" href="../../client/app/util/directive/jnd.tooltip.css">
+  <link rel="stylesheet" href="../../client/app/util/directive/jnd.version.css">
+  <link rel="stylesheet" href="../../client/assets/components/google-code-prettify/prettify.css">
+  <link rel="stylesheet" href="../../client/components/app/mention_ahead/mention.ahead.css">
+  <link rel="stylesheet" href="../../client/components/jandi/dialog/dialog.css">
+  <link rel="stylesheet" href="../../client/components/jandi/dialog/modal/modal.css">
+  <link rel="stylesheet" href="../../client/components/jandi/dialog/toast/toast.css">
+
+  <!-- endinjector -->
+  <!-- endbuild -->
+  
+  <link rel="stylesheet" href="../../client/app/connect/jnd.connect.css">
+  <link rel="stylesheet" href="../../client/app/connect/submenu/jnd.connect.submenu.css">
+  <link rel="stylesheet" href="../../client/app/connect/union/google-calendar/jnd.connect.google.calendar.css">
+  <link rel="stylesheet" href="../../client/app/connect/component/jnd.connect.union.plug.css">
+  <link rel="stylesheet" href="../../client/app/connect/component/jnd.connect.union.css">
+  <link rel="stylesheet" href="../../client/app/util/directive/switch-button/switch.button.css">
+  <link rel="stylesheet" href="../../client/app/connect/card/jnd.connect.card.plug.css">
+
+
+  
+  <!-- inline styles for sub-header -->
+  
+  <style>
+  .jnd-connect-logo-container {
+    box-shadow: 0 1px 0 #E3E7EA;
+  }
+  .connect-setting-lpanel.show-sub-header {
+	
+	height: 99px;
+	
+  }
+  .connect-setting-lpanel.show-sub-header:hover,
+  .connect-setting-lpanel.show-sub-header:active,
+  .connect-setting-lpanel.show-sub-header:focus {
+	background-color: #FFF;
+  }
+  
+  
+  .connect-setting-lpanel {
+	-webkit-transition: height 150ms ease-in-out;
+	height: 64px;
+	max-height: 99px;
+	
+	background-color: rgba(255, 255, 255, 0.9);
+  }
+  .connect-setting-lpanel .integrated-service.sub-header {
+    z-index: 0;
+    -webkit-transition: margin 150ms ease-in-out;
+    display: block !important;
+    max-width: 1038px;
+    margin: 0;
+    border-bottom-width: 0;
+  }
+  .integrated-service.sub-header .back-button {
+	color: #808080;
+	margin-left: -14px;
+  }
+  
+  .integrated-service.sub-header .back-button > i{
+    vertical-align: bottom;
+    display: inline-block;
+  }   
+  
+  .integrated-service.sub-header .save-button {
+	color: #13A4EB;
+	font-weight: bold;
+	
+  }
+  .integrated-service.sub-header .save-button:hover {
+	color: #009FE2;
+	
+  }
+  
+  .integrated-service.sub-header .back-button:hover,
+  .integrated-service.sub-header .back-button:focus,
+  .integrated-service.sub-header .back-button:active {
+	color: #555;
+	background-color: transparent;
+  }
+  .show-sub-header .integrated-service.sub-header {
+	
+	border-bottom-width: 0;
+	margin-top: 0;
+	   
+  }
+  
+  #jnd-connect-list-container {
+	display: none;
+  }
+  
+  
+  </style>
+  
+</head>
+
+<body jnd-main-key-handler
+      active-notifier
+      window-title-manager
+      jnd-wrapper>
+	      
+<!--[if lte IE 9]>
+  <![endif]-->
+<div class="content-wrapper opac-in-fast">
+  <background></background>
+  
+  
+  <div class="body-wrapper full-screen">
+	
+	
+	<!-- jandi connect setting container Starts here -->
+	<div class="jnd-connect-setting-container">
+		
+	  <div class="jnd-connect-hpanel non-selectable">
+		<div class="jnd-connect-header ng-scope">
+		  <span class="jnd-connect-header-navbar__topmenu back-button cursor_pointer" ng-click="">
+		    <i class="icon-long-arrow-left jnd-connect-header-navbar__menu-icon"></i>
+		    <!-- translate:  -->
+		    <span class="jnd-connect-header-navbar__title ng-scope" translate="">돌아가기</span>
+		  </span>
+		  <span class="jnd-connect-header-navbar__topmenu exit-button cursor_pointer" ng-click="">
+		    <!-- translate:  -->
+		    <span class="jnd-connect-header-navbar__title ng-scope" translate="">잔디 커넥트 닫기</span>
+		  </span>
+			
+		</div>
+	  </div>
+	  
+	  <div class="full-screen" id="connect-setting-ui" ui-view="">
+		  
+		<aside class="connect-setting-lpanel non-selectable opac-zero opac-in"
+			   ng-class="">
+				   
+		  <div class="jnd-connect-logo-container">
+			<i class="jnd-connect-logo"></i>
+			<span class="jnd-connect-title">잔디 커넥트</span>
+		  </div>
+		  
+		  <!-- connect setting page sub-header START Here -->
+		  <div class="jnd-connect integrated-service left-header sub-header">
+			
+			<span class="jnd-connect-detail back-button cursor_pointer">
+		      <i class="icon-long-arrow-left jnd-connect-detail"></i>
+		      <span class="ng-scope" translate="">서비스 설정 화면으로 돌아가기</span>
+		    </span>
+		    
+		    <span class="jnd-connect-detail save-button pull-right cursor_pointer">설정 저장하기</span>
+		    
+		    <div class="clear"></div>
+		  </div>
+		  <!-- connect setting page sub-header END Here -->
+		  
+		  
+		</aside>
+
+
+		<div class="jnd-connect-service-container" id="jnd-connect-available-service">
+
+      <!-- integration detail STARTS here -->
+      <div class="integration-service detail">
+
+			<span class="jnd-connect-detail back-button cursor_pointer" ng-click="">
+		      <i class="icon-long-arrow-left jnd-connect-detail"></i>
+        <!-- translate:  -->
+		      <span class="ng-scope" translate="">서비스 설정 화면으로 돌아가기</span>
+		    </span>
+
+        <div class="integration-service-container detail-container trello" id="jnd-connect-detail-container">
+
+          <section class="active-member-info" style="">
+            <!-- active member info will be placed here -->
+            <span class="ng-scope" translate=""><b class="active-member-count">1</b> 명의 다른 팀원이 연동중</span>
+          </section>
+
+          <section class="service-info jnd-column-5-width jnd-float-left">
+            <i class="icon-service-logo"></i>
+            <i class="icon-jnd-connect active"></i>
+
+            <span class="user-name">Admin</span><span class="service-name">'s Trello</span>
+            <span class="date-info">2015-12-01 생성</span>
+          </section>
+          
+          <section class="service-info jnd-column-5-width jnd-float-left second-column">
+	          
+            <div class="connect-union-plug-tool-container jnd-float-left"
+				 ng-class="{
+			     'on': plug.isOn
+				}">
+			  <span class="connect-union-plug-tool-text" ng-click="toggleOnOff()">중지됨</span>
+			  
+			  <div class="switch-button switch-off switch-on" ng-class="{'switch-on': active}" ng-click="onClick();">
+			    <div class="switch-background"></div>
+				<div class="switch-handler"></div>
+    		  </div>    		
+    		    
+    		  <span class="opt-button jnd-cursor-pointer" style="display: none;"><i class="icon-pencil"></i></span>
+			  <span class="opt-button jnd-cursor-pointer"><i class="icon-trash"></i></span>
+  			</div>
+  			
+  			<div class="verified-email-container jnd-float-left">
+  			    <span class="verified-label white-button">인증된 계정</span>
+  			    <span class="verified-email-address white-button">ted.kim@tosslab.com</span>
+  			    <div class="custom-select-box-btn white-button" ng-class="" ng-click="">
+                  <i class="fa custom-selectbox-arrow icon-angle-down"></i>
+                </div>
+  			  </div>
+  			
+  			
+  			
+          </section>
+
+
+          <section class="service-setting select-calendar clear jnd-column-5-width jnd-float-left arrow-column">
+            <span class="setting-label">알림을 받고자 하는 Board를 선택해주세요.</span>
+            <div class="setting-contents">
+              <span class="setting-description"></span>
+
+              <div class="custom-select-box-btn white-button" ng-class="" ng-click="">
+                <i class="fa custom-selectbox-arrow icon-angle-down"></i>
+                <span class="">Board 선택</span>
+              </div>
+
+              <span class="create-new-topic white-button cursor_pointer animate-all" style="display: none;">토픽 생성하기</span>
+              
+			  <i class="icon-long-arrow-right"></i>
+			  
+              <div class="clear"></div>
+
+            </div>
+          </section>
+          
+          <section class="service-setting select-conversation jnd-column-5-width jnd-float-left second-column compound-column">
+            <span class="setting-label">연동 토픽 또는 1:1 메시지 선택</span>
+            <div class="setting-contents">
+              <span class="setting-description"></span>
+
+              <div class="custom-select-box-btn white-button" ng-class="" ng-click="">
+                <i class="fa custom-selectbox-arrow icon-angle-down"></i>
+                <span class="">토스랩 코리아</span>
+              </div>
+
+              <span class="create-new-topic white-button cursor_pointer animate-all">토픽 생성하기</span>
+
+              <div class="clear"></div>
+
+            </div>
+          </section>
+
+          
+          <section class="service-setting select-nofification clear">
+            <span class="setting-label">메시지 발생 이벤트 선택</span>
+            <div class="setting-contents">
+              <span class="setting-description"></span>
+              
+              
+              <div class="inner-column jnd-column-5-width jnd-float-left">
+                <h3 class="column-title first-title">카드</h3>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">카드가 생성되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">카드가 옮겨졌을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">카드 이름이 변경되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">코멘트 카드가 추가되었을 떄</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">첨부 파일이 카드에 추가되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">설명(Description)이 변경되었을 때</span>
+                   </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">마감일(Due date)이 변경되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">라벨(Label)이 변경되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">카드에 멤버가 추가되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">카드가 archive 또는 unarchive되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="clear"></div>
+              
+                
+              </div>
+              <!-- inner column ENDS -->
+              
+              <div class="inner-column jnd-column-5-width jnd-float-left">
+                <h3 class="column-title">리스트</h3>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">리스트가 생성되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">리스트 이름이 바뀌었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                     <span translate="">리스트가 다른 보드로 옮겨졌을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">리스트가 archive 또는 unarchive되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">보드 이름이 바뀌었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">보드에 멤버가 추가되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="clear"></div>
+                
+              </div>
+              <!-- inner column ENDS -->
+              
+              <div class="inner-column jnd-column-5-width jnd-float-left">
+                <h3 class="column-title">체크리스트</h3>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">체크리스트가 카드에 추가되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">체크리스트 아이템이 생성되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+              
+                <div class="checkbox-list-container text-only jnd-float-left jnd-column-10-width">
+                  <input type="checkbox" id="" class="">
+                  <label>
+                    <div class="checkbox-description">
+                      <span translate="">체크리스트 아이템이 완료(Complete)/미완료(Incomplete)로 표시되었을 때</span>
+                    </div>
+                  </label>
+                </div>
+           
+                <div class="clear"></div>
+              
+              </div>
+              <!-- inner column ENDS -->
+              
+              <div class="clear"></div>
+              
+
+            </div>
+          </section>
+          
+          
+          <section class="service-setting select-profile">
+            <span class="setting-label">연동 서비스 프로필 설정</span>
+            <div class="setting-contents">
+              <span class="setting-description">팀 내에서 연동 항목이 메시지를 보낼 때 노출되는 프로필 이미지와 이름을 지정할 수 있습니다.</span>
+
+
+              <div class="change-profile cursor_pointer">
+                <span class="overlay-label">Edit</span>
+              </div>
+
+              <input class="setting-input form-control" name="" id="" placeholder="Google Calendar">
+
+              <div class="clear"></div>
+
+            </div>
+          </section>
+          
+          <!-- Added 'language select' section here-->
+          <section class="service-setting select-lang">
+            <span class="setting-label">언어 설정</span>
+            <div class="setting-contents">
+              <span class="setting-description">연동 서비스로부터 수신되는 메시지에 사용될 언어를 선택합니다.</span>
+
+
+              <div class="custom-select-box-btn white-button pull-right" ng-class="" ng-click="">
+                <i class="fa custom-selectbox-arrow icon-angle-down"></i>
+                <span class="">한국어</span>
+              </div>
+
+              <div class="clear"></div>
+
+            </div>
+          </section>
+          <!-- Added 'language select' section ENDS -->
+          
+
+          <input type="submit" class="btn comment-btn save-button btn-ok" value="설정 저장하기">
+
+
+        </div>
+
+      </div>
+      <!-- integration detail ENDS here -->
+		</div>
+		
+	  </div>
+	  
+	</div>
+	<!-- jandi connect setting container Ends here -->
+	
+
+    
+    
+    
+  </div>
+  
+  <div ng-if="!isReady" class="full-screen z-index-top" style="display: none;">
+  </div>
+  
+</div>
+
+
+
+<!--[if lte IE 9]>
+<![endif]-->
+
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script>
+   
+  $('.jnd-connect-service-container').scroll(function(){
+    checkCurrentScr();
+    //console.log(currentScr);
+  });
+  
+  //$(window).on('scroll', checkCurrentScr);
+  
+  function checkCurrentScr() {
+	
+	
+	var currentScr = $('.jnd-connect-service-container').scrollTop(); //현재 커넥트 셋팅 영역의 스크롤 값.
+	var targetScrVal = 48; //뒤로 가기 버튼이 안보이게 되는 스크롤 지점.
+	
+	
+	console.log(currentScr);
+	
+	if (currentScr > targetScrVal) {
+	  $('.connect-setting-lpanel').addClass('show-sub-header');
+	  
+	  
+	}
+	else {
+	  $('.connect-setting-lpanel').removeClass('show-sub-header');
+	}
+	
+	
+  }
+  
+</script>
+
+<!-- build:js(client) app/vendor.js -->
+<!-- bower:js -->
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,client}) app/app.js -->
+<!-- injector:js -->
+<!-- endinjector -->
+<!-- endbuild -->
+</body>
+</html>
