@@ -1,6 +1,6 @@
 .integration-preview-wrapper {
   font-size: 14px;
-  line-height: 22px;
+  line-height: 24px;
   clear: both;
 }
 
@@ -11,7 +11,7 @@
   font-size: 16px;
 }
 
-.integration-preview-wrapper .preview-description,
+.integration-preview-wrapper .preview-description:not(:first-child),
 .integration-preview-wrapper .preview-subset-description {
   margin-top: 5px;
   line-height: 20px;
@@ -45,9 +45,9 @@
 }
 
 .attachment-content .integration-preview-wrapper:first-child {
-  padding-top: 12px;
+  padding-top: 10px;
 }
 
 .attachment-content .integration-preview-wrapper:last-child {
-  padding-bottom: 14px;
+  padding-bottom: 12px;
 }
