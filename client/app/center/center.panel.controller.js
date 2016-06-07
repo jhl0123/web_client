@@ -13,8 +13,8 @@
                            currentSessionHelper, logger, centerService, markerService, TextBuffer, modalHelper,
                            NetInterceptor, jndPubSub, jndKeyCode, MessageCacheCollection, MessageSendingCollection,
                            AnalyticsHelper, Announcement, NotificationManager, Dialog, RendererUtil, HybridAppHelper,
-                           TopicInvitedFlagMap, UserList, JndConnect, RoomTopicList, SocketEventApi, jndWebSocket,
-                           ActiveNotifier, EntityFilterMember, DmApi) {
+                           TopicInvitedFlagMap, UserList, JndConnect, RoomTopicList, ActiveNotifier, EntityFilterMember,
+                           DmApi) {
 
     var TEXTAREA_MAX_LENGTH = 40000;
     var CURRENT_ENTITY_ARCHIVED = 2002;
@@ -239,9 +239,9 @@
       $scope.$on('NetInterceptor:connect', _refreshView);
       $scope.$on('NetInterceptor:onGatewayTimeoutError', _refreshView);
       $scope.$on('jndWebSocket:connect', _refreshView);
-
       $scope.$on('Auth:refreshTokenSuccess', _refreshView);
-
+      $scope.$on('MessageCacheCollection:getEventHistoryError', _refreshView);
+      
       $scope.$on('refreshCurrentTopic', _refreshCurrentTopic);
       $scope.$on('MessageCollection:newMessageArrived', _onNewMessageArrived);
       $scope.$on('MessageCollection:newSystemMessageArrived', _onNewSystemMessageArrived);
@@ -711,36 +711,7 @@
         if (MessageSendingCollection.queue.length) {
           _requestPostMessages(true);
         }
-        _requestEventsHistory();
       }
-    }
-
-    /**
-     * disconnect 동안 누락된 이벤트를 조회하기 위해
-     * event history API 를 호출한다.
-     * @private
-     */
-    function _requestEventsHistory() {
-      var lastTimeStamp = jndWebSocket.getLastTimestamp();
-      SocketEventApi.get({
-        ts: lastTimeStamp
-      }).success(_onSuccessGetEventsHistory)
-        .error(_onErrorGetEventHistory);
-    }
-
-    function _onErrorGetEventHistory() {
-      jndPubSub.pub('centerpanelController:getEventHistoryError');
-      _refreshCurrentTopic(true);
-    }
-
-    /**
-     * event history 조회 성공 이벤트 핸들러
-     * @param {object} response
-     * @private
-     */
-    function _onSuccessGetEventsHistory(response) {
-      var socketEvents = response.records;
-      jndWebSocket.processSocketEvents(socketEvents);
     }
 
     /**
