@@ -5,8 +5,8 @@
     .module('jandiApp')
     .directive('centerChatInputBox', centerChatInputBox);
 
-  function centerChatInputBox($state, $filter, integrationService, CoreUtil, ImagePaste, Browser, memberService,
-                              jndPubSub, currentSessionHelper, entityAPIservice, Mentionahead, Tutorial) {
+  function centerChatInputBox($state, $filter, integrationService, CoreUtil, ImagePaste, Browser, jndPubSub,
+                              RoomTopicList, Mentionahead, Tutorial) {
     var multiple = true;    // multiple upload 여부
 
     return {
@@ -82,7 +82,7 @@
        * @private
        */
       function _initializeVariables() {
-        scope.isDM = memberService.isMember(_entityId);
+        scope.isDM = !RoomTopicList.isExist(_entityId);
       }
 
       /**
@@ -109,8 +109,8 @@
        */
       function _onCurrentEntityChanged(angularEvent, currentEntity) {
         _entityId = currentEntity.id;
-        _setMentionList();
         _initializeVariables();
+        _setMentionList();
       }
 
       /**
@@ -132,7 +132,11 @@
        * @private
        */
       function _setMentionList() {
-        scope.mentionahead.list = Mentionahead.getMentionListForTopic(_entityId);
+        if (scope.isDM) {
+          scope.mentionahead.list = [];
+        } else {
+          scope.mentionahead.list = Mentionahead.getMentionListForTopic(_entityId);
+        }
       }
 
       /**
@@ -190,7 +194,9 @@
        * mention icon click event handler
        */
       function onMentionIconClick() {
-        scope.mentionahead.status = Mentionahead.MENTION_WITH_CHAR;
+        if (!scope.isDM) {
+          scope.mentionahead.status = Mentionahead.MENTION_WITH_CHAR;
+        }
       }
 
       /**

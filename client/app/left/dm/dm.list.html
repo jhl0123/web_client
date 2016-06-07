@@ -1,6 +1,6 @@
 <div>
   <!--    HEADER  -->
-  <div class="lpanel-list__header cursor_pointer" ng-click="onMessageHeaderClick($event);"
+  <div class="lpanel-list__header cursor_pointer _badgeParent" ng-click="onMessageHeaderClick($event);"
      ng-class="{'collapsed': isMessageListCollapsed}">
     <i class="lpanel-collapse-arrow" ng-class="{'icon-arrow-up-fill': !isMessageListCollapsed,
                                                 'icon-arrow-down-fill': isMessageListCollapsed}"></i>
@@ -28,7 +28,7 @@
 
     <!-- WHERE THERE IS AT LEAST ONE PERSON IN MESSAGE LIST -->
     <div ng-if="messageList.length > 0">
-      <li class="member cursor_pointer"
+      <li class="member cursor_pointer _badgeParent"
           ng-repeat="userEntity in messageList track by userEntity.id"
           ng-class="{'active': entityId == userEntity.id,
                     'messages-list-disabled-member': isDisabledMember(userEntity)}">
