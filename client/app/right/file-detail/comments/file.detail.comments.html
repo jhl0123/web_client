@@ -34,7 +34,7 @@
       <file-detail-comment ng-if="::!comment.extIsSticker"
                            comment="comment"
                            content="comment.content.body"></file-detail-comment>
-      <span class="create-time msg-time" ng-if="::comment.extHasCreateTime">{{comment.extCreateTime}}</span>
+      <span class="msg-time" data-write-time="{{::comment.extCreateTime}}"></span>
     </div>
   </div>
 
