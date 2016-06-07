@@ -10,6 +10,9 @@
 .message.bot-text .attachment-content-wrapper {
   margin-bottom: 24px;
 }
+.message.bot-text .attachment-content-wrapper + .attachment-content-wrapper {
+  margin-top: -21px;
+}
 .attachment-content-wrapper .attachment-content-bar {
   display: table-cell;
   position: absolute;
