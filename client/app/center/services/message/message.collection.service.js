@@ -634,10 +634,11 @@
        */
       _updateMarker: function(msg) {
         var markerId;
+        var writerId = CoreUtil.pick(msg, 'extWriter', 'id') || CoreUtil.pick(msg, 'message', 'writerId');
         if (this._isCurrentRoom()) {
-          markerId = markerService.getLastLinkIdOfMemberId(msg.extWriter.id);
+          markerId = markerService.getLastLinkIdOfMemberId(writerId);
           if (!markerId || markerId < msg.id) {
-            markerService.updateMarker(msg.extWriter.id, msg.id);
+            markerService.updateMarker(writerId, msg.id);
           }
         }
         
@@ -1030,15 +1031,18 @@
        * @returns {object}
        */
       getFormattedMessage: function(msg) {
-        msg.date = this._getDateKey(msg.time);
-        if (this._isSystemMessage(msg)) {
-          msg = this._getFormattedSystemMsg(msg);
-        } else {
-          // parse HTML, URL code
-          msg.message.content._body = msg.message.content.body;
-          this._filterContentBody(msg);
+        if (!msg.extIsFormatted) {
+          msg.extIsFormatted = true;
+          msg.date = this._getDateKey(msg.time);
+          if (this._isSystemMessage(msg)) {
+            msg = this._getFormattedSystemMsg(msg);
+          } else {
+            // parse HTML, URL code
+            msg.message.content._body = msg.message.content.body;
+            this._filterContentBody(msg);
+          }
+          this._setMessageFlag(msg);
         }
-        this._setMessageFlag(msg);
         return msg;
       },
 
