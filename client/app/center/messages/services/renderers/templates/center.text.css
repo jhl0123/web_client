@@ -12,7 +12,9 @@
   word-break: keep-all;
 }
 
-.message.system-event.unread-mark + .message.text:not(.text-child),
+.message.system-event.unread-mark + .message.text:not(.text-child) {
+  margin-top: 28px;
+}
 .message.system-event.unread-mark + .message.system-event {
   margin-top: 20px;
 }
