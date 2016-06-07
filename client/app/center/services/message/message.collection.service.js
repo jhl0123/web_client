@@ -634,10 +634,11 @@
        */
       _updateMarker: function(msg) {
         var markerId;
+        var writerId = CoreUtil.pick(msg, 'extWriter', 'id') || CoreUtil.pick(msg, 'message', 'writerId');
         if (this._isCurrentRoom()) {
-          markerId = markerService.getLastLinkIdOfMemberId(msg.extWriter.id);
+          markerId = markerService.getLastLinkIdOfMemberId(writerId);
           if (!markerId || markerId < msg.id) {
-            markerService.updateMarker(msg.extWriter.id, msg.id);
+            markerService.updateMarker(writerId, msg.id);
           }
         }
         
