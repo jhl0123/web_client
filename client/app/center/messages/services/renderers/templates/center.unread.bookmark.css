@@ -1,6 +1,6 @@
-.message.comment:not(.first):not(.last) + .message.system-event.unread-mark,
+.message.comment:not(.last) + .message.system-event.unread-mark,
 .message.message-group + .message.system-event.unread-mark {
-  margin: 12px 0 -4px;
+  margin: -4px 0 -12px;
 }
 .message.system-event.date-divider + .message.system-event.unread-mark {
   margin-top: -10px;
@@ -14,4 +14,5 @@
   color: #00abe6;
   font-weight: 700;
   background-color: transparent;
+  margin: auto;
 }
