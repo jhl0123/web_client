@@ -514,7 +514,7 @@
         var msg = data.msg;
         var jqTarget = $('#' + msg.id);
         if (jqTarget.length) {
-          jqTarget.find('.unread-badge').text(msg.unreadCount);
+          jqTarget.find('.unread-badge').attr('data-unread-count', msg.unreadCount);
         }
       }
 

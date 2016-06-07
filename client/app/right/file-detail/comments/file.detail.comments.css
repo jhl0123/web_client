@@ -129,7 +129,7 @@
   line-height: 20px;
 }
 
-.comment-item-body .create-time {
+.comment-item-body .msg-time {
   display: inline;
   margin-left: 0.75em;
 }

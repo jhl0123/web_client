@@ -16,7 +16,7 @@
 
 .message.comment .msg-item {
   width: 50%;
-  min-width: 450px;
+  min-width: 393px;
   max-width: 600px;
   margin: 0;
   padding: 10px 12px 12px 56px;
@@ -94,9 +94,6 @@
 .message.comment .msg-item-info {
   margin: 0;
   vertical-align: inherit;
-}
-.message .msg-item-info .msg-badge {
-  padding: 0 2px 0 2px;
 }
 
 .message.comment.first .msg-item:after {
