@@ -395,15 +395,13 @@
      * @private
      */
     function _onWindowFocus() {
-      if (_isViewContentLoaded) {
-        centerService.setBrowserFocus();
-        if (!_hasScroll() || centerService.isScrollBottom()) {
-          _clearBadgeCount($scope.currentEntity);
-        }
-        NotificationManager.resetNotificationCountOnFocus();
-        // update hybrid app badge
-        HybridAppHelper.updateBadge();
+      centerService.setBrowserFocus();
+      if (!_hasScroll() || centerService.isScrollBottom()) {
+        _clearBadgeCount($scope.currentEntity);
       }
+      NotificationManager.resetNotificationCountOnFocus();
+      // update hybrid app badge
+      HybridAppHelper.updateBadge();
     }
 
     /**
@@ -411,9 +409,7 @@
      * @private
      */
     function _onWindowBlur() {
-      if (_isViewContentLoaded) {
-        centerService.resetBrowserFocus();
-      }
+      centerService.resetBrowserFocus();
     }
 
     /**
