@@ -45,9 +45,9 @@
 }
 
 .attachment-content .integration-preview-wrapper:first-child {
-  padding-top: 12px;
+  padding-top: 10px;
 }
 
 .attachment-content .integration-preview-wrapper:last-child {
-  padding-bottom: 14px;
+  padding-bottom: 12px;
 }
