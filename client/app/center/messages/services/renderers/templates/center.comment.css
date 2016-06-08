@@ -96,7 +96,8 @@
   vertical-align: inherit;
 }
 
-.message.comment.first .msg-item:before {
+.message-group .message.comment.first .msg-item.comment-all:before,
+.message.comment.first > .msg-item:first-child:before {
   content: '';
   position: absolute;
   top: -6px;
@@ -143,5 +144,5 @@
   z-index: 1;
 }
 .message.comment .msg-item .comment-line {
-  background-color: rgba(172, 192, 208, 0.5);
+  background-color: rgba(172, 192, 208, 0.3);
 }
