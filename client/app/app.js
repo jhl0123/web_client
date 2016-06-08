@@ -57,12 +57,13 @@ app.config(function ($urlRouterProvider, $httpProvider, $tooltipProvider, $state
             templateUrl: 'app/left/left.html',
             controller: 'leftPanelController',
             resolve: {
-              initialPromise: function($q, $state, memberService, Auth, TopicFolderModel, leftpanelAPIservice) {
+              initialPromise: function($q, $state, memberService, Auth, TopicFolderModel, leftpanelAPIservice, DmApi) {
                 var promises = [];
 
                 if (memberService.getMember()) {
                   promises.push(leftpanelAPIservice.getLists());
                   promises.push(TopicFolderModel.load('initialize'));
+                  promises.push(DmApi.getRecentMessageList());
                   return $q.all(promises);
                 } else {
                   Auth.signIn();
@@ -87,21 +88,11 @@ app.config(function ($urlRouterProvider, $httpProvider, $tooltipProvider, $state
       })
       .state('messages.home', {
         url: '',
-        title: 'Welcome',
-        views: {
-          'centerpanel': {
-          }
-        }
+        title: 'Welcome'
       })
       .state('messages.detail', {
         url: '^/{entityType}/{entityId:[0-9]+}',
-        title: 'Messages',
-        views: {
-          'centerpanel': {
-            templateUrl: 'app/center/center.html',
-            controller: 'centerpanelController'
-          }
-        }
+        title: 'Messages'
       })
       .state('messages.detail.files', {
         url: '/files',

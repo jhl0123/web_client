@@ -36,10 +36,10 @@ pre.prettyprint {
   position:relative;
   min-height: 45px;
   padding: 14px 14px 8px 14px;
-  border: 1px solid #e1e1e1;
+  border: 1px solid rgba(0,0,0, 0.12);
   border-radius: 2px;
   margin-bottom: 4px;
-  background-color: rgba(249, 249, 249, 0.3);
+  background-color: #FFF;
   margin-top: 6px;
   font-size: 13px;
   line-height: 20px;

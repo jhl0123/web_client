@@ -9,7 +9,7 @@
     .service('DateDividerRenderer', DateDividerRenderer);
 
   /* @ngInject */
-  function DateDividerRenderer(MessageCollection, $filter) {
+  function DateDividerRenderer(MessageCacheCollection) {
     var _template = '';
 
     this.render = render;
@@ -30,12 +30,16 @@
      * @returns {*}
      */
     function render(index) {
-      var msg = MessageCollection.list[index];
+      var messageCollection = MessageCacheCollection.getCurrent();
+      var msg = messageCollection.list[index];
 
-      return _template({
-        msg: msg,
-        date: msg.date
-      });
+      return {
+        conditions: ['system-event', 'date-divider'],
+        template: _template({
+          msg: msg,
+          date: msg.date
+        })
+      };
     }
   }
 })();

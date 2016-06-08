@@ -9,7 +9,7 @@
     .directive('jndElastic', jndElastic);
 
 
-  function jndElastic($timeout, $parse, Browser, jndPubSub) {
+  function jndElastic($filter, $timeout, $parse, Browser, Dialog, jndPubSub) {
     return {
       restrict: 'A',
       scope: false,
@@ -38,6 +38,9 @@
       var _paddingHorizontal;
 
       var _name = attrs.jndElastic;
+      var _maxLength = attrs.jndElasticMaxLength;
+
+      var _prevInputLength;
       
       var onChangeCallback = $parse(attrs.jndElasticOnChange);
 
@@ -176,11 +179,37 @@
       function _onChange(changeEvent) {
         $timeout.cancel(_resizeTimer);
         _resizeTimer = $timeout(function() {
+          if (_isExceededMaxLength(changeEvent)) {
+            Dialog.error({
+              title: $filter('translate')('@message-exceeded-max-length')
+            });
+          }
+
           onChangeCallback(scope, {
             $event: changeEvent
           });
           _resize();
         }, 50);
+      }
+
+      /**
+       * max length 초과여부
+       * @param {object} changeEvent
+       * @returns {boolean}
+       * @private
+       */
+      function _isExceededMaxLength(changeEvent) {
+        var inputLength = changeEvent.target.value.length;
+        var isExceeded = false;
+
+        if (_maxLength != null && changeEvent.type === 'input') {
+          if (_prevInputLength === +_maxLength && inputLength === +_maxLength) {
+            isExceeded = true;
+          }
+          _prevInputLength = changeEvent.target.value.length;
+        }
+
+        return isExceeded;
       }
     }
   }

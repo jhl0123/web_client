@@ -10,7 +10,7 @@
     .factory('RoomChatDmList', RoomChatDmList);
 
   /* @ngInject */
-  function RoomChatDmList(CoreUtil, EntityCollection, UserList, BotList) {
+  function RoomChatDmList(CoreUtil, EntityCollection, UserList, BotList, memberService) {
 
     /**
      * RoomChatDmList 클래스
@@ -30,7 +30,11 @@
        * @override
        */
       add: function(chatRoom) {
-        var member = UserList.get(chatRoom.companionId) || BotList.get(chatRoom.companionId);
+        var member;
+        if (!this._isLegacyFormat(chatRoom)) {
+          chatRoom = this._convertToLegacyFormat(chatRoom);
+        }
+        member = UserList.get(chatRoom.companionId) || BotList.get(chatRoom.companionId);
         if (member) {
           this._extendMember(member, chatRoom);
           EntityCollection.prototype.add.call(this, _.extend(chatRoom, {
@@ -62,6 +66,29 @@
             member[name] = value;
           }
         })
+      },
+
+      _isLegacyFormat: function(chatRoom) {
+        return !!chatRoom.entityId;
+      },
+
+      _convertToLegacyFormat: function(chatRoom) {
+        var myId = memberService.getMemberId();
+        var companionId;
+        _.forEach(chatRoom.members, function(id) {
+          if (myId !== id) {
+            companionId = id;
+            return false;
+          }
+        });
+        return {
+          lastMessageStatus: null,
+          lastMessage: null,
+          lastLinkId: chatRoom.lastLinkId,
+          unread: 0,
+          companionId: companionId,
+          entityId: chatRoom.id
+        };
       }
     });
 

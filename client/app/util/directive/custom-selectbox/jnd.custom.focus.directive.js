@@ -83,7 +83,7 @@
        var jqTarget = $(mouseEvent.target);
        var jqSelectable = jqTarget.closest('._selectable');
        if (jqSelectable.length) {
-         _select(jqSelectable);
+         _select(jqSelectable, false, mouseEvent);
        }
        _jqInput.focus();
      }
@@ -102,13 +102,14 @@
       * select 한다
       * @param {object} [jqTarget] - select 할 jquery 엘리먼트
       * @param {boolean} [isInitial=false] - 처음 select 인지 여부
+      * @param {object} [mouseEvent] - 마우스 이벤트
       * @private
       */
-     function _select(jqTarget, isInitial) {
+     function _select(jqTarget, isInitial, mouseEvent) {
        jqTarget = jqTarget || _jqCurrent;
        if (_.isFunction(scope.onChange)) {
          JndUtil.safeApply(scope, function() {
-           scope.onChange(jqTarget, angular.element(jqTarget).scope());
+           scope.onChange(jqTarget, angular.element(jqTarget).scope(), mouseEvent);
            if (!isInitial) {
              _close();
            } else {

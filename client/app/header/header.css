@@ -7,7 +7,7 @@
 .header {
   height: 42px;
   line-height: 42px;
-  background-color: #154a67;
+  background-color: #11476F;
   min-width: 220px;
   color: white;
 }
@@ -74,7 +74,7 @@
 }
 .header-navbar__topmenu:hover,
 .header-navbar__topmenu.active {
-  background-color: #0E3E58;
+  background-color: #0D3F65;
   cursor: pointer;
   height: 42px !important;
 }
@@ -209,22 +209,21 @@
   display: table-cell;
   font-size: 18px;
   color: #fff;
-  border: 1px solid rgba(255,255,255,0.2);
   cursor: pointer;
   border-radius: 20px;
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
 
 }
 .header-toolbar .info-tool.active {
-  border-color: #0D3952;
-  background-color: #062F46;
+  background-color: #FFFFFF;
+  color: #0D3F65;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0);
 }
-.header-toolbar .info-tool:hover {
+.header-toolbar .info-tool:not(.active):hover {
   text-decoration: none;
-  background-color: #326682;
-}
-.header-toolbar .info-tool.active:hover {
-  border-color: #0D3952;
-  background-color: #062F46;
+  background-color: #0D3F65;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 .header-toolbar .info-tool > i {
   position: absolute;

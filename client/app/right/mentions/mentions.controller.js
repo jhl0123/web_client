@@ -9,7 +9,7 @@
     .controller('RightMentionsCtrl', RightMentionsCtrl);
 
   /* @ngInject */
-  function RightMentionsCtrl($scope, JndUtil, Mentions) {
+  function RightMentionsCtrl($scope, $timeout, JndUtil, Mentions, RightPanel) {
     var MENTIONS_COUNT = 20;
 
     var _mentionMap = {};
@@ -62,8 +62,13 @@
      * @private
      */
     function _onRightPanelStatusChange() {
-      if ($scope.status.isActive && !$scope.isInitDone) {
-        _refreshMentionList();
+      if ($scope.status.isActive) {
+        if (!$scope.isInitDone) {
+          _refreshMentionList();
+        }
+
+        // render 후 pub
+        $timeout(RightPanel.pubRendered);
       }
     }
 

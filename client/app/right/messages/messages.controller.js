@@ -10,7 +10,7 @@
 
   /* @ngInject */
   function RightMessagesCtrl($scope, $timeout, AnalyticsHelper, currentSessionHelper, fileAPIservice, JndUtil,
-                             messageAPIservice, RoomTopicList, TopicFolderModel) {
+                             messageAPIservice, RightPanel, RoomTopicList, TopicFolderModel) {
     var DEFAULT_PAGE = 1;
     var DEFAULT_PER_PAGE = 10;
 
@@ -56,7 +56,7 @@
       $scope.isKeywordEmpty = isKeywordEmpty;
       $scope.setKeywordFocus = setKeywordFocus;
 
-      _localCurrentEntity = currentSessionHelper.getCurrentEntity()
+      _localCurrentEntity = currentSessionHelper.getCurrentEntity();
 
       _initChatRoomOption();
       _setChatRoom(_localCurrentEntity);
@@ -144,10 +144,17 @@
      * @private
      */
     function _onRightPanelStatusChange() {
-      if ($scope.status.isActive && !$scope.searchStatus.isInitDone) {
-        // 아직 초기화가 진행되어 있지 않다면 전체 갱신한다.
+      if ($scope.status.isActive) {
+        if (!$scope.searchStatus.isInitDone) {
+          // 아직 초기화가 진행되어 있지 않다면 전체 갱신한다.
 
-        _refreshMessageList();
+          _refreshMessageList();
+        }
+
+        // render 후 pub
+        $timeout(RightPanel.pubRendered);
+
+        setKeywordFocus();
       }
     }
 

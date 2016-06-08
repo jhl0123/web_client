@@ -37,9 +37,7 @@
      * @private
      */
     function onStateChangeStart(event, toState, toParams, fromState, fromParams) {
-      if (!NetInterceptor.isConnected()) {
-        event.preventDefault();
-      } else if (_isStateChange(toState, toParams, fromState, fromParams)) {
+      if (_isStateChange(toState, toParams, fromState, fromParams)) {
         //console.info("==============================[stateChange]==============================");
         //console.info("   from    ", fromState.name, ' / ', fromParams);
         //console.info("    to     ", toState.name, ' / ',toParams);
@@ -152,19 +150,16 @@
           case 'messages.detail.messages.item':
           case 'messages.detail.stars.item':
           case 'messages.detail.mentions.item':
-            jndPubSub.pub('Router:fileChanged', toParams.itemId);
+            // right tabs & file detail
+            jndPubSub.pub('Router:fileChanged',
+              _.extend({fileId: toParams.itemId}, _getStateData(fromState, toState)));
             break;
           case 'messages.detail.files':
           case 'messages.detail.messages':
           case 'messages.detail.stars':
           case 'messages.detail.mentions':
-            jndPubSub.pub('rightPanelStatusChange', {
-              type: RightPanel.getStateName(toState),
-              toUrl: toState.url,
-              toTitle: toState.title,
-              fromUrl: fromState.url,
-              fromTitle: fromState.title
-            });
+            // right tabs
+            jndPubSub.pub('rightPanelStatusChange', _getStateData(fromState, toState));
             break;
           case '404':
             event.preventDefault();
@@ -223,6 +218,16 @@
       });
 
       return !(fromState.name === toState.name && _.isEqual(fromParams, toParams));
+    }
+
+    function _getStateData(fromState, toState) {
+      return {
+        type: RightPanel.getStateName(toState),
+        toUrl: toState.url,
+        toTitle: toState.title,
+        fromUrl: fromState.url,
+        fromTitle: fromState.title
+      };
     }
   }
 })();

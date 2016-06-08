@@ -13,7 +13,6 @@
   function AnnouncementCtrl($scope, Announcement, AnnouncementData, memberService, $stateParams,
                             config, jndPubSub, $filter, Dialog) {
 
-    var _topicType = $stateParams.entityType;
     var _topicId = parseInt($stateParams.entityId, 10);
 
     var myId = memberService.getMemberId();
@@ -79,12 +78,34 @@
       $scope.$on('minimizeAnnouncement', minimizeAnnouncement);
 
       $scope.$on('jndWebSocketMember:memberUpdated', _updateMemberProfile);
-
+      $scope.$on('$stateChangeSuccess', _onStateChangeSuccess);
       $scope.$watch('displayStatus.hide', function(isHided) {
         Announcement.setIsOpened(!isHided);
       });
     }
-
+    /**
+     * state change 이벤트 핸들러
+     * @param {Object} event
+     * @param {Object} toState
+     * @param {Object} toParams
+     * @param {Object} fromState
+     * @param {Object} fromParams
+     * @private
+     */
+    function _onStateChangeSuccess(event, toState, toParams, fromState, fromParams) {
+      var topicId = +toParams.entityId;
+      if (_topicId !== topicId) {
+        _topicId = topicId;
+        hasOwnEventHandler = false;
+        $scope.hasAnnouncement = false;
+        _.extend($scope.displayStatus, {
+          hide: false,
+          minimized: false
+        });
+        _getAnnouncement();
+        memberService.isAnnouncementOpen(_topicId);
+      }
+    }
     /**
      * 현재 토픽의 announcement 를 불러온다.
      * @private

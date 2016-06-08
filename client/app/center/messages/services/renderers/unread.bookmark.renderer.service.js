@@ -25,7 +25,10 @@
     }
 
     function render(){
-      return _template();
+      return {
+        conditions: ['system-event', 'unread-mark'],
+        template: _template()
+      };
     }
   }
 })();

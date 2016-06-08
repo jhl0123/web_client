@@ -1,46 +1,45 @@
-<div class="message-input-wrapper" ng-class="{'focus': isMessageInputFocus}" ng-show="hasInitialLoaded && file">
-  <div class="comment-item__thumbnail">
-    <img class="user-profile user-thumb-sm cursor_pointer"
-         ng-src="{{profileImage}}"
-         ng-click="onMemberClick(member);"/>
-  </div>
-
-  <div class="input-container-over cursor_pointer">
-    <sticker-layer name="file"></sticker-layer>
-  </div>
-
-  <div class="comment-input-body">
-    <form id="comment-form">
-      <div class="comment-textarea-wrap">
-      <textarea class="comment-input"
-                id="file-detail-comment-input"
-                placeholder="{{::'@message-mention'|translate}}"
-                ng-focus="onMessageInputFocus()"
-                ng-blur="onMessageInputBlur()"
-                message-submit="createComment()"
-                jnd-elastic="comment"
-                jnd-elastic-on-change="onCommentInputChange($event)"
-                mentionahead
-                mentionahead-type="comment"
-                mentionahead-status="mentionahead.status"
-                mentionahead-list="mentionahead.list"></textarea>
+<div class="message-input-container" ng-class="{'focus': isMessageInputFocus}" ng-show="hasInitialLoaded && file">
+  <div class="message-input-wrapper _commentInputForm">
+    <div class="message-input-inner">
+      <div class="input-container-over cursor_pointer">
+        <sticker-layer name="file"></sticker-layer>
       </div>
-    </form>
-  </div>
 
-  <div class="message-input-footer">
-    <div class="message-input-buttons">
-      <sticker-panel name="file" max-columns="3" dropdown-parent=".file-detail .input-container-over"></sticker-panel>
-      <i class="icon-at cursor_pointer"
-         ng-class="{'open': isMentionaheadOpen()}"
-         ng-click="onMentionIconClick()"
-         ng-disabled="isDmOnly"></i>
+      <div class="comment-input-body">
+        <form id="comment-form">
+          <textarea class="comment-input"
+                    id="file-detail-comment-input"
+                    maxlength="5000"
+                    placeholder="{{::'@placeholder-input-comment' | translate }}"
+                    ng-focus="onMessageInputFocus()"
+                    ng-blur="onMessageInputBlur()"
+                    message-submit="createComment()"
+                    jnd-elastic="comment"
+                    jnd-elastic-max-length="5000"
+                    jnd-elastic-on-change="onCommentInputChange($event)"
+                    mentionahead
+                    mentionahead-type="comment"
+                    mentionahead-status="mentionahead.status"
+                    mentionahead-list="mentionahead.list"></textarea>
+        </form>
+      </div>
+
+      <div class="message-input-footer">
+        <div class="message-input-buttons">
+          <sticker-panel name="file" max-columns="3" dropdown-parent=".file-detail .input-container-over"></sticker-panel>
+          <i class="icon-at cursor_pointer"
+             ng-class="{'open': isMentionaheadOpen()}"
+             ng-click="onMentionIconClick()"
+             ng-disabled="isDmOnly"></i>
+        </div>
+        <button class="message-input-submit btn btn-ok" ng-class="{'active': hasMessage}" ng-click="createComment()">
+          {{::'@common-send'|translate}}
+        </button>
+      </div>
     </div>
-    <button class="message-input-submit btn btn-ok" ng-class="{'active': hasMessage}" ng-click="createComment()">
-      {{::'@common-send'|translate}}
-    </button>
-    <div class="message-input-description">
-      <span>{{::'@msg-help-multiline'|translate}}</span>
-    </div>
+  </div>
+  <div class="comment-input-mirror _commentInputMirror"></div>
+  <div class="floating-button _floatingButton" ng-click="onFloatButtonClick()">
+    <i class="icon-comment-fill"></i>
   </div>
 </div>

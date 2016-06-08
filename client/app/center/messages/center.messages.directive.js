@@ -8,20 +8,54 @@
   angular
     .module('jandiApp')
     .directive('centerMessagesDirective', centerMessagesDirective);
-
-  function centerMessagesDirective($filter, CenterRenderer, CenterRendererFactory, MessageCollection,
+  
+  function centerMessagesDirective($filter, $state, CenterRenderer, CenterRendererFactory, MessageCacheCollection,
                                    StarAPIService, jndPubSub, FileDetail, memberService, Dialog, currentSessionHelper,
-                                   EntityHandler, JndUtil, RendererUtil) {
+                                   EntityHandler, JndUtil, RendererUtil, fileAPIservice, CoreUtil) {
     return {
-      restrict: 'E',
+      restrict: 'EA',
       replace: true,
       link: link
     };
 
     function link(scope, el, attrs) {
+      var that = this;
       var _teamId;
       var _listScope = scope.$new();
-      var that = this;
+
+      var _events = {
+        click: [
+          {
+            apply: true,
+            currentTarget: '._star',
+            handler: _onClickStar
+          },
+          {
+            apply: true,
+            currentTarget: '._fileStar',
+            handler: _onClickFileStar
+          },
+          {
+            apply: true,
+            currentTarget: '._user',
+            handler: _onClickUser
+          },
+          {
+            apply: true,
+            currentTarget: '._fileShare',
+            handler: _onClickFileShare
+          },
+          {
+            apply: true,
+            currentTarget: '._commentDelete',
+            handler: _onClickCommentDelete
+          },
+          {
+            currentTarget: '._fileDetail',
+            handler: _onClickFileDetail
+          }
+        ]
+      };
 
       _init();
 
@@ -31,7 +65,7 @@
        */
       function _init() {
         _teamId = memberService.getTeamId();
-        _attachEvents();
+        _attachScopeEvents();
         _attachDomEvents();
         _renderAll();
       }
@@ -40,41 +74,40 @@
        * angular event 를 바인딩한다.
        * @private
        */
-      function _attachEvents() {
-        scope.$on('messages:reset', _renderAll);
-        scope.$on('messages:append', _onAppend);
-        scope.$on('messages:prepend', _onPrepend);
-        scope.$on('messages:beforeRemove', _onBeforeRemove);
-        scope.$on('messages:remove', _onRemove);
-        scope.$on('messages:set', _renderAll);
+      function _attachScopeEvents() {
+        scope.$on('MessageCollection:render', _renderAll);
+        scope.$on('MessageCollection:reset', _renderAll);
+        scope.$on('MessageCollection:append', _onAppend);
+        scope.$on('MessageCollection:prepend', _onPrepend);
+        scope.$on('MessageCollection:beforeRemove', _onBeforeRemove);
+        scope.$on('MessageCollection:remove', _onRemove);
+        scope.$on('MessageCollection:set', _renderAll);
+        scope.$on('MessageCollection:embed', _onEmbed);
+        scope.$on('MessageCollection:refresh', _onRefresh);
+        scope.$on('MessageCollection:refresh:commentCount', _onRefreshCommentCount);
+        scope.$on('MessageCollection:refresh:star', _onRefreshStar);
+        
+        scope.$on('MessageCollection:updateUnread', _onUpdateUnread);
 
-        scope.$on('messages:updateUnread', _onUpdateUnread);
-
-        scope.$on('message:starred', _onStarred);
-        scope.$on('message:unStarred', _onUnStarred);
+        // scope.$on('jndWebSocketMessage:starred', _onStarred);
+        // scope.$on('jndWebSocketMessage:unStarred', _onUnStarred);
 
         scope.$on('webSocketConnect:connectUpdated', _onConnectUpdated);
 
         scope.$on('$destroy', _onDestroy);
 
-        scope.$on('updateCenterForRelatedFile', _onFileUpdated);
-        scope.$on('centerOnFileDeleted', _onFileDeleted);
-
         scope.$on('toggleLinkPreview', _onAttachMessagePreview);
         scope.$on('jndWebSocketMember:memberUpdated', _onUpdateMemberProfile);
         scope.$on('errorThumbnailImage', _onErrorThumbnailImage);
-        scope.$on('fileShared', _onFileShareStatusChange);
-        scope.$on('fileUnshared', _onFileShareStatusChange);
 
         scope.$on('hotkey-scroll-page-up', _onHotkeyScrollUp);
         scope.$on('hotkey-scroll-page-down', _onHotkeyScrollDown);
 
-        scope.$on('jndWebSocketFile:commentCreated', _onFileCommentCreated);
-        scope.$on('jndWebSocketFile:commentDeleted', _onFileCommentDeleted);
+        scope.$on('UserList:added', _onMemberAdded);
       }
 
       /**
-       *
+       * scrollUp 핫키 이벤트 핸들러
        * @private
        */
       function _onHotkeyScrollUp() {
@@ -84,7 +117,7 @@
       }
 
       /**
-       *
+       * scroll down 핫키 이벤트 핸들러
        * @private
        */
       function _onHotkeyScrollDown() {
@@ -94,107 +127,14 @@
       }
 
       /**
-       * file 공유 상태 변경시 이벤트 핸들러
+       * msg 에 해당하는 item 을 갱신한다.
        * @param {object} angularEvent
-       * @param {object} data
-       *    @param {object} data.file
-       *    @param {string} data.event
+       * @param {object} msg
        * @private
        */
-      function _onFileShareStatusChange(angularEvent, data) {
-        var entityIndex;
-        var currentEntityId = currentSessionHelper.getCurrentEntityId(true);
-        var eventType = data.event;
-        var fileId = data.file.id;
-        var message;
-
-        _onFileUpdated(angularEvent, data.file)
-          .error(function() {
-            _.forEach(MessageCollection.list, function(msg, index) {
-              if (msg.message.id === fileId) {
-                message = msg.message
-              } else if ((msg.feedback && msg.feedback.id) === fileId) {
-                message = msg.feedback;
-              } else {
-                message = null;
-              }
-
-              if (message) {
-                entityIndex = message.shareEntities.indexOf(currentEntityId);
-                if (eventType === 'file_unshared' && entityIndex !== -1) {
-                  message.shareEntities.splice(entityIndex, 1);
-                } else if (eventType === 'file_shared' && entityIndex === -1) {
-                  message.shareEntities.push(currentEntityId);
-                }
-                _refresh(msg.id, index);
-              }
-            });
-          });
-
-      }
-
-      /**
-       * file update 되었을 때 이벤트 핸들러
-       * @param {object} angularEvent
-       * @param {object} file
-       * @private
-       */
-      function _onFileUpdated(angularEvent, file) {
-        var fileId = file.id;
-        return FileDetail.get(fileId)
-          .success(function(response) {
-            var shareEntities;
-            var message;
-
-            _.forEach(response.messageDetails, function(item) {
-              if (item.contentType === 'file') {
-                shareEntities = _toEntityIdList(item.shareEntities);
-              }
-            });
-            _.forEach(MessageCollection.list, function(msg, index) {
-              message = RendererUtil.getFeedbackMessage(msg);
-              if (message.id === fileId) {
-                message.shareEntities = shareEntities;
-                _refresh(msg.id, index);
-              }
-            });
-          });
-      }
-
-      /**
-       * entityIdList 로 변경하여 반영한다
-       * @param {Array} memberIdList
-       * @returns {Array}
-       * @private
-       */
-      function _toEntityIdList(memberIdList) {
-        var entityIdList = [];
-        var entity;
-        _.forEach(memberIdList, function(memberId) {
-          entity = EntityHandler.get(memberId);
-          entityIdList.push(entity.entityId || entity.id);
-        });
-        return entityIdList;
-      }
-
-      /**
-       * file 삭제 이벤트 핸들러
-       * @param {object} angularEvent
-       * @param {object} param
-       * @private
-       */
-      function _onFileDeleted(angularEvent, param) {
-        var deletedFileId = parseInt(param.file.id, 10);
-        _.forEach(MessageCollection.list, function(msg, index) {
-          if (msg.message.id === deletedFileId) {
-            msg.message.status = 'archived';
-            _refresh(msg.id, index);
-          }
-          if (msg.feedback && msg.feedback.id === deletedFileId) {
-            msg.feedback.status = 'archived';
-            _refresh(msg.id, index);
-          }
-        });
+      function _onRefresh(angularEvent, msg) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        _refresh(msg.id, messageCollection.at(msg.id, true));
       }
 
       /**
@@ -204,7 +144,6 @@
       function _attachDomEvents() {
         _attachDelegateDomHandlers();
         el
-          .on('click', _onClick)
           .on('mouseover', _onMouseOver)
           .on('mouseout', _onMouseOut);
       }
@@ -232,12 +171,41 @@
         _refreshMsgByMemberId(id);
       }
 
+      /**
+       * 새로운 member 추가되었을 때 이벤트 핸들러
+       * 초대 메시지에 관해서만 refresh 한다.
+       * @param {object} angularEvent
+       * @param {object} member
+       * @private
+       */
+      function _onMemberAdded(angularEvent, member) {
+        var memberId = member.id;
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var list = messageCollection.list;
+        var info;
+        _.forEach(list, function(msg, index) {
+          if (msg.status === 'event') {
+            info = CoreUtil.pick(msg, 'info');
+            if (info && info.eventType === 'invite' && _.contains(info.inviteUsers, memberId)) {
+              messageCollection.manipulateMessage(msg);
+              _refresh(msg.id, index);
+            }
+          }
+        });
+      }
+
+      /**
+       * 인자로 받은 멤버가 작성한 메시지에 대해서만 refresh 한다.
+       * @param {number} id
+       * @private
+       */
       function _refreshMsgByMemberId(id) {
-        var list = MessageCollection.list;
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var list = messageCollection.list;
 
         _.forEach(list, function(msg, index) {
           if (msg.extFromEntityId === id) {
-            MessageCollection.manipulateMessage(msg);
+            messageCollection.manipulateMessage(msg);
             _refresh(msg.id, index);
           }
         });
@@ -249,46 +217,58 @@
        */
       function _attachDelegateDomHandlers() {
         var renderers = CenterRendererFactory.getAll();
+
+        // renderer 고유의 event handler
         _.forEach(renderers, function(renderer) {
-          if (renderer.delegateHandler) {
-            _attachEachDelegateHandler(renderer.delegateHandler);
+          if (renderer.events) {
+            _attachRendererDomEvents(renderer.events);
+          }
+        });
+
+        // renderer 공통의 event handler
+        _attachRendererDomEvents(_events);
+      }
+
+      /**
+       * center element에 각 events를 추가한다.
+       * @param {object} events
+       * @private
+       */
+      function _attachRendererDomEvents(events) {
+        _.each(events, function(event, eventName) {
+          if (eventName === 'click') {
+            _attachClickEvent(event, eventName);
           }
         });
       }
 
       /**
-       * 각각의 dom event handler 를 추가한다.
-       * @param {Object} handlers
+       * center element에 click event를 추가한다.
+       * @param {array} event
+       * @param {string} eventName
        * @private
        */
-      function _attachEachDelegateHandler(handlers) {
-        _.each(handlers, function(handler, eventName) {
-          el.on(eventName, handler);
-        });
-      }
+      function _attachClickEvent(event, eventName) {
+        _.each(event, function(delegate) {
+          el.on(eventName, delegate.currentTarget, function(clickEvent) {
+            var messageCollection = MessageCacheCollection.getCurrent();
+            var jqTarget = $(clickEvent.target);
+            var jqMessage = jqTarget.closest('.message');
+            var id = jqMessage.attr('id');
+            var msg = messageCollection.get(id);
 
-      /**
-       * delegation 을 사용하지 않고,
-       * 각각의 Renderer 에 설정된 이벤트 핸들러를 바인딩 한다.
-       * (현재 사용하지 않는 함수. 추후 사용 가능성 있음.)
-       * @param {object} jqTarget
-       * @param {object} renderer
-       * @private
-       * @deprecated
-       */
-      function _attachRendererHandler(jqTarget, renderer) {
-        if (renderer.eventHandler) {
-          _.each(renderer.eventHandler, function(handler, name) {
-            var tmp = name.split(' '),
-              eventName = tmp[0],
-              selector = tmp[1] || '';
+            delegate.handler(clickEvent, {
+              jqTarget: jqTarget,
+              jqMessage: jqMessage,
+              id: id,
+              msg: msg
+            });
 
-            if (selector) {
-              jqTarget = jqTarget.find(selector);
+            if (delegate.apply) {
+              JndUtil.safeApply(scope);
             }
-            jqTarget.on(eventName, handler);
-          });
-        }
+          })
+        });
       }
 
       /**
@@ -300,91 +280,135 @@
       }
 
       /**
-       * 모든 랜더러 공통 click 이벤트 핸들러
-       * @param {Event} clickEvent
+       * file share click 이벤트 핸들러
+       * @param {object} clickEvent
+       * @param {object} data
        * @private
        */
-      function _onClick(clickEvent) {
-        var jqTarget = $(clickEvent.target);
-        var id = jqTarget.closest('.msgs-group').attr('id');
-        var msg = MessageCollection.get(id);
-        var hasAction = false;
-        var jqElement;
+      function _onClickFileShare(clickEvent, data) {
+        scope.onShareClick(data.msg.message);
+      }
 
-        //star 클릭 시
-        if (jqTarget.closest('._star').length) {
-          _onClickStar(msg);
-          hasAction = true;
-        } else if ((jqElement = jqTarget.closest('._fileStar')).length) {
-          _onClickFileStar(msg, jqElement);
-          hasAction = true;
-        } else if (jqTarget.closest('._user').length) {
-          _onClickUser(msg);
-          hasAction = true;
-        } else if (jqTarget.closest('._fileShare').length) {
-          _onClickFileShare(msg);
-          hasAction = true;
-        }
+      /**
+       * comment delete
+       * @param {object} clickEvent
+       * @param {object} data
+       * @private
+       */
+      function _onClickCommentDelete(clickEvent, data) {
+        Dialog.confirm({
+          body: $filter('translate')('@web-notification-body-messages-confirm-delete'),
+          onClose: function (result) {
+            if (result === 'okay') {
+              _deleteComment(data);
+            }
+          }
+        });
+      }
 
-        if (hasAction) {
-          JndUtil.safeApply(scope);
+      /**
+       * delete comment
+       * @param {object} data
+       * @private
+       */
+      function _deleteComment(data) {
+        var file = RendererUtil.getFeedbackMessage(data.msg);
+        var comment = data.msg.message;
+        var messageCollection = MessageCacheCollection.getCurrent();
+        // message collection에서 바로 삭제한다.
+        messageCollection.remove(comment.id, true);
+
+        if (data.msg.message.contentType === 'comment_sticker') {
+          FileDetail.deleteSticker(comment.id)
+            .success(_onSuccessCommentDelete);
+        } else {
+          FileDetail.deleteComment(file.id, comment.id)
+            .success(_onSuccessCommentDelete);
         }
       }
 
       /**
-       * file share click 이벤트 핸들러
-       * @param {object} msg
+       * success comment delete
        * @private
        */
-      function _onClickFileShare(msg) {
-        scope.onShareClick(msg.message);
+      function _onSuccessCommentDelete() {
+        Dialog.success({
+          title: $filter('translate')('@message-deleted')
+        });
+      }
+
+      /**
+       * file detail
+       * @param {object} clickEvent
+       * @param {object} data
+       * @private
+       */
+      function _onClickFileDetail(clickEvent, data) {
+        var contentType = data.msg.message.contentType;
+        var userName = $filter('getName')(data.msg.message.writerId);
+        var itemId = contentType === 'comment' ? data.msg.feedbackId : data.msg.message.id;
+
+        if ($state.params.itemId != itemId) {
+          if (data.msg.feedback && contentType !== 'file') {
+            userName = $filter('getName')(data.msg.feedback.writerId);
+            itemId = data.msg.feedback.id;
+          }
+
+          $state.go('files', {
+            userName: userName,
+            itemId: itemId
+          });
+        }
       }
 
       /**
        * star click 핸들러
-       * @param {object} msg
+       * @param {object} clickEvent
+       * @param {object} data
        * @private
        */
-      function _onClickStar(msg) {
-        var message = msg.message;
+      function _onClickStar(clickEvent, data) {
+        var message = data.msg.message;
 
-        _requestStar(msg, message, '._star');
+        _requestStar(data.msg, message, '._star');
       }
 
       /**
        * file star click 핸들러
-       * @param {object} msg
-       * @param {object} jqElement
+       * @param {object} clickEvent
+       * @param {object} data
        * @private
        */
-      function _onClickFileStar(msg, jqElement) {
+      function _onClickFileStar(clickEvent, data) {
+        var jqCurrentTarget = $(clickEvent.currentTarget);
         var message;
 
-        if (jqElement.hasClass('_feedbackStar')) {
-          message = RendererUtil.getFeedbackMessage(msg);
+        if (jqCurrentTarget.hasClass('_feedbackStar')) {
+          message = RendererUtil.getFeedbackMessage(data.msg);
         } else {
-          message = msg.message;
+          message = data.msg.message;
         }
 
-        _requestStar(msg, message, '._fileStar');
+        _requestStar(data.msg, message, '._fileStar');
       }
 
       /**
        * request star
        * @param {object} msg
        * @param {object} message
+       * @param {object} jqTarget
        * @private
        */
       function _requestStar(msg, message, jqTarget) {
-        var messageId = message.id;
+        var linkId = message.id;
 
         message.isStarred = !message.isStarred;
-        _refreshStar(msg, message, jqTarget);
+        _refreshStar(linkId, message.isStarred, jqTarget);
         if (message.isStarred) {
-          StarAPIService.star(messageId, _teamId)
+          StarAPIService.star(linkId, _teamId)
             .error(_.bind(_onStarRequestError, that, msg, message, jqTarget));
         } else {
-          StarAPIService.unStar(messageId, _teamId)
+          StarAPIService.unStar(linkId, _teamId)
             .error(_.bind(_onStarRequestError, that, msg, message, jqTarget));
         }
       }
@@ -393,11 +417,12 @@
        * star 오류 핸들러
        * @param {object} msg
        * @param {object} message
+       * @param {object} jqTarget
        * @private
        */
       function _onStarRequestError(msg, message, jqTarget) {
         message.isStarred = !message.isStarred;
-        _refreshStar(msg, message, jqTarget);
+        _refreshStar(msg.id, message.isStarred, jqTarget);
 
         Dialog.error({
           title: $filter('translate')('@star-forbidden')
@@ -406,11 +431,15 @@
 
       /**
        * user 클릭 이벤트 핸들러
-       * @param {object} msg
+       * @param {object} clickEvent
+       * @param {object} data
        * @private
        */
-      function _onClickUser(msg) {
-        var writer = msg.extWriter;
+      function _onClickUser(clickEvent, data) {
+        var writer = data.msg.extWriter;
+
+        // user를 event가 파일 상세에 전달되어 파일 상세가 열리지 않도록 한다.
+        clickEvent.stopPropagation();
 
         if (!memberService.isConnectBot(writer.id)) {
           jndPubSub.pub('onMemberClick', writer.id);
@@ -418,70 +447,33 @@
       }
 
       /**
-       * socket 에서 starred 이벤트 발생시
-       * @param {Object} event - angular 이벤트
-       * @param {Object} param
-       *     @param {Number|String} param.teamId - team id
-       *     @param {Number|String} param.messageId - message id
-       * @private
-       */
-      function _onStarred(event, param) {
-        if (_teamId.toString() === param.teamId.toString()) {
-          _setStarred(param.messageId, true);
-        }
-      }
-
-      /**
-       * socket 에서 un-starred 이벤트 발생시 이벤트 핸들러
-       * @param {Object} event - angular 이벤트
-       * @param {Object} param
-       *     @param {Number|String} param.teamId - team id
-       *     @param {Number|String} param.messageId - message id
-       * @private
-       */
-      function _onUnStarred(event, param) {
-        if (_teamId.toString() === param.teamId.toString()) {
-          _setStarred(param.messageId, false);
-        }
-      }
-
-      /**
-       * set starred
-       * @param {number|string} messageId
+       * star 정보를 refresh 한다.
+       * @param {object} angularEvent
+       * @param {number} linkId
+       * @param {number} messageId
        * @param {boolean} isStarred
        * @private
        */
-      function _setStarred(messageId, isStarred) {
-        MessageCollection.forEach(function(msg) {
-          var message;
-
-          if (msg.feedbackId === messageId) {
-            message = RendererUtil.getFeedbackMessage(msg);
-
-            message.isStarred = isStarred;
-            _refreshStar(msg, message, '._star-' + msg.feedbackId);
-          } else if (msg.message.id === messageId) {
-            message = msg.message;
-
-            message.isStarred = isStarred;
-            _refreshStar(msg, message, '._star-' + msg.message.id);
-          }
-        });
+      function _onRefreshStar(angularEvent, linkId, messageId, isStarred) {
+        _refreshStar(linkId, isStarred, '._star-' + messageId);
       }
 
       /**
        * star 의 상태를 변경한다.
-       * @param {object} message
-       * @param {string|object} jqTarget
+       * @param {number} linkId
+       * @param {boolean} isStarred
+       * @param {object|string} jqTarget - target 또는 셀렉터
        * @private
        */
-      function _refreshStar(msg, message, jqTarget) {
-        jqTarget = $('#' + msg.id).find(jqTarget || '._star');
+      function _refreshStar(linkId, isStarred, jqTarget) {
+        jqTarget = $('#' + linkId).find(jqTarget || '._star');
         if (jqTarget.length) {
-          if (message.isStarred) {
-            jqTarget.removeClass('off').removeClass('msg-item__action');
+          if (isStarred) {
+            jqTarget.removeClass('off').addClass('on');
+            jqTarget.find('i').removeClass('icon-star-off').addClass('icon-star-on');
           } else {
-            jqTarget.addClass('off msg-item__action');
+            jqTarget.removeClass('on').addClass('off');
+            jqTarget.find('i').removeClass('icon-star-on').addClass('icon-star-off');
           }
         }
       }
@@ -534,15 +526,15 @@
        * @private
        */
       function _isDateRendered(id, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
         var jqTarget = $('#' + id);
         if (jqTarget.length) {
-          if (MessageCollection.isNewDate(index) && jqTarget.prev().attr('content-type') !== 'dateDivider') {
+          if (messageCollection.isNewDate(index) && jqTarget.prev().attr('content-type') !== 'dateDivider') {
             return false;
           }
         }
         return true;
       }
-
 
       /**
        * prepend 이벤트 핸들러
@@ -552,7 +544,8 @@
        */
       function _onPrepend(angularEvent, list) {
         var htmlList = [];
-        var headMsg = MessageCollection.list[list.length];
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var headMsg = messageCollection.list[list.length];
         _.forEach(list, function(message, index) {
           _pushMarkup(htmlList, message, index);
         });
@@ -573,7 +566,8 @@
        * @private
        */
       function _pushMarkup(htmlList, message, index) {
-        if (MessageCollection.isNewDate(index)) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        if (messageCollection.isNewDate(index)) {
           htmlList.push(CenterRenderer.render(index, 'dateDivider'));
         }
         htmlList.push(CenterRenderer.render(index));
@@ -592,14 +586,61 @@
       function _onAppend(angularEvent, list) {
         var length = list.length;
         var htmlList = [];
-        var index = MessageCollection.list.length - length;
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var index = messageCollection.list.length - length;
+        var prevIndex;
+        var prevMessage;
+
         _.forEach(list, function(message) {
           _pushMarkup(htmlList, message, index);
           index++;
         });
+
+        // append 되는 메시지가 child text 또는 child comment이면
+        // 이전 메시지의 뷰가 바뀌어야 한다(조건에 부합하는 이전 메시지는 메시지 작성 시간을 출력하지 않음).
+        if (messageCollection.isChildText(messageCollection.list.length - 1) ||
+          messageCollection.isChildComment(messageCollection.list.length - 1)) {
+          prevIndex = messageCollection.list.length - 2;
+          prevMessage = messageCollection.list[prevIndex];
+          _refresh(prevMessage.id, prevIndex);
+        }
+
         el.append(_getCompiledEl(htmlList.join('')));
         scope.onRepeatDone();
-        //$compile(el.contents())(scope);
+      }
+
+      /**
+       *
+       * @param angularEvent
+       * @param {number} index - embed 한 item 의 index
+       * @private
+       */
+      function _onEmbed(angularEvent, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var message;
+        var prevMessage;
+        var prevIndex = index - 1;
+        var nextMessage;
+        var nextIndex = index + 1;
+        var htmlList = [];
+        var jqPrev;
+
+        if (index > 0) {
+          message = CoreUtil.pick(messageCollection.list, index);
+          prevMessage = CoreUtil.pick(messageCollection.list, prevIndex);
+          nextMessage = CoreUtil.pick(messageCollection.list, nextIndex);
+          jqPrev = $('#' + prevMessage.id);
+
+          _pushMarkup(htmlList, message, index);
+          if (prevMessage) {
+            _refresh(prevMessage.id, prevIndex);
+          }
+          if (nextMessage) {
+            _refresh(nextMessage.id, nextIndex);
+          }
+          jqPrev.after(_getCompiledEl(htmlList.join('')));
+          scope.onRepeatDone();
+        }
       }
 
       /**
@@ -656,8 +697,9 @@
        * @private
        */
       function _onBeforeRemove(angularEvent, index) {
-        var msg = MessageCollection.list[index];
-        var isLastMsg = (index === MessageCollection.list.length - 1);
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var msg = messageCollection.list[index];
+        var isLastMsg = (index === messageCollection.list.length - 1);
         var jqTarget = $('#' + msg.id);
         var jqPrev = jqTarget.prev();
 
@@ -682,7 +724,19 @@
        * @private
        */
       function _onRemove(angularEvent, index) {
-        var msg = MessageCollection.list[index];
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var msg = messageCollection.list[index];
+        var prevIndex = index - 1;
+        var prevMessage;
+
+        // 삭제된 메시지의 이전 메시지가 child text 또는 child comment가 아니라면
+        // 이전 메시지의 뷰가 바뀌어야 한다(조건에 부합하는 이전 메시지는  메시지 작성 시간을 출력하지 않음).
+        if (!messageCollection.hasChildText(prevIndex) ||
+          !messageCollection.hasChildComment(prevIndex)) {
+          prevMessage = messageCollection.list[prevIndex];
+          _refresh(prevMessage.id, prevIndex);
+        }
+
         if (msg) {
           _refresh(msg.id, index);
         }
@@ -694,15 +748,14 @@
        */
       function _renderAll() {
         var htmlList = [];
-        var list = MessageCollection.list;
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var list = messageCollection.list;
         _destroyCompiledScope();
         _.forEach(list, function(message, index) {
           _pushMarkup(htmlList, message, index);
         });
         el.empty().html(_getCompiledEl(htmlList.join('')));
-        if (list.length) {
-          scope.onRepeatDone();
-        }
+        scope.onRepeatDone();
       }
 
       /**
@@ -712,7 +765,8 @@
        * @private
        */
       function _onAttachMessagePreview(angularEvent, messageId) {
-        MessageCollection.forEach(function(msg, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        messageCollection.forEach(function(msg, index) {
           if (messageId === (msg.message && msg.message.id)) {
             _refresh(msg.id, index);
           }
@@ -739,7 +793,8 @@
        */
       function _refreshFileMessage(socketEvent, callback) {
         var messageId = socketEvent.data.message.id;
-        MessageCollection.forEach(function(msg, index) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        messageCollection.forEach(function(msg, index) {
           if (messageId === (msg.message && msg.message.id) && !msg.message.content.extHasPreview) {
             // back-end에서 link
             msg.message.content.extHasPreview = true;
@@ -754,42 +809,25 @@
       }
 
       /**
-       * created file comment
+       * comment count refresh 이벤트 핸들러
        * @param {object} angularEvent
-       * @param {object} data
+       * @param {number} messageId - fileId 혹은 pollId
+       * @param {number} commentCount
        * @private
        */
-      function _onFileCommentCreated(angularEvent, data) {
-        _updateFileComment(data);
+      function _onRefreshCommentCount(angularEvent, messageId, commentCount) {
+        _refreshCommentCount(messageId, commentCount);
       }
 
+      
       /**
-       * deleted file comment
-       * @param {object} angularEvent
-       * @param {object} data
+       * comment count 를 갱신한다.
+       * @param {number} messageId
+       * @param {number} commentCount
        * @private
        */
-      function _onFileCommentDeleted(angularEvent, data) {
-        _updateFileComment(data);
-      }
-
-      /**
-       * comment count update handler
-       * @param data
-       * @private
-       */
-      function _updateFileComment(data) {
-        var fileId = data.file.id;
-        var commentCount = data.file.commentCount;
-        var message;
-
-        _.forEach(MessageCollection.list, function(msg) {
-          message = RendererUtil.getFeedbackMessage(msg);
-          if (message.id === fileId) {
-            message.commentCount = commentCount;
-          }
-        });
-        $('.comment-count-' + data.file.id).text(commentCount);
+      function _refreshCommentCount(messageId, commentCount) {
+        $('.comment-count-' + messageId).text(commentCount);
       }
     }
   }

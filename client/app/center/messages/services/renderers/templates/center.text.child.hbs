@@ -1,35 +1,33 @@
-<div class="msg-item text text-child {{css.botText}}">
-  <div class="text-msg-item-container">
-    <div class="msg-item-body">
-      <!-- TEXT -->
-      <div class="msg-text">
-        {{#if isSticker}}
-          <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
-        {{else}}
-          <span class="keep msg-text-body _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
-        {{/if}}
-        <!--  TIME  -->
-        <span class="msg-item-header__created">{{ msg.extTime }}</span>
-
-        <!--  UNREAD COUNT  -->
-        <span class="badge unread-badge">{{ msg.unreadCount }}</span>
-      </div>
-      <div class="msg-extra">
-        <!--More -->
-        {{#if hasMore}}
-          <span class="msg-item-icon _textMore">
-            <i class="icon-more-fill msg-item__action msg-item-circle msg-item-more cursor_pointer _textMore"></i>
-          </span>
-        {{/if}}
-        <!--Star -->
-        {{#if hasStar}}
-          <span class="cursor_pointer msg-item-star msg-item-icon msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
-            <i class="icon-star-on"></i>
-          </span>
-        {{/if}}
-      </div>
-    </div>
+{{#if isSticker}}
+  <div class="msg-item">
+    <div class="sticker size_5" style="background-image:url('{{msg.message.content.url}}');"></div>
   </div>
-  {{{ html.connectPreview }}}
-  {{{ html.linkPreview }}}
+{{else}}
+  <div class="msg-item text">
+    <span class="keep msg-text-body selectable _compile" jnd-ignore-braces>{{{ msg.message.content.body }}}</span>
+  </div>
+{{/if}}
+<div class="msg-text-extra">
+  <div class="msg-buttons">
+    <!--More -->
+    {{#if hasMore}}
+      <span class="msg-item-icon msg-item-more msg-item-circle">
+        <i class="icon-more _textMore"></i>
+      </span>
+    {{/if}}
+    <!--Star -->
+    {{#if hasStar}}
+      <span class="msg-item-icon msg-item-star msg-item-circle _star _star-{{msg.message.id}} {{css.star}}">
+        <i class="{{css.starIcon}}"></i>
+      </span>
+    {{/if}}
+  </div>
+  <div class="msg-item-info no-select">
+    <span class="msg-badge unread-badge">{{ msg.unreadCount }}</span>
+    {{#unless hasChild}}
+      <span class="msg-time">{{ msg.extTime }}</span>
+    {{/unless}}
+  </div>
 </div>
+{{{ html.connectPreview }}}
+{{{ html.linkPreview }}}

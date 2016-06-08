@@ -5,7 +5,7 @@
     .module('jandiApp')
     .directive('rightSearch', rightSearch);
 
-  function rightSearch($filter, Dialog, jndKeyCode) {
+  function rightSearch($filter, $timeout, Dialog, jndKeyCode) {
     return {
       restrict: 'E',
       scope: {
@@ -118,7 +118,10 @@
        */
       function _onFocus(isFocus) {
         if (isFocus === true) {
-          _jqSearchBox.focus();
+          // search directive의 template이 rendering 완료된 다음 focus항상 수행하도록 $timeout 사용한다.
+          $timeout(function() {
+            _jqSearchBox.focus();
+          });
         }
 
         scope.isFocus = false;

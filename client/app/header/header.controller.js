@@ -170,6 +170,11 @@
         _setTabStatus(data.type, true);
       });
 
+      $scope.$on('Router:fileChanged', function($event, data) {
+        _setTabStatus(currentRightPanel, false);
+        _setTabStatus(data.type, true);
+      });
+
       // right panel의 close event handler
       $scope.$on('closeRightPanel', function() {
         _closeRightPanel();

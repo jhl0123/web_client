@@ -1,0 +1,20 @@
+<div class="file-detail-shared">
+  <span ng-if="hasTopic">
+    <span>{{::'@common-shared-in'|translate}}</span>
+    <span class="shared-room" ng-repeat="sharedEntity in file.extShared">
+      <span class="shared-room-name inline-overflow-ellipsis cursor_pointer selectable"
+            ng-click="onClickSharedEntity(sharedEntity)">
+        {{::sharedEntity.prefix}}{{::sharedEntity.name}}
+      </span>
+      <a class="link-remove link-unshare cursor_pointer" ng-click="onClickUnshare(sharedEntity)">
+        <i class="icon-remove-circle"
+           tooltip="{{::'@file-action-unshare'|translate}}"
+           tooltip-placement="bottom"></i>
+      </a>
+      <span ng-hide="($index === file.extShared.length - 1)">, </span>
+    </span>
+  </span>
+  <span ng-if="!hasTopic">
+    <span>{{::'@alert-empty-file-shared'|translate}}</span>
+  </span>
+</div>

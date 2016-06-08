@@ -52,17 +52,6 @@
 .rpanel-header-heading__back:hover { color: rgba(255,255,255,0.7); }
 .rpanel-header-heading__back i { font-size: 18px; vertical-align: text-bottom; margin-right: -3px; }
 
-.file-item-meta__shared {
-  color: #00a5e9;
-  margin-left: 3px;
-  word-wrap: break-word;
-  text-decoration: underline;
-  margin-right: 2px;
-}
-.file-item-meta__shared:hover {
-  color: #00709E;
-}
-
 .scroll_loading_bg {
   display: none;
 }
@@ -151,22 +140,25 @@
   text-align: center;
   height: 35px;
   line-height: 35px;
-  background-color: #f1f4f8;
-  border-bottom: 1px solid #e1e1e1;
+  background-color: #FFF;
+  border-bottom: 1px solid #D5DADB;
 }
 
 .rpanel-header i {
-  position: absolute;
   display: block;
+  position: absolute;
   color: #154a67;
-  font-size: 14px;
-  margin-top: 11px;
-  margin-left: 15px;
   cursor: pointer;
 }
 .rpanel-header .icon-long-arrow-left {
+  top: 8px;
+  left: 15px;
   font-size: 18px;
-  margin-top: 9px;
+}
+.rpanel-header .icon-delete {
+  top: 11px;
+  right: 15px;
+  font-size: 14px;
 }
 .rpanel-header span {
   display: inline-block;

@@ -1,0 +1,23 @@
+.message.system-event {
+  min-height: 15px;
+  margin: 12px 0;
+  line-height: 24px;
+  font-size: 14px;
+}
+
+.message.system-event:before,
+.message.file.break:before {
+  content: '';
+  position: absolute;
+  background-color: rgba(35,58,70,0.25);
+  height: 1px;
+  left: 17px;
+  width: 32px;
+  top: 50%;
+  z-index: -1;
+}
+
+.message.system-event .noti-content {
+  margin: 0 5px 0 0;
+  color: #929498;
+}

@@ -1,9 +1,17 @@
-.text-msg-item-container {
-  /*z-index: 1;*/
+.message.sticker .msg-item-info {
+  margin-left: -24px;
 }
-.text-msg-item-container .msg-item-body {
-  /*z-index: 1;*/
+.message.sticker .msg-item {
+  background-color: transparent !important;
+  border: 0 !important;
 }
+
+.msg-item.text {
+  padding: 8px 13px;
+  word-wrap: break-word;
+  word-break: keep-all;
+}
+
 .text-highlight-background {
   background-color: #f2fbff;
 }
@@ -11,117 +19,6 @@
   background-color: #f2fbff;
 }
 
-.msg-item__action {
-  display:none;
-}
-
-.msg-item-action-icon {
-  font-size: 16px;
-  /*color: #c5c5c5;*/
-}
-.msg-item-action-icon:hover {
-  /*color: #9a9a9a;*/
-}
-
-.msg-item:hover .msg-item__action {
-  display:inline-block;
-}
-
-/********************
-       RIGHT ICONS
-********************/
-.msg-item-icon {
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  float: right;
-}
-.msg-item-circle {
-  border-radius: 10px;
-}
-
-.msg-item-star {
-  margin-right: 5px;
-  padding: 2px 0 0 1.5px !important;
-  font-size: 16px !important;
-  color: #f9bb00;
-  background: transparent;
-}
-
-.msg-item-star.off {
-  padding: 3px 0 0 3px !important;
-  font-size: 14px !important;
-  color: #ffffff;
-  background: #d7e0e8;
-}
-.msg-item-star.off:hover {
-  background: #f9bb00;
-}
-.comment-continue .msg-item-star i {
-  vertical-align: top;
-  display: inline-block;
-}
-
-
-.msg-item-more {
-  padding: 2px;
-  font-size: 16px;
-  color: #FFFFFF;
-  background: #d7e0e8;
-}
-
-.msg-item-more:hover {
-  background: #366480;
-}
-
-.msg-item.bot-text {
-  /*background-color: #FAFBFD;
-  border: 1px solid rgba(15,55,80,0.1);
-  border-left-width: 0;
-  border-right-width: 0;*/
-  padding:14px 18px 14px 67px;
-  margin: -4px 0 5px;
-}
-.msg-item.bot-text.text-child {
-  
-  margin-top:-5px;
-}
-.msg-item.bot-text.text-child:before {
-  content: '';
-  position: absolute;
-  left: 66px;
-  right: 0;
-  top:0;
-  height: 0;
-  border-top: 1px dashed #E1E5E8;
-}
-.msg-item.bot-text:hover {
-  /* background-color: #F7F9FC; */
-}
-.bot-text .msg-item-header {
-  padding: 0px;
-  line-height: 25px;
-  margin-bottom: 4px;
-}
-.bot-text .msg-item-header__name {
-  color: #333;
-}
-.bot-text .msg-item-header__name:after {
-  content: 'JANDI Connect';
-  position: relative;
-  display: inline;
-  padding: 2px 8px;
-  border-radius: 3px;
-  margin-left: 4px;
-  vertical-align: top;
-  font-size: 13px;
-  background-color: rgba(15,60,85,0.105);
-  color: rgba(14,60,85,0.3);
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-.bot-text .msg-item-float {
-  top:16px;
-}
 .bot-text .member-thumb {
   width: 34px;
   height: 34px;
@@ -131,7 +28,4 @@
   font-size: 15px;
   line-height: 22px;
   color:#757575;
-}
-.bot-text .attachment-content-wrapper {
-  padding: 8px 0 4px 0;
 }

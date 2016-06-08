@@ -1,0 +1,46 @@
+.message {
+  position: relative;
+  margin: 20px 0;
+  padding: 0 10px 0 58px;
+}
+
+.message .member-profile {
+  position: absolute;
+  left: -44px;
+  top: 5px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #FFF;
+  box-sizing: border-box;
+}
+
+.message .member-profile.icon-chat {
+  top: 15px;
+  left: -45px;
+  padding-top: 6px;
+  font-size: 24px;
+  text-align: center;
+  color: #C2CDD3;
+}
+
+.message .member-name {
+  color: #333;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.message:not(.message-group):hover .action-group,
+.message:not(.message-group):hover .msg-item-icon {
+  visibility: visible;
+}
+
+.message.message-group .msg-item + .msg-item {
+  display: block;
+}
+
+.message-group {
+  position: static;
+  margin: 0;
+  padding: 0;
+}

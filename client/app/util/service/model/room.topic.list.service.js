@@ -118,6 +118,7 @@
     function add(item, isJoin) {
       var collection = _getEntityCollection(isJoin);
       var id = item.id;
+      item.alarmCnt = item.alarmCnt || 0;
 
       _.extend(item, {
         subscribe: _.isUndefined(item.subscribe) ? true : item.subscribe,

@@ -1,6 +1,6 @@
 .rpanel-detail-body-comment {
   background-color: white;
-  padding: 12px;
+  min-height: 8px;
 }
 
 .archived-file-detail .rpanel-detail-body-comment {
@@ -9,10 +9,26 @@
 
 .comment-item {
   position: relative;
+  margin-bottom: 12px;
+  padding: 16px 12px 0 58px;
   font-size: 14px;
   color: #333;
-  padding: 5px 10px 5px 38px;
-  margin: 0 0 8px;
+  border: 1px solid #e4e8eb;
+  border-bottom: 0;
+  border-width: 1px 0;
+  margin-top: -1px;
+}
+.comment-item:last-child {
+  border-bottom: 0;
+}
+.comment-item.comment-child:after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0px;
+  width: 54px;
+  height: 1px;
+  background-color: #FFF;
 }
 
 .error-comment-item .comment-item-body,
@@ -20,29 +36,36 @@
   color: #c1c1c1;
 }
 
-.comment-item__thumbnail {
+.comment-writer-profile {
   position: absolute;
-  left: 0;
-  top: 0;
+  top: 2px;
+  left: -45px;
+}
+.comment-writer-profile .user-profile {
+  width: 35px;
+  height: 35px;
 }
 
 .comment-item-header {
-  line-height: 14px;
-  margin-bottom: 5px;
+  position: relative;
+  margin-top: -5px;
 }
 
 .comment-item-header > span {
   margin-right: 3px;
 }
 
-.comment-item-header__name {
+.comment-writer-name {
+  max-width: calc(50% - 4px);
   font-weight: 700;
   cursor: pointer;
 }
 
-.comment-item-header__created {
+.comment-writer-date {
   color: #999;
-  font-size: 12px;
+  font-size: 11px;
+  vertical-align: top;
+  margin-left: 0.25em;
 }
 
 .comment-item .comment-item-action {
@@ -57,13 +80,31 @@
   padding-right: 3px;
 }
 
+.comment-item-header__action {
+  margin-top: 0;
+}
+.comment-item.comment-child .comment-item-header__action {
+  margin-top: 2px;
+}
+
 .comment-item-header__action .comment-item-action > a {
   text-decoration: none;
+}
+
+.comment-profile {
+  display: inline-block;
+  max-width: calc(100% - 40px);
 }
 
 .comment-item-body {
   position: relative;
   line-height: 14px;
+}
+.comment-item-body .sticker {
+  display: inline-block;
+}
+.comment-item.comment-child .comment-item-body {
+  margin-right: 42px;
 }
 
 .comment-item__profile {
@@ -77,6 +118,22 @@
 }
 
 .comment-item-body .comment {
+  display: inline;
   margin: 0;
   line-height: 20px;
+}
+
+.comment-item-body .create-time {
+  display: inline;
+  margin-left: 0.25em;
+}
+
+.comment-item-body .comment .mention,
+.comment-item-body .comment a {
+  color: #00ACE9;
+}
+.comment-item-body .comment .mention:hover,
+.comment-item-body .comment a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 172, 233, 0.7);
 }

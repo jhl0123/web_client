@@ -4,26 +4,20 @@
 ********************************************/
 .mention {
   color: #1C6C88;
-  line-height: 1.6em;
 }
 
 .mention:hover {
   text-decoration: underline;
 }
 
-.mention.me {
-  padding: 2px;
-  background-color: #CEF8FF;
+.mention.me,
+.mention.all {
+  padding: 1px 2px;
+  background-color: rgba(3, 169, 244, 0.15);
 }
 
-.mention.all {
-  padding: 2px;
-  color: #1C6C88;
-  background-color: #CEF8FF;
-}
 .mention.all:hover {
   text-decoration: none;
-  color: #1C6C88;
 }
 
 .mention.inactive:hover {
