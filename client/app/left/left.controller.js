@@ -292,12 +292,10 @@ app.controller('leftPanelController', function(
    */
   function enterEntity(entity) {
     JndUtil.safeApply($scope, function() {
-      // NotificationManager.set(entity, 0);
-      // HybridAppHelper.onAlarmCntChanged(entity.id, 0);
-      // entity.alarmCnt = '';
       $scope.entityId = entity.id;
       jndPubSub.pub('onBeforeEntityChange', entity);
     });
+    //토픽 클릭에 대한 반응성 향상을 위해 상단 로직을 수행하여 left panel 에서 선택된 부분에 대한 랜더리을 먼저 하고 이후 center 랜더링을 수행한다.
     $timeout.cancel(_timerEnter);
     _timerEnter = $timeout(function() {
       _doEnter(entity);

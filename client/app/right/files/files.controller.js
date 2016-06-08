@@ -10,7 +10,7 @@
 
   function RightFilesCtrl($scope, $filter, $q, $state, $timeout, AnalyticsHelper, analyticsService, RightPanel,
                           currentSessionHelper, Dialog, EntityHandler, fileAPIservice, FileDetail, JndUtil, modalHelper,
-                          publicService, RoomTopicList, TopicFolderModel, UserList) {
+                          publicService, RoomTopicList, TopicFolderModel, UserList, jndPubSub) {
     var _disabledMemberAddedOnSharedIn = false;
     var _disabledMemberAddedOnSharedBy = false;
 
@@ -59,6 +59,7 @@
       $scope.loadMore = loadMore;
       $scope.onClickShare = onClickShare;
       $scope.onClickUnshare = onClickUnshare;
+      $scope.onFileUploadClick = onFileUploadClick;
   
       _localCurrentEntity = currentSessionHelper.getCurrentEntity();
 
@@ -763,6 +764,13 @@
             title: $filter('translate')('@success-file-unshare').replace('{{filename}}', message.content.title)
           });
         });
+    }
+
+    /**
+     * file upload하기 버튼 클릭 이벤트 핸들러
+     */
+    function onFileUploadClick() {
+      jndPubSub.pub('RightFilesCtrl:fileUpload');
     }
 
     /**

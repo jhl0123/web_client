@@ -9,7 +9,7 @@
     .service('OtherTeamNotification', OtherTeamNotification);
 
   /* @ngInject */
-  function OtherTeamNotification($filter, accountService, configuration, jndWebSocketCommon, HybridAppHelper,
+  function OtherTeamNotification($filter, configuration, jndWebSocketCommon, HybridAppHelper,
                                  DesktopNotificationUtil, DesktopNotification) {
     var that = this;
 
@@ -81,20 +81,7 @@
      * @private
      */
     function _getBody(teamName) {
-      var currentLanguage = accountService.getAccountLanguage();
-
-      var bodyMessage;
-
-      switch (currentLanguage) {
-        case 'en' :
-          bodyMessage = $filter('translate')('@web-notification-body-other-team-pre') + teamName;
-          break;
-        default :
-          bodyMessage = teamName + $filter('translate')('@web-notification-body-other-team-post');
-          break;
-      }
-
-      return bodyMessage;
+      return $filter('translate')('@web-notification-body-other-team').replace('{{teamName}}', teamName);
     }
   }
 })();

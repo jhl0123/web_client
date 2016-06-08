@@ -6,17 +6,16 @@
 
   angular
     .module('jandiApp')
-    .directive('rightMessageGroup', messageGroup);
+    .directive('rightMessageGroup', rightMessageGroup);
 
   /* @ngInject  */
-  function messageGroup() {
+  function rightMessageGroup() {
     return {
-      restrict: 'EA',
+      restrict: 'E',
       replace: true,
       scope: true,
       templateUrl : 'app/right/messages/message-group/message.group.html',
-      controller: 'RightMessageGroupCtrl',
-      link: angular.noop
+      controller: 'RightMessageGroupCtrl'
     };
   }
 })();
