@@ -56,8 +56,8 @@
 }
 
 /* message tab에서 검색 결과를 선택함 */
-.message:not(.message-group).focus .msg-item:not(.attachment-content-wrapper):after,
-.message-group.focus .message.comment.first > div:not(:first-child):after {
+.message:not(.message-group).focus > .msg-item:not(.attachment-content-wrapper):after,
+.message.message-group.focus .message.comment .msg-item:not(.comment-all):before {
   content: '';
   position: absolute;
   border: 1px solid #00ACE9;
@@ -98,6 +98,10 @@
 .message.comment.first.last.focus .msg-item:after {
   top: -1px !important;
   bottom: -1px!important;
+}
+.message.message-group.focus .message.comment .msg-item:not(.comment-all):before {
+  top : -1px;
+  bottom: -1px;
 }
 
 @-webkit-keyframes jnd-animate-selected-item-focus {
