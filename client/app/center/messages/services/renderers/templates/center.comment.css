@@ -96,7 +96,7 @@
   vertical-align: inherit;
 }
 
-.message.comment.first .msg-item:after {
+.message.comment.first .msg-item:before {
   content: '';
   position: absolute;
   top: -6px;
@@ -142,6 +142,6 @@
   background-color: inherit;
   z-index: 1;
 }
-.message.comment-child.self .msg-item .comment-line {
+.message.comment .msg-item .comment-line {
   background-color: rgba(172, 192, 208, 0.5);
 }

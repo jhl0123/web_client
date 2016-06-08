@@ -56,15 +56,12 @@
 }
 
 /* message tab에서 검색 결과를 선택함 */
-.message.text.focus .msg-item:after,
-.message.comment.focus .msg-item:after {
+.message.focus .msg-item:not(.attachment-content-wrapper):after {
   content: '';
   position: absolute;
   border: 1px solid #00ACE9;
   left: -1px;
   right: -1px;
-  top: -1px;
-  bottom: -1px;
   border-radius: 3px;
   box-shadow: 0 0 5px 0px rgba(0, 172, 233, 0.5);
   opacity: 0;
@@ -80,6 +77,18 @@
   animation-timing-function: cubic-bezier(0.65, 0.125, 0.675, 0.9);
   animation-iteration-count: 1;
 }
+
+.message.text.focus .msg-item:after {
+  top: -1px;
+  bottom: -1px;
+}
+
+.message.focus .message.comment.first .msg-item:after,
+.message.comment.focus .msg-item:after {
+  top: -2px;
+  bottom: 1px;
+}
+
 @-webkit-keyframes jnd-animate-selected-item-focus {
   0% { opacity: 0; }
   35% { opacity: 1; }
