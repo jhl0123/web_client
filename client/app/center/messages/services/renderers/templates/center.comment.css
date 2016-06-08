@@ -36,7 +36,6 @@
 }
 
 .message.comment.first .comment-all {
-  /*background-color: #fff;*/
   margin-bottom: 0px;
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
@@ -96,7 +95,8 @@
   vertical-align: inherit;
 }
 
-.message.comment.first .msg-item:after {
+.message-group .message.comment.first .msg-item.comment-all:before,
+.message.comment.first > .msg-item:first-child:before {
   content: '';
   position: absolute;
   top: -6px;
@@ -114,8 +114,8 @@
 .message.comment-child .msg-item {
   padding-right: 56px;
 }
-.message.comment .msg-item:before {
-  content: '';
+
+.message.comment .msg-item .comment-line {
   position: absolute;
   top: -1px;
   height: 1px;
@@ -124,16 +124,15 @@
   background-color: rgba(5, 35, 60, 0.06);
   z-index: 1;
 }
-
-.message.comment.first .msg-item:before {
+.message.comment.first .msg-item .comment-line {
   background-color: transparent;
 }
-.message.comment-child .msg-item:before {
+.message.comment-child .msg-item .comment-line {
   left: 54px;
   top: -2px;
   right: 0;
 }
-.message.comment-child .msg-item:hover:after {
+.message.comment-child .msg-item:hover:before {
   content: '';
   position: absolute;
   top: -2px;
@@ -143,6 +142,6 @@
   background-color: inherit;
   z-index: 1;
 }
-.message.comment-child.self .msg-item:before {
-  background-color: rgba(172, 192, 208, 0.5);
+.message.comment .msg-item .comment-line {
+  background-color: rgba(172, 192, 208, 0.3);
 }
