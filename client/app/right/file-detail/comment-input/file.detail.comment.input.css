@@ -13,6 +13,7 @@
   -webkit-transition: bottom ease-out 0.2s;
   transition: bottom ease-out 0.2s;
   box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 .rpanel-detail-body-comment + .message-input-container {
   margin-top: -8px;
