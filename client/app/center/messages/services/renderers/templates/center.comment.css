@@ -36,7 +36,6 @@
 }
 
 .message.comment.first .comment-all {
-  /*background-color: #fff;*/
   margin-bottom: 0px;
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
@@ -96,7 +95,7 @@
   vertical-align: inherit;
 }
 
-.message.comment.first .msg-item:before {
+.message.comment.first .msg-item:first-child:before {
   content: '';
   position: absolute;
   top: -6px;
