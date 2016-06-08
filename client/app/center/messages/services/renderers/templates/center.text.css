@@ -39,7 +39,7 @@
   color:#757575;
 }
 
-.message.on .msg-item.text:after {
+.message.focus .msg-item.text:after {
   content: '';
   position: absolute;
   border: 1px solid #00ACE9;

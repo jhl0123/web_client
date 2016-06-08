@@ -570,7 +570,7 @@
           _scrollAfterInitialLoad();
           MessageQuery.clearSearchLinkId();
         } else if (_isLoadingNewMessages()) {
-          _animateBackgroundColor($('#' + _messageCollection.getFirstLinkId()));
+          _animateMessageHighlight($('#' + _messageCollection.getFirstLinkId()));
         } else if (_isLoadingOldMessages()) {
           _scrollAfterRenderOldMessages();
         }
@@ -653,7 +653,7 @@
         }
 
         _scrollTo(targetScrollTop);
-        _animateBackgroundColor(jqTarget);
+        _animateMessageHighlight(jqTarget);
       }
     }
 
@@ -664,17 +664,13 @@
       _resetNewMsgHelpers();
     }
 
-    function _animateBackgroundColor(element) {
-      //console.log('::_animateBackgroundColor');
-      element.addClass('message-highlight');
-
-      $timeout(function () {
-        element.addClass('message-highlight-out');
-        $timeout(function () {
-          element.removeClass('message-highlight');
-          element.removeClass('message-highlight-out');
-        }, 517)
-      }, 500);
+    /**
+     * animate message highlight
+     * @param {object} element
+     * @private
+     */
+    function _animateMessageHighlight(element) {
+      element.addClass('focus');
     }
 
     /**
