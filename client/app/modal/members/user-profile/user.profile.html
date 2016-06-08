@@ -96,11 +96,11 @@
       <span class="action-file" ng-click="onActionClick('file')">
         <i class="icon-file"></i><span translate>@common-file-list</span>
       </span>
-      <span class="action-go" ng-switch="isMyself">
-        <span class="action-dm" ng-switch-when="false" ng-click="onActionClick('directMessage')">
+      <span class="action-go" ng-switch="isMyself" ng-click="onActionClick('go')">
+        <span class="action-dm" ng-switch-when="false">
           <i class="icon-chat"></i><span translate>@common-chat-dm</span>
         </span>
-        <span class="action-mention" ng-switch-default ng-click="onActionClick('mention')">
+        <span class="action-mention" ng-switch-default>
           <i class="icon-at"></i><span translate>@common-mention</span>
         </span>
       </span>

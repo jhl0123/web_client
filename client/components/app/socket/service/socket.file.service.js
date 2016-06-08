@@ -88,17 +88,22 @@
       jndPubSub.pub('errorThumbnailImage', data);
     }
 
-    function _onFileShared(data) {
-      jndPubSub.pub('fileShared', data);
+    /**
+     *
+     * @param socketEvent
+     * @private
+     */
+    function _onFileShared(socketEvent) {
+      jndPubSub.pub('jndWebSocketFile:fileShared', socketEvent);
     }
 
     /**
      * 파일이 공유되었을때
-     * @param data
+     * @param socketEvent
      * @private
      */
-    function _onFileUnshared(data) {
-      jndPubSub.pub('fileUnshared', data);
+    function _onFileUnshared(socketEvent) {
+      jndPubSub.pub('jndWebSocketFile:fileUnshared', socketEvent);
     }
 
     /**
@@ -109,7 +114,7 @@
     function _onFileDeleted(data) {
       jndPubSub.pub('rightFileOnFileDeleted', data);
       jndPubSub.pub('rightFileDetailOnFileDeleted', data);
-      jndPubSub.pub('centerOnFileDeleted', data);
+      jndPubSub.pub('jndWebSocketFile:fileDeleted', data);
     }
 
     /**
@@ -157,6 +162,12 @@
      * @private
      */
     function _onFileExternalShared(socketEvent) {
+      socketEvent.data.fileData = {
+        externalUrl: socketEvent.data.externalUrl,
+        externalCode: socketEvent.data.externalCode,
+        externalShared: socketEvent.data.externalShared
+      };
+      jndPubSub.pub('jndWebSocketFile:externalFileShared', socketEvent);
     }
 
     /**
@@ -165,6 +176,12 @@
      * @private
      */
     function _onFileExternalUnshared(socketEvent) {
+      socketEvent.data.fileData = {
+        externalUrl: null,
+        externalCode: null,
+        externalShared: false
+      };
+      jndPubSub.pub('jndWebSocketFile:externalFileUnShared', socketEvent);
     }
   }
 })();

@@ -79,8 +79,8 @@
       $scope.$on('rightPanelStatusChange', _onRightPanelStatusChange);
 
       // star / unstar
-      $scope.$on('message:starred', _starred);
-      $scope.$on('message:unStarred', _unStarred);
+      $scope.$on('jndWebSocketMessage:starred', _starred);
+      $scope.$on('jndWebSocketMessage:unStarred', _unStarred);
 
       // create/delete comment
       $scope.$on('jndWebSocketFile:commentCreated', _rightFileDetailOnFileCommentCreated);
@@ -90,11 +90,28 @@
       $scope.$on('jndWebSocketMessage:topicMessageDeleted', _topicMessageDeleted);
       $scope.$on('rightFileDetailOnFileDeleted', _rightFileOnFileDeleted);
 
+      $scope.$on('jndWebSocketFile:externalFileShared', _onExternalFileStatusChange);
+      $scope.$on('jndWebSocketFile:externalFileUnShared', _onExternalFileStatusChange);
+
       // 컨넥션이 끊어졌다 연결되었을 때, refreshFileList 를 호출한다.
       $scope.$on('NetInterceptor:connect', _onConnected);
       $scope.$on('NetInterceptor:disconnect', _onDisconnected);
       $scope.$on('NetInterceptor:onGatewayTimeoutError', _refreshView);
       $scope.$on('Auth:refreshTokenSuccess', _refreshView);
+    }
+
+    /**
+     * 외부 파일 공유 상태 변경 소켓 이벤트 핸들러
+     * @param {object} angularEvent
+     * @param {object} socketEvent
+     * @private
+     */
+    function _onExternalFileStatusChange(angularEvent, socketEvent) {
+      var fileId = socketEvent.data.messageId;
+      var msg = $scope.tabs.all.map[fileId];
+      if (msg) {
+        _.extend(msg.message.content, socketEvent.data.fileData);
+      }
     }
 
     /**

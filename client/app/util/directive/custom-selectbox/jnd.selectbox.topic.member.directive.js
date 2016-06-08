@@ -73,8 +73,11 @@
         var jqLi = jqTarget.closest('._selectable');
         var item = jqLi.data('item');
         _isPreventSelect = true;
-        scope.onKickout({
-          memberId: item.id
+        JndUtil.safeApply(scope, function() {
+          scope.onKickout({
+            memberId: item.id
+          });
+          close();
         });
       }
       /**
@@ -161,11 +164,16 @@
       /**
        * change 이벤트 핸들러
        * @param {object} jqTarget
+       * @param {object} targetScope
+       * @param {object} mouseEvent
        */
-      function onChange(jqTarget) {
+      function onChange(jqTarget, targetScope, mouseEvent) {
         var item = jqTarget.data('item');
-        scope.selectedValue = _getSelectedValue(item);
-        if (!_isPreventSelect) {
+        var isKickout = !!(mouseEvent && $(mouseEvent.target).closest('._kickout').length);
+        var isPreventSelect = _isPreventSelect || isKickout;
+
+        if (!isPreventSelect) {
+          scope.selectedValue = _getSelectedValue(item);
           scope.onSelect({
             memberId: item.id
           });

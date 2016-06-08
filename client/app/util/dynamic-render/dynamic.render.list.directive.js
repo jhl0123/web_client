@@ -175,10 +175,16 @@
 
       /**
        * update list event handler
+       * @param {object} $event
+       * @param {object} data
        * @private
        */
-      function _onUpdateList() {
-        _modelValue = jqFilter.val();
+      function _onUpdateList($event, data) {
+        if (data) {
+          _modelValue = data.filterValue;
+        } else {
+          _modelValue = jqFilter.val() || '';
+        }
 
         _updateList();
       }
@@ -198,7 +204,6 @@
        * @private
        */
       function _onDestroy() {
-
         //ToDo: listOnModal directive가 element가 아닌 container의 attribute로 제공 되어야 dom select 문제가 해결됨.
         // scope destroy시 jqFilter를 제거하여 scope 생성시 이전 jqFilter가 선택되지 않도록 한다.
         jqFilter.remove();
@@ -228,7 +233,7 @@
        * @private
        */
       function _isValueChanged(newValue, oldValue) {
-        return newValue === '' && oldValue == null || (newValue || '') !== (oldValue || '');
+        return (newValue || '') !== (oldValue || '');
       }
 
       /**

@@ -96,10 +96,13 @@
       $scope.$on('NetInterceptor:disconnect', _onDisconnected);
       $scope.$on('NetInterceptor:onGatewayTimeoutError', _refreshView);
       $scope.$on('Auth:refreshTokenSuccess', _refreshView);
-
+      $scope.$on('jndWebSocketFile:externalFileShared', _onExternalFileStatusChange);
+      $scope.$on('jndWebSocketFile:externalFileUnShared', _onExternalFileStatusChange);
+      
       $scope.$watch('searchStatus.sharedEntityId', _onSearchEntityChange);
       $scope.$watch('searchStatus.writerId', _onSearchWriterChange);
       $scope.$watch('searchStatus.fileType', _onSearchFileTypeChange);
+      
     }
 
     /**
@@ -155,6 +158,21 @@
       $scope.fileTypeList = fileAPIservice.generateFileTypeFilter();
     }
 
+    /**
+     * 외부 파일 공유 상태 변경 소켓 이벤트 핸들러
+     * @param {object} angularEvent
+     * @param {object} socketEvent
+     * @private
+     */
+    function _onExternalFileStatusChange(angularEvent, socketEvent) {
+      var fileId = socketEvent.data.messageId;
+      var file = _fileMap[fileId];
+
+      if (file) {
+        _.extend(file.content, socketEvent.data.fileData);
+      }
+    }
+    
     /**
      * '공유된 곳' 값 변경 이벤트 핸들러
      * @param {number|object} newValue

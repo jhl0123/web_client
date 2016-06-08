@@ -13,8 +13,8 @@
                            currentSessionHelper, logger, centerService, markerService, TextBuffer, modalHelper,
                            NetInterceptor, jndPubSub, jndKeyCode, MessageCacheCollection, MessageSendingCollection,
                            AnalyticsHelper, Announcement, NotificationManager, Dialog, RendererUtil, HybridAppHelper,
-                           TopicInvitedFlagMap, UserList, JndConnect, RoomTopicList, SocketEventApi, jndWebSocket,
-                           ActiveNotifier, EntityFilterMember, DmApi) {
+                           TopicInvitedFlagMap, UserList, JndConnect, RoomTopicList, ActiveNotifier, EntityFilterMember,
+                           DmApi) {
 
     var TEXTAREA_MAX_LENGTH = 40000;
     var CURRENT_ENTITY_ARCHIVED = 2002;
@@ -110,7 +110,7 @@
     $scope.onSendingRepeatDone = onSendingRepeatDone;
 
     $scope.isLastReadMarker = isLastReadMarker;
-
+    $scope.postMessageMarker = postMessageMarker;
 
     _init();
 
@@ -124,11 +124,19 @@
 
       //entity 리스트 load 가 완료되지 않았다면 dataInitDone 이벤트를 기다린다
       if (publicService.isInitDone() && _entityId && _entityType) {
-        _initializeListeners();
-        _initialRender();
+        _onInitDone();
       } else {
-        $scope.$on('publicService:dataInitDone', _init);
+        $scope.$on('publicService:dataInitDone', _onInitDone);
       }
+    }
+
+    /**
+     * init done 이벤트 핸들러
+     * @private
+     */
+    function _onInitDone() {
+      _initializeListeners();
+      _initialRender();
     }
 
     /**
@@ -143,15 +151,18 @@
         _initMessageCollection();
         _initializeView();
         _initializeFocusStatus();
-
-        if (!_messageCollection.status.isInitialized) {
-          _messageCollection.getRequestPromise().then(
-            _getCurrentRoomMarker
-          );
+        _initMarkers();
+        if (!_messageCollection.status.isInitialRequestSuccess) {
+          if (_messageCollection.status.isLoading) {
+            _messageCollection.getRequestPromise().then(
+              _getCurrentRoomMarker
+            );
+          } else {
+            _refreshCurrentTopic();
+          }
         } else {
           _getCurrentRoomMarker();
         }
-        _checkEntityMessageStatus();
         centerService.setHistory(_entityType, _entityId);
       }
     }
@@ -189,9 +200,6 @@
       $scope.currentEntity = currentSessionHelper.getCurrentEntity();
       $scope.analytics.entityType = _entityType;
       MessageSendingCollection.reset();
-
-      centerService.setEntityId(centerService.isChat() ? currentSessionHelper.getCurrentEntity().entityId : _entityId);
-
       modalHelper.closeModal('cancel');
       _cancelHttpRequest();
       _initLocalVariables();
@@ -208,7 +216,7 @@
       _hasRetryGetRoomInfo = false;
       _wasBottomReached = false;
       _hasLastReadMarker = false;
-      _lastReadMessageMarker = _getEntityId() ? memberService.getLastReadMessageMarker(_getEntityId()) : null;
+      _lastReadMessageMarker = memberService.getLastReadMessageMarker(_getRoomId());
 
       _deferredObject = {
         getMessage: null,
@@ -236,10 +244,12 @@
      */
     function _initializeListeners() {
 
-      $scope.$on('NetInterceptor:connect', _onConnected);
+      $scope.$on('NetInterceptor:connect', _refreshView);
       $scope.$on('NetInterceptor:onGatewayTimeoutError', _refreshView);
+      $scope.$on('jndWebSocket:connect', _refreshView);
       $scope.$on('Auth:refreshTokenSuccess', _refreshView);
-
+      $scope.$on('MessageCacheCollection:getEventHistoryError', _refreshView);
+      
       $scope.$on('refreshCurrentTopic', _refreshCurrentTopic);
       $scope.$on('MessageCollection:newMessageArrived', _onNewMessageArrived);
       $scope.$on('MessageCollection:newSystemMessageArrived', _onNewSystemMessageArrived);
@@ -252,10 +262,7 @@
 
       $scope.$on('centerOnMarkerUpdated', _onCenterMarkerUpdated);
       $scope.$on('centerOnTopicLeave', _onCenterOnTopicLeave);
-      $scope.$on('jndWebSocketFile:commentDeleted', _onFileCommentDeleted);
       $scope.$on('onChangeSticker:' + _stickerType, _onChangeSticker);
-      $scope.$on('externalFile:fileShareChanged', _onFileShareChanged);
-
       $scope.$on('center:scrollToBottom', _centerScrollToBottom);
       $scope.$on('Router:openRightPanel', _onBeforeRightPanelOpen);
       $scope.$on('RightPanel:rendered', _onAfterRightPanelOpen);
@@ -277,7 +284,8 @@
       $scope.$on('body:dragStart', _onDragStart);
       $scope.$on('topicDeleted', _onTopicDeleted);
 
-      $scope.$on('jndWebSocketMessage:messageDeleted', _onMessageDeleted);
+      $scope.$on('MessageCollection:messageDeleted', _checkEntityMessageStatus);
+      $scope.$on('MessageCollection:commentDeleted', _checkEntityMessageStatus);
     }
 
     /**
@@ -395,15 +403,13 @@
      * @private
      */
     function _onWindowFocus() {
-      if (_isViewContentLoaded) {
-        centerService.setBrowserFocus();
-        if (!_hasScroll() || centerService.isScrollBottom()) {
-          _clearBadgeCount($scope.currentEntity);
-        }
-        NotificationManager.resetNotificationCountOnFocus();
-        // update hybrid app badge
-        HybridAppHelper.updateBadge();
+      centerService.setBrowserFocus();
+      if (!_hasScroll() || centerService.isScrollBottom()) {
+        _clearBadgeCount($scope.currentEntity);
       }
+      NotificationManager.resetNotificationCountOnFocus();
+      // update hybrid app badge
+      HybridAppHelper.updateBadge();
     }
 
     /**
@@ -411,9 +417,7 @@
      * @private
      */
     function _onWindowBlur() {
-      if (_isViewContentLoaded) {
-        centerService.resetBrowserFocus();
-      }
+      centerService.resetBrowserFocus();
     }
 
     /**
@@ -446,6 +450,7 @@
     function _search() {
       _hideContents();
       _reset();
+      console.log('MessageQuery.hasSearchLinkId()', MessageQuery.hasSearchLinkId());
       _isFromSearch = true;
       _messageCollection.reset();
       _messageCollection.request();
@@ -556,19 +561,21 @@
      */
     function _adjustScroll() {
       // console.log('::updateScroll')
-      if (_isFromSearch && MessageQuery.hasSearchLinkId()) {
-        _findMessageDomElementById(MessageQuery.get('linkId'), true);
-        MessageQuery.clearSearchLinkId();
-        _isFromSearch = false;
-      } else if (!$scope.isInitializeRender) {
-        _scrollAfterInitialLoad();
-        MessageQuery.clearSearchLinkId();
-      } else if (_isLoadingNewMessages()) {
-        _animateBackgroundColor($('#' + _messageCollection.getFirstLinkId()));
-      } else if (_isLoadingOldMessages()) {
-        _scrollAfterRenderOldMessages();
+      if ($scope.status.isInitialRequestSuccess) {
+        if (_isFromSearch && MessageQuery.hasSearchLinkId()) {
+          _findMessageDomElementById(MessageQuery.get('linkId'), true);
+          MessageQuery.clearSearchLinkId();
+          _isFromSearch = false;
+        } else if (!$scope.isInitializeRender) {
+          _scrollAfterInitialLoad();
+          MessageQuery.clearSearchLinkId();
+        } else if (_isLoadingNewMessages()) {
+          _animateBackgroundColor($('#' + _messageCollection.getFirstLinkId()));
+        } else if (_isLoadingOldMessages()) {
+          _scrollAfterRenderOldMessages();
+        }
+        MessageQuery.reset();
       }
-      MessageQuery.reset();
     }
 
     /**
@@ -670,13 +677,15 @@
       }, 500);
     }
 
-
-    function _postMessageMarker() {
+    /**
+     * messageMarker 정보를 업데이트 한다
+     */
+    function postMessageMarker() {
       var lastLinkId = _messageCollection.roomData.lastLinkId;
-      if (memberService.getLastReadMessageMarker(_entityId) !== lastLinkId) {
+      if (memberService.getLastReadMessageMarker(_getRoomId()) !== lastLinkId) {
         messageAPIservice.updateMessageMarker(_entityId, _entityType, lastLinkId)
           .success(function (response) {
-            memberService.setLastReadMessageMarker(_getEntityId(), lastLinkId);
+            memberService.setLastReadMessageMarker(_getRoomId(), lastLinkId);
             _messageCollection.updateUnreadCount();
             //log('----------- successfully updated message marker for entity name ' + $scope.currentEntity.name + ' to ' + lastMessageId);
           })
@@ -697,51 +706,18 @@
     }
 
     /**
-     * 네트워크 연결 되었을때 콜백
-     * @private
-     */
-    function _onConnected() {
-      _refreshView();
-    }
-
-    /**
      * view 갱신
      * @private
      */
     function _refreshView() {
-      _initMarkers();
-      if (MessageSendingCollection.queue.length) {
-        _requestPostMessages(true);
+      if (!_messageCollection.status.isInitialRequestSuccess) {
+        _refreshCurrentTopic();
+      } else {
+        _initMarkers();
+        if (MessageSendingCollection.queue.length) {
+          _requestPostMessages(true);
+        }
       }
-      _requestEventsHistory();
-    }
-
-    /**
-     * disconnect 동안 누락된 이벤트를 조회하기 위해
-     * event history API 를 호출한다.
-     * @private
-     */
-    function _requestEventsHistory() {
-      var lastTimeStamp = jndWebSocket.getLastTimestamp();
-      SocketEventApi.get({
-        ts: lastTimeStamp
-      }).success(_onSuccessGetEventsHistory)
-        .error(_onErrorGetEventHistory);
-    }
-
-    function _onErrorGetEventHistory() {
-      jndPubSub.pub('centerpanelController:getEventHistoryError');
-      _refreshCurrentTopic(true);
-    }
-
-    /**
-     * event history 조회 성공 이벤트 핸들러
-     * @param {object} response
-     * @private
-     */
-    function _onSuccessGetEventsHistory(response) {
-      var socketEvents = response.records;
-      jndWebSocket.processSocketEvents(socketEvents);
     }
 
     /**
@@ -766,6 +742,7 @@
       $scope.hasMessage = false;
 
       jqInput.val('');
+      _saveTextBuffer();
       _hideSticker();
       _setChatInputFocus();
     }
@@ -801,15 +778,12 @@
     function _requestPostMessages(isForce) {
       var queue = MessageSendingCollection.queue;
       var payload;
-      var roomId = _entityId;
+      var roomId = _getRoomId();
 
       if (isForce || (NetInterceptor.isConnected() && !$scope.isPosting)) {
         if (queue.length) {
           $scope.isPosting = true;
           _deferredObject.postMessage = $q.defer();
-          if (EntityFilterMember.isExist(roomId)) {
-            roomId = EntityFilterMember.getChatRoomId(roomId);
-          }
           payload = queue.shift();
 
           messageAPIservice.postMessage(roomId, _getPostParam(payload), _deferredObject.postMessage)
@@ -818,6 +792,19 @@
             .finally(_onFinallyPost);
         }
       }
+    }
+
+    /**
+     * 현재 방의 id 를 받아온다. (DM 일 경우 _entityId 가 memberId 이기 때문에)
+     * @returns {number}
+     * @private
+     */
+    function _getRoomId() {
+      var roomId = _entityId;
+      if (EntityFilterMember.isExist(roomId)) {
+        roomId = EntityFilterMember.getChatRoomId(roomId);
+      }
+      return roomId;
     }
 
     /**
@@ -854,7 +841,7 @@
       if (_messageCollection.hasLastMessage()) {
         _messageCollection.append(response, true);
       }
-      memberService.setLastReadMessageMarker(_entityId, linkId);
+      memberService.setLastReadMessageMarker(_getRoomId(), linkId);
       MessageSendingCollection.clearSentMessages();
       try {
         //analytics
@@ -1031,7 +1018,7 @@
     function _clearBadgeCount(entity) {
       if (entity) {
         entityAPIservice.updateBadgeValue(entity, '');
-        _postMessageMarker();
+        postMessageMarker();
       }
     }
 
@@ -1215,12 +1202,6 @@
       }
     }
 
-
-    function _getEntityId() {
-      return centerService.getEntityId();
-    }
-
-
     /**
      * Decide to whether display badge or not.
      *
@@ -1240,7 +1221,7 @@
           _refreshCurrentTopic(true);
         } else {
           _scrollToBottom();
-          _postMessageMarker();
+          postMessageMarker();
         }
       }
 
@@ -1290,6 +1271,8 @@
     function _onBeforeRightPanelOpen($event, isOpen) {
       if (isOpen && $scope.isInitializeRender && _isBottomReached()) {
         _wasBottomReached = true;
+      } else {
+        _wasBottomReached = false;
       }
     }
 
@@ -1333,7 +1316,7 @@
      * @private
      */
     function _getCurrentRoomMarker() {
-      var currentRoomId = _getEntityId();
+      var currentRoomId = _getRoomId();
       if (currentRoomId) {
         _deferredObject.getRoomInformation = $q.defer();
         messageAPIservice.getRoomInformation(currentRoomId, _deferredObject.getRoomInformation)
@@ -1368,17 +1351,17 @@
     function onRepeatDone() {
       _adjustScroll();
       _checkEntityMessageStatus();
-      if (_messageCollection.status.isInitialized) {
+      if (_messageCollection.status.isInitialRequestSuccess) {
         publicService.hideDummyLayout();
         if (!$scope.isInitializeRender) {
           _onInitialRenderDone();
           $scope.isInitializeRender = true;
         }
+        if (!_hasRoomMarkerInfo) {
+          _getCurrentRoomMarker();
+        }
+        _showContents();
       }
-      if (!_hasRoomMarkerInfo) {
-        _getCurrentRoomMarker();
-      }
-      _showContents();
     }
 
     /**
@@ -1386,6 +1369,7 @@
      * @private
      */
     function _onInitialRenderDone() {
+      _clearBadgeCount($scope.currentEntity);
       _loadTextBuffer();
     }
 
@@ -1394,27 +1378,6 @@
      */
     function onSendingRepeatDone() {
       _scrollToBottom();
-    }
-
-    /**
-     * message 삭제 시 콜백
-     * @param {object} angularEvent
-     * @param {object} socketEvent
-     * @private
-     */
-    function _onMessageDeleted(angularEvent, socketEvent) {
-      _messageCollection.remove(socketEvent.messageId, true);
-      _checkEntityMessageStatus();
-    }
-
-    /**
-     * file comment 삭제 시 콜백
-     * @param {object} angularEvent
-     * @param {object} socketEvent
-     */
-    function _onFileCommentDeleted(angularEvent, socketEvent) {
-      _messageCollection.remove(socketEvent.comment.id);
-      _checkEntityMessageStatus();
     }
 
     /**
@@ -1655,20 +1618,6 @@
         $scope.hasMessage = message > 0 || !!_sticker;
         $scope.showMarkdownGuide = message > 1;
         TextBuffer.set(_entityId, value);
-      }
-    }
-
-    /**
-     * 외부 파일공유 상태 변경 이벤트 핸들러
-     * @param {object} $event
-     * @param {object} data
-     * @private
-     */
-    function _onFileShareChanged($event, data) {
-      var msg = _messageCollection.getByMessageId(data.id);
-
-      if (msg && msg.message.contentType === 'file') {
-        msg.message.content.externalShared = data.content.externalShared;
       }
     }
   }

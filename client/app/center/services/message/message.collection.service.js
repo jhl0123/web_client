@@ -11,7 +11,7 @@
   /* @ngInject */
   function MessageCollection($q, $filter, $injector, $rootScope, RoomTopicList, CoreUtil, markerService, jndPubSub, memberService,
                              currentSessionHelper, centerService, MessageComment, MessageText, DateFormatter, EntityFilterMember,
-                             messageAPIservice, MessageQuery) {
+                             messageAPIservice, MessageQuery, JndUtil, NetInterceptor) {
     /**
      * 한번에 조회할 기본 메시지 개수
      * @type {number}
@@ -55,6 +55,7 @@
           },
           status: {
             isInitialized: false,
+            isInitialRequestSuccess: false,
             isLoading: false
           },         
 
@@ -66,7 +67,8 @@
           },
           _map: {
             messageId: {},
-            id: {}
+            id: {},
+            feedback: {}
           },
           _deferred: null,
           _requestPromise: null
@@ -80,7 +82,7 @@
        * @returns {*}
        */
       initialRequest: function() {
-        var linkId = memberService.getLastReadMessageMarker(this.id);
+        var linkId = memberService.getLastReadMessageMarker(this._getCurrentRoomId());
         this.reset();
         this._requestPromise = this.request({
           linkId: linkId,
@@ -127,9 +129,50 @@
        */
       _attachScopeEvents: function() {
         this._scope.$on('jndWebSocketMessage:messageCreated', _.bind(this._onMessageCreated, this));
-        this._scope.$on('centerpanelController:getEventHistoryError', _.bind(this.initialRequest, this));
+        this._scope.$on('jndWebSocketMessage:messageDeleted', _.bind(this._onMessageDeleted, this));
+        this._scope.$on('jndWebSocketFile:commentDeleted', _.bind(this._onFileCommentDeleted, this));
+        this._scope.$on('jndWebSocketFile:commentCreated', _.bind(this._onFileCommentCreated, this));
+
+        this._scope.$on('jndWebSocketFile:fileShared', _.bind(this._onFileShared, this));
+        this._scope.$on('jndWebSocketFile:fileUnshared', _.bind(this._onFileUnshared, this));
+        this._scope.$on('jndWebSocketFile:fileDeleted', _.bind(this._onFileDeleted, this));
+        
+        this._scope.$on('externalFile:fileShareChanged', _.bind(this._onExternalFileShareChanged, this));
+        this._scope.$on('jndWebSocketMessage:starred', _.bind(this._onStarred, this));
+        this._scope.$on('jndWebSocketMessage:unStarred', _.bind(this._onUnStarred, this));        
+        
+        this._scope.$on('NetInterceptor:connect', _.bind(this._check, this));
+        this._scope.$on('NetInterceptor:disconnect', _.bind(this._cancelRequest, this));
+        this._scope.$on('NetInterceptor:onGatewayTimeoutError', _.bind(this._check, this));
+        this._scope.$on('jndWebSocket:connect', _.bind(this._check, this));
+        
+        this._scope.$on('MessageCacheCollection:getEventHistoryError', _.bind(this.initialRequest, this));
+        
+        this._scope.$on('jndWebSocketFile:externalFileShared', _.bind(this._onExternalFileStatusChange, this));
+        this._scope.$on('jndWebSocketFile:externalFileUnShared', _.bind(this._onExternalFileStatusChange, this));
       },
 
+      /**
+       * 현재 캐시 상태를 체크하고, 데이터가 없다면 다시 initialRequest 를 요청한다.
+       * @private
+       */
+      _check: function() {
+        var status = this.status;
+        if (!status.isInitialRequestSuccess && !status.isLoading) {
+          this.initialRequest();
+        }
+      },
+
+      /**
+       * request 를 cancel 한다.
+       * @private
+       */
+      _cancelRequest: function() {
+        if (this._deferred) {
+          this._deferred.resolve();
+        }
+      },
+      
       /**
        * message created 이벤트 핸들러
        * @param {object} angularEvent
@@ -156,6 +199,232 @@
       },
 
       /**
+       * 외부 파일 공유 해제 시 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      _onExternalFileStatusChange: function(angularEvent, socketEvent) {
+        var messageId = socketEvent.data.messageId;
+        var fileData = socketEvent.data.fileData;
+        var msg = this.getByMessageId(messageId);
+        var comments = this.getByFeedbackId(messageId);
+
+        if (msg) {
+          _.extend(msg.message.content, fileData);
+        }
+        _.forEach(comments, function(comment) {
+          _.extend(comment.feedback.content, fileData);
+        }, this);
+      },
+      
+      /**
+       * message 삭제 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      _onMessageDeleted: function(angularEvent, socketEvent) {
+        if (socketEvent.room.id === this._getCurrentRoomId()) {
+          this.remove(socketEvent.messageId, true);
+        }
+        this._pub('MessageCollection:messageDeleted', socketEvent.messageId);
+      },
+
+      /**
+       * file comment 삭제 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      _onFileCommentDeleted: function(angularEvent, socketEvent) {
+        var fileId = socketEvent.file.id;
+        var commentCount = socketEvent.file.commentCount;
+        var currentRoomId = this._getCurrentRoomId();
+        var isCurrentRoomComment = _.some(socketEvent.rooms, {
+          id: currentRoomId
+        });
+
+        if (isCurrentRoomComment) {
+          this.remove(socketEvent.comment.id, true);
+          this._pub('MessageCollection:commentDeleted', socketEvent.comment.id);
+        }
+        this._updateFileCommentCount(fileId, commentCount);
+      },
+
+      /**
+       * file comment 생성 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      _onFileCommentCreated: function(angularEvent, socketEvent) {
+        var fileId = socketEvent.file.id;
+        var commentCount = socketEvent.file.commentCount;
+        this._updateFileCommentCount(fileId, commentCount);
+      },
+
+      /**
+       * file comment 숫자를 업데이트 한다.
+       * @param {number} fileId
+       * @param {number} commentCount
+       * @private
+       */
+      _updateFileCommentCount: function(fileId, commentCount) {
+        this._updateMessagesWithComments(fileId, {
+          commentCount: commentCount
+        }, true);
+        this._pub('MessageCollection:refresh:commentCount', fileId, commentCount);
+      },
+
+      /**
+       * file 공유 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      _onFileShared: function(angularEvent, socketEvent) {
+        var fileId = socketEvent.file.id;
+        var shareEntities = socketEvent.file.shareEntities;
+        this._updateMessagesWithComments(fileId, {
+          shareEntities: shareEntities
+        });
+      },
+
+      /**
+       * file unshare 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      _onFileUnshared: function(angularEvent, socketEvent) {
+        var fileId = socketEvent.file.id;
+        var unshareRoomId = socketEvent.room.id;
+        var shareEntities;
+        var msg = this.getByMessageId(fileId);
+        var comments = this.getByFeedbackId(fileId);
+
+        if (msg) {
+          shareEntities = _.reject(msg.message.shareEntities, function(roomId) {
+            return unshareRoomId === roomId; 
+          });
+        } else if (comments.length) {
+          shareEntities = _.reject(comments[0].feedback.shareEntities, function(roomId) {
+            return unshareRoomId === roomId;
+          });
+        }
+        if (shareEntities) {
+          this._updateMessagesWithComments(fileId, {
+            shareEntities: shareEntities
+          });
+        }
+      },
+
+      /**
+       * file 삭제 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} socketEvent
+       * @private
+       */
+      _onFileDeleted: function(angularEvent, socketEvent) {
+        var fileId = socketEvent.file.id;
+        this._updateMessagesWithComments(fileId, {
+          status: 'archived'
+        });
+      },
+
+      /**
+       * 코멘트가 달린 메시지에 대해 데이터 업데이트를 하고 각각의 메시지에 대해 refresh 이벤트를 trigger 한다. 
+       * @param {number} messageId
+       * @param {object} obj - 확장할 데이터
+       * @param {boolean} isPreventEvent - refresh 이벤트를 트리거 할지 여부
+       * @private
+       */
+      _updateMessagesWithComments: function(messageId, obj, isPreventEvent) {
+        var msg = this.getByMessageId(messageId);
+        var comments = this.getByFeedbackId(messageId);
+
+        if (msg) {
+          _.extend(msg.message, obj);
+          if (!isPreventEvent) {
+            this._pub('MessageCollection:refresh', msg);
+          }
+        }
+        _.forEach(comments, function(comment) {
+          _.extend(comment.feedback, obj);
+          if (!isPreventEvent) {
+            this._pub('MessageCollection:refresh', comment);
+          }
+        }, this);
+      },
+
+      /**
+       * star 소켓 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} data
+       * @private
+       */
+      _onStarred: function(angularEvent, data) {
+        var teamId = memberService.getTeamId();
+        if (teamId.toString() === data.teamId.toString()) {
+          this._setStarred(data.messageId, true);
+        }
+      },
+
+      /**
+       * unstar 소켓 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} data
+       * @private
+       */
+      _onUnStarred: function(angularEvent, data) {
+        var teamId = memberService.getTeamId();
+        if (teamId.toString() === data.teamId.toString()) {
+          this._setStarred(data.messageId, false);
+        }
+      },
+
+      /**
+       * star 표시를 한다.
+       * @param {number} messageId
+       * @param {boolean} isStarred
+       * @private
+       */
+      _setStarred: function(messageId, isStarred) {
+        var msg = this.getByMessageId(messageId);
+        var comments = this.getByFeedbackId(messageId);
+        if (msg) {
+          _.extend(msg.message, {
+            isStarred: isStarred
+          });
+          this._pub('MessageCollection:refresh:star', msg.id, msg.message.id, isStarred);
+        }
+        _.forEach(comments, function(comment) {
+          _.extend(comment.feedback,  {
+            isStarred: isStarred
+          });
+          this._pub('MessageCollection:refresh:star', comment.id, comment.feedback.id, isStarred);
+        }, this);
+      },
+      
+      
+      /**
+       * 외부 파일 공유 상태 변경시 이벤트 핸들러
+       * @param {object} angularEvent
+       * @param {object} data
+       * @private
+       */
+      _onExternalFileShareChanged: function(angularEvent, data) {
+        var msg;
+        if (data.roomId === this.id) {
+          msg = this.getByMessageId(data.id);
+          if (msg && msg.message.contentType === 'file') {
+            msg.message.content.externalShared = data.content.externalShared;
+          }
+        } 
+      },
+      
+      /**
        * 서버로 질의를 요청한다.
        * @param {object} [query] - 없을 경우 MessageQuery 에 저장된 값을 사용한다.
        *    @param {number} query.count 
@@ -175,18 +444,24 @@
           this._deferred.resolve();
         }
         this._deferred = $q.defer();
-        //DM 일 경우, chatRoomId 가 없으면 request 하지 않는다.
-        this.status.isLoading = true;
 
-        query = query || MessageQuery.get();
-        query = _.cloneDeep(query);
+        if (NetInterceptor.isConnected()) {
+          this.status.isLoading = true;
+
+          query = query || MessageQuery.get();
+          query = _.cloneDeep(query);
 
 
 
-        return messageAPIservice.getMessages(type, id, query, this._deferred)
-          .then(
-            _.bind(this._onSuccessRequest, this, query),
-            _.bind(this._onErrorRequest, this, query));
+          return messageAPIservice.getMessages(type, id, query, this._deferred)
+            .then(
+              _.bind(this._onSuccessRequest, this, query),
+              _.bind(this._onErrorRequest, this, query));
+        } else {
+          this._deferred.reject();
+          return this._deferred.promise;
+        }
+
       },
 
       /**
@@ -210,6 +485,7 @@
       _onSuccessRequest: function(query, result) {
         var response = result.data;
         var messageList = response.records;
+        this.status.isInitialRequestSuccess = true;
         this._onDoneRequest();
         _.extend(this.roomData, {
           firstLinkId: response.firstLinkId,
@@ -234,6 +510,9 @@
        */
       _onErrorRequest: function(query, result) {
         this._onDoneRequest();
+        if (this._isCurrentRoom()) {
+          JndUtil.alertUnknownError(result.data, result.status);
+        }
         this._pub('MessageCollection:requestError', result, query);
       },
       
@@ -245,13 +524,17 @@
           this.list = [];
           this._map = {
             messageId: {},
-            id: {}
+            id: {},
+            feedback: {}
           };
           this._linkId = {
             first: -1,
             last: -1
           };
           this.status.isInitialized = false;
+          this.status.isInitialRequestSuccess = false;
+          this.status.isLoading = false;
+
           this._pub('MessageCollection:reset');
         }
       },
@@ -290,7 +573,7 @@
             msg = this.getFormattedMessage(msg);
             index = this._getEmbedPosition(msg);
             if (index > 0) {
-              list.splice(index, 0, msg);
+              list.splice(index + 1, 0, msg);
               this._pub('MessageCollection:embed', msg, index + 1);
               this._updateMarker(msg);
             }
@@ -300,11 +583,9 @@
         if (!this._isCurrentRoom()) {
           this._cutByMaxCacheCount();
         }
-        if (appendList.length) {
-          this._setLinkId(appendList);
-          this._addIndexMap(appendList);
-          this._pub('MessageCollection:append', appendList);
-        }
+        this._setLinkId(appendList);
+        this._addIndexMap(appendList);
+        this._pub('MessageCollection:append', appendList);
       },
 
       /**
@@ -333,7 +614,6 @@
       _cutByMaxCacheCount: function(isPrepend) {
         var list = this.list;
         var length = list.length;
-        var lastReadId = memberService.getLastReadMessageMarker(this.id);
         var difference = length - MAX_CACHE_MESSAGE_COUNT;
 
         if (difference > 0) {
@@ -353,10 +633,11 @@
        */
       _updateMarker: function(msg) {
         var markerId;
+        var writerId = CoreUtil.pick(msg, 'extWriter', 'id') || CoreUtil.pick(msg, 'message', 'writerId');
         if (this._isCurrentRoom()) {
-          markerId = markerService.getLastLinkIdOfMemberId(msg.extWriter.id);
+          markerId = markerService.getLastLinkIdOfMemberId(writerId);
           if (!markerId || markerId < msg.id) {
-            markerService.updateMarker(msg.extWriter.id, msg.id);
+            markerService.updateMarker(writerId, msg.id);
           }
         }
         
@@ -369,8 +650,17 @@
        */
       _addIndexMap: function(list) {
         var map = this._map;
-        map.id = _.extend(map.id, _.indexBy(list, 'id'));
-        map.messageId = _.extend(map.messageId, _.indexBy(list, 'messageId'));
+        var feedbackMessageId;
+        _.forEach(list, function(msg) {
+          map.id[msg.id] = msg;
+          map.messageId[msg.messageId] = msg;
+          if (msg && msg.feedback && msg.feedback.id) {
+            feedbackMessageId = msg.feedback.id;
+            map.feedback[feedbackMessageId] = map.feedback[feedbackMessageId] || [];
+            map.feedback[feedbackMessageId].push(msg);
+          }
+        }, this);
+
       },
 
       /**
@@ -380,10 +670,19 @@
        */
       _removeIndexMap: function (msg) {
         var map = this._map;
+        var feedbackMessageId = msg && msg.feedback && msg.feedback.id;
         map.id[msg.id] = null;
         delete map.id[msg.id];
         map.messageId[msg.messageId] = null;
-        delete map.messageId[msg.messageId]
+        delete map.messageId[msg.messageId];
+        if (feedbackMessageId && map.feedback[feedbackMessageId]) {
+          _.forEach(map.feedback[feedbackMessageId], function(feedbackMsg, index) {
+            if (msg.id === feedbackMsg.id) {
+              map.feedback[feedbackMessageId].splice(index, 1);
+              return false;
+            }
+          });
+        }
       },
 
       /**
@@ -436,6 +735,15 @@
        */
       getByMessageId: function(messageId) {
         return this._map.messageId[messageId];
+      },
+
+      /**
+       * feedback id ( =fileId =messageId) 를 가진 메시지들을 반환한다.
+       * @param {number} feedbackId
+       * @returns {Array} feedbackId 를 가지고 있는 메시지 리스트
+       */
+      getByFeedbackId: function(feedbackId) {
+        return this._map.feedback[feedbackId] || [];
       },
 
       /**
@@ -722,15 +1030,18 @@
        * @returns {object}
        */
       getFormattedMessage: function(msg) {
-        msg.date = this._getDateKey(msg.time);
-        if (this._isSystemMessage(msg)) {
-          msg = this._getFormattedSystemMsg(msg);
-        } else {
-          // parse HTML, URL code
-          msg.message.content._body = msg.message.content.body;
-          this._filterContentBody(msg);
+        if (!msg.extIsFormatted) {
+          msg.extIsFormatted = true;
+          msg.date = this._getDateKey(msg.time);
+          if (this._isSystemMessage(msg)) {
+            msg = this._getFormattedSystemMsg(msg);
+          } else {
+            // parse HTML, URL code
+            msg.message.content._body = msg.message.content.body;
+            this._filterContentBody(msg);
+          }
+          this._setMessageFlag(msg);
         }
-        this._setMessageFlag(msg);
         return msg;
       },
 
@@ -987,7 +1298,7 @@
       },
 
       /**
-       * 현
+       * 현재 방의 room id 를 조회한다.
        * @returns {*}
        * @private
        */

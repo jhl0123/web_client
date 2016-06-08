@@ -378,7 +378,7 @@ app.directive('jandiTypeahead', ['$compile', '$parse', '$q', '$timeout', '$docum
       }
     };
   }).
-  directive('jandiMentionaheadPopup', function (JndUtil) {
+  directive('jandiMentionaheadPopup', function (JndUtil, jndPubSub) {
     return {
       restrict:'EA',
       scope:{
@@ -416,6 +416,12 @@ app.directive('jandiTypeahead', ['$compile', '$parse', '$q', '$timeout', '$docum
 
           _attachDomEvents();
         }
+
+        scope.$watch('matches.length', function(newLength) {
+          jndPubSub.pub('updateList:mentionMembers', {
+            filterValue: scope.query
+          });
+        });
 
         /**
          * attach dom events
