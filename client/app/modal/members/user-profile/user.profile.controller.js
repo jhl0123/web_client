@@ -26,10 +26,10 @@
      */
     function _init() {
       _setCurrentUser(curUser);
+
       $scope.account = accountService.getAccount();
       $scope.isDefaultProfileImage = memberService.isDefaultProfileImage($scope.curUser.u_photoUrl);
       $scope.isStarred = $scope.curUser.isStarred;
-      $scope.isDeactivatedUser = _isDeactivatedUser();
       $scope.isInactiveUser = memberService.isInactiveUser(curUser);
       $scope.isMyself = _isMyself();
 
@@ -80,7 +80,10 @@
       $scope.position = $filter('getUserPosition')($scope.curUser);
       $scope.phoneNumber = $filter('getUserPhoneNumber')($scope.curUser);
       $scope.email = $filter('getUserEmail')($scope.curUser);
-      $scope.statusMessage = $filter('getUserStatusMessage')($scope.curUser);
+
+      $scope.isDeactivatedUser = _isDeactivatedUser();
+      $scope.statusMessage = $scope.isDeactivatedUser ?
+        $scope.deactivatedMessage : $filter('getUserStatusMessage')($scope.curUser);
     }
 
     /**
@@ -250,7 +253,7 @@
       }
 
       if (isDeactivated) {
-        $scope.deactivatedMessage = $filter('translate')(deactivatedMessageKey);
+        $scope.deactivatedMessage = $filter('translate')(deactivatedMessageKey).replace(/<?br>/g, '\n');
       }
 
       return isDeactivated;
