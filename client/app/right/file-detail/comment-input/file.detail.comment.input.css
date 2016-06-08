@@ -45,21 +45,24 @@
   margin-bottom: 12px !important;
 }
 
-.file-detail .sticker_panel.dropdown-menu-up,
+.file-detail .sticker_panel.dropdown-menu-up {
+  top: -262px;
+}
+
 .file-detail .sticker_panel.dropdown-menu-down {
   top: -192px;
 }
 
-/*
-.file-detail .sticker_panel.dropdown-menu-down {
-  top: 89px;
-}
-*/
 
 .file-detail .message-input-wrapper .input-container-over .sticker_panel_contents {
   width: 100%;
+  height: 220px;
+}
+
+.file-detail .message-input-wrapper .dropdown-menu-down .sticker_panel_contents {
   height: 150px;
 }
+
 .file-detail .message-input-wrapper .input-container-over .sticker_layer {
   top: -140px;
   width: 100.5%;
