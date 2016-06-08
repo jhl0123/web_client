@@ -32,7 +32,7 @@
        * @private
        */
       function _init() {
-        scope.isActive = scope.data.status === 'enabled';
+        scope.data.isActive = scope.data.status === 'enabled';
 
         scope.isConnector = _isConnector();
         scope.isAllowUpdate = scope.isConnector || scope.isAdmin || scope.isOwner;
@@ -59,7 +59,7 @@
        * @private
        */
       function _onStatusChange(value) {
-        scope.isActive = value === 'enabled';
+        scope.data.isActive = value === 'enabled';
       }
 
       /**

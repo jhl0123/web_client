@@ -32,8 +32,8 @@
 
           //Send Data to Log Server
           AnalyticsHelper.track(AnalyticsHelper.EVENT.BUTTON_CLICK, {
-            button: attributes.buttonTracker,
-            position: attributes.buttonPosition
+            BUTTON_NAME: attributes.buttonTracker,
+            BUTTON_POSITION: attributes.buttonPosition
           });
         });
       } else {

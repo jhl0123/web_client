@@ -58,7 +58,7 @@
       USER_AGENT: 'p7',
       REFERRER: 'p8',
       PAGE: 'p9',
-      BUTTON: 'p10',
+      BUTTON_NAME: 'p10',
       PREVIOUS_LANGUAGE: 'p11',
       CURRENT_LANGUAGE: 'p12',
       RESPONSE_SUCCESS: 'p13',
@@ -75,7 +75,9 @@
       SEARCH_KEYWORD: 'p24', 
       AUTO_SIGN_IN: 'p25',
       MESSAGE_ID: 'p26',
-      MEMBER_COUNT: 'p39'
+      MEMBER_COUNT: 'p39',
+      BUTTON_POSITION: 'p44',
+      KEY_UP_RESULT: 'p45'
     };
 
     this.IDENTIFY = {
@@ -135,7 +137,10 @@
       FILE_KEYWORD_SEARCH: 'e43',
       MESSAGE_POST: 'e44',
       MESSAGE_KEYWORD_SEARCH: 'e45',
-      MESSAGE_DELETE: 'e46'
+      MESSAGE_DELETE: 'e46',
+      TOPIC_JOIN: 'e49',
+      KEY_UP: 'e58',
+      TOPIC_ENTER: 'e59'
     };
   }
 })();
