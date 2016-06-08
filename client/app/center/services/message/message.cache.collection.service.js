@@ -10,8 +10,8 @@
 
   /* @ngInject */
   function MessageCacheCollection($rootScope, CoreUtil, CoreCollection, MessageCollection, RoomTopicList, currentSessionHelper,
-                                  RoomChatDmList, EntityFilterMember) {
-    var UNIT = 100;
+                                  RoomChatDmList, EntityFilterMember, jndWebSocket, SocketEventApi, jndPubSub) {
+    var UNIT = 300;
     var MessageCacheCollectionClass = CoreUtil.defineClass(CoreCollection, /**@lends Collection.prototype */{
       /**
        * 인자로 받은 option 값에 대해 초기 세팅을 한다.
@@ -24,8 +24,43 @@
         CoreCollection.prototype.init.apply(this, arguments);
         this._scope = $rootScope.$new();
         this._scope.$on('RoomTopicList:changed', _.bind(this.initializeTopics, this));
+        this._scope.$on('NetInterceptor:connect', _.bind(this._requestEventsHistory, this));
+        this._scope.$on('NetInterceptor:onGatewayTimeoutError', _.bind(this._requestEventsHistory, this));
+        this._scope.$on('jndWebSocket:connect', _.bind(this._requestEventsHistory, this));
+        this._scope.$on('Auth:refreshTokenSuccess', _.bind(this._requestEventsHistory, this));
       },
 
+      /**
+       * disconnect 동안 누락된 이벤트를 조회하기 위해
+       * event history API 를 호출한다.
+       * @private
+       */
+      _requestEventsHistory: function () {
+        var lastTimeStamp = jndWebSocket.getLastTimestamp();
+        SocketEventApi.get({
+          ts: lastTimeStamp
+        }).success(_.bind(this._onSuccessGetEventsHistory, this))
+          .error(_.bind(this._onErrorGetEventHistory, this));
+      },
+
+      /**
+       * event history 성공 이벤트 핸들러
+       * @param response
+       * @private
+       */
+      _onSuccessGetEventsHistory: function(response) {
+        var socketEvents = response.records;
+        jndWebSocket.processSocketEvents(socketEvents);
+      },
+
+      /**
+       * event history 오류 핸들러
+       * @private
+       */
+      _onErrorGetEventHistory: function() {
+        jndPubSub.pub('MessageCacheCollection:getEventHistoryError');
+      },
+      
       /**
        * topic 들을 초기화 한다
        */
@@ -34,7 +69,7 @@
         joinedTopics = _.sortBy(joinedTopics, 'alarmCnt');
         this._initCurrent();
         _.forEachRight(joinedTopics, function(topic, index) {
-          setTimeout(_.bind(this.add, this, topic.id), UNIT * index);
+          setTimeout(_.bind(this.add, this, topic.id), UNIT * (index + 1));
         }, this);
         this._removeUnjoinedTopics();
       },
@@ -45,7 +80,7 @@
       initializeChats: function() {
         var chats = RoomChatDmList.toJSON(true);
         _.forEach(chats, function(chat, index) {
-          setTimeout(_.bind(this.add, this, chat.extMember.id), UNIT * index);
+          setTimeout(_.bind(this.add, this, chat.extMember.id), UNIT * (index + 1));
         }, this);
       },
 

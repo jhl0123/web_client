@@ -37,17 +37,10 @@
     this.resetBrowserFocus = resetBrowserFocus;
 
     this.isMessageFromMe = isMessageFromMe;
-
-    this.setEntityId = setEntityId;
-    this.getEntityId = getEntityId;
-    this.setRoomId = setRoomId;
-    this.getRoomId = getRoomId;
-
+    
     this.isTextType = isTextType;
     this.isCommentType = isCommentType;
     this.isElapsed = isElapsed;
-
-    this.getLastReadMessageMarker = getLastReadMessageMarker;
 
     this.getHistory = getHistory;
     this.setHistory = setHistory
@@ -152,37 +145,6 @@
     }
 
     /**
-     * set entity id
-     * @param {string} entityId
-     */
-    function setEntityId(entityId) {
-      currentEntityId = entityId;
-    }
-    function getEntityId() {
-      return currentEntityId;
-    }
-
-    /**
-     * For New 1:1 chat entity, there is no entityId info stored locally.
-     * However, new entityId is given as 'entityId' attribute in response of 'loadmore' function.
-     *
-     * Save currentEntityId everytime 'loadmore' gets called.
-     * @param {string} roomId
-     */
-    function setRoomId(roomId) {
-      currentRoomId = roomId;
-      jndPubSub.pub('centerService:roomIdChanged', roomId);
-    }
-
-    /**
-     * get room id
-     * @returns {*}
-     */
-    function getRoomId() {
-      return currentRoomId;
-    }
-
-    /**
      * content type 이 text type 인지 확인한다.
      * @param {string} contentType
      * @returns {boolean}
@@ -212,15 +174,6 @@
     function isElapsed(startTime, endTime) {
       var elapsedMin = Math.floor((endTime - startTime) / 60000);
       return elapsedMin > MAX_MSG_ELAPSED_MINUTES;
-    }
-
-    /**
-     * entityId에 해당하는 토픽에서 현재 사용자가 마지막으로 읽은 link id를 리턴한다.
-     * @param {number} entityId - 알고싶은 토픽의 entity id
-     * @returns {number} lastLinkId - 사용자가 마지막으로 읽은 메세지의 link id
-     */
-    function getLastReadMessageMarker(entityId) {
-      return memberService.getLastReadMessageMarker(entityId);
     }
 
     /**

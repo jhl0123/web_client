@@ -17,6 +17,7 @@ app.controller('leftPanelController', function(
   var _hasToUpdate = false;
   // center chat timer
   var _timerUpdateCenterChat;
+  var _timerEnter;
 
   $scope.entityId = $state.params.entityId;
 
@@ -103,6 +104,7 @@ app.controller('leftPanelController', function(
     $scope.$on('NetInterceptor:connect', _onConnected);
     $scope.$on('NetInterceptor:onGatewayTimeoutError', _requestLeftSideMenu);
     $scope.$on('Auth:refreshTokenSuccess', _requestLeftSideMenu);
+    $scope.$on('MessageCacheCollection:getEventHistoryError', _requestLeftSideMenu);
     $scope.$on('onMemberClick', function(event, user) {
       $scope.onMemberClick(user);
     });
@@ -236,14 +238,14 @@ app.controller('leftPanelController', function(
    */
   function _parseAlarmInfoCount(alarmInfoCnt, alarms) {
     _.each(alarms, function (alarm) {
-      var entity;
-      var entityId = alarm.entityId;
-
-      // TODO: 서버님께서 alarmCount가 0인 entity에 대해서 data를 생성해서 주시는 이유가 궁금합니다.
-      if (alarm.alarmCount != 0 && (entity = EntityHandler.get(entityId))) {
-        entityAPIservice.updateBadgeValue(entity, alarm.alarmCount);
+      var roomId = alarm.entityId;
+      var room = EntityHandler.get(roomId);
+      //초기에 DM 의 room 정보가 없으므로 현 시점에서 DM 에 대해서는 badge 값을 업데이트 할 수 없다.
+      //chats API 를 통해 badge count 를 업데이트 할 수 있다.
+      if (room) {
+        entityAPIservice.updateBadgeValue(room, alarm.alarmCount);
       }
-      memberService.setLastReadMessageMarker(entityId, alarm.lastLinkId);
+      memberService.setLastReadMessageMarker(roomId, alarm.lastLinkId);
     });
   }
 
@@ -290,13 +292,16 @@ app.controller('leftPanelController', function(
    */
   function enterEntity(entity) {
     JndUtil.safeApply($scope, function() {
-      NotificationManager.set(entity, 0);
-      HybridAppHelper.onAlarmCntChanged(entity.id, 0);
-      entity.alarmCnt = '';
+      // NotificationManager.set(entity, 0);
+      // HybridAppHelper.onAlarmCntChanged(entity.id, 0);
+      // entity.alarmCnt = '';
       $scope.entityId = entity.id;
       jndPubSub.pub('onBeforeEntityChange', entity);
     });
-    _doEnter(entity);
+    $timeout.cancel(_timerEnter);
+    _timerEnter = $timeout(function() {
+      _doEnter(entity);
+    });
   }
 
   /**

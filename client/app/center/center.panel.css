@@ -77,6 +77,8 @@ article {
   height: 60px;
   background-position: center center;
   background-size: 60px 60px;
+  background-color: #F1F7FC;
+  box-shadow: 0 0 10px 4px #F1F7FC;
 }
 .msgs__loading .three-quarters-loader {
   position: absolute;
@@ -288,17 +290,6 @@ by ysyun 2015.2.25
   margin-right: 90px;
 }
 
-/*
-  animation을 사용해봤으나 효과가 매끄럽지 못해 부득이하게 클래스 2개를 사용해서 효과를 줬음. -jihoon
-*/
-.message-highlight {
-  background-color: #f2fbff;
-  /*animation: backgroundcolor-to-white  1510ms linear;*/
-}
-.message-highlight-out {
-  background-color: white;
-  transition: background-color 517ms linear;
-}
 @-webkit-keyframes opacIn {
   from {opacity: 0;}
   to {opacity: 1;}

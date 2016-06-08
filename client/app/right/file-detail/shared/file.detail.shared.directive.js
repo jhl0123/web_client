@@ -47,8 +47,8 @@
        * @private
        */
       function _attachEvents() {
-        scope.$on('fileShared', _onFileShared);
-        scope.$on('fileUnshared', _onFileUnshared);
+        scope.$on('jndWebSocketFile:fileShared', _onFileShared);
+        scope.$on('jndWebSocketFile:fileUnshared', _onFileUnshared);
 
         scope.$on('onChangeShared', _onChangeShared);
 

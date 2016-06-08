@@ -42,9 +42,9 @@
     //  return null if 'getEntityById' return nothing.
     function setCurrentEntity (currentEntity) {
       currentEntity = EntityHandler.get(currentEntity.id);
-      currentEntity.alarmCnt = '';
-      HybridAppHelper.onAlarmCntChanged(currentEntity.id, 0);
-      NotificationManager.remove(currentEntity);
+      // currentEntity.alarmCnt = '';
+      // HybridAppHelper.onAlarmCntChanged(currentEntity.id, 0);
+      // NotificationManager.remove(currentEntity);
 
       currentSessionHelper.setCurrentEntity(currentEntity);
       jndPubSub.pub('onCurrentEntityChanged', currentEntity);

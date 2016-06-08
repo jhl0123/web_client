@@ -5,8 +5,8 @@
     .module('jandiApp')
     .directive('centerChatInputBox', centerChatInputBox);
 
-  function centerChatInputBox($state, $filter, integrationService, CoreUtil, ImagePaste, Browser, memberService,
-                              jndPubSub, currentSessionHelper, entityAPIservice, Mentionahead, Tutorial) {
+  function centerChatInputBox($state, $filter, integrationService, CoreUtil, ImagePaste, Browser, jndPubSub,
+                              RoomTopicList, Mentionahead, Tutorial) {
     var multiple = true;    // multiple upload 여부
 
     return {
@@ -48,12 +48,12 @@
        * @private
        */
       function _init() {
-        scope.isDM = memberService.isMember(_entityId);
         scope.onMentionIconClick = onMentionIconClick;
         scope.onMessageInputFocus = onMessageInputFocus;
         scope.onMessageInputBlur = onMessageInputBlur;
         scope.isMentionaheadOpen = isMentionaheadOpen;
 
+        _initializeVariables();
         _attachScopeEvents();
         _attachDomEvents();
 
@@ -75,6 +75,14 @@
         scope.$on('jndWebSocketMember:memberUpdated', _setMentionList);
 
         scope.$watch('status.isLoading', _onChangeLoading);
+      }
+
+      /**
+       * 변수 값을 초기화 한다.
+       * @private
+       */
+      function _initializeVariables() {
+        scope.isDM = !RoomTopicList.isExist(_entityId);
       }
 
       /**
@@ -101,6 +109,7 @@
        */
       function _onCurrentEntityChanged(angularEvent, currentEntity) {
         _entityId = currentEntity.id;
+        _initializeVariables();
         _setMentionList();
       }
 
@@ -123,7 +132,11 @@
        * @private
        */
       function _setMentionList() {
-        scope.mentionahead.list = Mentionahead.getMentionListForTopic(_entityId);
+        if (scope.isDM) {
+          scope.mentionahead.list = [];
+        } else {
+          scope.mentionahead.list = Mentionahead.getMentionListForTopic(_entityId);
+        }
       }
 
       /**
@@ -181,7 +194,9 @@
        * mention icon click event handler
        */
       function onMentionIconClick() {
-        scope.mentionahead.status = Mentionahead.MENTION_WITH_CHAR;
+        if (!scope.isDM) {
+          scope.mentionahead.status = Mentionahead.MENTION_WITH_CHAR;
+        }
       }
 
       /**

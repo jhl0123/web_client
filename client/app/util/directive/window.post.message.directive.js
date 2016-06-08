@@ -64,7 +64,7 @@
        */
       function _parsePostMessageData(data) {
         var args = [];
-
+        data = data || '';
         data = data.split('#');
 
         if (data[1]) {
