@@ -51,7 +51,9 @@
       <!--    MESSAGE WHEN THERE IS NO ITEM TO SHOW   -->
       <div class="break-word" ng-if="isEmpty()">
         <div class="rpanel-alert-msg-container">
-          <center-help-message-container ng-if="!isFiltered()" status="'NO_FILES_UPLOADED'"></center-help-message-container>
+          <div ng-click="onFileUploadClick()">
+            <center-help-message-container ng-if="!isFiltered()" status="'NO_FILES_UPLOADED'"></center-help-message-container>
+          </div>
           <div class="rpanel-alert-msg-container__text" ng-if="isFiltered()">
             <img class="rpanel-alert-msg-container__img" src="assets/images/file-search-no-result.png">
             <span>{{::'@alert-empty-file-search'|translate}}</span>
