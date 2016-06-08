@@ -91,6 +91,9 @@
 .message.comment.comment-child.focus .msg-item:after {
   top: -2px !important;
 }
+.message.comment.last.focus .msg-item:after {
+  bottom: -1px !important;
+}
 .message.comment.first.focus .msg-item:after {
   top: -1px !important;
   bottom: 1px !important;
