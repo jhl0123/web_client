@@ -674,7 +674,7 @@
       // focus class에 사용되는 style이 element를 덮어 message에 대한 동작이 먹히지 않으므로 highlight 된 후 삭제한다.
       setTimeout(function() {
         element.removeClass('focus');
-      }, 2100);
+      }, 2300);
     }
 
     /**
