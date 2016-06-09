@@ -349,8 +349,6 @@
      */
     function _setCreateTime(comments) {
       _.each(comments, function(comment, index) {
-        //var createTime;
-
         comment.extCreateDate = DateFormatter.getFormattedDate(comment.createTime);
 
         if (_isLastChild(comments[index + 1], comment)) {
