@@ -1,3 +1,17 @@
+<a name="1.31.0"></a>
+# [1.31.0](https://github.com/tosslab/web_client/compare/v1.30.1...v1.31.0) (2016-06-09)
+
+
+### Bug Fixes
+
+* **connect:** connect enable/disable 상태 변경이 실시간으로 토픽 헤더에 반영되지 않는 버그 수정 ([6e9a62f](https://github.com/tosslab/web_client/commit/6e9a62f))
+
+### Features
+
+* **bubbleview:** message 텝에서 검색 결과의 아이템 선택시 center의 message가 highlight되는 효과 변경 ([2b0e62d](https://github.com/tosslab/web_client/commit/2b0e62d))
+
+
+
 <a name="1.30.1"></a>
 ## [1.30.1](https://github.com/tosslab/web_client/compare/v1.30.0...v1.30.1) (2016-06-07)
 
