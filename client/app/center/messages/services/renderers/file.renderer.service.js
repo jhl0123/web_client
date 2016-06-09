@@ -11,7 +11,8 @@
   /* @ngInject */
   function FileRenderer($filter, modalHelper, MessageCacheCollection, RendererUtil, JndPdfViewer, FileDetail, 
                         fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper, publicService) {
-    var messageHeightMap = {};
+    var DEFAULT_PREVIEW_IMAGE_HEIGHT = 12;
+
     var _template = '';
 
     this.render = render;
@@ -40,11 +41,11 @@
         },
         {
           currentTarget: '._commentText',
-          handler: _onClickCommentContent
+          handler: _onClickCommentText
         },
         {
           currentTarget: '._commentActions',
-          handler: _onClickCommentContent
+          handler: _onClickCommentActions
         }
       ]
     };
@@ -73,12 +74,12 @@
       clickEvent.stopPropagation();
 
       if (jqCardContent.hasClass('open')) {
-        messageHeightMap[data.msg.id] = jqPreviewImage.height();
+        jqPreviewImage.data('elementHeight', jqPreviewImage.height());
 
-        jqPreviewImage.height(12);
+        jqPreviewImage.height(DEFAULT_PREVIEW_IMAGE_HEIGHT);
         jqCardContent.removeClass('open');
       } else {
-        jqPreviewImage.height(messageHeightMap[data.msg.id]);
+        jqPreviewImage.height(jqPreviewImage.data('elementHeight'));
         jqCardContent.addClass('open');
       }
     }
@@ -104,11 +105,26 @@
     }
 
     /**
-     * comment content click event handler
+     * comment text click event handler
      * @param {object} clickEvent
      * @private
      */
-    function _onClickCommentContent(clickEvent) {
+    function _onClickCommentText(clickEvent) {
+      // comment card의 경우 클릭시 오른쪽 패널이 열려야 하기 때문에 comment card의 상위 element에 오른쪽 패널이 열리는
+      // delegate selector를 넣어 두었는데 그렇게 되면 comment 내용중 하나인 mention 또는 mail, href, star, delete 클릭시에도
+      // 오른쪽 패널이 열리기 때문에 comment text 클릭시에는 오른쪽 패널이 열리지 않도록 stopPropagation을 수행한다.
+
+      if ($(clickEvent.target).is('a')) {
+        clickEvent.stopPropagation();
+      }
+    }
+
+    /**
+     * comment actions click event handler
+     * @param {object} clickEvent
+     * @private
+     */
+    function _onClickCommentActions(clickEvent) {
       // comment card의 경우 클릭시 오른쪽 패널이 열려야 하기 때문에 comment card의 상위 element에 오른쪽 패널이 열리는
       // delegate selector를 넣어 두었는데 그렇게 되면 comment 내용중 하나인 mention 또는 mail, href, star, delete 클릭시에도
       // 오른쪽 패널이 열리기 때문에 comment text 클릭시에는 오른쪽 패널이 열리지 않도록 stopPropagation을 수행한다.
@@ -242,7 +258,7 @@
       });
 
       return {
-        conditions: ['file', 'non-selectable'],
+        conditions: ['message', 'file', 'non-selectable'],
         template: _template(data)
       };
     }

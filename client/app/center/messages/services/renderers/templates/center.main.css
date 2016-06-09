@@ -54,3 +54,68 @@
 .message .center-panel-disabled-member .member-name {
   opacity: 0.4;
 }
+
+/* message tab에서 검색 결과를 선택함 */
+.message.focus > .msg-item:not(.attachment-content-wrapper):after,
+.message-group.focus .message.comment .msg-item:not(.comment-all):before {
+  content: '';
+  position: absolute;
+  border: 1px solid #00ACE9;
+  left: -1px;
+  right: -1px;
+  border-radius: 3px;
+  box-shadow: 0 0 5px 0px rgba(0, 172, 233, 0.5);
+  opacity: 0;
+  z-index: 10;
+
+  -webkit-animation-name: jnd-animate-selected-item-focus;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-timing-function: cubic-bezier(0.65, 0.125, 0.675, 0.9);
+  -webkit-animation-iteration-count: 1;
+
+  animation-name: jnd-animate-selected-item-focus;
+  animation-duration: 2s;
+  animation-timing-function: cubic-bezier(0.65, 0.125, 0.675, 0.9);
+  animation-iteration-count: 1;
+}
+
+.message.text.focus .msg-item:after {
+  top: -1px;
+  bottom: -1px;
+}
+
+.message.comment.focus .msg-item:after {
+  top: -1px !important;
+  bottom: 0px !important;
+}
+.message.comment.comment-child.focus .msg-item:after {
+  top: -2px !important;
+}
+.message.comment.last.focus .msg-item:after {
+  bottom: -1px !important;
+}
+.message.comment.first.focus .msg-item:after {
+  top: -1px !important;
+  bottom: 1px !important;
+}
+.message.comment.first.last.focus .msg-item:after {
+  top: -1px !important;
+  bottom: -1px!important;
+}
+.message-group.focus .message.comment .msg-item:not(.comment-all):before {
+  top : -1px;
+  bottom: -1px;
+}
+
+@-webkit-keyframes jnd-animate-selected-item-focus {
+  0% { opacity: 0; }
+  35% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes jnd-animate-selected-item-focus {
+  0% { opacity: 0; }
+  35% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}

@@ -9,7 +9,6 @@
 
 .message.comment.first .comment-all + .msg-item {
   margin-top: -1px;
-  margin-bottom: 20px;
 }
 
 .message.comment .comment-all + .msg-item {

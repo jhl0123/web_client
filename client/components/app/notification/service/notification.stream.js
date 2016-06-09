@@ -71,9 +71,8 @@
 
         try {
           audio.currentTime = 0;
+          audio.play();
         } catch (e) {}
-
-        audio.play();
       }
     }
 

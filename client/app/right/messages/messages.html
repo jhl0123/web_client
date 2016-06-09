@@ -62,7 +62,7 @@
     </div>
 
     <div class="rpanel-message-list scroll-loading-list">
-      <right-message-group class="private-effect" ng-repeat="message in messageList"></right-message-group>
+      <right-message-group ng-repeat="message in messageList"></right-message-group>
       <right-loading-list is-scroll-loading="searchStatus.isScrollLoading"
                           is-end-of-list="searchStatus.isEndOfList"></right-loading-list>
     </div>

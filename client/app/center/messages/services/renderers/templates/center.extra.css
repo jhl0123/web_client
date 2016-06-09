@@ -92,7 +92,7 @@
 .msg-badge {
   padding: 0 2px 0 2px;
 }
-.msg-badge::before {
+.msg-badge:before {
   content: attr(data-unread-count);
 }
 .msg-badge[data-unread-count=''] {
@@ -105,7 +105,7 @@
   color: #8F9A9F;
   font-weight: 400;
 }
-.msg-time::before {
+.msg-time:before {
   content: attr(data-write-time);
 }
 .msg-time[data-write-time=''] {
