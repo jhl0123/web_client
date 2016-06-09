@@ -49,9 +49,10 @@
           id: id || 0,
           list: [],
           roomData: {
-            firstLinkId: 0,
-            lastLinkId: 0,
-            globalLastLinkId: 0
+            firstLinkId: -1,
+            lastLinkId: -1,
+            globalLastLinkId: -1,
+            lastReadLinkId: -1
           },
           status: {
             isInitialized: false,
@@ -82,7 +83,8 @@
        * @returns {*}
        */
       initialRequest: function() {
-        var linkId = memberService.getLastReadMessageMarker(this._getCurrentRoomId());
+        var linkId = this.roomData.lastReadLinkId = memberService.getLastReadMessageMarker(this._getCurrentRoomId());
+
         this.reset();
         this._requestPromise = this.request({
           linkId: linkId,
@@ -90,10 +92,15 @@
         });
         return this._requestPromise;
       },
-      
+
+      /**
+       * request promise 객체를 반환한다.
+       * @returns {*}
+       */
       getRequestPromise: function() {
         return this._requestPromise;
       },
+
       /**
        * 해당 collection 이 보이지 않게 되었을 경우 Background 에서 로직을 수행할 수 있도록 설정한다
        */
@@ -530,6 +537,12 @@
           this._linkId = {
             first: -1,
             last: -1
+          };
+          this.roomData = {
+            firstLinkId: -1,
+            lastLinkId: -1,
+            globalLastLinkId: -1,
+            lastReadLinkId: -1
           };
           this.status.isInitialized = false;
           this.status.isInitialRequestSuccess = false;

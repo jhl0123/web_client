@@ -11,6 +11,8 @@
   /* @ngInject */
   function MessageCacheCollection($rootScope, CoreUtil, CoreCollection, MessageCollection, RoomTopicList, currentSessionHelper,
                                   RoomChatDmList, EntityFilterMember, jndWebSocket, SocketEventApi, jndPubSub) {
+    //for debug;
+    var instance;
     var UNIT = 300;
     var MessageCacheCollectionClass = CoreUtil.defineClass(CoreCollection, /**@lends Collection.prototype */{
       /**
@@ -145,7 +147,9 @@
         }
       }
     });
-
-    return new MessageCacheCollectionClass();
+    instance = new MessageCacheCollectionClass();
+    window.MessageCacheCollection = instance;
+    
+    return instance;
   }
 })();
