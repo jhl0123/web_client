@@ -152,6 +152,9 @@
         scope.mentionahead.status = Mentionahead.MENTION_WITH_CHAR;
       }
 
+      /**
+       * on float button click
+       */
       function onFloatButtonClick() {
         ctrl.showFloatInput();
       }

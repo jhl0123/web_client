@@ -137,7 +137,9 @@
       if (isTitle) {
         conditions.push('message-group');
       } else {
+        conditions.push('message');
         conditions.push('comment');
+
         if (isChild) {
           conditions.push('comment-child');
         }

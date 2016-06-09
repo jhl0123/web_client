@@ -87,7 +87,7 @@
       }      
 
       return {
-        conditions: ['system-event', 'noti'],
+        conditions: ['message', 'system-event', 'noti'],
         template: _template({
           text: {
             announcement:  {

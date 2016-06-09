@@ -11,7 +11,8 @@
   /* @ngInject */
   function FileRenderer($filter, modalHelper, MessageCacheCollection, RendererUtil, JndPdfViewer, FileDetail, 
                         fileAPIservice, jndPubSub, AnalyticsHelper, currentSessionHelper, publicService) {
-    var messageHeightMap = {};
+    var DEFAULT_PREVIEW_IMAGE_HEIGHT = 12;
+
     var _template = '';
 
     this.render = render;
@@ -73,12 +74,12 @@
       clickEvent.stopPropagation();
 
       if (jqCardContent.hasClass('open')) {
-        messageHeightMap[data.msg.id] = jqPreviewImage.height();
+        jqPreviewImage.data('elementHeight', jqPreviewImage.height());
 
-        jqPreviewImage.height(12);
+        jqPreviewImage.height(DEFAULT_PREVIEW_IMAGE_HEIGHT);
         jqCardContent.removeClass('open');
       } else {
-        jqPreviewImage.height(messageHeightMap[data.msg.id]);
+        jqPreviewImage.height(jqPreviewImage.data('elementHeight'));
         jqCardContent.addClass('open');
       }
     }
@@ -242,7 +243,7 @@
       });
 
       return {
-        conditions: ['file', 'non-selectable'],
+        conditions: ['message', 'file', 'non-selectable'],
         template: _template(data)
       };
     }

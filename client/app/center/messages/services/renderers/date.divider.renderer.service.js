@@ -34,7 +34,7 @@
       var msg = messageCollection.list[index];
 
       return {
-        conditions: ['system-event', 'date-divider'],
+        conditions: ['message', 'system-event', 'date-divider'],
         template: _template({
           msg: msg,
           date: msg.date
