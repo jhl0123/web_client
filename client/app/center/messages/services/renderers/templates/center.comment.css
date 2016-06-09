@@ -145,3 +145,7 @@
 .message.comment .msg-item .comment-line {
   background-color: rgba(172, 192, 208, 0.3);
 }
+
+.message-group .message.comment > .msg-item {
+  display: block;
+}
