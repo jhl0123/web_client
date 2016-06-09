@@ -7,7 +7,7 @@
   display: inline-block;
   position: relative;
   width: 50%;
-  min-width: 450px;
+  min-width: 393px;
   max-width: 600px;
   margin: 6px 0 0 0;
   background-color: #f1f4f8;
@@ -15,12 +15,12 @@
   overflow: hidden;
   /*box-shadow: 0 0 3px rgba(0,0,0,0.08);*/
   border: 1px solid rgba(5, 35, 60, 0.1);
-  border-bottom: 1px solid rgba(5,35,60,0.2);
+  /* border-bottom: 1px solid rgba(5,35,60,0.2); */
 }
 
 .msg-file:hover {
-  box-shadow: 0 0 3px 0px rgba(5, 35, 60, 0.1);
-  border-color: rgba(5,35,60,0.25);
+  box-shadow: 0 0 3px 0px rgba(5, 35, 60, 0.15);
+  border-color: rgba(5,35,60,0.15);
 }
 
 
@@ -39,6 +39,7 @@
 .card-preview .preview-image {
   display: block;
   margin: 0 auto;
+  max-width: 100%;
 }
 
 .card-preview .preview-image .loading-content {
@@ -174,7 +175,7 @@
   width: 58px;
   height: calc(100% + 1px);
   background-color: #f1f4f8;
-  border: 1px solid rgba(5, 35, 60, 0.13);
+  border: 1px solid rgba(5, 35, 60, 0.08);
   border-top-color: transparent;
   overflow: hidden;
   -webkit-transition: left ease-in-out .3s .4s;

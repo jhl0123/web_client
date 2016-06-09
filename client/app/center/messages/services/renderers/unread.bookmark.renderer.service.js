@@ -26,7 +26,7 @@
 
     function render(){
       return {
-        conditions: ['system-event', 'unread-mark'],
+        conditions: ['message', 'system-event', 'unread-mark', 'non-selectable'],
         template: _template()
       };
     }

@@ -5,9 +5,8 @@
 .message.system-event + .message.text-child {
   margin-top: 20px;
 }
-
-.message.bot-text.text-child {
-  margin-top:-14px;
+.message.system-event.unread-mark + .message.text-child {
+  margin-top: 18px;
 }
 .message.bot-text .attachment-content-wrapper .attachment-content {
   min-width: auto;

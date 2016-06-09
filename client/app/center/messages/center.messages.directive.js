@@ -251,24 +251,35 @@
       function _attachClickEvent(event, eventName) {
         _.each(event, function(delegate) {
           el.on(eventName, delegate.currentTarget, function(clickEvent) {
-            var messageCollection = MessageCacheCollection.getCurrent();
-            var jqTarget = $(clickEvent.target);
-            var jqMessage = jqTarget.closest('.message');
-            var id = jqMessage.attr('id');
-            var msg = messageCollection.get(id);
-
-            delegate.handler(clickEvent, {
-              jqTarget: jqTarget,
-              jqMessage: jqMessage,
-              id: id,
-              msg: msg
-            });
-
-            if (delegate.apply) {
-              JndUtil.safeApply(scope);
-            }
+            _onClickHandler(clickEvent, delegate.handler, delegate.apply)
           })
         });
+      }
+
+      /**
+       * on click handler
+       * @param {object} clickEvent
+       * @param {function} handler
+       * @param {boolean} apply
+       * @private
+       */
+      function _onClickHandler(clickEvent, handler, isApply) {
+        var messageCollection = MessageCacheCollection.getCurrent();
+        var jqTarget = $(clickEvent.target);
+        var jqMessage = jqTarget.closest('._message');
+        var id = jqMessage.attr('id');
+        var msg = messageCollection.get(id);
+
+        handler(clickEvent, {
+          jqTarget: jqTarget,
+          jqMessage: jqMessage,
+          id: id,
+          msg: msg
+        });
+
+        if (isApply) {
+          JndUtil.safeApply(scope);
+        }
       }
 
       /**
@@ -514,7 +525,7 @@
         var msg = data.msg;
         var jqTarget = $('#' + msg.id);
         if (jqTarget.length) {
-          jqTarget.find('.unread-badge').text(msg.unreadCount);
+          jqTarget.find('.unread-badge').attr('data-unread-count', msg.unreadCount);
         }
       }
 

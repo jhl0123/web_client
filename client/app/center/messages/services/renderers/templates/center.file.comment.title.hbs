@@ -1,4 +1,4 @@
-<div class="message file" id="{{msg.id}}">
+<div class="message file">
   <div class="msg-header">
     <i class="member-profile icon-chat"></i>
   </div>
@@ -206,14 +206,16 @@
   </div>
 </div>
 
-<div class="message comment first {{css.last}}" id="{{msg.id}}">
+<div class="message comment first {{css.last}}">
   {{#if hasCommentAllDesc}}
     <div class="msg-item comment-all cursor_pointer _fileDetail">
+      <div class="comment-line"></div>
       <i class="icon-more"></i>
       <span class="comment-all-desc">{{{translate.commentAllDesc}}}</span>
     </div>
   {{/if}}
   <div class="msg-item _fileDetail">
+    <div class="comment-line"></div>
     {{#unless isChild}}
       <div class="msg-header">
         <!--  User Thumbnail -->
@@ -229,9 +231,9 @@
       {{/if}}
       <div class="msg-extra _commentActions">
         <div class="msg-item-info no-select">
-          <span class="msg-badge unread-badge">{{ msg.unreadCount }}</span>
+          <span class="msg-badge unread-badge" data-unread-count="{{ msg.unreadCount }}"></span>
           {{#unless hasChild}}
-            <span class="msg-time">{{ msg.extTime }}</span>
+            <span class="msg-time" data-write-time="{{ msg.extTime }}"></span>
           {{/unless}}
         </div>
         <div class="msg-comment-actions">

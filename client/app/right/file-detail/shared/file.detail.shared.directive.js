@@ -114,45 +114,16 @@
         var file = scope.file;
 
         fileAPIservice.unShareEntity(file.id, entity.id)
-          .success(function() {
-            _unsharedForMe = true;
+          .success(_onSuccessUnshared);
+      }
 
-            // 곧 지워짐
-            var share_target = "";
-            switch (entity.type) {
-              case 'channel':
-                share_target = "topic";
-                break;
-              case 'privateGroup':
-                share_target = "private group";
-                break;
-              case 'user':
-                share_target = "direct message";
-                break;
-              default:
-                share_target = "invalid";
-                break;
-            }
-            var file_meta = (file.content.type).split("/");
-            var share_data = {
-              "entity type": share_target,
-              "category": file_meta[0],
-              "extension": file.content.ext,
-              "mime type": file.content.type,
-              "size": file.content.size
-            };
-            analyticsService.mixpanelTrack( "File Unshare", share_data );
-
-            try {
-              //analytics
-              AnalyticsHelper.track(AnalyticsHelper.EVENT.FILE_UNSHARE, {
-                'RESPONSE_SUCCESS': true,
-                'FILE_ID': file.id,
-                'TOPIC_ID': entity.id
-              });
-            } catch (e) {
-            }
-          });
+      /**
+       * on success unshared
+       * @private
+       */
+      function _onSuccessUnshared() {
+        _unsharedForMe = true;
+        _analyticsUnshared();
       }
 
       /**
@@ -240,6 +211,44 @@
           setTimeout(function() {
             jndPubSub.pub('fileDetail:updateFile');
           }, 800);
+        }
+      }
+
+      function _analyticsUnshared() {
+        // 곧 지워짐
+        var share_target = "";
+        switch (entity.type) {
+          case 'channel':
+            share_target = "topic";
+            break;
+          case 'privateGroup':
+            share_target = "private group";
+            break;
+          case 'user':
+            share_target = "direct message";
+            break;
+          default:
+            share_target = "invalid";
+            break;
+        }
+        var file_meta = (file.content.type).split("/");
+        var share_data = {
+          "entity type": share_target,
+          "category": file_meta[0],
+          "extension": file.content.ext,
+          "mime type": file.content.type,
+          "size": file.content.size
+        };
+        analyticsService.mixpanelTrack( "File Unshare", share_data );
+
+        try {
+          //analytics
+          AnalyticsHelper.track(AnalyticsHelper.EVENT.FILE_UNSHARE, {
+            'RESPONSE_SUCCESS': true,
+            'FILE_ID': file.id,
+            'TOPIC_ID': entity.id
+          });
+        } catch (e) {
         }
       }
     }

@@ -20,7 +20,7 @@ article {
   left: 240px;
   right: 0;
   bottom: 0;
-  min-width: 608px;
+  min-width: 560px;
 
   -webkit-transition: opacity 0.7s, left !important;
   transition: opacity 0.7s, left !important;
@@ -104,7 +104,7 @@ article {
   max-width: calc(100% - 84px);
   border-radius: 3px 3px 4px 4px;
   border: 1px solid rgba(5, 35, 60, 0.1);
-  border-bottom: 1px solid rgba(5,35,60,0.2);
+  /* border-bottom: 1px solid rgba(5,35,60,0.2); */
   background-color: #fff;
   color: #333;
 }
@@ -290,17 +290,6 @@ by ysyun 2015.2.25
   margin-right: 90px;
 }
 
-/*
-  animation을 사용해봤으나 효과가 매끄럽지 못해 부득이하게 클래스 2개를 사용해서 효과를 줬음. -jihoon
-*/
-.message-highlight {
-  background-color: #f2fbff;
-  /*animation: backgroundcolor-to-white  1510ms linear;*/
-}
-.message-highlight-out {
-  background-color: white;
-  transition: background-color 517ms linear;
-}
 @-webkit-keyframes opacIn {
   from {opacity: 0;}
   to {opacity: 1;}
@@ -346,9 +335,10 @@ by ysyun 2015.2.25
   border: 1px solid #e1e1e1;
 }
 
-.jandi-bot .member-thumb {
+.jandi-bot .member-thumb.member-profile {
   height: auto;
   border-radius: 0;
-  margin-top: -8px;
+  margin-top: -12px;
   border-width: 0;
+  background-color: transparent;
 }

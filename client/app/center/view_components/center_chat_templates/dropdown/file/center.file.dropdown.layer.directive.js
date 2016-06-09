@@ -76,6 +76,7 @@
         scope.isAdmin = memberService.isAdmin();
 
         scope.message = msg.feedback ? msg.feedback : msg.message;
+        scope.isStarred = scope.message.isStarred;
         scope.fileId = scope.message.id;
 
         content = scope.message.content;

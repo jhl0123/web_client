@@ -1,5 +1,8 @@
-.message.system-event.unread-mark {
-  margin: 28px 0;
+.message.comment:not(.last) + .message.system-event.unread-mark,
+.message.message-group + .message.system-event.unread-mark,
+.message.text:not(.bot-text) + .message.system-event.unread-mark,
+.message.file + .message.system-event.unread-mark {
+  margin: -5px 0 -12px;
 }
 .message.system-event.unread-mark:before {
   background-color: #00abe6;
@@ -10,4 +13,5 @@
   color: #00abe6;
   font-weight: 700;
   background-color: transparent;
+  margin: auto;
 }
