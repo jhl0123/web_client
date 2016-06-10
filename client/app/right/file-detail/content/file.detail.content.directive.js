@@ -47,6 +47,7 @@
        */
       function _attachScopeEvents() {
         scope.$on('$destroy', _onDestroy);
+        scope.$on('JndZoom:zoom', _onCurrentZoomScaleChanged);
       }
 
       /**
@@ -72,6 +73,14 @@
        */
       function _detachDomEvents() {
         $($window).off('resize', _onResize);
+      }
+
+      /**
+       * on zoom scale changed
+       * @private
+       */
+      function _onCurrentZoomScaleChanged() {
+        resizeFileDetailBody();
       }
 
       /**
@@ -109,7 +118,7 @@
 
         _jqFileDetailBody
           .addClass('opac-in')
-          .height($window.innerHeight - el.offset().top - jqFileDetailHeader.outerHeight());
+          .css({top: jqFileDetailHeader.outerHeight()})
       }
 
       /**
