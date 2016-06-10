@@ -294,7 +294,8 @@
      */
     function _initMessageCollection() {
       _messageCollection = MessageCacheCollection.getCurrent();
-
+      _messageCollection.roomData.lastReadLinkId = _lastReadMessageMarker;
+      
       $scope.status = _messageCollection.status;
       $scope.isNewDate = _messageCollection.isNewDate;
       $scope.hasLinkPreview = _messageCollection.hasLinkPreview;
