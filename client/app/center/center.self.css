@@ -1,16 +1,15 @@
-.message.self .msg-item:not(.comment-all) {
+.message-group.self .msg-item:not(.comment-all),
+.message.self .msg-item {
   background-color: #E8F2FB;
   border-bottom-color: #CBDCEA;
 }
 .message.self.comment:not(.first):not(.comment-child) .msg-item {
   border-top-color: #FFF;
 }
-
+.message-group.self .message.comment .msg-item:not(.comment-all):hover,
 .message.self.comment .msg-item:hover {
   background-color: #F7FBFE;
 }
 .message.self.text .msg-item {
-  /* border: 1px solid #CBDCEA; */
   border: 1px solid #C7D7E4;
-  /* box-shadow: inset 0 0 3px 0 rgba(5,35,60,0.05); */
 }
