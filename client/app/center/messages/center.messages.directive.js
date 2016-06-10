@@ -327,7 +327,7 @@
         var comment = data.msg.message;
         var messageCollection = MessageCacheCollection.getCurrent();
         // message collection에서 바로 삭제한다.
-        messageCollection.remove(comment.id, true);
+        messageCollection.removeByMessageId(comment.id, true);
 
         if (data.msg.message.contentType === 'comment_sticker') {
           FileDetail.deleteSticker(comment.id)

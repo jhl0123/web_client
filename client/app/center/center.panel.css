@@ -52,6 +52,7 @@ article {
   overflow-y: auto;
   z-index: 9;
 }
+.msgs.dev{background: #F1F7FC url(https://jandi-box.com/files-sticker/103/19) right bottom no-repeat !important;}
 
 .rpanel-show .scroll-gray .msgs {
   margin-right: 4px;
