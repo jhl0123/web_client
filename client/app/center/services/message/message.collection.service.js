@@ -644,7 +644,7 @@
           }
           _.forEach(removeIds, function(removeId) {
             this.remove(removeId);
-          });
+          }, this);
           this._setLinkId(list);
         }
       },
