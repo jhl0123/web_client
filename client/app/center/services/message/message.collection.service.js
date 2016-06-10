@@ -233,7 +233,7 @@
        */
       _onMessageDeleted: function(angularEvent, socketEvent) {
         if (socketEvent.room.id === this._getCurrentRoomId()) {
-          this.remove(socketEvent.messageId, true);
+          this.removeByMessageId(socketEvent.messageId, true);
         }
         this._pub('MessageCollection:messageDeleted', socketEvent.messageId);
       },
@@ -253,7 +253,7 @@
         });
 
         if (isCurrentRoomComment) {
-          this.remove(socketEvent.comment.id, true);
+          this.removeByMessageId(socketEvent.comment.id, true);
           this._pub('MessageCollection:commentDeleted', socketEvent.comment.id);
         }
         this._updateFileCommentCount(fileId, commentCount);
@@ -587,8 +587,10 @@
             index = this._getEmbedPosition(msg);
             if (index > 0) {
               list.splice(index + 1, 0, msg);
-              this._pub('MessageCollection:embed', msg, index + 1);
+              this._setLinkId([msg]);
+              this._addIndexMap([msg]);
               this._updateMarker(msg);
+              this._pub('MessageCollection:embed', msg, index + 1);              
             }
           }
         }, this);
@@ -628,13 +630,21 @@
         var list = this.list;
         var length = list.length;
         var difference = length - MAX_CACHE_MESSAGE_COUNT;
-
+        var i;
+        var removeIds = [];
         if (difference > 0) {
           if (isPrepend) {
-            list.splice(MAX_CACHE_MESSAGE_COUNT);
+            for(i = 0; i < MAX_CACHE_MESSAGE_COUNT; i++) {
+              removeIds.push(list[i].id);
+            }
           } else {
-            list.splice(0, difference);
+            for(i = difference; i < length; i++) {
+              removeIds.push(list[i].id);
+            }
           }
+          _.forEach(removeIds, function(removeId) {
+            this.remove(removeId);
+          }, this);
           this._setLinkId(list);
         }
       },
@@ -725,13 +735,31 @@
 
       /**
        * 메세지를 삭제한다.
+       * @param {number} linkId
+       * @param {boolean} [isReversal] 역순으로 순회할지 여부
+       * @returns {boolean} 삭제에 성공했는지 여부
+       */
+      remove: function(linkId, isReversal) {
+        var targetIdx = this.at(linkId, isReversal);
+        
+        if (targetIdx !== -1) {
+          this._pub('MessageCollection:beforeRemove', targetIdx);
+          this._removeIndexMap(this.get(linkId));
+          this.list.splice(targetIdx, 1);
+          this._pub('MessageCollection:remove', targetIdx);
+        }
+        return targetIdx !== -1;
+      },
+
+      /**
+       * 메세지 id 로 메시지를 삭제한다.
        * @param {number|string} messageId 메세지 id
        * @param {boolean} [isReversal] 역순으로 순회할지 여부
        * @returns {boolean} 삭제에 성공했는지 여부
        */
-      remove: function(messageId, isReversal) {
+      removeByMessageId: function(messageId, isReversal) {
         var targetIdx = this.atByMessageId(messageId, isReversal);
-        
+
         if (targetIdx !== -1) {
           this._pub('MessageCollection:beforeRemove', targetIdx);
           this._removeIndexMap(this.getByMessageId(messageId));
@@ -740,7 +768,7 @@
         }
         return targetIdx !== -1;
       },
-      
+
       /**
        * messageId 에 해당하는 message 를 반환한다.
        * @param {number|string} messageId messageId 메세지 id
