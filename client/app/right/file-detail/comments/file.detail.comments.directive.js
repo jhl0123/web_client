@@ -9,7 +9,7 @@
     .directive('fileDetailComments', fileDetailComments);
 
   /* @ngInject */
-  function fileDetailComments($filter, $state, DateFormatter, Dialog, FileDetail, jndPubSub, JndUtil, memberService) {
+  function fileDetailComments($filter, UserList, Dialog, FileDetail, jndPubSub, JndUtil, memberService) {
     return {
       restrict: 'E',
       replace: true,
@@ -79,18 +79,13 @@
       function _onMentionClick($event) {
         var jqTarget = $($event.currentTarget);
         var memberId;
+        var user;
 
         // $apply를 호출하여 즉각 뷰에 반영하도록 한다.
         JndUtil.safeApply(scope, function() {
-          if (!jqTarget.hasClass('me')) {
-            memberId = jqTarget.attr('mention-view');
-            if (memberService.isMember(memberId)) {
-
-              $state.go('archives', {
-                entityType: 'users',
-                entityId: memberId
-              });
-            }
+          memberId = jqTarget.attr('mention-view');
+          if (user = UserList.get(memberId)) {
+            scope.onMemberClick(user);
           }
         });
       }
