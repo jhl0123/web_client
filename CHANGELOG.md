@@ -1,3 +1,15 @@
+<a name="1.31.1"></a>
+## [1.31.1](https://github.com/tosslab/web_client/compare/v1.31.0...v1.31.1) (2016-06-10)
+
+
+### Bug Fixes
+
+* **message:** context 오류 수정 ([8887188](https://github.com/tosslab/web_client/commit/8887188))
+* **message:** 메시지 소켓 데이터 순서가 보장되어 오지 않을 경우, 해당 메시지 data에 접근하지 못하는 현상 수정 ([fd619e7](https://github.com/tosslab/web_client/commit/fd619e7))
+* **new-message:** new message  버튼 위치 잘못 찾는 현상 수정 ([8c457cf](https://github.com/tosslab/web_client/commit/8c457cf))
+
+
+
 <a name="1.31.0"></a>
 # [1.31.0](https://github.com/tosslab/web_client/compare/v1.30.1...v1.31.0) (2016-06-09)
 
