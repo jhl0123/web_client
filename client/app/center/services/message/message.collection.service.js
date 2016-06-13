@@ -572,37 +572,40 @@
         var lastId = list[length - 1] && list[length - 1].id || -1;
         var appendList = [];
         var index;
-        messageList = this.beforeAddMessages(messageList);
-        _.forEach(messageList, function(msg) {
-          if (lastId < msg.id) {
-            msg = this.getFormattedMessage(msg);
-            list.push(msg);
-            appendList.push(msg);
-            //작성자의 marker 정보를 업데이트 한다
-            this._updateMarker(msg);
-            
-            //linkId 가 중간에 끼워야 하는 값이라면
-          } else if (isAllowEmbed && !this._map.id[msg.id]) {
-            msg = this.getFormattedMessage(msg);
-            index = this._getEmbedPosition(msg);
-            if (index > 0) {
-              list.splice(index + 1, 0, msg);
-              this._setLinkId([msg]);
-              this._addIndexMap([msg]);
+
+        if (this.status.isInitialRequestSuccess) {
+          messageList = this.beforeAddMessages(messageList);
+          _.forEach(messageList, function (msg) {
+            if (lastId < msg.id) {
+              msg = this.getFormattedMessage(msg);
+              list.push(msg);
+              appendList.push(msg);
+              //작성자의 marker 정보를 업데이트 한다
               this._updateMarker(msg);
-              this._pub('MessageCollection:embed', msg, index + 1);              
+
+              //linkId 가 중간에 끼워야 하는 값이라면
+            } else if (isAllowEmbed && !this._map.id[msg.id]) {
+              msg = this.getFormattedMessage(msg);
+              index = this._getEmbedPosition(msg);
+              if (index > 0) {
+                list.splice(index + 1, 0, msg);
+                this._setLinkId([msg]);
+                this._addIndexMap([msg]);
+                this._updateMarker(msg);
+                this._pub('MessageCollection:embed', msg, index + 1);
+              }
             }
+          }, this);
+
+
+          this._addIndexMap(appendList);
+          this._setLinkId(appendList);
+
+          if (!this._isCurrentRoom()) {
+            this._cutByMaxCacheCount();
           }
-        }, this);
-
-
-        this._addIndexMap(appendList);
-        this._setLinkId(appendList);
-
-        if (!this._isCurrentRoom()) {
-          this._cutByMaxCacheCount();
+          this._pub('MessageCollection:append', appendList);
         }
-        this._pub('MessageCollection:append', appendList);
       },
 
       /**
@@ -721,22 +724,24 @@
         var list = this.list;
         var firstId = list[0] && list[0].id || -1;
         var prependList = [];
-        messageList = this.beforeAddMessages(messageList);
-        _.forEachRight(messageList, function(msg) {
-          if (firstId === -1 || firstId > msg.id) {
-            msg = this.getFormattedMessage(msg);
-            list.unshift(msg);
-            prependList.unshift(msg);
-            this._updateMarker(msg);
-          }
-        }, this);
+        if (this.status.isInitialRequestSuccess) {
+          messageList = this.beforeAddMessages(messageList);
+          _.forEachRight(messageList, function (msg) {
+            if (firstId === -1 || firstId > msg.id) {
+              msg = this.getFormattedMessage(msg);
+              list.unshift(msg);
+              prependList.unshift(msg);
+              this._updateMarker(msg);
+            }
+          }, this);
 
-        this._setLinkId(prependList);
-        this._addIndexMap(prependList);
-        if (!this._isCurrentRoom()) {
-          this._cutByMaxCacheCount();
+          this._setLinkId(prependList);
+          this._addIndexMap(prependList);
+          if (!this._isCurrentRoom()) {
+            this._cutByMaxCacheCount();
+          }
+          this._pub('MessageCollection:prepend', prependList);
         }
-        this._pub('MessageCollection:prepend', prependList);
       },
 
       /**
@@ -1273,10 +1278,12 @@
        * @param list
        */
       setList: function(list) {
-        this.list = list;
-        this._setLinkId(list);
-        this._addIndexMap(list);
-        this._pub('MessageCollection:set', list);
+        if (this.status.isInitialRequestSuccess) {
+          this.list = list;
+          this._setLinkId(list);
+          this._addIndexMap(list);
+          this._pub('MessageCollection:set', list);
+        }
       },
 
       /**
