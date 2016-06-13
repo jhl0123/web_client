@@ -10,6 +10,7 @@
   padding: 8px 13px;
   word-wrap: break-word;
   word-break: keep-all;
+  margin-top: 2px;
 }
 
 .message.system-event.unread-mark + .message.text:not(.text-child):not(.bot-text) {
