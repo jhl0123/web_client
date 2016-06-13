@@ -234,7 +234,7 @@
        * @private
        */
       function _getMemberData() {
-        var members = _getMembers();
+        var members = _getMembers() || [];
         var enabledList = [];
         var disabledList = [];
         _.each(members, function(member) {
