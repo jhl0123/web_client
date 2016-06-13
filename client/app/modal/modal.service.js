@@ -14,46 +14,49 @@
   function modalWindowHelper($rootScope, $modal, $filter, $timeout, teamAPIservice, fileAPIservice, accountService,
                              NetInterceptor, Dialog, Browser, currentSessionHelper, CoreUtil, Tutorial, RoomTopicList,
                              jndPubSub) {
-    var that = this;
+    var _that = this;
 
     var DEFAULT_NAMESPACE = 'default';
 
-    // open된 modal을 관리하는 공간
+    // open된 modal들을 namespace별로 전체를 닫거나 관리하기 위해 사용한다.
     var _modalSpaces = {};
 
-    var inviteModalLock;
+    var _inviteModalLock;
 
-    that.openFileUploadModal = openFileUploadModal;
-    that.openFileShareModal = openFileShareModal;
-    that.openFileIntegrationModal = openFileIntegrationModal;
+    _that.openFileUploadModal = openFileUploadModal;
+    _that.openFileShareModal = openFileShareModal;
+    _that.openFileIntegrationModal = openFileIntegrationModal;
 
-    that.openTopicCreateModal = openTopicCreateModal;
-    that.openTopicInviteModal = openTopicInviteModal;
-    that.openTopicInviteFromDmModal = openTopicInviteFromDmModal;
-    that.openTopicJoinModal = openTopicJoinModal;
-    that.openTopicRenameModal = openTopicRenameModal;
+    _that.openTopicCreateModal = openTopicCreateModal;
+    _that.openTopicInviteModal = openTopicInviteModal;
+    _that.openTopicInviteFromDmModal = openTopicInviteFromDmModal;
+    _that.openTopicJoinModal = openTopicJoinModal;
+    _that.openTopicRenameModal = openTopicRenameModal;
 
-    that.openTeamMemberListModal = openTeamMemberListModal;
-    that.openInviteToTeamModal = openInviteToTeamModal;
+    _that.openTeamMemberListModal = openTeamMemberListModal;
+    _that.openInviteToTeamModal = openInviteToTeamModal;
 
-    that.openUserProfileModal = openUserProfileModal;
-    that.openProfileImageModal = openProfileImageModal;
-    that.openBotProfileModal = openBotProfileModal;
+    _that.openUserProfileModal = openUserProfileModal;
+    _that.openProfileImageModal = openProfileImageModal;
+    _that.openBotProfileModal = openBotProfileModal;
 
-    that.openImageCarouselModal = openImageCarouselModal;
-    that.openFullScreenImageModal = openFullScreenImageModal;
+    _that.openImageCarouselModal = openImageCarouselModal;
+    _that.openFullScreenImageModal = openFullScreenImageModal;
 
-    that.openNotificationSettingModal = openNotificationSettingModal;
+    _that.openNotificationSettingModal = openNotificationSettingModal;
 
-    that.openPasswordResetRequestModal = openPasswordResetRequestModal;
+    _that.openPasswordResetRequestModal = openPasswordResetRequestModal;
 
-    that.openAgreementModal = openAgreementModal;
-    that.openPrivacyModal = openPrivacyModal;
+    _that.openAgreementModal = openAgreementModal;
+    _that.openPrivacyModal = openPrivacyModal;
 
-    that.openQuickLauncherModal = openQuickLauncherModal;
-    that.openShortcutModal = openShortcutModal;
-    that.closeModal = closeModal;
-    that.dismissModal = dismissModal
+    _that.openQuickLauncherModal = openQuickLauncherModal;
+    _that.openShortcutModal = openShortcutModal;
+    _that.openWelcom = openWelcom;
+    _that.openDeprecated = openDeprecated;
+
+    _that.closeModal = closeModal;
+    _that.dismissModal = dismissModal;
 
     /**
      * file 을 upload 하는 모달창을 연다.
@@ -246,8 +249,8 @@
      * 이메일로 팀으로 초대하는 모달창을 연다.
      */
     function openInviteToTeamModal() {
-      if (!inviteModalLock) {
-        inviteModalLock = true;
+      if (!_inviteModalLock) {
+        _inviteModalLock = true;
         // modal에 해당 member의 team information을 전달 해야함.
         teamAPIservice.getTeamInfo()
           .success(function(res) {
@@ -264,7 +267,7 @@
             _modalOpener(modalOption);
           })
           .finally(function() {
-            inviteModalLock = false;
+            _inviteModalLock = false;
           });
       }
     }
@@ -335,7 +338,11 @@
       return _modalOpener(modalOption);
     }
 
-    this.openWelcom = openWelcom;
+    /**
+     * welcom modal
+     * 가입 후 첫 team 진입시 출력하는 modal
+     * @param {object} option
+     */
     function openWelcom(option) {
       var modalOption = {
         controller: 'WelcomeCtrl',
@@ -346,7 +353,11 @@
       _modalOpener(_.extend(modalOption, option));
     }
 
-    window.openD = this.openDeprecated = openDeprecated;
+    /**
+     * deprecated modal
+     * 더이상 지원하지 않는 application 사용시 출력하는 modal
+     * @param {object} option
+     */
     function openDeprecated(option) {
       var modalOption = {
         controller: 'DeprecatedCtrl',
