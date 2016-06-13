@@ -17,7 +17,7 @@
   
   <!--    WRAPPING DIV FOR FILE DRAG&DROP -->
   <div>
-    <div class="msgs__loading initial"
+    <div class="msgs__loading initial" style="opacity: 0.3"
          ng-if="!status.isInitialRequestSuccess || (!status.isInitialized && status.isLoading)">
       <span class="three-quarters-loader jnd-three-quarters-loader center"></span>
     </div>
@@ -32,9 +32,9 @@
         <!-- Sent Message -->
         <div center-messages-directive></div>
         <!-- unsent Message -->
-        <center-messages-sending-directive></center-messages-sending-directive>
+        <div center-messages-sending-directive></div>
       </div>
-      <center-help-message-container ng-if="hasNoMessage" status="emptyMessageStateHelper"></center-help-message-container>
+      <center-help-message-container ng-show="status.isInitialRequestSuccess && hasNoMessage" status="emptyMessageStateHelper"></center-help-message-container>
       <center-item-dropdown-layer></center-item-dropdown-layer>
       <center-file-dropdown-layer></center-file-dropdown-layer>
     </article>

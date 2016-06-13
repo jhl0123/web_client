@@ -1215,7 +1215,6 @@
      * @private
      */
     function _onNewMessageArrived(angularEvent, msg) {
-      console.log('###_onNewMessageArrived', msg);
       MessageSendingCollection.clearSentMessages();
       if (centerService.isMessageFromMe(msg)) {
         if (!_messageCollection.hasLastMessage()) {
@@ -1243,10 +1242,10 @@
      */
     function _onNewSystemMessageArrived() {
       if (centerService.hasBottomReached()) {
-        _scrollToBottomWithAnimate();
+        _scrollToBottom();
       }
       _messageCollection.updateUnreadCount();
-      $timeout(_checkEntityMessageStatus, 100);
+      _checkEntityMessageStatus();
     }
 
     /**
