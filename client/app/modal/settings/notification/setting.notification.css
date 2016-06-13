@@ -1,5 +1,5 @@
 .notification-modal-body {
-  margin: 18px 20px 15px;
+  margin: 3px 20px 0px;
   padding: 15px 0;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .notification-modal-body .tab-content {
-  padding: 15px;
+  padding: 15px 15px 7px ;
   background: #FFFFFF;
 }
 .notification-modal-body .notification-role {
