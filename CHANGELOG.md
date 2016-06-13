@@ -1,3 +1,16 @@
+<a name="1.31.2"></a>
+## [1.31.2](https://github.com/tosslab/web_client/compare/v1.31.1...v1.31.2) (2016-06-13)
+
+
+### Bug Fixes
+
+* **cache:** max-cache 로직 버그 수정 ([ec78e5f](https://github.com/tosslab/web_client/commit/ec78e5f))
+* **cache:** message cache 의 request 보다 system event 가 빠르게 도달했을 경우 발생하는 오류 수정 ([f84abf4](https://github.com/tosslab/web_client/commit/f84abf4))
+* **center:** POST 시 message 가 있는지 판단하는 로직에 예외처리 추가 ([2bc6265](https://github.com/tosslab/web_client/commit/2bc6265))
+* **center:** 새로운 토픽 진입 시 scroll 위치 어긋나는 현상 수정 ([9b876c5](https://github.com/tosslab/web_client/commit/9b876c5))
+
+
+
 <a name="1.31.1"></a>
 ## [1.31.1](https://github.com/tosslab/web_client/compare/v1.31.0...v1.31.1) (2016-06-10)
 
