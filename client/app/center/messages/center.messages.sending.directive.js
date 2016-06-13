@@ -12,7 +12,7 @@
 
   function centerMessagesSendingDirective(MessageSendingCollection, MessageCacheCollection, MessageText, jndPubSub) {
     return {
-      restrict: 'E',
+      restrict: 'A',
       replace: true,
       link: link
     };
