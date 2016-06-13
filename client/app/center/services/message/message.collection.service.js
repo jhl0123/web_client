@@ -595,11 +595,13 @@
           }
         }, this);
 
+
+        this._addIndexMap(appendList);
+        this._setLinkId(appendList);
+
         if (!this._isCurrentRoom()) {
           this._cutByMaxCacheCount();
         }
-        this._setLinkId(appendList);
-        this._addIndexMap(appendList);
         this._pub('MessageCollection:append', appendList);
       },
 
@@ -623,25 +625,28 @@
 
       /**
        * max cache 세팅값에 따라 list 를 자른다.
-       * @param {boolean} [isPrepend=false] - prepend 이후 cut 할 지 여부
        * @private
        */
-      _cutByMaxCacheCount: function(isPrepend) {
+      _cutByMaxCacheCount: function() {
         var list = this.list;
         var length = list.length;
         var difference = length - MAX_CACHE_MESSAGE_COUNT;
         var i;
+        var lastReadLinkId = memberService.getLastReadMessageMarker(this._getCurrentRoomId());
+        var lastReadIndex = this.at(lastReadLinkId);
+        var threshold = Math.floor((MAX_CACHE_MESSAGE_COUNT - 1) / 2);
+        var startIdx = Math.max(0, lastReadIndex - threshold);
+        var endIdx = Math.min(lastReadIndex + threshold, length);
         var removeIds = [];
+
         if (difference > 0) {
-          if (isPrepend) {
-            for(i = 0; i < MAX_CACHE_MESSAGE_COUNT; i++) {
-              removeIds.push(list[i].id);
-            }
-          } else {
-            for(i = difference; i < length; i++) {
-              removeIds.push(list[i].id);
-            }
+          for (i = 0; i < startIdx; i++) {
+            removeIds.push(list[i].id);
           }
+          for (i = endIdx; i < length; i ++) {
+            removeIds.push(list[i].id);
+          }
+
           _.forEach(removeIds, function(removeId) {
             this.remove(removeId);
           }, this);
@@ -725,11 +730,12 @@
             this._updateMarker(msg);
           }
         }, this);
+
+        this._setLinkId(prependList);
+        this._addIndexMap(prependList);
         if (!this._isCurrentRoom()) {
           this._cutByMaxCacheCount();
         }
-        this._setLinkId(prependList);
-        this._addIndexMap(prependList);
         this._pub('MessageCollection:prepend', prependList);
       },
 
