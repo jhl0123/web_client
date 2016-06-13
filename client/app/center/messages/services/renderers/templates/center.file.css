@@ -55,8 +55,8 @@
 }
 
 .preview-image {
-  -webkit-transition: height ease-in-out .4s;
-  transition: height ease-in-out .4s;
+  -webkit-transition: all ease-in-out .4s;
+  transition: all ease-in-out .4s;
 }
 
 .file-action {
