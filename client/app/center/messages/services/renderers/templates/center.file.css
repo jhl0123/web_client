@@ -40,8 +40,14 @@
   display: block;
   margin: 0 auto;
   max-width: 100%;
-  min-height: 100px;
   line-height: 100px;
+}
+.card-content.open .card-preview .preview-image {
+  min-height: 100px;
+  
+}
+.card-content:not(.open) .card-preview .preview-image {
+  min-height: 12px;
 }
 
 .card-preview .preview-image .loading-content {
