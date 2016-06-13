@@ -193,7 +193,7 @@
   height: calc(100% + 1px);
   background-color: #f1f4f8;
   border: 1px solid rgba(5, 35, 60, 0.08);
-  border-top-color: transparent;
+  border-top-width: 0;
   overflow: hidden;
   -webkit-transition: left ease-in-out .3s .4s;
   transition: left ease-in-out .3s .4s;
@@ -203,7 +203,7 @@
 }
 .card-image.icon > .fileicon {
   position: absolute;
-  top: calc(50% - 1px);
+  top: 50%;
   -webkit-transform: translateY(-52%);
   transform: translateY(-52%);
   
@@ -217,7 +217,7 @@
   position: relative;
   width: 100%;
   height: auto;
-  top: calc(50% - 1px);
+  top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
