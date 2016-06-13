@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Bookmarks: -1,71,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: client/app/tpl/503/503.html
@@ -1082,6 +1082,21 @@ msgstr "快找"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@header-nav-language"
 msgstr "语言设置"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@hybridapp-update-button-download"
+msgstr "下载"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@hybridapp-update-desc"
+msgstr ""
+"本次更新：\n"
+"- 您可以设定预置团队，当开启 JANDI 后，页面将自动导向预置的团队\n"
+"- 性能优化和错误修复"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@hybridapp-update-title"
+msgstr "新版本上线"
 
 #: client/app/modal/members/current_member_profile/current.member.profile.html
 msgid "@ie9-profile-image-support"
