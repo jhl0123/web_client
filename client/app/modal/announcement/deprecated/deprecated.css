@@ -1,5 +1,4 @@
 .deprecated-wrap .pop-body {
-  text-align: center;
   word-break: keep-all;
   padding-top: 10px;
 }
@@ -12,11 +11,16 @@
   letter-spacing:-1px;
 }
 
-.deprecated-wrap .pop-desc-box p {
+.deprecated-wrap .pop-desc-box {
+  text-align: left;
+  white-space: pre-line;
   padding-top:23px;
 }
 
 .deprecated-wrap .pop-btn-box {
-  text-align:center;
-  margin:40px 0 45px;
+  position: absolute;
+  top: 355px;
+  left: 0;
+  width: 100%;
+  text-align: center;
 }

@@ -39,7 +39,6 @@
 
 .announcement-modal .pop-head {
   padding: 0px;
-  word-break: keep-all;
   text-align: center;
 }
 .announcement-modal .pop-body {
@@ -66,4 +65,3 @@
 .announcement-modal .btn-pop-close:hover {
   color: #1c1c1c;
 }
-

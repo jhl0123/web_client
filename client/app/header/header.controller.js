@@ -43,7 +43,7 @@
     var quickLauncherModal;
     var timerOpenQuickLauncher;
 
-    var _isInitWelcome = false;
+    var _isInitAnnouncement = false;
 
     _init();
 
@@ -106,35 +106,33 @@
      * @private
      */
     function _onSetAccount() {
-      _initWelcome();
+      _initAnnouncement();
       _setTutorialBlink();
     }
 
     /**
-     * welcome 을 보여줄지 상태를 결정한다.
+     * announcement를 보여줄지 상태를 결정한다.
      * @private
      */
-    function _initWelcome() {
-      if (!_isInitWelcome) {
-        //기존 사용자면 welcome 은 생략한다
-        if (!AccountHasSeen.get('TUTORIAL_VER3_WELCOME')) {
-          //초기 진입 시 모든 랜더링 동작을 완료한 이후 welcome 모달을 fade in 효과로 노출하기 위해 1초의 딜레이를 할당한다.
-          modalHelper.openWelcom({
+    function _initAnnouncement() {
+      if (!_isInitAnnouncement) {
+        if (HybridAppHelper.isDeprecatedApp()) {
+          modalHelper.openDeprecated({
             namespace: 'announcement'
           });
         } else {
           if (_isOldUser()) {
+            //기존 사용자면 welcome 은 생략한다
             AccountHasSeen.set('TUTORIAL_VER3_WELCOME', true);
-          }
-
-          if (HybridAppHelper.isDeprecatedApp()) {
-            modalHelper.openDeprecated({
+          } else if (!AccountHasSeen.get('TUTORIAL_VER3_WELCOME')) {
+            //초기 진입 시 모든 랜더링 동작을 완료한 이후 welcome 모달을 fade in 효과로 노출하기 위해 1초의 딜레이를 할당한다.
+            modalHelper.openWelcom({
               namespace: 'announcement'
             });
           }
         }
 
-        _isInitWelcome = true;
+        _isInitAnnouncement = true;
       }
     }
 

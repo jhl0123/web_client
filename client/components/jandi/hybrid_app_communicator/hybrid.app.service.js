@@ -82,7 +82,6 @@
      * 0.9.6 version 이하의 window, mac app인지 여부
      */
     function isDeprecatedApp() {
-      return true;
       return isPcApp() || MacAppHelper.isDeprecatedVersion();
     }
 
