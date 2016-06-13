@@ -102,6 +102,9 @@
   <link rel="stylesheet" href="app/left/topics/topics.css">
   <link rel="stylesheet" href="app/mention/mention.view.css">
   <link rel="stylesheet" href="app/mobile/mobile.catcher.css">
+  <link rel="stylesheet" href="app/modal/announcement.modal.css">
+  <link rel="stylesheet" href="app/modal/announcement/deprecated/deprecated.css">
+  <link rel="stylesheet" href="app/modal/announcement/welcome/welcome.css">
   <link rel="stylesheet" href="app/modal/files/integration/integration.css">
   <link rel="stylesheet" href="app/modal/files/share/share.css">
   <link rel="stylesheet" href="app/modal/files/upload/upload.css">
@@ -160,7 +163,6 @@
   <link rel="stylesheet" href="app/tutorial/popover/css/star.css">
   <link rel="stylesheet" href="app/tutorial/popover/tutorial.popover.css">
   <link rel="stylesheet" href="app/tutorial/tooltip/tutorial.tooltip.css">
-  <link rel="stylesheet" href="app/tutorial/welcome/tutorial.welcome.css">
   <link rel="stylesheet" href="app/util/css/jandi-common.css">
   <link rel="stylesheet" href="app/util/css/jandi-icon.css">
   <link rel="stylesheet" href="app/util/css/spinners.css">
@@ -220,7 +222,6 @@
                       'scroll_gray': !browser.platform.isMac}">
       </div>
     </div>
-    <tutorial-welcome ng-if="tutorial.isShowWelcome"></tutorial-welcome>
     <tutorial-popover ng-if="tutorial.isShowPopover"></tutorial-popover>
     <jnd-tooltip></jnd-tooltip>
     <jnd-connect ng-if="connectSetting.isOpen" jnd-data-params="connectSetting.params"></jnd-connect>
@@ -456,6 +457,8 @@
 <script src="app/mention/mention.view.directive.js"></script>
 <script src="app/mobile/mobile.catcher.controller.js"></script>
 <script src="app/modal/modal.service.js"></script>
+<script src="app/modal/announcement/deprecated/deprecated.controller.js"></script>
+<script src="app/modal/announcement/welcome/welcome.controller.js"></script>
 <script src="app/modal/files/integration/integration.controller.js"></script>
 <script src="app/modal/files/share/share.controller.js"></script>
 <script src="app/modal/files/upload/upload.controller.js"></script>
@@ -550,8 +553,6 @@
 <script src="app/tutorial/popover/tutorial.popover.directive.js"></script>
 <script src="app/tutorial/tooltip/tutorial.tooltip.controller.js"></script>
 <script src="app/tutorial/tooltip/tutorial.tooltip.directive.js"></script>
-<script src="app/tutorial/welcome/tutorial.welcome.controller.js"></script>
-<script src="app/tutorial/welcome/tutorial.welcome.directive.js"></script>
 <script src="app/util/directive/animate.text.directive.js"></script>
 <script src="app/util/directive/jnd.code.prettify.directive.js"></script>
 <script src="app/util/directive/jnd.elastic.directive.js"></script>

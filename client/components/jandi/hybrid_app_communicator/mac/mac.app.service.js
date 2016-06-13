@@ -11,6 +11,8 @@
   /* @ngInject */
   function MacAppHelper(TeamData, UnreadBadge, NotificationManager) {
     var that = this;
+
+    // [major, minor, patch]
     var _deprecatedVersion = [0, 9, 7];
 
     that.trigger = trigger;
@@ -62,20 +64,20 @@
      */
     function isDeprecatedVersion() {
       var isDeprecatedVersion = false;
-      var version;
+      var currentVersion;
 
       if (isMacApp()) {
-        version = window.jandimac.version;
-        if (_.isString(version)) {
-          version = version.split('.');
-          if (version.length === 3 &&
-              (_deprecatedVersion[0] > version[0] ||
-              _deprecatedVersion[1] > version[1] ||
-              _deprecatedVersion[2] > version[2])) {
+        currentVersion = window.jandimac.version;
+        if (currentVersion == null) {
+          isDeprecatedVersion = true;
+        } else if (_.isString(currentVersion)) {
+          currentVersion = currentVersion.split('.');
+          if (currentVersion.length === 3 &&
+            (_deprecatedVersion[0] > currentVersion[0] ||
+            _deprecatedVersion[1] > currentVersion[1] ||
+            _deprecatedVersion[2] > currentVersion[2])) {
             isDeprecatedVersion = true;
           }
-        } else {
-          isDeprecatedVersion = true;
         }
       }
 

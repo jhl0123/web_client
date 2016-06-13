@@ -1,0 +1,28 @@
+.welcome-content {
+  max-width: 400px;
+  height: 70px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 34px;
+  padding: 0 20px 0 20px;
+}
+.welcome-img img{
+  width: 400px;
+  margin-top: 45px;
+  margin-bottom: 40px;
+}
+.welcome-footer {
+  width: 100%;
+  bottom: 0;
+  padding: 20px;
+  color: #00abe6;
+  font-weight: 700;
+  font-size: 15px;
+}
+.welcome-footer .icon-angle-double-right{
+  margin-left: -5px;
+}
+.welcome-footer .icon-angle-double-left{
+  margin-right: -5px;
+}

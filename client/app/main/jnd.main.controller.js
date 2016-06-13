@@ -10,10 +10,9 @@
     .controller('JndMainCtrl', JndMainCtrl);
 
   function JndMainCtrl($scope, $filter, Dialog, RoomTopicList, jndPubSub, memberService,
-                          currentSessionHelper, TopicInvitedFlagMap, JndUtil, WatchDog) {
+                          currentSessionHelper, TopicInvitedFlagMap, JndUtil, WatchDog, modalHelper) {
     $scope.isShowDummyLayout = false;
     $scope.tutorial = {
-      isShowWelcome: false,
       isShowPopover: false
     };
 
@@ -49,9 +48,6 @@
       $scope.$on('JndConnect:open', _onJndConnectOpen);
       $scope.$on('JndConnect:close', _onJndConnectClose);
 
-      $scope.$on('Tutorial:showWelcome', _onShowTutorialWelcome);
-      $scope.$on('Tutorial:hideWelcome', _onHideTutorialWelcome);
-
       $scope.$on('Tutorial:showPopover', _onShowTutorialPopover);
       $scope.$on('Tutorial:hidePopover', _onHideTutorialPopover);
     }
@@ -61,22 +57,6 @@
     }
     function _onHideDummyLayout() {
       $scope.isShowDummyLayout = false;
-    }
-
-    /**
-     * Welcome 튜토리얼 Show 이벤트 핸들러
-     * @private
-     */
-    function _onShowTutorialWelcome() {
-      $scope.tutorial.isShowWelcome = true;
-    }
-
-    /**
-     * Welcome 튜토리얼 Hide 이벤트 핸들러
-     * @private
-     */
-    function _onHideTutorialWelcome() {
-      $scope.tutorial.isShowWelcome = false;
     }
 
     /**

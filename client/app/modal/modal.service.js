@@ -14,14 +14,14 @@
   function modalWindowHelper($rootScope, $modal, $filter, $timeout, teamAPIservice, fileAPIservice, accountService,
                              NetInterceptor, Dialog, Browser, currentSessionHelper, CoreUtil, Tutorial, RoomTopicList,
                              jndPubSub) {
-
     var that = this;
 
-    // singleton modal instance
-    var modal;
+    var DEFAULT_NAMESPACE = 'default';
+
+    // open된 modal을 관리하는 공간
+    var _modalSpaces = {};
 
     var inviteModalLock;
-
 
     that.openFileUploadModal = openFileUploadModal;
     that.openFileShareModal = openFileShareModal;
@@ -335,6 +335,28 @@
       return _modalOpener(modalOption);
     }
 
+    this.openWelcom = openWelcom;
+    function openWelcom(option) {
+      var modalOption = {
+        controller: 'WelcomeCtrl',
+        templateUrl: 'app/modal/announcement/welcome/welcome.html',
+        windowClass: 'announcement-modal'
+      };
+
+      _modalOpener(_.extend(modalOption, option));
+    }
+
+    window.openD = this.openDeprecated = openDeprecated;
+    function openDeprecated(option) {
+      var modalOption = {
+        controller: 'DeprecatedCtrl',
+        templateUrl: 'app/modal/announcement/deprecated/deprecated.html',
+        windowClass: 'announcement-modal'
+      };
+
+      _modalOpener(_.extend(modalOption, option));
+    }
+
     /**
      * apply 를 안전하게 수행한다.
      * @param {object} scope
@@ -475,16 +497,22 @@
      * @private
      */
     function _modalOpener(options) {
+      var namespace = options.namespace || DEFAULT_NAMESPACE;
+      var modal;
+
       if (!options.multiple) {
         closeModal();
       }
 
       if (NetInterceptor.isConnected()) {
+        _modalSpaces[namespace] = _modalSpaces[namespace] || [];
         modal = $modal.open(options);
+        _modalSpaces[namespace].push(modal);
 
         modal.opened.then(function() {
           jndPubSub.pub('modalHelper:opened');
         });
+        modal.result.then(_.bind(_modalResult, {}, modal, namespace), _.bind(_modalResult, {}, modal, namespace));
 
         _modalRendered(modal, options);
 
@@ -493,21 +521,53 @@
     }
 
     /**
+     * modal result callback
+     * @param {object} modal
+     * @param {string} namespace
+     * @private
+     */
+    function _modalResult(modal, namespace) {
+      var modals = _modalSpaces[namespace];
+      var index;
+
+      if (modals) {
+        index = modals.indexOf(modal);
+        if (index > -1) {
+          modals.splice(index, 1);
+
+          if (modals.length === 0) {
+            delete _modalSpaces[namespace];
+          }
+        }
+      }
+    }
+
+    /**
      * 모달의 결과값을 전달하며 닫음
-     * @private {string} result
+     * @param {object} [option]
+     * @param {string} [option.namespace]
+     * @param {string} [option.result]
      * @returns {*}
      */
-    function closeModal(result) {
-      return modal && modal.close(result);
+    function closeModal(option) {
+      option = option || {};
+      _.each(_modalSpaces[option.namespace || DEFAULT_NAMESPACE], function(modal) {
+        modal.close(option.result);
+      });
     }
 
     /**
      * 모달의 취소사유를 전달하며 닫음
-     * @private {string} reason
+     * @param {object} [option]
+     * @param {string} [option.namespace]
+     * @param {string} [option.reason]
      * @returns {*}
      */
-    function dismissModal(reason) {
-      return modal && modal.dismiss(reason);
+    function dismissModal(option) {
+      option = option || {};
+      _.each(_modalSpaces[option.namespace || DEFAULT_NAMESPACE], function(modal) {
+        modal.dismiss(option.reason);
+      });
     }
 
     /**

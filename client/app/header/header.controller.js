@@ -9,7 +9,7 @@
   /* @ngInject */
   function headerCtrl($scope, $state, $filter, $timeout, accountService, memberService, Environment,
                       publicService, language, modalHelper, jndPubSub, DeskTopNotificationBanner, Browser,
-                      AnalyticsHelper, Router, JndConnect, JndZoom, RightPanel, Tutorial,
+                      AnalyticsHelper, Router, JndConnect, JndZoom, RightPanel, Tutorial, HybridAppHelper,
                       AccountHasSeen) {
     var modalMap = {
       'agreement': function() {
@@ -42,6 +42,8 @@
     var isOpenQuickLauncher;
     var quickLauncherModal;
     var timerOpenQuickLauncher;
+
+    var _isInitWelcome = false;
 
     _init();
 
@@ -90,7 +92,12 @@
 
       _initializeIntercomLanguage();
 
-      _initTutorialBlink();
+      if (accountService.getAccount()) {
+        _onSetAccount();
+      } else {
+        $scope.$on('accountService:setAccount', _onSetAccount);
+      }
+
       _attachEvents();
     }
 
@@ -98,12 +105,45 @@
      * tutorial blink 표시를 초기화 한다.
      * @private
      */
-    function _initTutorialBlink() {
-      if (accountService.getAccount()) {
-        _setTutorialBlink();
-      } else {
-        $scope.$on('accountService:setAccount', _setTutorialBlink);
+    function _onSetAccount() {
+      _initWelcome();
+      _setTutorialBlink();
+    }
+
+    /**
+     * welcome 을 보여줄지 상태를 결정한다.
+     * @private
+     */
+    function _initWelcome() {
+      if (!_isInitWelcome) {
+        //기존 사용자면 welcome 은 생략한다
+        if (!AccountHasSeen.get('TUTORIAL_VER3_WELCOME')) {
+          //초기 진입 시 모든 랜더링 동작을 완료한 이후 welcome 모달을 fade in 효과로 노출하기 위해 1초의 딜레이를 할당한다.
+          modalHelper.openWelcom({
+            namespace: 'announcement'
+          });
+        } else {
+          if (_isOldUser()) {
+            AccountHasSeen.set('TUTORIAL_VER3_WELCOME', true);
+          }
+
+          if (HybridAppHelper.isDeprecatedApp()) {
+            modalHelper.openDeprecated({
+              namespace: 'announcement'
+            });
+          }
+        }
+
+        _isInitWelcome = true;
       }
+    }
+
+    /**
+     * tutorial 을 이미 시청한 기존 사용자인지 여부를 반환한다.
+     * @private
+     */
+    function _isOldUser() {
+      return AccountHasSeen.get('GUIDE_TOPIC_FOLDER') && AccountHasSeen.get('GUIDE_CONNECT') ;
     }
 
     /**

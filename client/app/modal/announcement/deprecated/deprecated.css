@@ -1,0 +1,22 @@
+.deprecated-wrap .pop-body {
+  text-align: center;
+  word-break: keep-all;
+  padding-top: 10px;
+}
+
+.deprecated-wrap .pop-head {
+  font-weight:bold;
+  color:#1c1c1c;
+  font-size:22px;
+  line-height:36px;
+  letter-spacing:-1px;
+}
+
+.deprecated-wrap .pop-desc-box p {
+  padding-top:23px;
+}
+
+.deprecated-wrap .pop-btn-box {
+  text-align:center;
+  margin:40px 0 45px;
+}
