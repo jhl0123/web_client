@@ -731,7 +731,7 @@
 
       // prevent duplicate request
       if (msg || _sticker) {
-        if ($scope.getMentions) {
+        if (msg && $scope.getMentions) {
           if (content = $scope.getMentions()) {
             msg = content.msg;
             mentions = content.mentions;
