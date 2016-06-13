@@ -45,6 +45,10 @@
   margin-top: 1px;
   margin-right: 2px;
   float: left;
+  min-width: 22px;
+}
+.msg-item-delete > i {
+  font-size: 12px;
 }
 
 .msg-item-star.on {
