@@ -34,7 +34,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 90%;
+  max-width: calc(100% - 84px);
 }
 
 .message:not(.message-group):hover .action-group,
