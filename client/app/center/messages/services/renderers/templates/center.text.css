@@ -1,4 +1,7 @@
 .message.sticker .msg-item-info {
+  margin-left: 0;
+}
+.message.sticker.self .msg-item-info {
   margin-left: -24px;
 }
 .message.sticker .msg-item {
