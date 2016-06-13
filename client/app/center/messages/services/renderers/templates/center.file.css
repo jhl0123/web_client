@@ -313,7 +313,7 @@
 
 .msg-file.unshared .info-title {
   display: inline-block;
-  max-width: calc(100% - 84px);
+  max-width: calc(100% - 94px);
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -324,10 +324,10 @@
 .msg-file.unshared .info-title:lang(en),
 .msg-file.unshared .info-title:lang(zh-cn),
 .msg-file.unshared .info-title:lang(zh-tw) {
-  max-width: calc(100% - 120px);
+  max-width: calc(100% - 130px);
 }
 .msg-file.unshared .info-title:lang(ja) {
-  max-width: calc(100% - 180px);
+  max-width: calc(100% - 190px);
 }
 
 /* unshared image preview & filter type preview */
@@ -369,7 +369,7 @@
   white-space: nowrap;
   
   float: left;
-  margin: 2px 5px 0 -1px;
+  margin: 3px 5px 0 -1px;
 }
 
 .msg-item ._fileExpand {
