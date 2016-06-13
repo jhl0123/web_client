@@ -71,7 +71,7 @@
 .message.comment .member-name {
   position: relative;
   top: 0;
-  max-width: 50%;
+  max-width: calc(100% - 58px);
   line-height: 20px;
 }
 
