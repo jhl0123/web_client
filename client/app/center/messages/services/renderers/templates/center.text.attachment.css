@@ -22,8 +22,8 @@
   min-width: 4px;
   /*background-color: #9da7ad;*/
   background-color: #00ACE9;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
   
   border-top: 1px solid rgba(5, 35, 60, 0.15);
   border-bottom: 1px solid rgba(5, 35, 60, 0.18);
@@ -37,14 +37,14 @@
   min-width: 360px;
   max-width: calc(100% - 120px);
   border: 1px solid #E4E8EB;
-  border-bottom: 1px solid rgba(5,35,60,0.2);
-  border-radius: 4px;
+  border-bottom: 1px solid rgba(5,35,60,0.15);
+  border-radius: 3px;
   background-color: #FFF;
 }
 
 .attachment-content .link-preview-content:not(.has-image):hover .social-body {
   /*box-shadow: 0px 0px 2px 1px rgba(0, 172, 233, 0.25);*/
-  border-radius: 3px 3px 4px 4px;
+  border-radius: 3px;
   box-shadow: 0 0 4px 0px rgba(5, 35, 60, 0.2);
   border-color: rgba(5,35,60,0.15);
 }

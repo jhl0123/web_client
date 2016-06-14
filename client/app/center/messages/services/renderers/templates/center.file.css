@@ -249,7 +249,7 @@
 }
 
 .card-info .info-group-up {
-  padding: 12px 15px 0;
+  padding: 11px 14px 0;
   font-size: 14px;
 }
 
@@ -271,27 +271,28 @@
 }
 
 .info-group-up .info-writer {
-  font-size: 14px;
+  font-size: 0.82rem;
   font-weight: 500;
   max-width: calc(100% - 250px);
   vertical-align: text-bottom;
+  color: #333 !important;
 }
 
 .info-group-up .info-created-time {
-  font-size: 12px;
+  font-size: 0.74rem;
   color: #999;
   letter-spacing: .02em;
 }
 
 .info-group-up .info-comment-count {
   vertical-align: text-bottom;
-  font-size: 12px;
+  font-size: 0.74rem;
 }
 
 .info-comment-count > i {
   letter-spacing: .02em;
   margin-left: -0.25em;
-  vertical-align: middle;
+  vertical-align: inherit;
 }
 .info-comment-count > span {
   vertical-align: middle;
@@ -299,7 +300,7 @@
 
 .card-info .info-group-bottom {
   width: 100%;
-  padding: 0 15px 10px 15px;
+  padding: 0 13px 6px 13px;
   line-height: 22px;
   word-break: break-all;
 }
@@ -309,8 +310,8 @@
 .msg-file.archived .info-title {
   color: #333;
   font-weight: 700;
-  font-size: 15px;
-  line-height: 20px;
+  font-size: 0.95rem;
+  line-height: 1.44rem;
   display: inline-block;
   margin: 0.15em 0.25em 0.15em 0;
 }
