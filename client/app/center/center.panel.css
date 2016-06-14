@@ -151,6 +151,7 @@ article {
 .message.comment a,
 .message.bot-text .attachment-content a {
   color: #00ACE9;
+  word-break: break-all;
 }
 .msg-item.text a:hover,
 .message.comment a:hover,

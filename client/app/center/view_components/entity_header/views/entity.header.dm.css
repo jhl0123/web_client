@@ -3,14 +3,11 @@
   DISABLED MEMBER CSS
 
 ********************************************/
-.center-panel-disabled-member.panel-title-container {
-  background-color: #ef6700;
-  color: white !important;
-}
 
 .center-panel-disabled-member.panel-title-container {
   background-color: #ef6700;
   color: white !important;
+  border-bottom-color: #ef4f00;
 }
 
 .center-panel-disabled-member.panel-title-container .disabled-member-notice-msg {
