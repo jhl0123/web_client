@@ -1091,7 +1091,10 @@ msgid "@hybridapp-update-desc"
 msgstr ""
 "本次更新：\n"
 "- 您可以設定預置團隊，當開啟 JANDI 後，頁面將自動導向預置的團隊\n"
-"- 性能優化和錯誤修復"
+"- 性能優化和錯誤修復\n"
+"\n"
+"體驗新的Mac版本，請下載並將檔案拖拉至應用程式資料夾，新版本將會自動覆蓋舊"
+"的版本。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@hybridapp-update-title"
@@ -1158,8 +1161,8 @@ msgstr "連結你的Google帳戶"
 #: client/app/modal/files/integration/integration.html
 msgid "@integration-desc-google-drive-2"
 msgstr ""
-"點擊篩選功能的“Google Doc”選項輕鬆搜尋Google 文件、試算表、簡報。而使用篩選"
-"功能的檔案類型，可查詢Word、Excel、PDF等其他格式的檔案。"
+"點擊篩選功能的“Google Doc”選項輕鬆搜尋Google 文件、試算表、簡報。而使用篩"
+"選功能的檔案類型，可查詢Word、Excel、PDF等其他格式的檔案。"
 
 #: client/app/modal/files/integration/integration.html
 msgid "@integration-submit"
@@ -1530,8 +1533,8 @@ msgstr "上述的範例格式將會顯示訊息如下"
 msgid "@jnd-connect-168"
 msgstr ""
 "你可自製整合服務的名稱和大頭照若有任何疑問，歡迎隨時與 <a href=\"https://"
-"jandi.zendesk.com/hc/zh-tw/requests/new\" target=\"_blank\">JANDI用戶關係團"
-"隊</a>聯絡"
+"jandi.zendesk.com/hc/zh-tw/requests/new\" target=\"_blank\">JANDI用戶關係"
+"團隊</a>聯絡"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-169"
@@ -1788,13 +1791,14 @@ msgstr "請選擇欲接收通知的議題或私訊，你仍可於設定完成後
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-225"
 msgstr ""
-"串連Google日曆、Trello、JIRA、GitHub和其他服務，<br>並將其通知集中於JANDI。"
-"<br><br>你將明顯感受到JANDI Connect將資訊<br><br><b>彙整一處所帶來的便利性"
-"和節省數種平台切換的瑣碎時間。<b><br>"
+"串連Google日曆、Trello、JIRA、GitHub和其他服務，<br>並將其通知集中於"
+"JANDI。<br><br>你將明顯感受到JANDI Connect將資訊<br><br><b>彙整一處所帶來"
+"的便利性和節省數種平台切換的瑣碎時間。<b><br>"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-226"
-msgstr "你無法使用JANDI Connect的服務，請聯絡團隊管理({{adminName}})瞭解詳情"
+msgstr ""
+"你無法使用JANDI Connect的服務，請聯絡團隊管理({{adminName}})瞭解詳情"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-227"
@@ -1819,9 +1823,9 @@ msgstr ""
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-25"
 msgstr ""
-"<b><a href=https://atlassian.com/software/jira target=_blank>JIRA</a></b>是"
-"一個問題追蹤管理系統，將問題設定為專案，方便團隊進行管理和追蹤。<br/><br/"
-">\n"
+"<b><a href=https://atlassian.com/software/jira target=_blank>JIRA</a></b>"
+"是一個問題追蹤管理系統，將問題設定為專案，方便團隊進行管理和追蹤。<br/"
+"><br/>\n"
 "串聯JIRA後，你將會於設定接收的議題內收取所有問題的更新通知。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
@@ -1834,8 +1838,8 @@ msgstr ""
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-27"
 msgstr ""
-"<b>Incoming Webhook</b>可視為個人化的整合服務，將外部平台或應用程式的通知寄"
-"發至設定接收的議題內。"
+"<b>Incoming Webhook</b>可視為個人化的整合服務，將外部平台或應用程式的通知"
+"寄發至設定接收的議題內。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@jnd-connect-28"
@@ -2184,8 +2188,8 @@ msgstr "下載"
 msgid "@macappupdate-desc"
 msgstr ""
 "在經過審慎的評估過後，為了能提供服務更穩定、功能更完善且具有自動更新版本功"
-"能的應用程式，我們決定搬移Mac App Store！享受新的應用程式，請直接下載並將檔"
-"案移至Finder的「應用程式」中，新版本將會自動覆蓋舊版本！"
+"能的應用程式，我們決定搬移Mac App Store！享受新的應用程式，請直接下載並將"
+"檔案移至Finder的「應用程式」中，新版本將會自動覆蓋舊版本！"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@macappupdate-title"
@@ -2229,8 +2233,8 @@ msgstr "你即將完成提及{{topicParticipantsCount}}位屬於{{topicName}}裡
 #: client/app/right/mentions/mentions.html
 msgid "@mention-empty"
 msgstr ""
-"你尚未被其他成員提及。欲提及其他成員？輸入\"@\"後成員名單跳出，選取成員完成"
-"提及。"
+"你尚未被其他成員提及。欲提及其他成員？輸入\"@\"後成員名單跳出，選取成員完"
+"成提及。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/center/view_components/center_chat_templates/dropdown/file/center.file.dropdown.layer.html
@@ -2903,8 +2907,8 @@ msgstr "{{msg.message.content.actionOwner}} 刪除公告"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@team-create-info-help-msg"
 msgstr ""
-"有了JANDI，您可以任意建立許多團隊及任意邀請許多成員加入，完全免費。不如自己"
-"親自來看看JANDI可以如何改善您在工作場合裏的溝通方式。"
+"有了JANDI，您可以任意建立許多團隊及任意邀請許多成員加入，完全免費。不如自"
+"己親自來看看JANDI可以如何改善您在工作場合裏的溝通方式。"
 
 #: client/app/modal/teams/team_invite/team.invite.html
 #: client/app/tutorial/popup/view_components/modal/invitation/tutorial.modal.team.invitation.html
@@ -2986,8 +2990,8 @@ msgstr "議題管理權限已成功轉移"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@topic-admin-transfer-tooltip"
 msgstr ""
-"議題管理員權限為下：- 更改議題名稱和資訊- 刪除議題- 剔除議題成員- 暫停/刪除"
-"JANDI Connect整合項目"
+"議題管理員權限為下：- 更改議題名稱和資訊- 刪除議題- 剔除議題成員- 暫停/刪"
+"除JANDI Connect整合項目"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 #: client/app/modal/topics/topic_create/topic.create.html
@@ -3042,8 +3046,8 @@ msgstr "恭喜 {{username}}！"
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_congratulations_content"
 msgstr ""
-"你已完成所有的使用教學！接下來將轉移至  {{teamName}} ，開始與工作夥伴的合作"
-"無間！"
+"你已完成所有的使用教學！接下來將轉移至  {{teamName}} ，開始與工作夥伴的合"
+"作無間！"
 
 #: client/app/tutorial/popup/tutorial.main.html
 msgid "@tutorial_dm_click_list"
@@ -3246,8 +3250,8 @@ msgstr ""
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-file-msg2"
 msgstr ""
-"想找到封塵已久的檔案，透過鍵入關鍵字或篩選功能中“檔案類別、曾經被誰分享、曾"
-"經分享在哪個議題下”的項目進行搜尋。"
+"想找到封塵已久的檔案，透過鍵入關鍵字或篩選功能中“檔案類別、曾經被誰分享、"
+"曾經分享在哪個議題下”的項目進行搜尋。"
 
 #: client/app/modal/change_log/changeLog.msg.search.html
 #: client/app/tutorial/tutorial.html
@@ -3310,7 +3314,8 @@ msgstr "迅速切換討論視窗"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal6-content"
 msgstr ""
-"成為專業的JANDI哲人，使用快捷鍵快速執行如多檔案上傳(Ctrl/Cmd+U)等重複的動作"
+"成為專業的JANDI哲人，使用快捷鍵快速執行如多檔案上傳(Ctrl/Cmd+U)等重複的動"
+"作"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@tutorial-modal6-title"
@@ -3329,8 +3334,8 @@ msgstr "JANDI Connect"
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-msg-explanation"
 msgstr ""
-"要發送訊息，只需在文字欄中開始打字然後按‘Enter’。要上傳檔案，點擊左側的按鈕"
-"和選擇所需的檔案路徑，或任意拖拽檔案到中間留言板上的任何地方。"
+"要發送訊息，只需在文字欄中開始打字然後按‘Enter’。要上傳檔案，點擊左側的按"
+"鈕和選擇所需的檔案路徑，或任意拖拽檔案到中間留言板上的任何地方。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-skip"
@@ -3374,14 +3379,14 @@ msgstr "開啟右視窗瀏覽所有檔案、標示項目和其他功能"
 msgid "@tutorial-topic-dm-explanation"
 msgstr ""
 "私訊是介於兩位成員之間的私人、一對一的對話。當您收到一個新訊息，私訊會自動"
-"出現，或者您也可以透過點擊‘+添加’啓動對話。您也可以關閉並隱藏私訊，同時仍然"
-"保留訊息歷史直到對話重新啟動。"
+"出現，或者您也可以透過點擊‘+添加’啓動對話。您也可以關閉並隱藏私訊，同時仍"
+"然保留訊息歷史直到對話重新啟動。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-group-explanation"
 msgstr ""
-"私人議題是僅限邀請機制，分享的資訊僅對參與者顯示。透過點擊‘+添加’來啟動新的"
-"私人議題。"
+"私人議題是僅限邀請機制，分享的資訊僅對參與者顯示。透過點擊‘+添加’來啟動新"
+"的私人議題。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-title"
@@ -3390,9 +3395,9 @@ msgstr "‘公開議題’、‘私人議題’及‘私訊’有什麽不同？
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-topic-topic-explanation"
 msgstr ""
-"’議題‘是以社群爲主的討論及分享任何事物的空間 - 專案、更新、會議行程、午餐的"
-"建議等等。公開議題是開放給您團隊上的任何人來參與。您可以透過‘+添加’來建立您"
-"自己的，或則透過點擊‘☰瀏覽’加入其它現行的公開議題。"
+"’議題‘是以社群爲主的討論及分享任何事物的空間 - 專案、更新、會議行程、午餐"
+"的建議等等。公開議題是開放給您團隊上的任何人來參與。您可以透過‘+添加’來建"
+"立您自己的，或則透過點擊‘☰瀏覽’加入其它現行的公開議題。"
 
 #: client/app/tutorial/tutorial.html
 msgid "@tutorial-tour"
@@ -3659,8 +3664,8 @@ msgstr "三"
 
 #~ msgid "@modal-create-ch-msg3"
 #~ msgstr ""
-#~ "- 私人議題對未受邀成員不開放- 在私人議題内分享的檔案僅開放給其參與者- 已"
-#~ "設定爲公開或私人的議題在建立之後不能被轉換成另一個"
+#~ "- 私人議題對未受邀成員不開放- 在私人議題内分享的檔案僅開放給其參與者- "
+#~ "已設定爲公開或私人的議題在建立之後不能被轉換成另一個"
 
 #~ msgid "@modal-create-pg-msg1"
 #~ msgstr "私人議題僅向其成員顯示，且僅其成員可以閲讀或搜尋其内容。"
@@ -3722,7 +3727,8 @@ msgstr "三"
 
 #~ msgid "@setting-team-domain-warning-msg"
 #~ msgstr ""
-#~ "網域名稱必須至少有3個字符，並且只能由小寫字母，數字和連字符（ - ）組成。"
+#~ "網域名稱必須至少有3個字符，並且只能由小寫字母，數字和連字符（ - ）組"
+#~ "成。"
 
 #~ msgid "@setting-team-name-change"
 #~ msgstr "更改團隊名稱"
