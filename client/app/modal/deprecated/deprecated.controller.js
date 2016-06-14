@@ -10,7 +10,6 @@
 
   function DeprecatedCtrl($scope, modalHelper) {
     $scope.close = close;
-    $scope.onDownloadClick = onDownloadClick;
 
     _init();
 
@@ -28,14 +27,6 @@
       modalHelper.closeModal({
         namespace: 'announcement'
       });
-    }
-
-    /**
-     * download click
-     */
-    function onDownloadClick() {
-      window.open('http://bit.ly/jandimac', '_self');
-      close();
     }
   }
 })();

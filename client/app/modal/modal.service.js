@@ -346,7 +346,7 @@
     function openWelcom(option) {
       var modalOption = {
         controller: 'WelcomeCtrl',
-        templateUrl: 'app/modal/announcement/welcome/welcome.html',
+        templateUrl: 'app/modal/welcome/welcome.html',
         windowClass: 'announcement-modal'
       };
 
@@ -361,7 +361,7 @@
     function openDeprecated(option) {
       var modalOption = {
         controller: 'DeprecatedCtrl',
-        templateUrl: 'app/modal/announcement/deprecated/deprecated.html',
+        templateUrl: 'app/modal/deprecated/deprecated.html',
         windowClass: 'announcement-modal'
       };
 
