@@ -1,4 +1,7 @@
 .message.sticker .msg-item-info {
+  margin-left: 0;
+}
+.message.sticker.self .msg-item-info {
   margin-left: -24px;
 }
 .message.sticker .msg-item {
@@ -10,6 +13,7 @@
   padding: 8px 13px;
   word-wrap: break-word;
   word-break: keep-all;
+  margin-top: 2px;
 }
 
 .message.system-event.unread-mark + .message.text:not(.text-child):not(.bot-text) {
@@ -34,7 +38,7 @@
   border-width: 0;
 }
 .bot-text .msg-text-body {
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 0.95rem;
+  line-height: 1.44rem;
   color:#757575;
 }

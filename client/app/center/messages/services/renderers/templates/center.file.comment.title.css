@@ -1,10 +1,10 @@
 .message.comment.first .comment-all i {
   display: block;
   position: absolute;
-  left: 19px;
-  top: 12px;
-  font-size: 19px;
-  color: rgba(5, 35, 60, 0.3);
+  left: 18px;
+  top: 9px;
+  font-size: 1.18rem;
+  color: rgba(153, 153, 153, 0.5);
 }
 
 .message.comment.first .comment-all + .msg-item {
@@ -27,7 +27,7 @@
 .msg-item.comment-all .comment-all-desc {
   display: inline-block;
   margin-top: 3px;
-  font-size: 14px;
+  font-size: 0.83rem;
   color: #999;
 }
 .msg-item.comment-all:hover .comment-all-desc {

@@ -17,7 +17,7 @@
 
 .modal-dialog .invite-channel .member-list-container {
 	margin-top: 20px;
-	max-height: 500px;
+	max-height: 370px;
 	overflow-y: auto;
 }
 
@@ -48,6 +48,7 @@
 	margin-top: 12px;
 	padding: 4px;
 	line-height: 20px;
+	margin-bottom:0px;
 }
 
 .invite-channel .select-all-container span:hover {

@@ -1,6 +1,6 @@
 .file-detail-header {
   position: relative;
-  padding: 15px 15px 0px 15px;
+  padding: 12px 15px 0px 15px;
   font-size: 14px;
   color: #666;
   background-color: #FFF;
@@ -9,7 +9,7 @@
 .file-detail-header .file-creator {
   position: relative;
   width: 290px;
-  padding: 0px 20px 0px 43px;
+  padding: 0px 20px 0px 40px;
 }
 
 .file-detail-header .file-creator-profile {
@@ -18,19 +18,21 @@
   top: -1px;
 }
 .file-detail-header .file-creator-profile .user-profile {
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
+  top: 2px;
+  position: absolute;
 }
 
 .file-detail-header .file-creator-name {
   max-width: 230px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.82rem;
   color: #333;
 }
 
 .file-detail-header .file-creator-time {
-  font-size: 12px;
+  font-size: 0.74rem;
   color: #9DA7AD;
 }
 
@@ -39,8 +41,9 @@
 }
 
 .file-detail-header .file-meta {
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: 8px;
+  font-size: 0.95rem;
+  line-height: 1.44rem;
   color: #363636;
 }
 
@@ -49,8 +52,8 @@
 }
 .file-detail-header .file-meta .file-title {
   margin-right: 5px;
-  line-height: 20px;
-  font-size: 15px;
+  line-height: 1.44rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #333;
 }
@@ -58,7 +61,7 @@
 .file-detail-header .file-meta .file-meta-extra {
   display: inline-block;
   color: #8F9A9F;
-  font-size: 11px;
+  font-size: 0.69rem;
   text-transform: uppercase;
   white-space: nowrap;
 }

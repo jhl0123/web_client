@@ -693,7 +693,7 @@
 */
 .modal-body .list-tabs .tab-pane .list-viewport {
   margin-top: 0;
-  max-height: 662px;
+  max-height: 440px;
   overflow-y: auto;
   background-color: #fff;
 }
