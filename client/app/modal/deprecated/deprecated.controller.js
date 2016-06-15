@@ -19,7 +19,7 @@
      */
     function _init() {
       $scope.downloadLink = HybridAppHelper.isMacApp() ?
-        'http://bit.ly/jandimac' :
+        'https://d1fxzwizdp8gty.cloudfront.net/download/JANDI.dmg' :
         'https://d1fxzwizdp8gty.cloudfront.net/download/JANDI.exe';
     }
 
