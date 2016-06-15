@@ -18,9 +18,13 @@
      * @private
      */
     function _init() {
-      $scope.downloadLink = HybridAppHelper.isMacApp() ?
-        'https://d1fxzwizdp8gty.cloudfront.net/download/JANDI.dmg' :
-        'https://d1fxzwizdp8gty.cloudfront.net/download/JANDI.exe';
+      if (HybridAppHelper.isMacApp()) {
+        $scope.updateDesc = '@macapp-update-desc';
+        $scope.downloadLink = 'https://d1fxzwizdp8gty.cloudfront.net/download/JANDI.dmg';
+      } else {
+        $scope.updateDesc = '@winapp-update-desc';
+        $scope.downloadLink = 'https://d1fxzwizdp8gty.cloudfront.net/download/JANDI.exe';
+      }
     }
 
     /**
