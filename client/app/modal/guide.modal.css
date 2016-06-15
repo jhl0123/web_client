@@ -1,4 +1,4 @@
-.announcement-modal.modal .modal-dialog {
+.guide-modal.modal .modal-dialog {
   position:absolute;
   background: #FFFFFF;
   width: 400px;
@@ -13,21 +13,21 @@
   transition: all 0.3s;
 }
 
-.announcement-modal.modal.in .modal-dialog {
+.guide-modal.modal.in .modal-dialog {
   opacity: 1;
   transform: scale(1);
 }
 
-.announcement-modal.modal .modal-content {
+.guide-modal.modal .modal-content {
   background-color: transparent;
   box-shadow: none;
 }
 
-.announcement-modal .pop-wrap{
+.guide-modal .pop-wrap{
   padding:0px 40px;
 }
 
-.announcement-modal .pop-wrap:before {
+.guide-modal .pop-wrap:before {
   content: '';
   position: relative;
   display: block;
@@ -37,23 +37,23 @@
   background-color: #d1d1d1;
 }
 
-.announcement-modal .pop-head {
+.guide-modal .pop-head {
   padding: 0px;
   text-align: center;
 }
-.announcement-modal .pop-body {
+.guide-modal .pop-body {
   font-size: 16px;
   line-height: 1.4;
   padding: 0px;
 }
-.announcement-modal .pop-desc-box {
+.guide-modal .pop-desc-box {
   font-size: 15px;
   line-height: 26px;
   color: #8d8d8d;
   letter-spacing: -1px;
 }
 
-.announcement-modal .btn-pop-close {
+.guide-modal .btn-pop-close {
   position:absolute;
   top: -47px;
   right: 10px;
@@ -62,6 +62,6 @@
   font-size: 18px;
 }
 
-.announcement-modal .btn-pop-close:hover {
+.guide-modal .btn-pop-close:hover {
   color: #1c1c1c;
 }

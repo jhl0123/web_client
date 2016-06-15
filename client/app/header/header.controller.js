@@ -43,8 +43,6 @@
     var quickLauncherModal;
     var timerOpenQuickLauncher;
 
-    var _isInitAnnouncement = false;
-
     _init();
 
     function _init() {
@@ -93,55 +91,12 @@
       _initializeIntercomLanguage();
 
       if (accountService.getAccount()) {
-        _onSetAccount();
+        _setTutorialBlink();
       } else {
-        $scope.$on('accountService:setAccount', _onSetAccount);
+        $scope.$on('accountService:setAccount', _setTutorialBlink);
       }
 
       _attachEvents();
-    }
-
-    /**
-     * tutorial blink 표시를 초기화 한다.
-     * @private
-     */
-    function _onSetAccount() {
-      _initAnnouncement();
-      _setTutorialBlink();
-    }
-
-    /**
-     * announcement를 보여줄지 상태를 결정한다.
-     * @private
-     */
-    function _initAnnouncement() {
-      if (!_isInitAnnouncement) {
-        if (HybridAppHelper.isDeprecatedApp()) {
-          modalHelper.openDeprecated({
-            namespace: 'announcement'
-          });
-        } else {
-          if (_isOldUser()) {
-            //기존 사용자면 welcome 은 생략한다
-            AccountHasSeen.set('TUTORIAL_VER3_WELCOME', true);
-          } else if (!AccountHasSeen.get('TUTORIAL_VER3_WELCOME')) {
-            //초기 진입 시 모든 랜더링 동작을 완료한 이후 welcome 모달을 fade in 효과로 노출하기 위해 1초의 딜레이를 할당한다.
-            modalHelper.openWelcom({
-              namespace: 'announcement'
-            });
-          }
-        }
-
-        _isInitAnnouncement = true;
-      }
-    }
-
-    /**
-     * tutorial 을 이미 시청한 기존 사용자인지 여부를 반환한다.
-     * @private
-     */
-    function _isOldUser() {
-      return AccountHasSeen.get('GUIDE_TOPIC_FOLDER') && AccountHasSeen.get('GUIDE_CONNECT') ;
     }
 
     /**

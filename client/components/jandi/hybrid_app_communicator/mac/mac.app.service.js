@@ -73,9 +73,9 @@
         } else if (_.isString(currentVersion)) {
           currentVersion = currentVersion.split('.');
           if (currentVersion.length === 3 &&
-            (_deprecatedVersion[0] > currentVersion[0] ||
-            _deprecatedVersion[1] > currentVersion[1] ||
-            _deprecatedVersion[2] > currentVersion[2])) {
+            (+(_deprecatedVersion[0]) > +(currentVersion[0]) ||
+            +(_deprecatedVersion[1]) > +(currentVersion[1]) ||
+            +(_deprecatedVersion[2]) > +(currentVersion[2]))) {
             isDeprecatedVersion = true;
           }
         }

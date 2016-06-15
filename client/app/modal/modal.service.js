@@ -52,7 +52,7 @@
 
     _that.openQuickLauncherModal = openQuickLauncherModal;
     _that.openShortcutModal = openShortcutModal;
-    _that.openWelcom = openWelcom;
+    _that.openWelcome = openWelcome;
     _that.openDeprecated = openDeprecated;
 
     _that.closeModal = closeModal;
@@ -339,15 +339,15 @@
     }
 
     /**
-     * welcom modal
+     * welcome modal
      * 가입 후 첫 team 진입시 출력하는 modal
      * @param {object} option
      */
-    function openWelcom(option) {
+    function openWelcome(option) {
       var modalOption = {
         controller: 'WelcomeCtrl',
         templateUrl: 'app/modal/welcome/welcome.html',
-        windowClass: 'announcement-modal'
+        windowClass: 'guide-modal'
       };
 
       _modalOpener(_.extend(modalOption, option));
@@ -362,7 +362,7 @@
       var modalOption = {
         controller: 'DeprecatedCtrl',
         templateUrl: 'app/modal/deprecated/deprecated.html',
-        windowClass: 'announcement-modal'
+        windowClass: 'guide-modal'
       };
 
       _modalOpener(_.extend(modalOption, option));
@@ -523,7 +523,7 @@
         modal.opened.then(function() {
           jndPubSub.pub('modalHelper:opened');
         });
-        modal.result.then(_.bind(_modalResult, {}, modal, namespace), _.bind(_modalResult, {}, modal, namespace));
+        modal.result.then(_.bind(_modalResult, null, modal, namespace), _.bind(_modalResult, null, modal, namespace));
 
         _modalRendered(modal, options);
 

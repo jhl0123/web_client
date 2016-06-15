@@ -9,7 +9,7 @@
     .module('jandiApp')
     .controller('JndMainCtrl', JndMainCtrl);
 
-  function JndMainCtrl($scope, $filter, Dialog, RoomTopicList, jndPubSub, memberService,
+  function JndMainCtrl($scope, $filter, Dialog, RoomTopicList, jndPubSub, InitiateGuide,
                           currentSessionHelper, TopicInvitedFlagMap, JndUtil, WatchDog, modalHelper) {
     $scope.isShowDummyLayout = false;
     $scope.tutorial = {
@@ -30,6 +30,8 @@
      */
     function _init() {
       WatchDog.run();
+
+      InitiateGuide.show();
 
       _attachEvents();
     }

@@ -73,7 +73,7 @@
       //isComplete 값 변경에 대한 fade 효과를 주기 위해 $timeout 을 사용한다.
       $timeout(function() {
         modalHelper.closeModal({
-          namespace: 'announcement'
+          namespace: 'guide'
         });
 
         Tutorial.showTooltip();

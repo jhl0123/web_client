@@ -28,7 +28,7 @@
      */
     function close() {
       modalHelper.closeModal({
-        namespace: 'announcement'
+        namespace: 'guide'
       });
     }
   }
