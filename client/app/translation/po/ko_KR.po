@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.7\n"
 
 #: client/app/tpl/503/503.html
 msgid "@503-unavailable-msg"
@@ -366,6 +366,10 @@ msgstr "차단"
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@common-disabled-member-notice-msg-short"
 msgstr "차단된 멤버입니다"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-disabled-member-profile-msg"
+msgstr "차단된 멤버입니다. <br>궁금하신 사항은 팀 관리자에게 문의하세요."
 
 #: client/app/modal/topics/topic_invite_from_dm/topic.invite.direct.html
 msgid "@common-dm-invite-to"
@@ -1104,6 +1108,14 @@ msgstr "Jump"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@header-nav-language"
 msgstr "언어 설정"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@hybridapp-update-button-download"
+msgstr "새 버전 다운로드"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@hybridapp-update-title"
+msgstr "새로운 잔디 앱이 출시되었습니다!"
 
 #: client/app/modal/members/current_member_profile/current.member.profile.html
 msgid "@ie9-profile-image-support"
@@ -2238,6 +2250,17 @@ msgstr "이메일 또는 비밀번호를 확인해주세요"
 #: client/app/signin/signin.html
 msgid "@login-reset-password"
 msgstr "비밀번호 찾기"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macapp-update-desc"
+msgstr ""
+"새로운 버전에는,  \n"
+"- 항상 접속하는 기본 팀 지정 기능\n"
+"- 전반적인 성능 개선 \n"
+"이외에도 여러 개선사항들이 반영되었습니다.\n"
+"\n"
+"다운로드 후 잔디 앱을 종료하시고, 새 버전을 애플리케이션 폴더에 덮어쓰기를 "
+"하시면 됩니다."
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@macappupdate-button-download"
@@ -3624,6 +3647,24 @@ msgstr "JANDI 메시지"
 msgid "@wednesday"
 msgstr "수요일"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@winapp-update-desc"
+msgstr ""
+"새로운 버전에는,  \n"
+"- 항상 접속하는 기본 팀 지정 기능\n"
+"- 전반적인 성능 개선 \n"
+"이외에도 여러 개선사항들이 반영되었습니다."
+
+#~ msgid "@hybridapp-update-desc"
+#~ msgstr ""
+#~ "새로운 버전에는,  \n"
+#~ "- 항상 접속하는 기본 팀 지정 기능\n"
+#~ "- 전반적인 성능 개선 \n"
+#~ "이외에도 여러 개선사항들이 반영되었습니다.\n"
+#~ "\n"
+#~ "다운로드 후 잔디 앱을 종료하시고, 새 버전을 애플리케이션 폴더에 덮어쓰기"
+#~ "를 하시면 됩니다."
+
 #~ msgid "@topic-admin-transfer-kickout-confirm-2"
 #~ msgstr ""
 #~ "이 멤버는 이 토픽의 관리자입니다. <br>다음 관리자를 지정한 후 토픽에서 내"
@@ -3850,9 +3891,6 @@ msgstr "수요일"
 
 #~ msgid "@alert-empty-ch-can-join"
 #~ msgstr "참여 가능한 토픽이 없습니다"
-
-#~ msgid "@common-disabled-member-profile-msg"
-#~ msgstr "차단된 멤버입니다. 궁금하신 사항은 팀 관리자에게 문의하세요."
 
 #~ msgid "@input-rename"
 #~ msgstr "변경할 이름을 입력하세요"

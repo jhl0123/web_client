@@ -1,14 +1,14 @@
 /**
- * @fileoverview 튜토리얼 중 가장 첫번째 노출하게 될 웰컴 디렉티브
+ * @fileoverview welcome modal controller
  */
 (function() {
   'use strict';
 
   angular
     .module('jandiApp')
-    .controller('TutorialWelcomeCtrl', TutorialWelcomeCtrl);
+    .controller('WelcomeCtrl', WelcomeCtrl);
 
-  function TutorialWelcomeCtrl($scope, $filter, $timeout, Tutorial, AccountHasSeen) {
+  function WelcomeCtrl($scope, $filter, $timeout, Tutorial, AccountHasSeen, modalHelper) {
     var _translate = $filter('translate');
 
     $scope.curStep = 0;
@@ -72,7 +72,10 @@
       $scope.isComplete = true;
       //isComplete 값 변경에 대한 fade 효과를 주기 위해 $timeout 을 사용한다.
       $timeout(function() {
-        Tutorial.hideWelcome();
+        modalHelper.closeModal({
+          namespace: 'guide'
+        });
+
         Tutorial.showTooltip();
       }, 100);
     }

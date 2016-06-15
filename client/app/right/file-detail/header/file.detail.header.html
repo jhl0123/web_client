@@ -1,5 +1,5 @@
-<div>
-  <div class="file-detail-header" ng-if="!isArchivedFile && !isInvalidRequest">
+<div class="file-detail-header">
+  <div ng-if="!isArchivedFile && !isInvalidRequest">
     <div class="file-creator" ng-class="{'file-detail-disabled-member': file.extIsDisabledMember}">
       <div class="file-creator-profile">
         <img class="user-profile user-thumb-sm cursor_pointer" ng-src="{{file.extProfileImg}}" ng-click="onMemberClick(file.extWriter)"/>
@@ -97,7 +97,7 @@
   </div>
 
   <!-- FILE ARCHIVED -->
-  <div class="file-detail-header _fileDetailHeader" ng-if="isArchivedFile && !isInvalidRequest">
+  <div class="_fileDetailHeader" ng-if="isArchivedFile && !isInvalidRequest">
     <div class="file-creator">
       <div class="file-creator-profile">
         <img class="user-profile user-thumb-sm cursor_pointer"
@@ -122,7 +122,7 @@
   </div>
 
   <!-- FILE API ERROR -->
-  <div class="file-detail-header _fileDetailHeader" ng-if="isInvalidRequest">
+  <div class="_fileDetailHeader" ng-if="isInvalidRequest">
     <div class="warning file-unshare-preview" ng-click="backToPrevState()">
       <div class="fileicon fileicon-unshared"></div>
       <span>{{::'@file-unshared-no-longer-accessible'|translate}}</span>

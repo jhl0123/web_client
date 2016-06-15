@@ -51,9 +51,11 @@
   margin: 0;
   padding: 0;
 }
+/*
 .message-group .message.file {
   margin-bottom: 28px;
 }
+*/
 
 .message .center-panel-disabled-member .member-name,
 .message .center-panel-disabled-member .member-profile {

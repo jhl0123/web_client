@@ -114,7 +114,10 @@
         var file = scope.file;
 
         fileAPIservice.unShareEntity(file.id, entity.id)
-          .success(_onSuccessUnshared);
+          .success(function() {
+            _analyticsUnshared(entity);
+            _onSuccessUnshared();
+          });
       }
 
       /**
@@ -123,7 +126,6 @@
        */
       function _onSuccessUnshared() {
         _unsharedForMe = true;
-        _analyticsUnshared();
       }
 
       /**
@@ -214,7 +216,12 @@
         }
       }
 
-      function _analyticsUnshared() {
+      /**
+       * analytics unshared
+       * @param {object} entity
+       * @private
+       */
+      function _analyticsUnshared(entity) {
         // 곧 지워짐
         var share_target = "";
         switch (entity.type) {

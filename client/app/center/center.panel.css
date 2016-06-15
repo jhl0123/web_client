@@ -92,7 +92,7 @@ article {
 }
 .msgs__loading.initial {
   height: 100%;
-  background:#EFF3FA;
+  background: #F1F7FC;
 }
 .msgs__loading.load-more-top {
   position: absolute;
