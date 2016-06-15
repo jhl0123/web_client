@@ -1,5 +1,5 @@
 .rpanel-search-message-card {
-  padding: 10px 0 6px 0;
+  padding: 4px 0 5px 0;
   border-bottom: 1px solid #e1e1e1;
   background-color: white;
   font-size: 16px;
@@ -8,16 +8,20 @@
 
 .rpanel-search-message-card .message-card .message-card-body {
   margin-left: 38px;
-  font-size: 14px;
+  font-size: 0.95rem;
+}
+.rpanel-search-message-card .message-card .message-profile {
+  top: 10px;
 }
 .rpanel-search-message-card .main-message-card.message-card .message-card-body {
-  font-size: 16px;
+  font-size: 0.95rem;
+  line-height: 1.44rem;
 }
 .rpanel-search-message-card .main-message-card.message-card .message-writer {
-  font-size: 16px;
+  font-size: 0.85rem;
 }
 .rpanel-search-message-card .main-message-card.message-card .message-writer-highlight {
-  font-size: 16px;
+  font-size: 0.85rem;
 }
 .rpanel-search-message-card .sub-message-card.message-card {
   color: #999;
@@ -28,7 +32,7 @@
 }
 
 .rpanel-search-message-card .message-card {
-  padding: 3px 40px 9px 14px;
+  padding: 8px 40px 8px 14px;
   border: 0;
 }
 

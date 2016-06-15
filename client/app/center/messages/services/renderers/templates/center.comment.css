@@ -19,7 +19,7 @@
   min-width: 393px;
   max-width: 600px;
   margin: 0;
-  padding: 10px 12px 12px 56px;
+  padding: 7px 15px 9px 50px;
   border-width: 1px;
   border-radius: 0;
   cursor: pointer;
@@ -32,22 +32,22 @@
 
 .message.comment-child.last .msg-item:not(.comment-all):hover,
 .message.comment.last .msg-item:not(.comment-all):hover {
-  border-bottom-color: rgba(5,35,60,0.2);
+  border-bottom-color: rgba(5,35,60,0.065);
 }
 
 .message.comment.first .comment-all {
   margin-bottom: 0px;
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
-  border-bottom-color: rgba(5, 35, 60, 0.1);
+  border-bottom-color: rgba(5, 35, 60, 0.065);
 }
 
 .message.comment.first .comment-all,
 .message.comment.first .msg-item {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  margin-top: 8px;
-  border-top: 1px solid rgba(5, 35, 60, 0.1);
+  margin-top: 2px;
+  border-top: 1px solid rgba(5, 35, 60, 0.065);
 }
 
 .message.commment.first .msg-item:hover {
@@ -60,12 +60,16 @@
 }
 
 .message.comment .msg-header {
-  height: 22px;
+  height: 20px;
+  margin-bottom: 0;
+  margin-top: 1px;
 }
 
 .message.comment .member-profile {
   top: 4px;
-  left: -45px;
+  left: -38px;
+  width: 30px;
+  height: 30px;
 }
 
 .message.comment .member-name {
@@ -73,11 +77,13 @@
   top: 0;
   max-width: calc(100% - 58px);
   line-height: 20px;
+  font-size: 0.83rem;
 }
 
 .message.comment .comment-content {
   line-height: 19px;
-  font-size: 14px;
+  font-size: 0.85rem;
+  line-height: 1.22rem;
   vertical-align: top;
 }
 
@@ -87,8 +93,8 @@
 
 .message.comment .comment-content > .sticker {
   display: inline-block;
-  width: 126px;
-  height: 126px;
+  width: 120px;
+  height: 120px;
 }
 
 .message.comment .msg-item-info {
@@ -100,13 +106,13 @@
 .message.comment.first > .msg-item:first-child:before {
   content: '';
   position: absolute;
-  top: -6px;
-  left: 23px;
-  width: 9px;
-  height: 9px;
+  top: -5px;
+  left: 22px;
+  width: 8px;
+  height: 8px;
   background-color: inherit;
-  border-left: 1px solid rgba(5, 35, 60, 0.1);
-  border-top: 1px solid rgba(5, 35, 60, 0.1);
+  border-left: 1px solid rgba(5, 35, 60, 0.065);
+  border-top: 1px solid rgba(5, 35, 60, 0.065);
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
   display: block;
@@ -129,7 +135,7 @@
   background-color: transparent;
 }
 .message.comment-child .msg-item .comment-line {
-  left: 54px;
+  left: 50px;
   top: -2px;
   right: 0;
 }
@@ -144,7 +150,7 @@
   z-index: 1;
 }
 .message.comment .msg-item .comment-line {
-  background-color: rgba(172, 192, 208, 0.3);
+  background-color: rgba(5, 35, 60, 0.065);
 }
 
 .message-group .message.comment > .msg-item {
