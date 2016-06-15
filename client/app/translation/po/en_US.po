@@ -1116,7 +1116,10 @@ msgid "@hybridapp-update-desc"
 msgstr ""
 "New in this update:\n"
 "• Managing multiple JANDI teams? Set a default team at app launch\n"
-"• Performance improvements and bug fixes"
+"• Performance improvements and bug fixes\n"
+"\n"
+"To take advantage of the new app, please download and move it to the "
+"Applications folder to overwrite the old version."
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@hybridapp-update-title"

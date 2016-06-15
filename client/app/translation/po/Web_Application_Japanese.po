@@ -1124,7 +1124,8 @@ msgstr ""
 "-全般的なパフォーマンス改善\n"
 "以外にも色んな不具合を改善しました。\n"
 "\n"
-"今すぐ新機能を確認してみてください！"
+"ダウンロードした後にJANDIアプリケーションを終了し、新しいバージョンをアプ"
+"リケーションフォルダーに上書きしてください。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@hybridapp-update-title"
