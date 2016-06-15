@@ -34,6 +34,9 @@
         );
 
         return function(scope, el, attrs, ctrls) {
+          var LIVE_SEARCH_DELAY = 0;
+          var timerLiveSearch;
+
           var mentionCtrl;
           var jqMentionahead;
 
@@ -53,47 +56,57 @@
               jqEle: el,
               attrs: attrs,
               on: function() {
-                var LIVE_SEARCH_DELAY = 0;
-                var timerLiveSearch;
-
-                // text change event handling
-                function changeHandler(event) {
-                  var value = event.target.value;
-
-                  if (value !== mentionCtrl.getValue()) {
-                    mentionCtrl.setValue(value);
-                  }
-                }
-
-                // 실시간 mention 입력 확인
-                function liveSearchHandler(event) {
-                  $timeout.cancel(timerLiveSearch);
-                  timerLiveSearch = $timeout(function() {
-                    var jqPopup = jqMentionahead.next();
-                    var css;
-
-                    mentionCtrl.setMentionOnLive(event);
-                    if (_isOpenMentionaheadMenu()) {
-                      mentionCtrl.showMentionahead();
-                    }
-
-                    // mention ahead position
-                    css = $position.positionElements(jqMentionahead, jqPopup, 'top-left', false);
-                    jqPopup.css(css);
-                  }, LIVE_SEARCH_DELAY);
-                }
-
                 el
-                  .on('input', changeHandler)
-                  .on('click', liveSearchHandler)
+                  .on('input', _onChangeHandler)
+                  .on('click', _onLiveSearchHandler)
                   .on('blur', function() {
                     JndUtil.safeApply(scope, function() {
                       mentionCtrl.clearMention();
                     });
                   })
-                  .on('keyup', liveSearchHandler);
+                  .on('keyup', _onLiveSearchHandler);
               }
             });
+
+          /**
+           * text change event handler
+           * @param {object} event
+           */
+          function _onChangeHandler(event) {
+            var value = event.target.value;
+
+            if (value !== mentionCtrl.getValue()) {
+              mentionCtrl.setValue(value);
+            }
+          }
+
+          /**
+           * 실시간 mention 입력 확인
+           * @param {object} event
+           */
+          function _onLiveSearchHandler(event) {
+            $timeout.cancel(timerLiveSearch);
+            timerLiveSearch = $timeout(_.bind(_liveSearchHandler, null, event), LIVE_SEARCH_DELAY);
+          }
+
+          /**
+           * 실시간 mention 입력 확인
+           * @param {object} event
+           * @private
+           */
+          function _liveSearchHandler(event) {
+            var jqPopup = jqMentionahead.next();
+            var css;
+
+            mentionCtrl.setMentionOnLive(event);
+            if (_isOpenMentionaheadMenu()) {
+              mentionCtrl.showMentionahead();
+            }
+
+            // mention ahead position
+            css = $position.positionElements(jqMentionahead, jqPopup, 'top-left', false);
+            jqPopup.css(css);
+          }
 
           /**
            * mentionahead menu가 열려 있는지 여부
