@@ -47,7 +47,7 @@
        */
       function _attachScopeEvents() {
         scope.$on('$destroy', _onDestroy);
-        scope.$on('JndZoom:zoom', _onCurrentZoomScaleChanged);
+        scope.$on('JndZoom:zoom', resizeFileDetailBody);
       }
 
       /**
@@ -73,14 +73,6 @@
        */
       function _detachDomEvents() {
         $($window).off('resize', _onResize);
-      }
-
-      /**
-       * on zoom scale changed
-       * @private
-       */
-      function _onCurrentZoomScaleChanged() {
-        resizeFileDetailBody();
       }
 
       /**
