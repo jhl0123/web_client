@@ -122,6 +122,7 @@
       function _showFloatInput(jqForm, hasAnimation) {
         if (!ctrl.hasFloatInput) {
           jqForm.appendTo(el);
+          jqForm.addClass('float-input');
 
           if (hasAnimation) {
             jqForm.addClass('float');
@@ -209,6 +210,8 @@
       function _showStaticInput(jqContainer, jqForm) {
         if (ctrl.hasFloatInput) {
           jqContainer.prepend(jqForm);
+          jqForm.removeClass('float-input');
+
           ctrl.hasFloatInput = false;
         }
       }
