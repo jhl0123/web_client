@@ -734,7 +734,7 @@
 
       // prevent duplicate request
       if (msg || _sticker) {
-        if ($scope.getMentions) {
+        if (msg && $scope.getMentions) {
           if (content = $scope.getMentions()) {
             msg = content.msg;
             mentions = content.mentions;
@@ -1217,7 +1217,6 @@
      * @private
      */
     function _onNewMessageArrived(angularEvent, msg) {
-      console.log('###_onNewMessageArrived', msg);
       MessageSendingCollection.clearSentMessages();
       if (centerService.isMessageFromMe(msg)) {
         if (!_messageCollection.hasLastMessage()) {
@@ -1245,10 +1244,10 @@
      */
     function _onNewSystemMessageArrived() {
       if (centerService.hasBottomReached()) {
-        _scrollToBottomWithAnimate();
+        _scrollToBottom();
       }
       _messageCollection.updateUnreadCount();
-      $timeout(_checkEntityMessageStatus, 100);
+      _checkEntityMessageStatus();
     }
 
     /**

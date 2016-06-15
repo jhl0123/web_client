@@ -233,7 +233,7 @@
        */
       _onMessageDeleted: function(angularEvent, socketEvent) {
         if (socketEvent.room.id === this._getCurrentRoomId()) {
-          this.remove(socketEvent.messageId, true);
+          this.removeByMessageId(socketEvent.messageId, true);
         }
         this._pub('MessageCollection:messageDeleted', socketEvent.messageId);
       },
@@ -253,7 +253,7 @@
         });
 
         if (isCurrentRoomComment) {
-          this.remove(socketEvent.comment.id, true);
+          this.removeByMessageId(socketEvent.comment.id, true);
           this._pub('MessageCollection:commentDeleted', socketEvent.comment.id);
         }
         this._updateFileCommentCount(fileId, commentCount);
@@ -572,33 +572,40 @@
         var lastId = list[length - 1] && list[length - 1].id || -1;
         var appendList = [];
         var index;
-        messageList = this.beforeAddMessages(messageList);
-        _.forEach(messageList, function(msg) {
-          if (lastId < msg.id) {
-            msg = this.getFormattedMessage(msg);
-            list.push(msg);
-            appendList.push(msg);
-            //작성자의 marker 정보를 업데이트 한다
-            this._updateMarker(msg);
-            
-            //linkId 가 중간에 끼워야 하는 값이라면
-          } else if (isAllowEmbed && !this._map.id[msg.id]) {
-            msg = this.getFormattedMessage(msg);
-            index = this._getEmbedPosition(msg);
-            if (index > 0) {
-              list.splice(index + 1, 0, msg);
-              this._pub('MessageCollection:embed', msg, index + 1);
-              this._updateMarker(msg);
-            }
-          }
-        }, this);
 
-        if (!this._isCurrentRoom()) {
-          this._cutByMaxCacheCount();
+        if (this.status.isInitialRequestSuccess) {
+          messageList = this.beforeAddMessages(messageList);
+          _.forEach(messageList, function (msg) {
+            if (lastId < msg.id) {
+              msg = this.getFormattedMessage(msg);
+              list.push(msg);
+              appendList.push(msg);
+              //작성자의 marker 정보를 업데이트 한다
+              this._updateMarker(msg);
+
+              //linkId 가 중간에 끼워야 하는 값이라면
+            } else if (isAllowEmbed && !this._map.id[msg.id]) {
+              msg = this.getFormattedMessage(msg);
+              index = this._getEmbedPosition(msg);
+              if (index > 0) {
+                list.splice(index + 1, 0, msg);
+                this._setLinkId([msg]);
+                this._addIndexMap([msg]);
+                this._updateMarker(msg);
+                this._pub('MessageCollection:embed', msg, index + 1);
+              }
+            }
+          }, this);
+
+
+          this._addIndexMap(appendList);
+          this._setLinkId(appendList);
+
+          if (!this._isCurrentRoom()) {
+            this._cutByMaxCacheCount();
+          }
+          this._pub('MessageCollection:append', appendList);
         }
-        this._setLinkId(appendList);
-        this._addIndexMap(appendList);
-        this._pub('MessageCollection:append', appendList);
       },
 
       /**
@@ -621,20 +628,31 @@
 
       /**
        * max cache 세팅값에 따라 list 를 자른다.
-       * @param {boolean} [isPrepend=false] - prepend 이후 cut 할 지 여부
        * @private
        */
-      _cutByMaxCacheCount: function(isPrepend) {
+      _cutByMaxCacheCount: function() {
         var list = this.list;
         var length = list.length;
         var difference = length - MAX_CACHE_MESSAGE_COUNT;
+        var i;
+        var lastReadLinkId = memberService.getLastReadMessageMarker(this._getCurrentRoomId());
+        var lastReadIndex = this.at(lastReadLinkId);
+        var threshold = Math.floor((MAX_CACHE_MESSAGE_COUNT - 1) / 2);
+        var startIdx = Math.max(0, lastReadIndex - threshold);
+        var endIdx = Math.min(lastReadIndex + threshold, length);
+        var removeIds = [];
 
         if (difference > 0) {
-          if (isPrepend) {
-            list.splice(MAX_CACHE_MESSAGE_COUNT);
-          } else {
-            list.splice(0, difference);
+          for (i = 0; i < startIdx; i++) {
+            removeIds.push(list[i].id);
           }
+          for (i = endIdx; i < length; i ++) {
+            removeIds.push(list[i].id);
+          }
+
+          _.forEach(removeIds, function(removeId) {
+            this.remove(removeId);
+          }, this);
           this._setLinkId(list);
         }
       },
@@ -706,32 +724,53 @@
         var list = this.list;
         var firstId = list[0] && list[0].id || -1;
         var prependList = [];
-        messageList = this.beforeAddMessages(messageList);
-        _.forEachRight(messageList, function(msg) {
-          if (firstId === -1 || firstId > msg.id) {
-            msg = this.getFormattedMessage(msg);
-            list.unshift(msg);
-            prependList.unshift(msg);
-            this._updateMarker(msg);
+        if (this.status.isInitialRequestSuccess) {
+          messageList = this.beforeAddMessages(messageList);
+          _.forEachRight(messageList, function (msg) {
+            if (firstId === -1 || firstId > msg.id) {
+              msg = this.getFormattedMessage(msg);
+              list.unshift(msg);
+              prependList.unshift(msg);
+              this._updateMarker(msg);
+            }
+          }, this);
+
+          this._setLinkId(prependList);
+          this._addIndexMap(prependList);
+          if (!this._isCurrentRoom()) {
+            this._cutByMaxCacheCount();
           }
-        }, this);
-        if (!this._isCurrentRoom()) {
-          this._cutByMaxCacheCount();
+          this._pub('MessageCollection:prepend', prependList);
         }
-        this._setLinkId(prependList);
-        this._addIndexMap(prependList);
-        this._pub('MessageCollection:prepend', prependList);
       },
 
       /**
        * 메세지를 삭제한다.
+       * @param {number} linkId
+       * @param {boolean} [isReversal] 역순으로 순회할지 여부
+       * @returns {boolean} 삭제에 성공했는지 여부
+       */
+      remove: function(linkId, isReversal) {
+        var targetIdx = this.at(linkId, isReversal);
+        
+        if (targetIdx !== -1) {
+          this._pub('MessageCollection:beforeRemove', targetIdx);
+          this._removeIndexMap(this.get(linkId));
+          this.list.splice(targetIdx, 1);
+          this._pub('MessageCollection:remove', targetIdx);
+        }
+        return targetIdx !== -1;
+      },
+
+      /**
+       * 메세지 id 로 메시지를 삭제한다.
        * @param {number|string} messageId 메세지 id
        * @param {boolean} [isReversal] 역순으로 순회할지 여부
        * @returns {boolean} 삭제에 성공했는지 여부
        */
-      remove: function(messageId, isReversal) {
+      removeByMessageId: function(messageId, isReversal) {
         var targetIdx = this.atByMessageId(messageId, isReversal);
-        
+
         if (targetIdx !== -1) {
           this._pub('MessageCollection:beforeRemove', targetIdx);
           this._removeIndexMap(this.getByMessageId(messageId));
@@ -740,7 +779,7 @@
         }
         return targetIdx !== -1;
       },
-      
+
       /**
        * messageId 에 해당하는 message 를 반환한다.
        * @param {number|string} messageId messageId 메세지 id
@@ -1239,10 +1278,12 @@
        * @param list
        */
       setList: function(list) {
-        this.list = list;
-        this._setLinkId(list);
-        this._addIndexMap(list);
-        this._pub('MessageCollection:set', list);
+        if (this.status.isInitialRequestSuccess) {
+          this.list = list;
+          this._setLinkId(list);
+          this._addIndexMap(list);
+          this._pub('MessageCollection:set', list);
+        }
       },
 
       /**

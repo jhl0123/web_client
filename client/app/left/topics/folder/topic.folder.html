@@ -1,4 +1,4 @@
-<div class="topic-folder _badgeParent"
+<div class="topic-folder"
      ng-class="{
      'has-folder': folder.id !== -1,
      'open': isExpand
@@ -17,7 +17,7 @@
   <div ng-if="!hasEmptyArea"
        ng-class="{'topic-folder-area': folder.id !== -1}">
     <!--folder title-->
-    <div ng-if="::folder.id !== -1" class="topic-folder-title cursor_pointer"
+    <div ng-if="::folder.id !== -1" class="topic-folder-title cursor_pointer _badgeParent"
          topic-folder-draggable="folder"
          ng-click="collapse()">
       <span class="topic-folder-area-icon">
