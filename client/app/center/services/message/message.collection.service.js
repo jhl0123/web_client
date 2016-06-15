@@ -126,7 +126,6 @@
        * 랜더링을 요청한다.
        */
       render: function() {
-        this._cutByMaxCacheCount();
         this._pub('MessageCollection:render');
       },
       
