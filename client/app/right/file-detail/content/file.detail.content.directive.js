@@ -47,6 +47,7 @@
        */
       function _attachScopeEvents() {
         scope.$on('$destroy', _onDestroy);
+        scope.$on('JndZoom:zoom', resizeFileDetailBody);
       }
 
       /**
@@ -109,7 +110,7 @@
 
         _jqFileDetailBody
           .addClass('opac-in')
-          .height($window.innerHeight - el.offset().top - jqFileDetailHeader.outerHeight());
+          .css({top: jqFileDetailHeader.position().top + jqFileDetailHeader.outerHeight()})
       }
 
       /**
@@ -139,42 +140,51 @@
        */
       function setCommentInputLayout() {
         var jqInput = ctrl.getJqInput();
-        var jqContainer = jqInput.container;
-        var jqForm =  jqInput.form;
-        var jqText = jqInput.text;
-        var jqFloat = jqInput.float;
+        var jqContainer;
+        var jqForm;
+        var jqText;
+        var jqFloat;
 
-        var isFocus = jqText.is(':focus');
-        var isHiddenInput = _isHiddenInput(jqContainer);
+        var isFocus;
+        var isHiddenInput;
 
-        if (_isChanged(isFocus, isHiddenInput)) {
-          if (isFocus) {
-            // text input에 focus가 있는 상태에서는 float input으로 출력하도록 하는 button을 숨겨 사용자가 텍스트 입력이
-            // 용이하도록 하며, text input이 scrolling을 통하여 보이지 않게되면 float input으로 출력하도록 한다.
+        if (jqInput) {
+          jqContainer = jqInput.container;
+          jqForm =  jqInput.form;
+          jqText = jqInput.text;
+          jqFloat = jqInput.float;
 
-            jqFloat.removeClass('show');
+          isFocus = jqText.is(':focus');
+          isHiddenInput = _isHiddenInput(jqContainer);
+          if (_isChanged(isFocus, isHiddenInput)) {
+            if (isFocus) {
+              // text input에 focus가 있는 상태에서는 float input으로 출력하도록 하는 button을 숨겨 사용자가 텍스트 입력이
+              // 용이하도록 하며, text input이 scrolling을 통하여 보이지 않게되면 float input으로 출력하도록 한다.
 
-            if (isHiddenInput) {
-              _showFloatInput(jqForm);
-            } else {
-              _showStaticInput(jqContainer, jqForm);
-            }
-            jqText.focus();
-          } else {
-            // text input에 focus가 있지 않는 상태에서는 float input으로 출력하도록 하는 button만을 통하여 float input을
-            // 출력하도록 한다.
-
-            _showStaticInput(jqContainer, jqForm);
-
-            if (isHiddenInput) {
-              jqFloat.addClass('show');
-            } else {
               jqFloat.removeClass('show');
-            }
-          }
 
-          _prevFocus = isFocus;
-          _prevIsHiddenInput = isHiddenInput;
+              if (isHiddenInput) {
+                _showFloatInput(jqForm);
+              } else {
+                _showStaticInput(jqContainer, jqForm);
+              }
+              jqText.focus();
+            } else {
+              // text input에 focus가 있지 않는 상태에서는 float input으로 출력하도록 하는 button만을 통하여 float input을
+              // 출력하도록 한다.
+
+              _showStaticInput(jqContainer, jqForm);
+
+              if (isHiddenInput) {
+                jqFloat.addClass('show');
+              } else {
+                jqFloat.removeClass('show');
+              }
+            }
+
+            _prevFocus = isFocus;
+            _prevIsHiddenInput = isHiddenInput;
+          }
         }
       }
 
