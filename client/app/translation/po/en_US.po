@@ -376,6 +376,12 @@ msgstr "Disable"
 msgid "@common-disabled-member-notice-msg-short"
 msgstr "This member has been temporarily disabled"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-disabled-member-profile-msg"
+msgstr ""
+"This member has been temporarily disabled. Please contact the team "
+"administrator for more information."
+
 #: client/app/modal/topics/topic_invite_from_dm/topic.invite.direct.html
 msgid "@common-dm-invite-to"
 msgstr "Invite to"
@@ -1110,16 +1116,6 @@ msgstr "Language"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@hybridapp-update-button-download"
 msgstr "Download Now"
-
-#: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@hybridapp-update-desc"
-msgstr ""
-"New in this update:\n"
-"• Managing multiple JANDI teams? Set a default team at app launch\n"
-"• Performance improvements and bug fixes\n"
-"\n"
-"To take advantage of the new app, please download and move it to the "
-"Applications folder to overwrite the old version."
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@hybridapp-update-title"
@@ -2253,6 +2249,16 @@ msgstr "Invalid email or password"
 #: client/app/signin/signin.html
 msgid "@login-reset-password"
 msgstr "Forgot Your Password?"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macapp-update-desc"
+msgstr ""
+"New in this update:\n"
+"• Managing multiple JANDI teams? Set a default team at app launch\n"
+"• Performance improvements and bug fixes\n"
+"\n"
+"To take advantage of the new app, please download and move it to the "
+"Applications folder to overwrite the old version."
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@macappupdate-button-download"
@@ -3645,6 +3651,22 @@ msgstr "JANDI Message Received"
 msgid "@wednesday"
 msgstr "Wednesday"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@winapp-update-desc"
+msgstr ""
+"New in this update:\n"
+"• Managing multiple JANDI teams? Set a default team at app launch\n"
+"• Performance improvements and bug fixes"
+
+#~ msgid "@hybridapp-update-desc"
+#~ msgstr ""
+#~ "New in this update:\n"
+#~ "• Managing multiple JANDI teams? Set a default team at app launch\n"
+#~ "• Performance improvements and bug fixes\n"
+#~ "\n"
+#~ "To take advantage of the new app, please download and move it to the "
+#~ "Applications folder to overwrite the old version."
+
 #~ msgid "@web-notification-body-other-team-post"
 #~ msgstr "You received a new message in "
 
@@ -3833,11 +3855,6 @@ msgstr "Wednesday"
 
 #~ msgid "@alert-empty-ch-can-join"
 #~ msgstr "No topics to join"
-
-#~ msgid "@common-disabled-member-profile-msg"
-#~ msgstr ""
-#~ "This member has been temporarily disabled. Please contact the team "
-#~ "administrator for more information."
 
 #~ msgid "@input-rename"
 #~ msgstr "Enter name to change"

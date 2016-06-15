@@ -1114,17 +1114,6 @@ msgid "@hybridapp-update-button-download"
 msgstr "새 버전 다운로드"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
-msgid "@hybridapp-update-desc"
-msgstr ""
-"새로운 버전에는,  \n"
-"- 항상 접속하는 기본 팀 지정 기능\n"
-"- 전반적인 성능 개선 \n"
-"이외에도 여러 개선사항들이 반영되었습니다.\n"
-"\n"
-"다운로드 후 잔디 앱을 종료하시고, 새 버전을 애플리케이션 폴더에 덮어쓰기를 "
-"하시면 됩니다."
-
-#: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@hybridapp-update-title"
 msgstr "새로운 잔디 앱이 출시되었습니다!"
 
@@ -2261,6 +2250,17 @@ msgstr "이메일 또는 비밀번호를 확인해주세요"
 #: client/app/signin/signin.html
 msgid "@login-reset-password"
 msgstr "비밀번호 찾기"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macapp-update-desc"
+msgstr ""
+"새로운 버전에는,  \n"
+"- 항상 접속하는 기본 팀 지정 기능\n"
+"- 전반적인 성능 개선 \n"
+"이외에도 여러 개선사항들이 반영되었습니다.\n"
+"\n"
+"다운로드 후 잔디 앱을 종료하시고, 새 버전을 애플리케이션 폴더에 덮어쓰기를 "
+"하시면 됩니다."
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@macappupdate-button-download"
@@ -3646,6 +3646,24 @@ msgstr "JANDI 메시지"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@wednesday"
 msgstr "수요일"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@winapp-update-desc"
+msgstr ""
+"새로운 버전에는,  \n"
+"- 항상 접속하는 기본 팀 지정 기능\n"
+"- 전반적인 성능 개선 \n"
+"이외에도 여러 개선사항들이 반영되었습니다."
+
+#~ msgid "@hybridapp-update-desc"
+#~ msgstr ""
+#~ "새로운 버전에는,  \n"
+#~ "- 항상 접속하는 기본 팀 지정 기능\n"
+#~ "- 전반적인 성능 개선 \n"
+#~ "이외에도 여러 개선사항들이 반영되었습니다.\n"
+#~ "\n"
+#~ "다운로드 후 잔디 앱을 종료하시고, 새 버전을 애플리케이션 폴더에 덮어쓰기"
+#~ "를 하시면 됩니다."
 
 #~ msgid "@topic-admin-transfer-kickout-confirm-2"
 #~ msgstr ""
