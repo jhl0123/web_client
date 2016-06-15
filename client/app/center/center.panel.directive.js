@@ -10,7 +10,7 @@
     .module('jandiApp')
     .directive('centerPanel', centerPanel);
 
-  function centerPanel() {
+  function centerPanel(JndVersion) {
     return {
       restrict: 'E',
       scope: true,
@@ -20,6 +20,9 @@
     };
 
     function link(scope, el, attrs) {
+      if (JndVersion.isDev) {
+        el.find('.msgs').addClass('dev');
+      }
     }
   }
 })();

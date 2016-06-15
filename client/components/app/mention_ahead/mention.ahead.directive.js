@@ -9,7 +9,7 @@
     .directive('mentionahead', mentionahead);
 
   /* @ngInject */
-  function mentionahead($compile, $timeout, $position, currentSessionHelper, JndUtil, memberService) {
+  function mentionahead($compile, $timeout, $position, JndUtil) {
 
     return {
       restrict: 'A',
@@ -20,9 +20,7 @@
       require: ['mentionahead'],
       controller: 'MentionaheadCtrl',
       compile: function() {
-        var mentionahead;
-
-        mentionahead = $compile(
+        var mentionahead = $compile(
           '<div type="text" style="position: absolute; top: 0; left: 0; width: 100%;" ' +
           'jandi-typeahead="mention.name for mention in mentionList' +
                            ' | getMatchedList: \'extSearchName\':mention.match[2]' +
@@ -36,82 +34,78 @@
         );
 
         return function(scope, el, attrs, ctrls) {
-          var mentionaheadType = attrs.mentionaheadType;
+          var LIVE_SEARCH_DELAY = 0;
+          var timerLiveSearch;
 
           var mentionCtrl;
           var jqMentionahead;
 
-          if (_isMentionaheadAvailable(mentionaheadType)) {
-            // center에 사용되는 mention ahead이 아니거나 center가 dm이 아닐경우에만 mention ahead를 사용한다.
+          mentionCtrl = ctrls[0];
+          scope.eventCatcher = el;
 
-            mentionCtrl = ctrls[0];
-            scope.eventCatcher = el;
+          scope.mentionOrderBy = mentionOrderBy;
 
-            scope.mentionOrderBy = mentionOrderBy;
+          jqMentionahead = mentionahead(scope, function (jqMentionahead) {
+            el.parent().append(jqMentionahead);
+          });
 
-            jqMentionahead = mentionahead(scope, function (jqMentionahead) {
-              el.parent().append(jqMentionahead);
+          mentionCtrl
+            .init({
+              originScope: scope.$parent,
+              mentionModel: jqMentionahead.data('$ngModelController'),
+              jqEle: el,
+              attrs: attrs,
+              on: function() {
+                el
+                  .on('input', _onChangeHandler)
+                  .on('click', _onLiveSearchHandler)
+                  .on('blur', function() {
+                    JndUtil.safeApply(scope, function() {
+                      mentionCtrl.clearMention();
+                    });
+                  })
+                  .on('keyup', _onLiveSearchHandler);
+              }
             });
 
-            mentionCtrl
-              .init({
-                originScope: scope.$parent,
-                mentionModel: jqMentionahead.data('$ngModelController'),
-                jqEle: el,
-                attrs: attrs,
-                on: function() {
-                  var LIVE_SEARCH_DELAY = 0;
-                  var timerLiveSearch;
+          /**
+           * text change event handler
+           * @param {object} event
+           */
+          function _onChangeHandler(event) {
+            var value = event.target.value;
 
-                  // text change event handling
-                  function changeHandler(event) {
-                    var value = event.target.value;
-
-                    if (value !== mentionCtrl.getValue()) {
-                      mentionCtrl.setValue(value);
-                    }
-                  }
-
-                  // 실시간 mention 입력 확인
-                  function liveSearchHandler(event) {
-                    $timeout.cancel(timerLiveSearch);
-                    timerLiveSearch = $timeout(function() {
-                      var jqPopup = jqMentionahead.next();
-                      var css;
-
-                      mentionCtrl.setMentionOnLive(event);
-                      if (_isOpenMentionaheadMenu()) {
-                        mentionCtrl.showMentionahead();
-                      }
-
-                      // mention ahead position
-                      css = $position.positionElements(jqMentionahead, jqPopup, 'top-left', false);
-                      jqPopup.css(css);
-                    }, LIVE_SEARCH_DELAY);
-                  }
-
-                  el
-                    .on('input', changeHandler)
-                    .on('click', liveSearchHandler)
-                    .on('blur', function() {
-                      JndUtil.safeApply(scope, function() {
-                        mentionCtrl.clearMention();
-                      });
-                    })
-                    .on('keyup', liveSearchHandler);
-                }
-              });
+            if (value !== mentionCtrl.getValue()) {
+              mentionCtrl.setValue(value);
+            }
           }
 
           /**
-           * mention ahead avaliable
-           * @param {string} mentionaheadType
-           * @returns {*|boolean}
+           * 실시간 mention 입력 확인
+           * @param {object} event
+           */
+          function _onLiveSearchHandler(event) {
+            $timeout.cancel(timerLiveSearch);
+            timerLiveSearch = $timeout(_.bind(_liveSearchHandler, null, event), LIVE_SEARCH_DELAY);
+          }
+
+          /**
+           * 실시간 mention 입력 확인
+           * @param {object} event
            * @private
            */
-          function _isMentionaheadAvailable(mentionaheadType) {
-            var currentEntity = currentSessionHelper.getCurrentEntity();
-            return currentEntity && (mentionaheadType !== 'message' || !memberService.isMember(currentEntity.id));
+          function _liveSearchHandler(event) {
+            var jqPopup = jqMentionahead.next();
+            var css;
+
+            mentionCtrl.setMentionOnLive(event);
+            if (_isOpenMentionaheadMenu()) {
+              mentionCtrl.showMentionahead();
+            }
+
+            // mention ahead position
+            css = $position.positionElements(jqMentionahead, jqPopup, 'top-left', false);
+            jqPopup.css(css);
           }
 
           /**

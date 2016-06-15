@@ -70,8 +70,9 @@
 
 .message.comment .member-name {
   position: relative;
-  top: 1px;
-  max-width: 50%;
+  top: 0;
+  max-width: calc(100% - 58px);
+  line-height: 20px;
 }
 
 .message.comment .comment-content {

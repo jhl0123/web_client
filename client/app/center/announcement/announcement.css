@@ -148,10 +148,10 @@
   transition: color ease-in-out 150ms;
   
 }
-.announcement-body__content > a {
+.announcement-body__content a {
   color: #00ACE9;
 }
-.announcement-body__content > a:hover {
+.announcement-body__content a:hover {
   text-decoration: none;
   border-bottom: 1px solid rgba(0, 172, 233, 0.7);
 }

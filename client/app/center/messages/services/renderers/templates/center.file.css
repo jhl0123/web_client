@@ -9,7 +9,7 @@
   width: 50%;
   min-width: 393px;
   max-width: 600px;
-  margin: 6px 0 0 0;
+  margin: 2px 0 0 0;
   background-color: #f1f4f8;
   border-radius: 3px 3px 4px 4px;
   overflow: hidden;
@@ -40,15 +40,32 @@
   display: block;
   margin: 0 auto;
   max-width: 100%;
+  line-height: 100px;
+}
+.card-content.open .card-preview .preview-image {
+  min-height: 100px;
+  
+}
+.card-content:not(.open) .card-preview .preview-image {
+  min-height: 12px;
 }
 
 .card-preview .preview-image .loading-content {
   position: absolute;
+  width: 100% !important;
+  min-height: 100px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+.card-preview .preview-image .loading-content .loading_bar {
+  line-height: 24px;
 }
 
 .preview-image {
-  -webkit-transition: height ease-in-out .4s;
-  transition: height ease-in-out .4s;
+  -webkit-transition: all ease-in-out .4s;
+  transition: all ease-in-out .4s;
 }
 
 .file-action {
@@ -176,7 +193,7 @@
   height: calc(100% + 1px);
   background-color: #f1f4f8;
   border: 1px solid rgba(5, 35, 60, 0.08);
-  border-top-color: transparent;
+  border-top-width: 0;
   overflow: hidden;
   -webkit-transition: left ease-in-out .3s .4s;
   transition: left ease-in-out .3s .4s;
@@ -186,7 +203,7 @@
 }
 .card-image.icon > .fileicon {
   position: absolute;
-  top: calc(50% - 1px);
+  top: 50%;
   -webkit-transform: translateY(-52%);
   transform: translateY(-52%);
   
@@ -200,7 +217,7 @@
   position: relative;
   width: 100%;
   height: auto;
-  top: calc(50% - 1px);
+  top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -313,7 +330,7 @@
 
 .msg-file.unshared .info-title {
   display: inline-block;
-  max-width: calc(100% - 84px);
+  max-width: calc(100% - 94px);
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -324,10 +341,10 @@
 .msg-file.unshared .info-title:lang(en),
 .msg-file.unshared .info-title:lang(zh-cn),
 .msg-file.unshared .info-title:lang(zh-tw) {
-  max-width: calc(100% - 120px);
+  max-width: calc(100% - 130px);
 }
 .msg-file.unshared .info-title:lang(ja) {
-  max-width: calc(100% - 180px);
+  max-width: calc(100% - 190px);
 }
 
 /* unshared image preview & filter type preview */
@@ -369,7 +386,7 @@
   white-space: nowrap;
   
   float: left;
-  margin: 2px 5px 0 -1px;
+  margin: 3px 5px 0 -1px;
 }
 
 .msg-item ._fileExpand {
