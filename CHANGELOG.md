@@ -1,3 +1,13 @@
+<a name="1.31.3"></a>
+## [1.31.3](https://github.com/tosslab/web_client/compare/v1.31.2...v1.31.3) (2016-06-15)
+
+
+### Bug Fixes
+
+* **mention:** web_client 진입을 dm으로 하였을때 mention list가 생성되지 않는 버그 수정 ([f4d1302](https://github.com/tosslab/web_client/commit/f4d1302))
+
+
+
 <a name="1.31.2"></a>
 ## [1.31.2](https://github.com/tosslab/web_client/compare/v1.31.1...v1.31.2) (2016-06-13)
 
