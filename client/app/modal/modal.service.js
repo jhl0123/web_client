@@ -14,46 +14,49 @@
   function modalWindowHelper($rootScope, $modal, $filter, $timeout, teamAPIservice, fileAPIservice, accountService,
                              NetInterceptor, Dialog, Browser, currentSessionHelper, CoreUtil, Tutorial, RoomTopicList,
                              jndPubSub) {
+    var _that = this;
 
-    var that = this;
+    var DEFAULT_NAMESPACE = 'default';
 
-    // singleton modal instance
-    var modal;
+    // open된 modal들을 namespace별로 전체를 닫거나 관리하기 위해 사용한다.
+    var _modalSpaces = {};
 
-    var inviteModalLock;
+    var _inviteModalLock;
 
+    _that.openFileUploadModal = openFileUploadModal;
+    _that.openFileShareModal = openFileShareModal;
+    _that.openFileIntegrationModal = openFileIntegrationModal;
 
-    that.openFileUploadModal = openFileUploadModal;
-    that.openFileShareModal = openFileShareModal;
-    that.openFileIntegrationModal = openFileIntegrationModal;
+    _that.openTopicCreateModal = openTopicCreateModal;
+    _that.openTopicInviteModal = openTopicInviteModal;
+    _that.openTopicInviteFromDmModal = openTopicInviteFromDmModal;
+    _that.openTopicJoinModal = openTopicJoinModal;
+    _that.openTopicRenameModal = openTopicRenameModal;
 
-    that.openTopicCreateModal = openTopicCreateModal;
-    that.openTopicInviteModal = openTopicInviteModal;
-    that.openTopicInviteFromDmModal = openTopicInviteFromDmModal;
-    that.openTopicJoinModal = openTopicJoinModal;
-    that.openTopicRenameModal = openTopicRenameModal;
+    _that.openTeamMemberListModal = openTeamMemberListModal;
+    _that.openInviteToTeamModal = openInviteToTeamModal;
 
-    that.openTeamMemberListModal = openTeamMemberListModal;
-    that.openInviteToTeamModal = openInviteToTeamModal;
+    _that.openUserProfileModal = openUserProfileModal;
+    _that.openProfileImageModal = openProfileImageModal;
+    _that.openBotProfileModal = openBotProfileModal;
 
-    that.openUserProfileModal = openUserProfileModal;
-    that.openProfileImageModal = openProfileImageModal;
-    that.openBotProfileModal = openBotProfileModal;
+    _that.openImageCarouselModal = openImageCarouselModal;
+    _that.openFullScreenImageModal = openFullScreenImageModal;
 
-    that.openImageCarouselModal = openImageCarouselModal;
-    that.openFullScreenImageModal = openFullScreenImageModal;
+    _that.openNotificationSettingModal = openNotificationSettingModal;
 
-    that.openNotificationSettingModal = openNotificationSettingModal;
+    _that.openPasswordResetRequestModal = openPasswordResetRequestModal;
 
-    that.openPasswordResetRequestModal = openPasswordResetRequestModal;
+    _that.openAgreementModal = openAgreementModal;
+    _that.openPrivacyModal = openPrivacyModal;
 
-    that.openAgreementModal = openAgreementModal;
-    that.openPrivacyModal = openPrivacyModal;
+    _that.openQuickLauncherModal = openQuickLauncherModal;
+    _that.openShortcutModal = openShortcutModal;
+    _that.openWelcome = openWelcome;
+    _that.openDeprecated = openDeprecated;
 
-    that.openQuickLauncherModal = openQuickLauncherModal;
-    that.openShortcutModal = openShortcutModal;
-    that.closeModal = closeModal;
-    that.dismissModal = dismissModal
+    _that.closeModal = closeModal;
+    _that.dismissModal = dismissModal;
 
     /**
      * file 을 upload 하는 모달창을 연다.
@@ -246,8 +249,8 @@
      * 이메일로 팀으로 초대하는 모달창을 연다.
      */
     function openInviteToTeamModal() {
-      if (!inviteModalLock) {
-        inviteModalLock = true;
+      if (!_inviteModalLock) {
+        _inviteModalLock = true;
         // modal에 해당 member의 team information을 전달 해야함.
         teamAPIservice.getTeamInfo()
           .success(function(res) {
@@ -264,7 +267,7 @@
             _modalOpener(modalOption);
           })
           .finally(function() {
-            inviteModalLock = false;
+            _inviteModalLock = false;
           });
       }
     }
@@ -333,6 +336,36 @@
       };
 
       return _modalOpener(modalOption);
+    }
+
+    /**
+     * welcome modal
+     * 가입 후 첫 team 진입시 출력하는 modal
+     * @param {object} option
+     */
+    function openWelcome(option) {
+      var modalOption = {
+        controller: 'WelcomeCtrl',
+        templateUrl: 'app/modal/welcome/welcome.html',
+        windowClass: 'guide-modal'
+      };
+
+      _modalOpener(_.extend(modalOption, option));
+    }
+
+    /**
+     * deprecated modal
+     * 더이상 지원하지 않는 application 사용시 출력하는 modal
+     * @param {object} option
+     */
+    function openDeprecated(option) {
+      var modalOption = {
+        controller: 'DeprecatedCtrl',
+        templateUrl: 'app/modal/deprecated/deprecated.html',
+        windowClass: 'guide-modal'
+      };
+
+      _modalOpener(_.extend(modalOption, option));
     }
 
     /**
@@ -475,16 +508,22 @@
      * @private
      */
     function _modalOpener(options) {
+      var namespace = options.namespace || DEFAULT_NAMESPACE;
+      var modal;
+
       if (!options.multiple) {
         closeModal();
       }
 
       if (NetInterceptor.isConnected()) {
+        _modalSpaces[namespace] = _modalSpaces[namespace] || [];
         modal = $modal.open(options);
+        _modalSpaces[namespace].push(modal);
 
         modal.opened.then(function() {
           jndPubSub.pub('modalHelper:opened');
         });
+        modal.result.then(_.bind(_modalResult, null, modal, namespace), _.bind(_modalResult, null, modal, namespace));
 
         _modalRendered(modal, options);
 
@@ -493,21 +532,53 @@
     }
 
     /**
+     * modal result callback
+     * @param {object} modal
+     * @param {string} namespace
+     * @private
+     */
+    function _modalResult(modal, namespace) {
+      var modals = _modalSpaces[namespace];
+      var index;
+
+      if (modals) {
+        index = modals.indexOf(modal);
+        if (index > -1) {
+          modals.splice(index, 1);
+
+          if (modals.length === 0) {
+            delete _modalSpaces[namespace];
+          }
+        }
+      }
+    }
+
+    /**
      * 모달의 결과값을 전달하며 닫음
-     * @private {string} result
+     * @param {object} [option]
+     * @param {string} [option.namespace]
+     * @param {string} [option.result]
      * @returns {*}
      */
-    function closeModal(result) {
-      return modal && modal.close(result);
+    function closeModal(option) {
+      option = option || {};
+      _.each(_modalSpaces[option.namespace || DEFAULT_NAMESPACE], function(modal) {
+        modal.close(option.result);
+      });
     }
 
     /**
      * 모달의 취소사유를 전달하며 닫음
-     * @private {string} reason
+     * @param {object} [option]
+     * @param {string} [option.namespace]
+     * @param {string} [option.reason]
      * @returns {*}
      */
-    function dismissModal(reason) {
-      return modal && modal.dismiss(reason);
+    function dismissModal(option) {
+      option = option || {};
+      _.each(_modalSpaces[option.namespace || DEFAULT_NAMESPACE], function(modal) {
+        modal.dismiss(option.reason);
+      });
     }
 
     /**
