@@ -12,8 +12,12 @@
   function MacAppHelper(TeamData, UnreadBadge, NotificationManager) {
     var that = this;
 
+    // [major, minor, patch]
+    var _deprecatedVersion = [0, 9, 7];
+
     that.trigger = trigger;
     that.isMacApp = isMacApp;
+    that.isDeprecatedVersion = isDeprecatedVersion;
 
     that.updateBadge = updateBadge;
 
@@ -52,6 +56,32 @@
      */
     function _getTotalBadgeCount() {
       return TeamData.getOtherTeamBadgeCount() + UnreadBadge.getTotalCount();
+    }
+
+    /**
+     * is deprecated version
+     * @returns {boolean}
+     */
+    function isDeprecatedVersion() {
+      var isDeprecatedVersion = false;
+      var currentVersion;
+
+      if (isMacApp()) {
+        currentVersion = window.jandimac.version;
+        if (currentVersion == null) {
+          isDeprecatedVersion = true;
+        } else if (_.isString(currentVersion)) {
+          currentVersion = currentVersion.split('.');
+          if (currentVersion.length === 3 &&
+            (+(_deprecatedVersion[0]) > +(currentVersion[0]) ||
+            +(_deprecatedVersion[1]) > +(currentVersion[1]) ||
+            +(_deprecatedVersion[2]) > +(currentVersion[2]))) {
+            isDeprecatedVersion = true;
+          }
+        }
+      }
+
+      return isDeprecatedVersion;
     }
 
     /**

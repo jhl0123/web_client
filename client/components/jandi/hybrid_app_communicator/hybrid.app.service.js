@@ -28,6 +28,7 @@
       delegator.isPcApp = isPcApp;
       delegator.isMacApp = isMacApp;
       delegator.isHybridApp = isHybridApp;
+      delegator.isDeprecatedApp = isDeprecatedApp;
     }
 
     /**
@@ -75,6 +76,13 @@
      */
     function isMacApp() {
       return MacAppHelper.isMacApp();
+    }
+
+    /**
+     * 0.9.6 version 이하의 window, mac app인지 여부
+     */
+    function isDeprecatedApp() {
+      return isPcApp() || MacAppHelper.isDeprecatedVersion();
     }
 
     /**

@@ -87,19 +87,26 @@
        * 영역을 노출한다.
        * @private
        */
-      function _show() {
-        clearTimeout(_timer);
+      function _show($event) {
+        var originalEvent = $event.originalEvent;
+        var isFiles = originalEvent.dataTransfer &&
+          originalEvent.dataTransfer.types &&
+          _.indexOf(originalEvent.dataTransfer.types, 'Files') >= 0;
 
-        if (_isHiding) {
-          _jqDragArea.stop();
-          _isHiding = false;
-        }
+        if (isFiles) {
+          clearTimeout(_timer);
 
-        if (!_isShowing) {
-          _isShowing = true;
-          _jqDragArea.fadeIn(300, function() {
-            _isShowing = false;
-          });
+          if (_isHiding) {
+            _jqDragArea.stop();
+            _isHiding = false;
+          }
+
+          if (!_isShowing) {
+            _isShowing = true;
+            _jqDragArea.fadeIn(300, function() {
+              _isShowing = false;
+            });
+          }
         }
       }
     }

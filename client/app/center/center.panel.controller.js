@@ -200,7 +200,9 @@
       $scope.currentEntity = currentSessionHelper.getCurrentEntity();
       $scope.analytics.entityType = _entityType;
       MessageSendingCollection.reset();
-      modalHelper.closeModal('cancel');
+      modalHelper.closeModal({
+        result: 'cancel'
+      });
       _cancelHttpRequest();
       _initLocalVariables();
       _hideContents();

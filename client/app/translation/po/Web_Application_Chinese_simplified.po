@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Bookmarks: -1,71,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: client/app/tpl/503/503.html
@@ -361,6 +361,10 @@ msgstr "关闭权限"
 #: client/app/center/view_components/entity_header/entity.header.html
 msgid "@common-disabled-member-notice-msg-short"
 msgstr "此成员权限已被暂时关闭"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-disabled-member-profile-msg"
+msgstr "此成员权限已被暂时关闭。 欲知更多细节，请联络团队管理员。"
 
 #: client/app/modal/topics/topic_invite_from_dm/topic.invite.direct.html
 msgid "@common-dm-invite-to"
@@ -1082,6 +1086,14 @@ msgstr "快找"
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@header-nav-language"
 msgstr "语言设置"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@hybridapp-update-button-download"
+msgstr "下载"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@hybridapp-update-title"
+msgstr "新版本上线"
 
 #: client/app/modal/members/current_member_profile/current.member.profile.html
 msgid "@ie9-profile-image-support"
@@ -2161,6 +2173,16 @@ msgstr "电子邮件或密码无效"
 #: client/app/signin/signin.html
 msgid "@login-reset-password"
 msgstr "忘了密码？"
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macapp-update-desc"
+msgstr ""
+"本次更新：\n"
+"- 您可以设定预置团队，当开启 JANDI 后，页面将自动导向预置的团队\n"
+"- 性能优化和错误修复\n"
+"\n"
+"体验新的Mac版本，请下载并将档案拖拉至应用程序文件夹，新版本将会自动覆盖旧的"
+"版本。"
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@macappupdate-button-download"
@@ -3489,6 +3511,22 @@ msgstr "JANDI 新信息"
 msgid "@wednesday"
 msgstr "星期三"
 
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@winapp-update-desc"
+msgstr ""
+"本次更新：\n"
+"- 您可以设定预置团队，当开启 JANDI 后，页面将自动导向预置的团队\n"
+"- 性能优化和错误修复"
+
+#~ msgid "@hybridapp-update-desc"
+#~ msgstr ""
+#~ "本次更新：\n"
+#~ "- 您可以设定预置团队，当开启 JANDI 后，页面将自动导向预置的团队\n"
+#~ "- 性能优化和错误修复\n"
+#~ "\n"
+#~ "体验新的Mac版本，请下载并将档案拖拉至应用程序文件夹，新版本将会自动覆盖"
+#~ "旧的版本。"
+
 #~ msgid "@topic-admin-transfer-kickout-confirm-2"
 #~ msgstr "此成员为议题管理员，需先将权限转移至其他成员才可剔除此成员"
 
@@ -3515,9 +3553,6 @@ msgstr "星期三"
 
 #~ msgid "@alert-empty-ch-can-join"
 #~ msgstr "没有可加入的议题"
-
-#~ msgid "@common-disabled-member-profile-msg"
-#~ msgstr "此成员权限已被暂时关闭。 欲知更多细节，请联络团队管理员。"
 
 #~ msgid "@input-rename"
 #~ msgstr "输入修改的名字"

@@ -9,8 +9,9 @@
     .directive('fileDetailComments', fileDetailComments);
 
   /* @ngInject */
-  function fileDetailComments($filter, UserList, Dialog, FileDetail, jndPubSub, JndUtil, memberService) {
+  function fileDetailComments($filter, $timeout, UserList, Dialog, FileDetail, jndPubSub, JndUtil, memberService) {
     return {
+      require: '^fileDetailContent',
       restrict: 'E',
       replace: true,
       scope: {
@@ -25,7 +26,7 @@
       link: link
     };
 
-    function link(scope, el) {
+    function link(scope, el, attr, ctrl) {
       var _commentMap = {};
 
       scope.hasOwnComment = hasOwnComment;
@@ -47,6 +48,11 @@
           comment.extIsOpen = false;
 
           _commentMap[comment.id] = comment;
+        });
+
+        // comments가 rendering이 완료된 다음 file detail body element의 높이값을 재설정 해야한다.
+        $timeout(function() {
+          ctrl.resizeFileDetailBody();
         });
 
         _attachScopeEvents();

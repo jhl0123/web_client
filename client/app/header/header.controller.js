@@ -9,7 +9,7 @@
   /* @ngInject */
   function headerCtrl($scope, $state, $filter, $timeout, accountService, memberService, Environment,
                       publicService, language, modalHelper, jndPubSub, DeskTopNotificationBanner, Browser,
-                      AnalyticsHelper, Router, JndConnect, JndZoom, RightPanel, Tutorial,
+                      AnalyticsHelper, Router, JndConnect, JndZoom, RightPanel, Tutorial, HybridAppHelper,
                       AccountHasSeen) {
     var modalMap = {
       'agreement': function() {
@@ -90,20 +90,13 @@
 
       _initializeIntercomLanguage();
 
-      _initTutorialBlink();
-      _attachEvents();
-    }
-
-    /**
-     * tutorial blink 표시를 초기화 한다.
-     * @private
-     */
-    function _initTutorialBlink() {
       if (accountService.getAccount()) {
         _setTutorialBlink();
       } else {
         $scope.$on('accountService:setAccount', _setTutorialBlink);
       }
+
+      _attachEvents();
     }
 
     /**
