@@ -67,7 +67,13 @@
   -webkit-transition: all ease-in-out .4s;
   transition: all ease-in-out .4s;
 }
-
+.preview-image img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
 .file-action {
   line-height: 16px !important;
   font-size: 16px;

@@ -67,7 +67,7 @@
       function _createLoadingBar() {
         jqLoadingBar = $('<div class="loading-content">' + Loading.getTemplate() + '</div>')
           .css({width: dimention.width, height: dimention.height})
-          .appendTo(jqEle);
+          .prependTo(jqEle);
       }
 
       /**
@@ -78,7 +78,7 @@
         jqImage = $('<img class="opac-zero" src="' + imageView + '">')
           .css({width: dimention.width, height: dimention.height})
           .one('load', _onImageLoad)
-          .appendTo(jqEle);
+          .prependTo(jqEle);
       }
 
       /**
