@@ -1,3 +1,21 @@
+<a name="1.32.0"></a>
+# [1.32.0](https://github.com/tosslab/web_client/compare/v1.31.3...v1.32.0) (2016-06-16)
+
+
+### Bug Fixes
+
+* **bubbleview:** filecard의 너비가 줄어들었을때 preview가 중앙정렬되도록 수정 ([795b4a0](https://github.com/tosslab/web_client/commit/795b4a0))
+* **bubbleview:** zoom 조정 시 댓글 입력창이 잘리는 버그 수정 ([82f3c11](https://github.com/tosslab/web_client/commit/82f3c11))
+* **bubbleview:** 파일 코멘트 사이 언리드 마커로 쓰레드가 잘렸을 경우, 마커 이후에 코멘트는 항상 작설자를 노출 ([6f19899](https://github.com/tosslab/web_client/commit/6f19899))
+* **cache:** UnreadMarker 가 비정상적으로 노출되는 현상 수정 ([12673f5](https://github.com/tosslab/web_client/commit/12673f5))
+* **filedrag:** 텍스트 드래그시 파일 업로드 이미지 출력되는 버그 수정 ([3029311](https://github.com/tosslab/web_client/commit/3029311))
+
+### Features
+
+* **deprecatedapp:** 더이상 지원하지 않는 app일경우 업데이트 완료하라는 popup을 account 정보 불러온 후 출력하도록 추가 ([485ad35](https://github.com/tosslab/web_client/commit/485ad35))
+
+
+
 <a name="1.31.3"></a>
 ## [1.31.3](https://github.com/tosslab/web_client/compare/v1.31.2...v1.31.3) (2016-06-15)
 
