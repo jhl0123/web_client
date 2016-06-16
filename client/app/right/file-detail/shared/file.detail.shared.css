@@ -1,5 +1,5 @@
 .file-detail-shared {
-  padding: 8px 15px;
+  padding: 6px 15px;
   line-height: 16px;
   font-size: 13px;
   color: rgba(5, 35, 60, 0.4);
@@ -9,7 +9,7 @@
   /*background-color: #EAF1F5;*/
   box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.13);
   border-top: 1px solid #eee;
-  margin:12px -15px 0 -15px;
+  margin: 6px -15px 0 -15px;
   z-index: 1;
 }
 .file-detail-shared > span > span {

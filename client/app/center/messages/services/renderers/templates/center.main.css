@@ -7,16 +7,16 @@
 .message .member-profile {
   position: absolute;
   left: -44px;
-  top: 5px;
-  width: 35px;
-  height: 35px;
+  top: 0px;
+  width: 33px;
+  height: 33px;
   border-radius: 50%;
   background-color: #FFF;
   box-sizing: border-box;
 }
 
 .message .member-profile.icon-chat {
-  top: 15px;
+  top: 6px;
   left: -45px;
   padding-top: 6px;
   font-size: 24px;
@@ -27,7 +27,7 @@
 .message .member-name {
   color: #333;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 0.9rem;
   
   display: inline-block;
   line-height: 20px;
@@ -51,9 +51,11 @@
   margin: 0;
   padding: 0;
 }
+/*
 .message-group .message.file {
   margin-bottom: 28px;
 }
+*/
 
 .message .center-panel-disabled-member .member-name,
 .message .center-panel-disabled-member .member-profile {

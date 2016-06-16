@@ -1,6 +1,6 @@
 .message-card {
   position: relative;
-  padding: 16px 15px 14px 14px;
+  padding: 13px 15px 12px 14px;
   cursor: pointer;
   color: #333;
   border-bottom: 1px solid #ebebeb;
@@ -10,12 +10,15 @@
 }
 .message-card .message-profile {
   position: absolute;
+  top: 16px;
+  border: 1px solid #e1e1e1;
+  border-radius: 50%;
 }
 .message-card .message-meta {
   padding-left: 38px;
 }
 .message-meta .message-writer {
-  font-size: 14px;
+  font-size: 0.82rem;
   font-weight: 600;
   display: inline-block;
   max-width: 180px;
@@ -31,12 +34,12 @@
 .message-meta .message-date {
   display: inline-block;
   overflow: hidden;
-  font-size: 12px;
+  font-size: 0.74rem;
   color: #999;
 }
 .message-meta .message-start {
   max-width: 300px;
-  font-size: 12px;
+  font-size: 0.74rem;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -44,7 +47,7 @@
   color: #999;
 }
 .message-meta .message-start .topic-start {
-  font-size: 12px;
+  font-size: 0.74rem;
   color: #00a4e6;
   text-decoration: underline;
 }
@@ -52,7 +55,7 @@
   color: #00709E;
 }
 .message-meta .message-start .comment-start {
-  font-size: 12px;
+  font-size: 0.74rem;
   font-weight: 700;
 }
 .message-meta .message-start .comment-start:hover {
@@ -75,8 +78,8 @@
   margin-top: -7px;
 }
 .message-card .message-card-body {
-  font-size: 16px;
-  line-height: 1.5em;
+  font-size: 0.95rem;
+  line-height: 1.44rem;
 }
 .message-card .message-card-body.message-simple {
   margin-left: 36px;

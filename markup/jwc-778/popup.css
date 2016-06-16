@@ -1,0 +1,29 @@
+.fn-16{font-size:16px !important;}
+.fn-18{font-size:18px !important;}
+.txt-c{text-align:center}
+.word-keep{word-break:keep-all;}
+.dis-b{display:block;}
+.hidden{position:absolute !important;width:1px !important;height:1px !important;padding:0px !important;overflow:hidden !important;background:transparent !important}
+button{border:none;padding:0px 0px;cursor:pointer;background-color:transparent;}
+button:focus{border:none;outline:0}
+p{padding:0;margin:0}
+
+.pop-container{z-index:610;position:fixed;top:0;right:0;left:0;bottom:0;background:rgba(0,0,0,0.5);}
+.pop-wrap{background:#fff;z-index:612;position:fixed;padding:0px 40px;width:400px;;left:calc(50% - 200px);top:calc(50% - 250px);border-radius:4px;box-shadow:0 0  5px rgba(0,0,0,0.45)}
+.pop-liner{position:relative;margin:65px auto 25px;width:26px;border-top:2px solid #d1d1d1;}
+.pop-head{padding:0px;word-break:keep-all;text-align:center;}
+.pop-body{font-size:16px;line-height:1.4;padding:0px;}
+.pop-body{}
+.pop-desc-box{font-size:15px;line-height:26px;color:#8d8d8d;letter-spacing:-1px}
+.btn-pop-close{ position:absolute;right:10px;top:15px;color:#999 ; padding:5px 10px;}
+.btn-pop-close:hover{color:#1c1c1c}
+
+
+.mac-release .pop-body{ padding-top: 10px;}
+.mac-release .pop-head{font-weight:bold;color:#1c1c1c;font-size:22px;line-height:36px;;letter-spacing:-1px}
+.mac-release .pop-desc-box p{padding-top:23px;}
+.mac-release .pop-btn-box{text-align:center;margin:40px 0 45px}
+.btn-liteblue {background-color:#00abe6;color:#fff}
+.btn-liteblue:hover{background-color:#0092d8;}
+.btn-s1 {font-size:16px;height:38px;min-width:57px;background-shadow:none;font-weight:700;padding:0 15px;}
+.rd3 {border-radius:3px;}

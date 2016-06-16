@@ -346,6 +346,10 @@ msgstr ""
 msgid "@common-disabled-member-notice-msg-short"
 msgstr ""
 
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@common-disabled-member-profile-msg"
+msgstr ""
+
 #: client/app/modal/topics/topic_invite_from_dm/topic.invite.direct.html
 msgid "@common-dm-invite-to"
 msgstr ""
@@ -1064,6 +1068,14 @@ msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@header-nav-language"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@hybridapp-update-button-download"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@hybridapp-update-title"
 msgstr ""
 
 #: client/app/modal/members/current_member_profile/current.member.profile.html
@@ -2103,6 +2115,10 @@ msgstr ""
 #: client/app/modal/password/password.reset.request.html
 #: client/app/signin/signin.html
 msgid "@login-reset-password"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@macapp-update-desc"
 msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
@@ -3379,4 +3395,8 @@ msgstr ""
 
 #: client/app/center/messages/services/renderers/templates/translate.html
 msgid "@wednesday"
+msgstr ""
+
+#: client/app/center/messages/services/renderers/templates/translate.html
+msgid "@winapp-update-desc"
 msgstr ""

@@ -8,13 +8,7 @@
     .module('jandiApp')
     .service('Tutorial', Tutorial);
 
-  function Tutorial($rootScope, jndPubSub, accountService, AccountHasSeen) {
-    var _isInit = false;
-    var _scope = $rootScope.$new(true);
-
-    this.showWelcome = showWelcome;
-    this.hideWelcome = hideWelcome;
-
+  function Tutorial(jndPubSub) {
     this.hideTooltip = hideTooltip;
     this.showTooltip = showTooltip;
 
@@ -30,50 +24,6 @@
      * @private
      */
     function _init() {
-      if (accountService.getAccount()) {
-        _initWelcome();
-      } else {
-        _scope.$on('accountService:setAccount', _initWelcome);
-      }
-    }
-
-    /**
-     * welcome 을 보여줄지 상태를 결정한다.
-     * @private
-     */
-    function _initWelcome() {
-      if (!_isInit) {
-        //기존 사용자면 welcome 은 생략한다
-        if (_isOldUser()) {
-          AccountHasSeen.set('TUTORIAL_VER3_WELCOME', true);
-        } else if (!AccountHasSeen.get('TUTORIAL_VER3_WELCOME')) {
-          //초기 진입 시 모든 랜더링 동작을 완료한 이후 welcome 모달을 fade in 효과로 노출하기 위해 1초의 딜레이를 할당한다.
-          setTimeout(showWelcome, 1000);
-        }
-        _isInit = true;
-      }
-    }
-
-    /**
-     * tutorial 을 이미 시청한 기존 사용자인지 여부를 반환한다.
-     * @private
-     */
-    function _isOldUser() {
-      return AccountHasSeen.get('GUIDE_TOPIC_FOLDER') && AccountHasSeen.get('GUIDE_CONNECT') ;
-    }
-
-    /**
-     * 튜토리얼 welcome 을 노출한다.
-     */
-    function showWelcome() {
-      jndPubSub.pub('Tutorial:showWelcome');
-    }
-
-    /**
-     * 튜토리얼 welcome 을 감춘다.
-     */
-    function hideWelcome() {
-      jndPubSub.pub('Tutorial:hideWelcome');
     }
 
     /**

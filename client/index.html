@@ -102,10 +102,12 @@
   <link rel="stylesheet" href="app/left/topics/topics.css">
   <link rel="stylesheet" href="app/mention/mention.view.css">
   <link rel="stylesheet" href="app/mobile/mobile.catcher.css">
+  <link rel="stylesheet" href="app/modal/deprecated/deprecated.css">
   <link rel="stylesheet" href="app/modal/files/integration/integration.css">
   <link rel="stylesheet" href="app/modal/files/share/share.css">
   <link rel="stylesheet" href="app/modal/files/upload/upload.css">
   <link rel="stylesheet" href="app/modal/fullscreen.modal.css">
+  <link rel="stylesheet" href="app/modal/guide.modal.css">
   <link rel="stylesheet" href="app/modal/images/carousel/image.carousel.css">
   <link rel="stylesheet" href="app/modal/members/bot-profile/bot.profile.css">
   <link rel="stylesheet" href="app/modal/members/expanding-input/expanding.input.css">
@@ -127,6 +129,7 @@
   <link rel="stylesheet" href="app/modal/topics/topic_invite/topic.invite.css">
   <link rel="stylesheet" href="app/modal/topics/topic_join/topic.join.css">
   <link rel="stylesheet" href="app/modal/topics/topic_rename/topic.rename.css">
+  <link rel="stylesheet" href="app/modal/welcome/welcome.css">
   <link rel="stylesheet" href="app/right/file-detail/comment-input/file.detail.comment.input.css">
   <link rel="stylesheet" href="app/right/file-detail/comments/file.detail.comments.css">
   <link rel="stylesheet" href="app/right/file-detail/content/file.detail.content.css">
@@ -160,7 +163,6 @@
   <link rel="stylesheet" href="app/tutorial/popover/css/star.css">
   <link rel="stylesheet" href="app/tutorial/popover/tutorial.popover.css">
   <link rel="stylesheet" href="app/tutorial/tooltip/tutorial.tooltip.css">
-  <link rel="stylesheet" href="app/tutorial/welcome/tutorial.welcome.css">
   <link rel="stylesheet" href="app/util/css/jandi-common.css">
   <link rel="stylesheet" href="app/util/css/jandi-icon.css">
   <link rel="stylesheet" href="app/util/css/spinners.css">
@@ -220,7 +222,6 @@
                       'scroll_gray': !browser.platform.isMac}">
       </div>
     </div>
-    <tutorial-welcome ng-if="tutorial.isShowWelcome"></tutorial-welcome>
     <tutorial-popover ng-if="tutorial.isShowPopover"></tutorial-popover>
     <jnd-tooltip></jnd-tooltip>
     <jnd-connect ng-if="connectSetting.isOpen" jnd-data-params="connectSetting.params"></jnd-connect>
@@ -456,6 +457,7 @@
 <script src="app/mention/mention.view.directive.js"></script>
 <script src="app/mobile/mobile.catcher.controller.js"></script>
 <script src="app/modal/modal.service.js"></script>
+<script src="app/modal/deprecated/deprecated.controller.js"></script>
 <script src="app/modal/files/integration/integration.controller.js"></script>
 <script src="app/modal/files/share/share.controller.js"></script>
 <script src="app/modal/files/upload/upload.controller.js"></script>
@@ -492,6 +494,7 @@
 <script src="app/modal/topics/topic_invite_from_dm/topic.invite.direct.controller.js"></script>
 <script src="app/modal/topics/topic_join/topic.join.controller.js"></script>
 <script src="app/modal/topics/topic_rename/topic.rename.controller.js"></script>
+<script src="app/modal/welcome/welcome.controller.js"></script>
 <script src="app/right/right.controller.js"></script>
 <script src="app/right/right.service.js"></script>
 <script src="app/right/file-detail/file.detail.controller.js"></script>
@@ -550,8 +553,6 @@
 <script src="app/tutorial/popover/tutorial.popover.directive.js"></script>
 <script src="app/tutorial/tooltip/tutorial.tooltip.controller.js"></script>
 <script src="app/tutorial/tooltip/tutorial.tooltip.directive.js"></script>
-<script src="app/tutorial/welcome/tutorial.welcome.controller.js"></script>
-<script src="app/tutorial/welcome/tutorial.welcome.directive.js"></script>
 <script src="app/util/directive/animate.text.directive.js"></script>
 <script src="app/util/directive/jnd.code.prettify.directive.js"></script>
 <script src="app/util/directive/jnd.elastic.directive.js"></script>
@@ -619,6 +620,7 @@
 <script src="app/util/service/file.object.service.js"></script>
 <script src="app/util/service/file.upload.service.js"></script>
 <script src="app/util/service/image.paste.service.js"></script>
+<script src="app/util/service/initiate.guide.service.js"></script>
 <script src="app/util/service/integration.service.js"></script>
 <script src="app/util/service/jnd.util.service.js"></script>
 <script src="app/util/service/jnd.zoom.service.js"></script>
