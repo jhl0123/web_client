@@ -621,12 +621,13 @@
       }
 
       /**
-       *
-       * @param angularEvent
+       * 중간에 메시지를 끼워 넣는다.
+       * @param {object} angularEvent
+       * @param {object} msg
        * @param {number} index - embed 한 item 의 index
        * @private
        */
-      function _onEmbed(angularEvent, index) {
+      function _onEmbed(angularEvent, msg, index) {
         var messageCollection = MessageCacheCollection.getCurrent();
         var message;
         var prevMessage;
@@ -640,15 +641,16 @@
           message = CoreUtil.pick(messageCollection.list, index);
           prevMessage = CoreUtil.pick(messageCollection.list, prevIndex);
           nextMessage = CoreUtil.pick(messageCollection.list, nextIndex);
-          jqPrev = $('#' + prevMessage.id);
 
-          _pushMarkup(htmlList, message, index);
           if (prevMessage) {
             _refresh(prevMessage.id, prevIndex);
           }
           if (nextMessage) {
             _refresh(nextMessage.id, nextIndex);
           }
+          _pushMarkup(htmlList, message, index);
+
+          jqPrev = $('#' + prevMessage.id);
           jqPrev.after(_getCompiledEl(htmlList.join('')));
           scope.onRepeatDone();
         }
