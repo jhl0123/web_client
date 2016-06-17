@@ -12,7 +12,9 @@
   color:#1c1c1c;
   font-size:22px;
   line-height:36px;
-  letter-spacing:-1px;
+}
+.deprecated-wrap:lang(ko) {
+  letter-spacing:-0.5px;
 }
 
 .deprecated-wrap .pop-desc-box {
