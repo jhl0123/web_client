@@ -1,3 +1,13 @@
+<a name="1.32.1"></a>
+## [1.32.1](https://github.com/tosslab/web_client/compare/v1.32.0...v1.32.1) (2016-06-17)
+
+
+### Bug Fixes
+
+* **cache:** 중간에 들어온 메시지가 랜더링 되지 않고 누락되는 현상 수정 ([7d7efc2](https://github.com/tosslab/web_client/commit/7d7efc2))
+
+
+
 <a name="1.32.0"></a>
 # [1.32.0](https://github.com/tosslab/web_client/compare/v1.31.3...v1.32.0) (2016-06-16)
 
