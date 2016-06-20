@@ -19,17 +19,22 @@ textarea[disabled] {
 }
 
 .break {
-  word-wrap: break-word;
   word-break: break-all;
   white-space: pre-wrap;
 }
 .keep {
-  word-wrap: break-word;
+  word-break:break-all;
   white-space: pre-wrap;
 }
 .break-word {
   word-wrap: break-word;
 }
+.break-lang:lang(ko){word-break:keep-all;}
+.break-lang:lang(en){word-break:keep-all;}
+.break-lang:lang(ja){word-break:break-all;}
+.break-lang:lang(zh-cn){word-break:break-all;}
+.break-lang:lang(zh-tw){word-break:break-all;}
+
 .underline { border-bottom: 1px solid #31c08a;  }
 .cursor_pointer { cursor: pointer; }
 

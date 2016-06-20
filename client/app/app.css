@@ -120,11 +120,11 @@
   url('../assets/fonts/Roboto-Bold-webfont.ttf') format('truetype');
 }
 
-:lang(ja) { font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ", helvetica, arial, sans-serif, fontAwesome; }
-:lang(ko) { font-family: "Helvetica Neue", Helvetica, 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, Tahoma, Dotum, sans-serif, fontAwesome; }
-:lang(en) { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, fontAwesome; }
-:lang(zh-cn) { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, fontAwesome; }
-:lang(zh-tw) { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, fontAwesome; }
+:lang(ja) { font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ", helvetica, arial, sans-serif, fontAwesome; word-break:break-all;}
+:lang(ko) { font-family: "Helvetica Neue", Helvetica, 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, Tahoma, Dotum, sans-serif, fontAwesome; word-break:keep-all; }
+:lang(en) { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, fontAwesome; word-break:keep-all; }
+:lang(zh-cn) { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, fontAwesome; word-break:break-all; }
+:lang(zh-tw) { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, fontAwesome; word-break:break-all; }
 
 /**
 * App-wide Styles
