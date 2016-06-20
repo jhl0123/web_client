@@ -107,6 +107,8 @@
       toBackground: function() {
         if (!this.hasLastMessage()) {
           this.initialRequest();
+        } else {
+          this._cutByMaxCacheCount();
         }
       },
 
@@ -602,6 +604,7 @@
 
           if (!this._isCurrentRoom()) {
             this._cutByMaxCacheCount();
+            appendList = this.list;
           }
           this._pub('MessageCollection:append', appendList);
         }
@@ -738,6 +741,7 @@
           this._addIndexMap(prependList);
           if (!this._isCurrentRoom()) {
             this._cutByMaxCacheCount();
+            prependList = this.list;
           }
           this._pub('MessageCollection:prepend', prependList);
         }
