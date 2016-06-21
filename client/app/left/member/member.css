@@ -38,13 +38,13 @@
 }
 .lpanel-user__position {
   font-size: 12px;
-  padding-left: 3px;
+  padding-left: 4px;
   width: 100%;
 }
 .lpanel-user__name {
-  font-size: 14px;
-  font-weight: 500;
-  padding-left: 3px;
+  font-size: 15px;
+  font-weight: 600;
+  padding-left: 4px;
   width: 100%;
 }
 

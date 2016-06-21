@@ -12,8 +12,8 @@
 
 .mention.me,
 .mention.all {
-  padding: 1px 2px;
-  background-color: rgba(3, 169, 244, 0.15);
+  padding: 2px 4px;
+  background-color: #E3EFFA;
 }
 
 .mention.all:hover {

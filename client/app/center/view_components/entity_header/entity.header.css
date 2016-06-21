@@ -106,7 +106,7 @@
   font-size: 16px;
 }
 .prefix.star { margin-right: 0; padding-right: 5px; cursor:pointer;}
-.prefix .icon-star-on { color: #f9bb00; }
+.prefix .icon-star-on { color: #F8BC2C; }
 .center-panel-inactive-member .prefix .icon-star-on { color: #FFF; }
 .panel-title-info__name {
   padding-left:3px;

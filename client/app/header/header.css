@@ -19,11 +19,11 @@
   vertical-align: top;
 }
 .header-navbar>.divider {
-  width: 1px;
+  width: 1.5px;
   height: 17px;
-  background-color: #366480;
+  background-color: #50759C;
   float: left;
-  margin-top: 12px;
+  margin-top: 13px;
 }
 .header-navbar-invite {
 }
@@ -74,7 +74,7 @@
 }
 .header-navbar__topmenu:hover,
 .header-navbar__topmenu.active {
-  background-color: #0D3F65;
+  background-color: #043E68;
   cursor: pointer;
   height: 42px !important;
 }
@@ -212,7 +212,7 @@
   cursor: pointer;
   border-radius: 20px;
   border: 1px solid transparent;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 1.5px #50759C;
 
 }
 .header-toolbar .info-tool.active {
@@ -222,8 +222,8 @@
 }
 .header-toolbar .info-tool:not(.active):hover {
   text-decoration: none;
-  background-color: #0D3F65;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  background-color: #043E68;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.5);
 }
 .header-toolbar .info-tool > i {
   position: absolute;
