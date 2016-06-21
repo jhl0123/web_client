@@ -75,7 +75,7 @@
                   </span>
                 </div>
                 <div class="info-group-bottom">
-                  <span class="info-title break-word selectable">{{ file.title }}</span>
+                  <span class="info-title selectable">{{ file.title }}</span>
                   {{#unless file.isUnshared}}
                     {{#unless file.isIntegrateFile}}
                       {{#if file.size}}
@@ -140,7 +140,7 @@
               </span>
               </div>
               <div class="info-group-bottom">
-                <span class="info-title break-word">{{ file.title }}</span>
+                <span class="info-title">{{ file.title }}</span>
               <span class="info-extra">
                 {{#unless file.isUnshared}}
                   {{#unless file.isIntegrateFile}}
@@ -197,7 +197,7 @@
           <div class="card-image icon">
             <div class="fileicon fileicon-unshared"></div>
           </div>
-          <span class="info-title break-word">{{ file.title }}</span>
+          <span class="info-title">{{ file.title }}</span>
           <span class="info-extra">
             <span class="unshared-label">{{translate '@filecard-unshared-file'}}</span>
           </span>
